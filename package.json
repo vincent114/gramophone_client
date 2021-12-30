@@ -1,0 +1,28 @@
+{
+  "name": "gramophone_client",
+  "version": "1.0.0",
+  "description": "Music jukebox App",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vincent114/gramophone_client.git"
+  },
+  "keywords": [
+    "music",
+    "app",
+    "electron",
+    "jukebox"
+  ],
+  "author": "Vincent Boni",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vincent114/gramophone_client/issues"
+  },
+  "homepage": "https://github.com/vincent114/gramophone_client#readme",
+  "devDependencies": {
+    "electron": "^16.0.5"
+  }
+}
