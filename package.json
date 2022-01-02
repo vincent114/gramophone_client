@@ -1,6 +1,6 @@
 {
-  "name": "gramophone_client",
-  "version": "1.0.0",
+  "name": "gramophone_app",
+  "version": "4.0.0",
   "description": "Music jukebox App",
   "main": "main.js",
   "scripts": {
