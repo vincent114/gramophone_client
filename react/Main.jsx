@@ -101,9 +101,9 @@ const RootStore = types
 			// -
 
 			// Search
-			if (navContext == 'search') {
-				app.navigate('/main.html', 'search');
-			}
+			// if (navContext == 'search') {
+			// 	app.navigate('/main.html', 'search');
+			// }
 
 			// -
 
@@ -172,14 +172,14 @@ let popups = {}
 
 let routes = {
 	'home': '/main.html',
-	'search': '/search',
+
 	'artists': '/artists',
 	'albums': '/albums',
 	'tracks': '/tracks',
+
 	'years': '/years',
 	'genres': '/genres',
 	'playlists': '/playlists',
-	'admin': '/admin',
 }
 
 // Store

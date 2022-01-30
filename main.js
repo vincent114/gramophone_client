@@ -1,23 +1,42 @@
 
-const { app, BrowserWindow } = require('electron');
+const { app, dialog, shell, BrowserWindow, Menu, globalShortcut } = require('electron');
+const windowStateKeeper = require('electron-window-state');
 const path = require('path');
+
+let mainWindow = null;
 
 
 // Functions
 // ======================================================================================================
 
 const createWindow = () => {
-	const win = new BrowserWindow({
+
+	let winState = windowStateKeeper({
+		defaultWidth: 1000,
+		defaultHeight: 800
+	});
+
+	mainWindow = new BrowserWindow({
 		titleBarStyle: 'hidden',
 		trafficLightPosition: { x: 10, y: 20 },
-		defaultWidth: 1000,
-		defaultHeight: 800,
+
+		x: winState.x,
+		y: winState.y,
+		width: winState.width,
+		height: winState.height,
+
 		webPreferences: {
 			nodeIntegration: true,
 			preload: path.join(__dirname, 'preload.js'),
 		},
-	})
-	win.loadFile('main.html');
+	});
+
+	winState.manage(mainWindow);
+	if (process.platform == 'win32') {
+		mainWindow.setMenuBarVisibility(false);
+	}
+
+	mainWindow.loadFile('main.html');
 }
 
 
@@ -30,7 +49,7 @@ app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
 		app.quit();
 	}
-})
+});
 
 app.whenReady().then(() => {
 	createWindow();
@@ -41,5 +60,19 @@ app.whenReady().then(() => {
 			createWindow();
 		}
 	})
+});
 
-})
+app.on('will-quit', () => {
+	globalShortcut.unregisterAll()
+});
+
+
+// Exports
+// ======================================================================================================
+
+exports.app = app;
+exports.dialog = dialog;
+exports.shell = shell;
+exports.mainWindow = mainWindow;
+exports.menu = Menu;
+exports.globalShortcut = globalShortcut;
