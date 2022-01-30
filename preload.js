@@ -1,19 +1,25 @@
+const { contextBridge, ipcRenderer } = require('electron');
 
 
-// Events
+// Exports
 // ======================================================================================================
 
-window.addEventListener('DOMContentLoaded', () => {
+contextBridge.exposeInMainWorld('electron', {
 
-	// const replaceText = (selector, text) => {
-	// 	const element = document.getElementById(selector)
-	// 	if (element) {
-	// 		element.innerText = text;
-	// 	}
-	// }
+	send: (apiKey, params) => {
+		ipcRenderer.send(apiKey, params);
+	},
 
-	// for (const dependency of ['chrome', 'node', 'electron']) {
-	// 	replaceText(`${dependency}-version`, process.versions[dependency])
-	// }
+	sendSync: (apiKey, ...arg) => {
+		return ipcRenderer.sendSync(apiKey, arg);
+	},
 
-})
+	once: (apiKey, callback) => {
+		ipcRenderer.once(apiKey, (event, ...args) => callback(...args));
+	},
+
+	on: (apiKey, callback) => {
+		ipcRenderer.on(apiKey, (event, ...args) => callback(...args));
+	},
+
+});

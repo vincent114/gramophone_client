@@ -3,18 +3,23 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
-import { Header } from 'nexus/layout/header/Header';
-import { HomeHeaderMiddle } from 'nexus/contexts/home/Home';
+import {
+	Header,
+	HeaderDivider
+} from 'nexus/layout/header/Header';
+import { SearchHeaderMiddle } from 'nexus/contexts/search/Search';
 import { AboutHeaderLeft } from 'nexus/contexts/about/About';
 import { AdminHeaderLeft } from 'nexus/contexts/admin/Admin';
 
-import { SearchHeaderMiddle } from 'gramophone_client/contexts/search/Search';
 import { ArtistsHeaderLeft } from 'gramophone_client/contexts/artists/Artists';
 import { AlbumsHeaderLeft } from 'gramophone_client/contexts/albums/Albums';
 import { TracksHeaderLeft } from 'gramophone_client/contexts/tracks/Tracks';
+
 import { YearsHeaderLeft } from 'gramophone_client/contexts/years/Years';
 import { GenresHeaderLeft } from 'gramophone_client/contexts/genres/Genres';
 import { PlaylistsHeaderLeft } from 'gramophone_client/contexts/playlists/Playlists';
+
+import { PlaybackControls } from 'gramophone_client/components/playback_controls/PlaybackControls';
 
 
 // Functions Components ReactJS
@@ -31,6 +36,7 @@ export const ContextualHeader = observer((props) => {
 
 	// From ... store
 
+	const breakPoint650 = app.breakPoint650;
 	const context = app.context;
 	const homeContext = app.homeContext;
 	const authContext = app.authContext;
@@ -44,16 +50,9 @@ export const ContextualHeader = observer((props) => {
 
 	// -------------------------------------------------
 
-	const renderHeaderHome = () => {
-
-		if ([homeContext, authContext].indexOf(context) == -1 ) { return; }
-
-		headerMiddle = <HomeHeaderMiddle />
-	}
-
 	const renderHeaderSearch = () => {
 
-		if (context != 'search') { return; }
+		if (breakPoint650 && context != 'search') { return; }
 
 		headerMiddle = <SearchHeaderMiddle />
 	}
@@ -122,7 +121,6 @@ export const ContextualHeader = observer((props) => {
 
 	// -------------------------------------------------
 
-	renderHeaderHome();
 	renderHeaderSearch();
 
 	renderHeaderArtists();
@@ -135,6 +133,14 @@ export const ContextualHeader = observer((props) => {
 
 	renderHeaderAbout();
 	renderHeaderAdmin();
+
+	headerRight = (
+		<React.Fragment>
+			{headerRight}
+			{headerRight && <HeaderDivider />}
+			<PlaybackControls />
+		</React.Fragment>
+	)
 
 	return (
 		<Header

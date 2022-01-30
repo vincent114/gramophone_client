@@ -11,8 +11,38 @@ import { Icon } from 'nexus/ui/icon/Icon';
 import './Tracks.css';
 
 
+// Datas
+// ======================================================================================================
+
+export const MODEL_TRACK = {
+	'id': '',
+	'name': '',
+	'disk': null,
+	'track': null,
+	'audio_file': '',
+	'audio_file_type': '',
+
+	'stamp_file': '',
+	'stamp_added': '',
+
+	'artist': '',
+	'album': '',
+
+	'selected': true,
+	'favorite': false,
+	'starred': false,
+
+	'album_id': '',
+	'artist_id': '',
+	'year_id': '',
+	'genre_id': '',
+
+	'not_found': false,
+}
+
+
 // Models
-// -------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 
 // ***** TracksStore *****
 // ***********************
@@ -22,6 +52,14 @@ export const TracksStore = types
 	.model({
 
 	})
+	.views(self => ({
+
+		get nbTracks() {
+			// TODO
+			return 0;
+		},
+
+	}))
 	.actions(self => ({
 
 		setField: (field, value) => {
@@ -38,7 +76,7 @@ export const TracksStore = types
 
 
 // Functions Components ReactJS
-// -------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 
 // ***** TracksHeaderLeft *****
 // ****************************

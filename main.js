@@ -1,5 +1,13 @@
 
-const { app, dialog, shell, BrowserWindow, Menu, globalShortcut } = require('electron');
+const {
+	app,
+	dialog,
+	shell,
+	BrowserWindow,
+	Menu,
+	globalShortcut,
+	ipcMain,
+} = require('electron');
 const windowStateKeeper = require('electron-window-state');
 const path = require('path');
 
@@ -26,7 +34,8 @@ const createWindow = () => {
 		height: winState.height,
 
 		webPreferences: {
-			nodeIntegration: true,
+			// nodeIntegration: false,
+			// contextIsolation: true,
 			preload: path.join(__dirname, 'preload.js'),
 		},
 	});
@@ -42,6 +51,9 @@ const createWindow = () => {
 
 // Events
 // ======================================================================================================
+
+// app events
+// -------------------------------------------------------------------
 
 app.on('window-all-closed', () => {
 
@@ -66,13 +78,19 @@ app.on('will-quit', () => {
 	globalShortcut.unregisterAll()
 });
 
+// ipc events
+// -------------------------------------------------------------------
 
-// Exports
-// ======================================================================================================
+ipcMain.on("chooseFolder", (event) => {
 
-exports.app = app;
-exports.dialog = dialog;
-exports.shell = shell;
-exports.mainWindow = mainWindow;
-exports.menu = Menu;
-exports.globalShortcut = globalShortcut;
+	// Sélection d'un dossier
+	// ---
+
+	dialog.showOpenDialog(mainWindow, {
+		properties: ['openDirectory']
+	}).then(result => {
+		mainWindow.webContents.send("folderChoosed", result.filePaths);
+	}).catch(err => {
+		console.log(err)
+	});
+});

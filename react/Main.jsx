@@ -7,6 +7,7 @@ import { NxAppStore, NxApp, makeInitSnapshot } from 'nexus/NxApp';
 
 import { ContextualHeader } from 'gramophone_client/ui/ContextualHeader';
 import { ContextualMenu } from 'gramophone_client/ui/ContextualMenu';
+
 import { HomePage } from 'gramophone_client/contexts/home/Home';
 import { SearchStore, SearchPage } from 'gramophone_client/contexts/search/Search';
 import { ArtistsStore, ArtistsPage } from 'gramophone_client/contexts/artists/Artists';
@@ -16,6 +17,8 @@ import { YearsStore, YearsPage } from 'gramophone_client/contexts/years/Years';
 import { GenresStore, GenresPage } from 'gramophone_client/contexts/genres/Genres';
 import { PlaylistsStore, PlaylistsPage } from 'gramophone_client/contexts/playlists/Playlists';
 import { AdminPage } from 'gramophone_client/contexts/admin/Admin';
+
+import { LibraryStore } from 'gramophone_client/models/Library';
 
 import './Main.css';
 
@@ -35,40 +38,25 @@ const RootStore = types
 	.model({
 		'app': types.optional(NxAppStore, {}),
 
-		// Search
 		// -
 
 		'search': types.optional(SearchStore, {}),
 
-		// Artistes
 		// -
 
 		'artists': types.optional(ArtistsStore, {}),
-
-		// Albums
-		// -
-
 		'albums': types.optional(AlbumsStore, {}),
-
-		// Titres
-		// -
-
 		'tracks': types.optional(TracksStore, {}),
 
-		// Années
 		// -
 
 		'years': types.optional(YearsStore, {}),
-
-		// Genres
-		// -
-
 		'genres': types.optional(GenresStore, {}),
+		'playlists': types.optional(PlaylistsStore, {}),
 
-		// Playlists
 		// -
 
-		'playlists': types.optional(PlaylistsStore, {}),
+		'library': types.optional(LibraryStore, {}),
 
 	})
 	.views(self => ({
@@ -189,6 +177,9 @@ let initSnapshot = makeInitSnapshot(routes, {
 	'app': {
 		'context': 'home', // TODO : Last context ?
 		'kind': 'electron',
+		'menu': {
+			'pinned': false,
+		},
 		'theme': {
 			'variant': 'light',
 			'palette': {
