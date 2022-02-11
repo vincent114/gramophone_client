@@ -11,19 +11,39 @@ import { Icon } from 'nexus/ui/icon/Icon';
 import './Artists.css';
 
 
-// Datas
-// ======================================================================================================
-
-export const MODEL_ARTIST = {
-	'id': '',
-	'name': '',
-
-	'albums_ids': [],
-}
-
-
 // Models
 // ======================================================================================================
+
+// ***** ArtistStore *****
+// ***********************
+
+const TAG_ArtistStore = () => {}
+export const ArtistStore = types
+	.model({
+		id: types.maybeNull(types.string),
+		name: types.maybeNull(types.string),
+
+		albums_ids: types.optional(types.array(types.string), []),
+	})
+	.actions(self => ({
+
+		setField: (field, value) => {
+			self[field] = value;
+		},
+
+		// -
+
+		update: (raw) => {
+			self.id = raw.id;
+			self.name = raw.name;
+
+			self.albums_ids = [];
+			for (const albumId of raw.albums_ids) {
+				self.albums_ids.push(albumId);
+			}
+		},
+
+	}))
 
 // ***** ArtistsStore *****
 // ************************
@@ -31,13 +51,14 @@ export const MODEL_ARTIST = {
 const TAG_ArtistsStore = () => {}
 export const ArtistsStore = types
 	.model({
+		by_id: types.map(ArtistStore),
 
+		loaded: false,
 	})
 	.views(self => ({
 
 		get nbArtists() {
-			// TODO
-			return 0;
+			return Object.entries(self.by_id).length;
 		},
 
 	}))
@@ -50,7 +71,23 @@ export const ArtistsStore = types
 		// -
 
 		update: (raw) => {
+			self.by_id = {};
+			for (let [artistId, artistRaw] of Object.entries(raw.by_id)) {
+				const artist = ArtistStore.create({});
+				artist.update(artistRaw);
+				self.by_id.set(artistId, artist);
+			}
+			self.loaded = true;
+		},
 
+		load: (callback) => {
+
+			// Chargement des artistes
+			// ---
+
+			if (callback) {
+				callback();
+			}
 		},
 
 	}))

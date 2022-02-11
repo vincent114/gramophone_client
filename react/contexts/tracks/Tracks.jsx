@@ -11,38 +11,74 @@ import { Icon } from 'nexus/ui/icon/Icon';
 import './Tracks.css';
 
 
-// Datas
-// ======================================================================================================
-
-export const MODEL_TRACK = {
-	'id': '',
-	'name': '',
-	'disk': null,
-	'track': null,
-	'audio_file': '',
-	'audio_file_type': '',
-
-	'stamp_file': '',
-	'stamp_added': '',
-
-	'artist': '',
-	'album': '',
-
-	'selected': true,
-	'favorite': false,
-	'starred': false,
-
-	'album_id': '',
-	'artist_id': '',
-	'year_id': '',
-	'genre_id': '',
-
-	'not_found': false,
-}
-
-
 // Models
 // ======================================================================================================
+
+// ***** TrackStore *****
+// **********************
+
+const TAG_TrackStore = () => {}
+export const TrackStore = types
+	.model({
+		id: types.maybeNull(types.string),
+		name: types.maybeNull(types.string),
+		disk: types.frozen(null),
+		track: types.frozen(null),
+
+		track_path: types.maybeNull(types.string),
+		track_type: types.maybeNull(types.string),
+		track_available: true,
+
+		ts_file: types.maybeNull(types.string),
+		ts_added: types.maybeNull(types.string),
+
+		artist: types.maybeNull(types.string),
+		album: types.maybeNull(types.string),
+
+		checked: true,
+		favorite: false,
+		starred: false,
+
+		album_id: types.maybeNull(types.string),
+		artist_id: types.maybeNull(types.string),
+		year_id: types.maybeNull(types.string),
+		genre_id: types.maybeNull(types.string),
+	})
+	.actions(self => ({
+
+		setField: (field, value) => {
+			self[field] = value;
+		},
+
+		// -
+
+		update: (raw) => {
+			self.id = raw.id;
+			self.name = raw.name;
+			self.disk = raw.disk;
+			self.track = raw.track;
+
+			self.track_path = raw.track_path;
+			self.track_type = raw.track_type;
+			self.track_available = raw.track_available;
+
+			self.ts_file = raw.ts_file;
+			self.ts_added = raw.ts_added;
+
+			self.artist = raw.artist;
+			self.album = raw.album;
+
+			self.checked = raw.checked;
+			self.favorite = raw.favorite;
+			self.starred = raw.starred;
+
+			self.album_id = raw.album_id;
+			self.artist_id = raw.artist_id;
+			self.year_id = raw.year_id;
+			self.genre_id = raw.genre_id;
+		},
+
+	}))
 
 // ***** TracksStore *****
 // ***********************
@@ -50,13 +86,14 @@ export const MODEL_TRACK = {
 const TAG_TracksStore = () => {}
 export const TracksStore = types
 	.model({
+		by_id: types.map(TrackStore),
 
+		loaded: false,
 	})
 	.views(self => ({
 
 		get nbTracks() {
-			// TODO
-			return 0;
+			return Object.entries(self.by_id).length;
 		},
 
 	}))
@@ -69,7 +106,25 @@ export const TracksStore = types
 		// -
 
 		update: (raw) => {
+			self.by_id = {};
+			for (const [trackId, trackRaw] of Object.entries(self.by_id)) {
+				const track = TrackStore.create({});
+				track.update(trackRaw);
+				self.by_id.set(trackId, track);
+			}
+			self.loaded = true;
+		},
 
+		load: (callback) => {
+
+			// Chargement des morceaux
+			// ---
+
+			// TODO
+
+			if (callback) {
+				callback();
+			}
 		},
 
 	}))

@@ -3,34 +3,23 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
-
-// Datas
-// ======================================================================================================
-
-export const MODEL_IGNORED_FILE = {
-	'file_name': '',
-	'file_path': '',
-	'reason': '',
-}
-
-export const MODEL_FOLDER = {
-	'path': '',
-	'nb_files': 0,
-	'nb_files_ignored': 0,
-	'ignored_files': {},
-}
+import {
+	getFromStorage,
+	setToStorage
+} from 'nexus/utils/Storage';
 
 
 // Models
 // ======================================================================================================
 
-// ***** LibraryFolderStore *****
-// ******************************
+// ***** LibraryIgnoredFileStore *****
+// ***********************************
 
-const TAG_LibraryFolderStore = () => {}
-export const LibraryFolderStore = types
+const TAG_LibraryIgnoredFileStore = () => {}
+export const LibraryIgnoredFileStore = types
 	.model({
-
+		file_path: types.maybeNull(types.string),
+		reason: types.maybeNull(types.string),
 	})
 	.actions(self => ({
 
@@ -46,16 +35,19 @@ export const LibraryFolderStore = types
 
 	}))
 
+// ***** LibraryFolderStore *****
+// ******************************
 
-// ***** LibraryStore *****
-// ************************
-
-const TAG_LibraryStore = () => {}
-export const LibraryStore = types
+const TAG_LibraryFolderStore = () => {}
+export const LibraryFolderStore = types
 	.model({
-		loaded: false,
+		folder_path: types.maybeNull(types.string),
+		folder_available: false,
 
-		folders: types.optional(types.array(LibraryFolderStore), []),
+		nb_files: types.maybeNull(types.integer),
+		nb_files_ignored: types.maybeNull(types.integer),
+
+		ignored_files: types.optional(types.array(types.string), []),
 	})
 	.actions(self => ({
 
@@ -66,15 +58,103 @@ export const LibraryStore = types
 		// -
 
 		update: (raw) => {
-			self.folders = [];
-			for (const folderRaw of raw.folders) {
-				const libraryFolder = LibraryFolderStore.create({});
-				libraryFolder.update(folderRaw);
-				self.folders.push(libraryFolder);
-			}
+			self.folder_path = raw.folder_path;
+		},
+
+	}))
+
+// ***** LibraryStore *****
+// ************************
+
+const TAG_LibraryStore = () => {}
+export const LibraryStore = types
+	.model({
+		source_folder: types.optional(LibraryFolderStore, {}),
+		local_folder: types.optional(LibraryFolderStore, {}),
+
+		auto_scan_enabled: true,
+
+		last_full_scan: types.maybeNull(types.string),
+		last_quick_scan: types.maybeNull(types.string),
+
+		shuffle_ignore_soudtracks: true,
+
+		loaded: false,
+	})
+	.actions(self => ({
+
+		setField: (field, value) => {
+			self[field] = value;
+		},
+
+		// -
+
+		refreshAvailability: () => {
+
+			// Les dossiers sont-ils toujours accessibles ?
+			// ---
+
+			// TODO (folder_available)
+		},
+
+		update: (raw) => {
+
+			self.source_folder = LibraryFolderStore.create({});
+			self.source_folder.update(raw.source_folder);
+			self.local_folder = LibraryFolderStore.create({});
+			self.local_folder.update(raw.local_folder);
+
+			self.auto_scan_enabled = raw.auto_scan_enabled;
+
+			self.last_full_scan = raw.last_full_scan;
+			self.last_quick_scan = raw.last_quick_scan;
+
+			self.shuffle_ignore_soudtracks = raw.shuffle_ignore_soudtracks;
+
+			self.loaded = true;
 		},
 
 		load: () => {
+
+			// Chargement des paramètres de la bibliothèque
+			// ---
+
+			const params = getFromStorage('params', null, 'json');
+			if (!params) {
+				self.save();
+			} else {
+				self.update(params);
+			}
+
+			self.refreshAvailability();
+		},
+
+		save: () => {
+
+			// Sauvegarde des paramètres de la bibliothèque
+			// ---
+
+			const params = self.toJSON();
+			setToStorage('params', params, 'json');
+		},
+
+		scan: (quickScan) => {
+
+			// Scan des fichiers dans les dossiers
+			// ---
+
+			quickScan = (quickScan == true && self.last_full_scan) ? true : false;
+
+			// TODO
+		},
+
+		// -
+
+		setFolder: (folder) => {
+
+			// Défini le dossier
+			// ---
+
 
 		},
 

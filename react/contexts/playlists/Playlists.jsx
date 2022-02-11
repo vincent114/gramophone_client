@@ -11,21 +11,47 @@ import { Icon } from 'nexus/ui/icon/Icon';
 import './Playlists.css';
 
 
-// Datas
-// ======================================================================================================
-
-export const MODEL_PLAYLIST = {
-	'id': '',
-	'name': '',
-	'datetime': null,
-	'permanent': false,
-
-	'tracks_ids': [],
-}
-
-
 // Models
 // ======================================================================================================
+
+// ***** PlaylistStore *****
+// *************************
+
+const TAG_PlaylistStore = () => {}
+export const PlaylistStore = types
+	.model({
+		id: types.maybeNull(types.string),
+		name: types.maybeNull(types.string),
+
+		ts_playlist: types.maybeNull(types.string),
+
+		permanent: false,
+
+		tracks_ids: types.optional(types.array(types.string), []),
+	})
+	.actions(self => ({
+
+		setField: (field, value) => {
+			self[field] = value;
+		},
+
+		// -
+
+		update: (raw) => {
+			self.id = raw.id;
+			self.name = raw.name;
+
+			self.ts_playlist = raw.ts_playlist;
+
+			self.permanent = raw.permanent;
+
+			self.tracks_ids = [];
+			for (const trackId of raw.tracks_ids) {
+				self.tracks_ids.push(trackId);
+			}
+		},
+
+	}))
 
 // ***** PlaylistsStore *****
 // **************************
@@ -33,13 +59,14 @@ export const MODEL_PLAYLIST = {
 const TAG_PlaylistsStore = () => {}
 export const PlaylistsStore = types
 	.model({
+		by_id: types.map(PlaylistStore),
 
+		loaded: false,
 	})
 	.views(self => ({
 
 		get nbPlaylists() {
-			// TODO
-			return 0;
+			return Object.entries(self.by_id).length;
 		},
 
 	}))
@@ -52,7 +79,25 @@ export const PlaylistsStore = types
 		// -
 
 		update: (raw) => {
+			self.by_id = [];
+			for (const [playlistId, playlistRaw] of Object.entries(raw.by_id)) {
+				const playlist = PlaylistStore.create({});
+				playlist.update(playlistRaw);
+				self.by_id.set(playlistId, playlist);
+			}
+			self.loaded = true;
+		},
 
+		load: (callback) => {
+
+			// Chargement des playlists
+			// ---
+
+			// TODO
+
+			if (callback) {
+				callback();
+			}
 		},
 
 	}))

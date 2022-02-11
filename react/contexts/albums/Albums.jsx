@@ -11,25 +11,51 @@ import { Icon } from 'nexus/ui/icon/Icon';
 import './Albums.css';
 
 
-// Datas
-// ======================================================================================================
-
-export const MODEL_ALBUM = {
-	'id': '',
-	'name': '',
-	'cover_file': '',
-	'folder': '',
-	'year': '',
-
-	'artist_id': '',
-	'year_id': '',
-	'genre_id': '',
-	'tracks_ids': [],
-}
-
-
 // Models
 // ======================================================================================================
+
+// ***** AlbumStore *****
+// **********************
+
+const TAG_AlbumStore = () => {}
+export const AlbumStore = types
+	.model({
+		id: types.maybeNull(types.string),
+		name: types.maybeNull(types.string),
+		cover: types.maybeNull(types.string),
+		folder: types.maybeNull(types.string),
+		year: types.maybeNull(types.string),
+
+		artist_id: types.maybeNull(types.string),
+		year_id: types.maybeNull(types.string),
+		genre_id: types.maybeNull(types.string),
+		tracks_ids: types.optional(types.array(types.string), []),
+	})
+	.actions(self => ({
+
+		setField: (field, value) => {
+			self[field] = value;
+		},
+
+		// -
+
+		update: (raw) => {
+			self.id = raw.id;
+			self.name = raw.name;
+			self.cover = raw.cover;
+			self.folder = raw.folder;
+			self.year = raw.year;
+
+			self.artist_id = raw.artist_id;
+			self.year_id = raw.year_id;
+			self.genre_id = raw.genre_id;
+			self.tracks_ids = [];
+			for (const trackId of raw.tracks_ids) {
+				self.tracks_ids.push(trackId);
+			}
+		},
+
+	}))
 
 // ***** AlbumsStore *****
 // ***********************
@@ -37,13 +63,14 @@ export const MODEL_ALBUM = {
 const TAG_AlbumsStore = () => {}
 export const AlbumsStore = types
 	.model({
+		by_id: types.map(AlbumStore),
 
+		loaded: false,
 	})
 	.views(self => ({
 
 		get nbAlbums() {
-			// TODO
-			return 0;
+			return Object.entries(self.by_id).length;
 		},
 
 	}))
@@ -56,7 +83,25 @@ export const AlbumsStore = types
 		// -
 
 		update: (raw) => {
+			self.by_id = {};
+			for (let [albumId, albumRaw] of Object.entries(raw.by_id)) {
+				const album = AlbumStore.create({});
+				album.update(albumRaw);
+				self.by_id.set(albumId, album);
+			}
+			self.loaded = true;
+		},
 
+		load: (callback) => {
+
+			// Chargement des albums
+			// ---
+
+			// TODO
+
+			if (callback) {
+				callback();
+			}
 		},
 
 	}))

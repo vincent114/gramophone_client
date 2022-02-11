@@ -11,19 +11,39 @@ import { Icon } from 'nexus/ui/icon/Icon';
 import './Years.css';
 
 
-// Datas
-// ======================================================================================================
-
-export const MODEL_YEAR = {
-	'id': '',
-	'name': '',
-
-	'albums_ids': [],
-}
-
-
 // Models
 // ======================================================================================================
+
+// ***** YearStore *****
+// **********************
+
+const TAG_YearStore = () => {}
+export const YearStore = types
+	.model({
+		id: types.maybeNull(types.string),
+		name: types.maybeNull(types.string),
+
+		albums_ids: types.optional(types.array(types.string), []),
+	})
+	.actions(self => ({
+
+		setField: (field, value) => {
+			self[field] = value;
+		},
+
+		// -
+
+		update: (raw) => {
+			self.id = raw.id;
+			self.name = raw.name;
+
+			self.albums_ids = [];
+			for (const albumId of raw.albums_ids) {
+				self.albums_ids.push(albumId);
+			}
+		},
+
+	}))
 
 // ***** YearsStore *****
 // **********************
@@ -31,13 +51,14 @@ export const MODEL_YEAR = {
 const TAG_YearsStore = () => {}
 export const YearsStore = types
 	.model({
+		by_id: types.map(YearStore),
 
+		loaded: false,
 	})
 	.views(self => ({
 
 		get nbYears() {
-			// TODO
-			return 0;
+			return Object.entries(self.by_id).length;
 		},
 
 	}))
@@ -50,7 +71,25 @@ export const YearsStore = types
 		// -
 
 		update: (raw) => {
+			self.by_id = {};
+			for (const [yearId, yearRaw] of Object.entries(raw.by_id)) {
+				const year = YearStore.create({});
+				year.update(yearRaw);
+				self.by_id.set(yearId, year);
+			}
+			self.loaded = true;
+		},
 
+		load: (callback) => {
+
+			// Chargement des années
+			// ---
+
+			// TODO
+
+			if (callback) {
+				callback();
+			}
 		},
 
 	}))

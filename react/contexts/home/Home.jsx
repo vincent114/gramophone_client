@@ -20,9 +20,11 @@ export const HomePage = observer((props) => {
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
 	const tracks = store.tracks;
+	const library = store.library;
 
 	// From ... store
 
+	const loaded = store.loaded;
 	const isLoading = app.isLoading;
 
 	const nbTracks = tracks.nbTracks;
@@ -32,7 +34,9 @@ export const HomePage = observer((props) => {
 
 	const handleChooseLibrary = () => {
 		window.electron.once('folderChoosed', (folders) => {
-			console.log(folders);
+			for (const folder of folders) {
+				library.addFolder(folder);
+			}
 		});
 		window.electron.send('chooseFolder');
 	}
@@ -45,15 +49,18 @@ export const HomePage = observer((props) => {
 		// Render :: Helper
 		// ---
 
-		let helperSubtitle = "Que souhaitez-vous écouter aujourd'hui ?";
-		if (nbTracks == 0) {
-			helperSubtitle = "Pour commencer, sélectionnez ou glissez un dossier contenant de la musique.";
+		let helperSubtitle = "";
+		if (loaded) {
+			helperSubtitle = "Que souhaitez-vous écouter aujourd'hui ?";
+			if (nbTracks == 0) {
+				helperSubtitle = "Pour commencer, sélectionnez ou glissez un dossier contenant de la musique.";
+			}
 		}
 
 		// -------------------------------------------------
 
 		let helperContent = null;
-		if (nbTracks == 0) {
+		if (loaded && nbTracks == 0) {
 			helperContent = (
 				<Button
 					key="btn-choose-library"

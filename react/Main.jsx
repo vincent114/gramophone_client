@@ -36,27 +36,29 @@ import './Main.css';
 const TAG_RootStore = () => {}
 const RootStore = types
 	.model({
-		'app': types.optional(NxAppStore, {}),
+		app: types.optional(NxAppStore, {}),
 
 		// -
 
-		'search': types.optional(SearchStore, {}),
+		search: types.optional(SearchStore, {}),
 
 		// -
 
-		'artists': types.optional(ArtistsStore, {}),
-		'albums': types.optional(AlbumsStore, {}),
-		'tracks': types.optional(TracksStore, {}),
+		artists: types.optional(ArtistsStore, {}),
+		albums: types.optional(AlbumsStore, {}),
+		tracks: types.optional(TracksStore, {}),
 
 		// -
 
-		'years': types.optional(YearsStore, {}),
-		'genres': types.optional(GenresStore, {}),
-		'playlists': types.optional(PlaylistsStore, {}),
+		years: types.optional(YearsStore, {}),
+		genres: types.optional(GenresStore, {}),
+		playlists: types.optional(PlaylistsStore, {}),
 
 		// -
 
-		'library': types.optional(LibraryStore, {}),
+		library: types.optional(LibraryStore, {}),
+
+		loaded: false,
 
 	})
 	.views(self => ({
@@ -70,12 +72,44 @@ const RootStore = types
 	}))
 	.actions(self => ({
 
+		afterLoad: () => {
+
+			// La bibliothèque est-elle entièrement chargée ?
+			// ---
+
+			const library = self.library;
+
+			if (!library.loaded) { return; }
+
+			if (!self.artists.loaded) { return; }
+			if (!self.albums.loaded) { return; }
+			if (!self.tracks.loaded) { return; }
+
+			if (!self.years.loaded) { return; }
+			if (!self.genres.loaded) { return; }
+			if (!self.playlists.loaded) { return; }
+
+			self.loaded = true;
+
+			if (library.source_folder.folder_available && library.auto_scan_enabled) {
+				library.scan(true);
+			}
+		},
+
 		update: (datas) => {
 
 			// Gramophone-specific init datas
 			// ---
 
-			console.log(datas);
+			self.library.load();
+
+			self.artists.load(self.afterLoad);
+			self.albums.load(self.afterLoad);
+			self.tracks.load(self.afterLoad);
+
+			self.years.load(self.afterLoad);
+			self.genres.load(self.afterLoad);
+			self.playlists.load(self.afterLoad);
 		},
 
 		navigateTo: (navContext, contextId, contextUrl, contextExtras, callback) => {

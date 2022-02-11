@@ -11,19 +11,39 @@ import { Icon } from 'nexus/ui/icon/Icon';
 import './Genres.css';
 
 
-// Datas
-// ======================================================================================================
-
-export const MODEL_GENRE = {
-	'id': '',
-	'name': '',
-
-	'albums_ids': [],
-}
-
-
 // Models
 // ======================================================================================================
+
+// ***** GenreStore *****
+// **********************
+
+const TAG_GenreStore = () => {}
+export const GenreStore = types
+	.model({
+		id: types.maybeNull(types.string),
+		name: types.maybeNull(types.string),
+
+		albums_ids: types.optional(types.array(types.string), []),
+	})
+	.actions(self => ({
+
+		setField: (field, value) => {
+			self[field] = value;
+		},
+
+		// -
+
+		update: (raw) => {
+			self.id = raw.id;
+			self.name = raw.name;
+
+			self.albums_ids = [];
+			for (const albumId of raw.albums_ids) {
+				self.albums_ids.push(albumId);
+			}
+		},
+
+	}))
 
 // ***** GenresStore *****
 // ***********************
@@ -31,13 +51,14 @@ export const MODEL_GENRE = {
 const TAG_GenresStore = () => {}
 export const GenresStore = types
 	.model({
+		by_id: types.map(GenreStore),
 
+		loaded: false,
 	})
 	.views(self => ({
 
 		get nbGenres() {
-			// TODO
-			return 0;
+			return Object.entries(self.by_id).length;
 		},
 
 	}))
@@ -50,7 +71,25 @@ export const GenresStore = types
 		// -
 
 		update: (raw) => {
+			self.by_id = [];
+			for (const [genreId, genreRaw] of Object.entries(raw.by_id)) {
+				const genre = GenreStore.create({});
+				genre.update(genreRaw);
+				self.by_id.set(genreId, genre);
+			}
+			self.loaded = true;
+		},
 
+		load: (callback) => {
+
+			// Chargement des morceaux
+			// ---
+
+			// TODO
+
+			if (callback) {
+				callback();
+			}
 		},
 
 	}))
