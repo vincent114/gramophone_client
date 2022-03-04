@@ -78,9 +78,24 @@ export const LibraryStore = types
 		last_quick_scan: types.maybeNull(types.string),
 
 		shuffle_ignore_soudtracks: true,
+		shuffle_ignore_hidden: true,
 
 		loaded: false,
 	})
+	.views(self => ({
+
+		get collectionPath() {
+			const cwd = ipc.sendSync('getCwd');
+			const path = ipc.sendSync('pathJoin', [cwd, 'collection']);
+			return path;
+		},
+
+		get collectionCoversPath() {
+			const path = ipc.sendSync('pathJoin', [self.collectionPath, 'covers']);
+			return path;
+		},
+
+	}))
 	.actions(self => ({
 
 		setField: (field, value) => {
@@ -125,6 +140,9 @@ export const LibraryStore = types
 			} else {
 				self.update(params);
 			}
+
+			ipc.sendSync('mkdirsSync', self.collectionPath);
+			ipc.sendSync('mkdirsSync', self.collectionCoversPath);
 
 			self.refreshAvailability();
 		},

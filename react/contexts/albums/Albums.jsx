@@ -69,6 +69,13 @@ export const AlbumsStore = types
 	})
 	.views(self => ({
 
+		get albumsCollectionFilePath() {
+			const store = getRoot(self);
+			const library = store.library;
+			const path = ipc.sendSync('pathJoin', [library.collectionPath, 'albums.json']);
+			return path;
+		},
+
 		get nbAlbums() {
 			return Object.entries(self.by_id).length;
 		},
@@ -97,7 +104,12 @@ export const AlbumsStore = types
 			// Chargement des albums
 			// ---
 
-			// TODO
+			const store = getRoot(self);
+
+			const raw = store._readJsonFile(self.albumsCollectionFilePath, {
+				by_id: {},
+			});
+			self.update(raw);
 
 			if (callback) {
 				callback();

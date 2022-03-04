@@ -92,6 +92,13 @@ export const TracksStore = types
 	})
 	.views(self => ({
 
+		get tracksCollectionFilePath() {
+			const store = getRoot(self);
+			const library = store.library;
+			const path = ipc.sendSync('pathJoin', [library.collectionPath, 'tracks.json']);
+			return path;
+		},
+
 		get nbTracks() {
 			return Object.entries(self.by_id).length;
 		},
@@ -120,7 +127,10 @@ export const TracksStore = types
 			// Chargement des morceaux
 			// ---
 
-			// TODO
+			const raw = store._readJsonFile(self.tracksCollectionFilePath, {
+				by_id: {},
+			});
+			self.update(raw);
 
 			if (callback) {
 				callback();

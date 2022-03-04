@@ -528,7 +528,9 @@ var ICON_KEYS_TO_FILES = {
     'skip_next': 'skip_next_black_24dp.svg',
     'pause_circle_filled': 'pause_circle_filled_black_24dp.svg',
     'play_circle_filled': 'play_circle_filled_black_24dp.svg',
-    'queue_music': 'queue_music_black_24dp.svg'
+    'queue_music': 'queue_music_black_24dp.svg',
+    'youtube_searched_for': 'youtube_searched_for_black_24dp.svg',
+    'storage': 'storage_black_24dp.svg'
   }
 }; // const ICON_SIZES = {
 // 	'small': {
@@ -5123,15 +5125,15 @@ var RenderAdminAuth = (0,es/* observer */.Pi)(function (props) {
   var accountLink = accountId ? "".concat(cerberusUrl, "/user/").concat(accountId) : '/login'; // Render
   // ==================================================================================================
   // Section -> Icon
-  // ---
+  // -------------------------------------------------
 
   var sectionIcon = /*#__PURE__*/react.createElement(Icon_Icon, {
     name: "verified_user"
   }); // Section -> Title
-  // ---
+  // -------------------------------------------------
 
   var sectionTitle = "Authentification"; // Section -> Content
-  // ---
+  // -------------------------------------------------
 
   var sectionContent = /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", {
     className: "h-col-small"
@@ -5155,15 +5157,15 @@ var RenderAdminLinks = (0,es/* observer */.Pi)(function (props) {
   // Render
   // ==================================================================================================
   // Section -> Icon
-  // ---
+  // -------------------------------------------------
 
   var sectionIcon = /*#__PURE__*/react.createElement(Icon_Icon, {
     name: "link"
   }); // Section -> Title
-  // ---
+  // -------------------------------------------------
 
   var sectionTitle = "Liens"; // Section -> Content
-  // ---
+  // -------------------------------------------------
 
   var sectionContent = /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", {
     className: "h-col-small"
@@ -8749,8 +8751,11 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
     update: function update(raw, callback) {
       self.history = []; // User logged
 
-      self.account.update(raw.user);
-      self.auth.setField('step', self.account.isLogged ? 'logged' : 'login'); // Edit mode ?
+      if (raw) {
+        self.account.update(raw.user);
+        self.auth.setField('step', self.account.isLogged ? 'logged' : 'login');
+      } // Edit mode ?
+
 
       var editMode = getFromStorage('editMode', false, 'bool');
 
@@ -8772,7 +8777,10 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       self.initialized = true;
       self.editMode = editMode;
       self.debugMode = debugMode;
-      self.services.update(raw.smap);
+
+      if (raw) {
+        self.services.update(raw.smap);
+      }
 
       if (callback) {
         callback(raw);
@@ -8806,7 +8814,7 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
             console.error("Fetch failed for ".concat(url), ex); // self.snackbar.update(true, "Une erreur est survenue.", "error");
           });
         } else {
-          callback();
+          self.update(null, callback);
         }
       } // Responsiveness -> watching the window's size
 
@@ -10017,6 +10025,13 @@ var ArtistsStore = mobx_state_tree_module/* types.model */.V5.model({
   loaded: false
 }).views(function (self) {
   return {
+    get artistsCollectionFilePath() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var library = store.library;
+      var path = ipc.sendSync('pathJoin', [library.collectionPath, 'artists.json']);
+      return path;
+    },
+
     get nbArtists() {
       return Object.entries(self.by_id).length;
     }
@@ -10046,6 +10061,14 @@ var ArtistsStore = mobx_state_tree_module/* types.model */.V5.model({
     load: function load(callback) {
       // Chargement des artistes
       // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+
+      var raw = store._readJsonFile(self.artistsCollectionFilePath, {
+        by_id: {}
+      });
+
+      self.update(raw);
+
       if (callback) {
         callback();
       }
@@ -10080,7 +10103,7 @@ var ArtistsMenuItem = (0,es/* observer */.Pi)(function (props) {
   var app = store.app;
   var menu = app.menu; // ...
 
-  var artistsContext = 'artists'; // Evènements
+  var artistsContext = 'artists'; // Events
   // ==================================================================================================
 
   var handleMenuItemClick = function handleMenuItemClick() {
@@ -10206,6 +10229,13 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
   loaded: false
 }).views(function (self) {
   return {
+    get albumsCollectionFilePath() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var library = store.library;
+      var path = ipc.sendSync('pathJoin', [library.collectionPath, 'albums.json']);
+      return path;
+    },
+
     get nbAlbums() {
       return Object.entries(self.by_id).length;
     }
@@ -10235,7 +10265,14 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
     load: function load(callback) {
       // Chargement des albums
       // ---
-      // TODO
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+
+      var raw = store._readJsonFile(self.albumsCollectionFilePath, {
+        by_id: {}
+      });
+
+      self.update(raw);
+
       if (callback) {
         callback();
       }
@@ -10398,6 +10435,13 @@ var TracksStore = mobx_state_tree_module/* types.model */.V5.model({
   loaded: false
 }).views(function (self) {
   return {
+    get tracksCollectionFilePath() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var library = store.library;
+      var path = ipc.sendSync('pathJoin', [library.collectionPath, 'tracks.json']);
+      return path;
+    },
+
     get nbTracks() {
       return Object.entries(self.by_id).length;
     }
@@ -10427,7 +10471,12 @@ var TracksStore = mobx_state_tree_module/* types.model */.V5.model({
     load: function load(callback) {
       // Chargement des morceaux
       // ---
-      // TODO
+      var raw = store._readJsonFile(self.tracksCollectionFilePath, {
+        by_id: {}
+      });
+
+      self.update(raw);
+
       if (callback) {
         callback();
       }
@@ -10576,6 +10625,13 @@ var YearsStore = mobx_state_tree_module/* types.model */.V5.model({
   loaded: false
 }).views(function (self) {
   return {
+    get yearsCollectionFilePath() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var library = store.library;
+      var path = ipc.sendSync('pathJoin', [library.collectionPath, 'years.json']);
+      return path;
+    },
+
     get nbYears() {
       return Object.entries(self.by_id).length;
     }
@@ -10605,7 +10661,12 @@ var YearsStore = mobx_state_tree_module/* types.model */.V5.model({
     load: function load(callback) {
       // Chargement des années
       // ---
-      // TODO
+      var raw = store._readJsonFile(self.yearsCollectionFilePath, {
+        by_id: {}
+      });
+
+      self.update(raw);
+
       if (callback) {
         callback();
       }
@@ -10754,6 +10815,13 @@ var GenresStore = mobx_state_tree_module/* types.model */.V5.model({
   loaded: false
 }).views(function (self) {
   return {
+    get genresCollectionFilePath() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var library = store.library;
+      var path = ipc.sendSync('pathJoin', [library.collectionPath, 'genres.json']);
+      return path;
+    },
+
     get nbGenres() {
       return Object.entries(self.by_id).length;
     }
@@ -10766,7 +10834,7 @@ var GenresStore = mobx_state_tree_module/* types.model */.V5.model({
     },
     // -
     update: function update(raw) {
-      self.by_id = [];
+      self.by_id = {};
 
       for (var _i = 0, _Object$entries = Object.entries(raw.by_id); _i < _Object$entries.length; _i++) {
         var _Object$entries$_i = Genres_slicedToArray(_Object$entries[_i], 2),
@@ -10783,7 +10851,12 @@ var GenresStore = mobx_state_tree_module/* types.model */.V5.model({
     load: function load(callback) {
       // Chargement des morceaux
       // ---
-      // TODO
+      var raw = store._readJsonFile(self.genresCollectionFilePath, {
+        by_id: {}
+      });
+
+      self.update(raw);
+
       if (callback) {
         callback();
       }
@@ -10936,6 +11009,13 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
   loaded: false
 }).views(function (self) {
   return {
+    get playlistsCollectionFilePath() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var library = store.library;
+      var path = ipc.sendSync('pathJoin', [library.collectionPath, 'playlists.json']);
+      return path;
+    },
+
     get nbPlaylists() {
       return Object.entries(self.by_id).length;
     }
@@ -10948,7 +11028,7 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
     },
     // -
     update: function update(raw) {
-      self.by_id = [];
+      self.by_id = {};
 
       for (var _i = 0, _Object$entries = Object.entries(raw.by_id); _i < _Object$entries.length; _i++) {
         var _Object$entries$_i = Playlists_slicedToArray(_Object$entries[_i], 2),
@@ -10965,7 +11045,12 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
     load: function load(callback) {
       // Chargement des playlists
       // ---
-      // TODO
+      var raw = store._readJsonFile(self.playlistsCollectionFilePath, {
+        by_id: {}
+      });
+
+      self.update(raw);
+
       if (callback) {
         callback();
       }
@@ -11373,7 +11458,7 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
   // ==================================================================================================
 
   var handleChooseLibrary = function handleChooseLibrary() {
-    window.electron.once('folderChoosed', function (folders) {
+    ipc.once('folderChoosed', function (folders) {
       var _iterator = Home_createForOfIteratorHelper(folders),
           _step;
 
@@ -11388,7 +11473,7 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
         _iterator.f();
       }
     });
-    window.electron.send('chooseFolder');
+    ipc.send('chooseFolder');
   }; // Renderers
   // ==================================================================================================
 
@@ -11502,30 +11587,114 @@ var admin_Admin = __webpack_require__(4251);
 
 
 
+
+
  // Functions Components ReactJS
 // -------------------------------------------------------------------------------------------------------------
-// ***** AdminPage *****
+// ***** RenderAdminScan *****
+// ***************************
+
+var TAG_RenderAdminScan = function TAG_RenderAdminScan() {};
+
+var RenderAdminScan = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app; // ...
+  // Render
+  // ==================================================================================================
+  // Section -> Icon
+  // -------------------------------------------------
+
+  var sectionIcon = /*#__PURE__*/react.createElement(Icon_Icon, {
+    name: "youtube_searched_for"
+  }); // Section -> Title
+  // -------------------------------------------------
+
+  var sectionTitle = "Scan"; // Section -> Content
+  // -------------------------------------------------
+
+  var sectionContent = /*#__PURE__*/react.createElement("div", null); // -------------------------------------------------
+
+  return /*#__PURE__*/react.createElement(Section_Section, {
+    icon: sectionIcon,
+    title: sectionTitle
+  }, sectionContent);
+}); // ***** RenderAdminFolders *****
+// ******************************
+
+var TAG_RenderAdminFolders = function TAG_RenderAdminFolders() {};
+
+var RenderAdminFolders = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app; // ...
+  // Render
+  // ==================================================================================================
+  // Section -> Icon
+  // -------------------------------------------------
+
+  var sectionIcon = /*#__PURE__*/react.createElement(Icon_Icon, {
+    name: "storage"
+  }); // Section -> Title
+  // -------------------------------------------------
+
+  var sectionTitle = "Dossiers"; // Section -> Content
+  // -------------------------------------------------
+
+  var sectionContent = /*#__PURE__*/react.createElement("div", null); // -------------------------------------------------
+
+  return /*#__PURE__*/react.createElement(Section_Section, {
+    icon: sectionIcon,
+    title: sectionTitle
+  }, sectionContent);
+}); // ***** RenderAdmin *****
+// ***********************
+
+var Admin_TAG_RenderAdmin = function TAG_RenderAdmin() {};
+
+var Admin_RenderAdmin = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app; // ...
+  // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(RenderAdminScan, null), /*#__PURE__*/react.createElement(RenderAdminFolders, null));
+}); // ***** AdminPage *****
 // *********************
 
 var Admin_TAG_AdminPage = function TAG_AdminPage() {};
 
 var Admin_AdminPage = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
-  var app = store.app; // Renderers
+  var app = store.app; // From ... store
+
+  var initialized = app.initialized; // ...
+
+  var showHelper = !initialized ? true : false; // Renderers
   // ==================================================================================================
+
+  var renderPage = function renderPage() {
+    // Render :: Page
+    // ---
+    var pageContent = null;
+
+    if (initialized) {
+      pageContent = /*#__PURE__*/react.createElement(Admin_RenderAdmin, null);
+    }
+
+    return pageContent;
+  };
 
   var renderHelper = function renderHelper() {
     // Render :: Helper
     // ---
     return /*#__PURE__*/react.createElement(Helper_Helper, {
       iconName: "setting",
-      show: true
+      show: showHelper
     });
   };
 
   return /*#__PURE__*/react.createElement("div", {
     className: "nx-page"
-  }, renderHelper());
+  }, renderPage(), renderHelper());
 });
 ;// CONCATENATED MODULE: ./models/Library.jsx
 
@@ -11583,7 +11752,22 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
   last_full_scan: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   last_quick_scan: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   shuffle_ignore_soudtracks: true,
+  shuffle_ignore_hidden: true,
   loaded: false
+}).views(function (self) {
+  return {
+    get collectionPath() {
+      var cwd = ipc.sendSync('getCwd');
+      var path = ipc.sendSync('pathJoin', [cwd, 'collection']);
+      return path;
+    },
+
+    get collectionCoversPath() {
+      var path = ipc.sendSync('pathJoin', [self.collectionPath, 'covers']);
+      return path;
+    }
+
+  };
 }).actions(function (self) {
   return {
     setField: function setField(field, value) {
@@ -11616,6 +11800,8 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
         self.update(params);
       }
 
+      ipc.sendSync('mkdirsSync', self.collectionPath);
+      ipc.sendSync('mkdirsSync', self.collectionCoversPath);
       self.refreshAvailability();
     },
     save: function save() {
@@ -11638,6 +11824,8 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
 // EXTERNAL MODULE: ./Main.css
 var Main = __webpack_require__(1729);
 ;// CONCATENATED MODULE: ./Main.jsx
+var _this = undefined;
+
 
 
 
@@ -11694,6 +11882,7 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
     afterLoad: function afterLoad() {
       // La bibliothèque est-elle entièrement chargée ?
       // ---
+      var app = self.app;
       var library = self.library;
 
       if (!library.loaded) {
@@ -11725,6 +11914,7 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       self.loaded = true;
+      app.removeTask('load_library');
 
       if (library.source_folder.folder_available && library.auto_scan_enabled) {
         library.scan(true);
@@ -11782,6 +11972,42 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
       if (navContext == 'playlists') {
         app.navigate('/main.html', 'playlists');
       }
+    },
+    // -
+    _readJsonFile: function _readJsonFile(filePath, defaultDatas) {
+      // Lit le fichier JSON passé en paramètres et renvoie un dictionnaire
+      // ---
+      var datas = defaultDatas ? defaultDatas : {}; // On s'assure que le fichier existe
+
+      if (!ipc.sendSync('existsSync', filePath)) {
+        ipc.sendSync('writeJSONSync', filePath, datas, {
+          spaces: 4
+        });
+      } // Lecture des données du fichier
+
+
+      try {
+        datas = ipc.sendSync('readJsonSync', filePath);
+      } catch (err) {
+        console.error(err);
+      }
+
+      return datas;
+    },
+    _writeJsonFile: function _writeJsonFile(filePath, datas) {
+      // Ecrit le dictionnaire dans le fichier json passés en paramètres
+      // ---
+      var self = _this;
+      ipc.once('writeJSON', function (ret) {
+        console.log(ret);
+      });
+      ipc.send('writeJSON', {
+        filePath: filePath,
+        datas: datas,
+        options: {
+          spaces: 4
+        }
+      });
     }
   };
 }); // Init
@@ -11821,6 +12047,7 @@ var initSnapshot = makeInitSnapshot(routes, {
     'context': 'home',
     // TODO : Last context ?
     'kind': 'electron',
+    'tasks': ['load_library'],
     'menu': {
       'pinned': false
     },
@@ -11859,7 +12086,6 @@ var TAG_Root = function TAG_Root() {};
 var Root = (0,es/* observer */.Pi)(function () {
   // Render
   // ==================================================================================================
-  console.log(window.process);
   return /*#__PURE__*/react.createElement(RootStoreContext.Provider, {
     value: rootStore
   }, /*#__PURE__*/react.createElement(NxApp_NxApp, {

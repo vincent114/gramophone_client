@@ -57,6 +57,13 @@ export const ArtistsStore = types
 	})
 	.views(self => ({
 
+		get artistsCollectionFilePath() {
+			const store = getRoot(self);
+			const library = store.library;
+			const path = ipc.sendSync('pathJoin', [library.collectionPath, 'artists.json']);
+			return path;
+		},
+
 		get nbArtists() {
 			return Object.entries(self.by_id).length;
 		},
@@ -84,6 +91,13 @@ export const ArtistsStore = types
 
 			// Chargement des artistes
 			// ---
+
+			const store = getRoot(self);
+
+			const raw = store._readJsonFile(self.artistsCollectionFilePath, {
+				by_id: {},
+			});
+			self.update(raw);
 
 			if (callback) {
 				callback();
@@ -134,7 +148,7 @@ export const ArtistsMenuItem = observer((props) => {
 
 	const artistsContext = 'artists';
 
-	// Evènements
+	// Events
 	// ==================================================================================================
 
 	const handleMenuItemClick = () => {

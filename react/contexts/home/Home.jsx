@@ -33,12 +33,12 @@ export const HomePage = observer((props) => {
 	// ==================================================================================================
 
 	const handleChooseLibrary = () => {
-		window.electron.once('folderChoosed', (folders) => {
+		ipc.once('folderChoosed', (folders) => {
 			for (const folder of folders) {
 				library.addFolder(folder);
 			}
 		});
-		window.electron.send('chooseFolder');
+		ipc.send('chooseFolder');
 	}
 
 	// Renderers

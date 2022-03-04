@@ -57,6 +57,13 @@ export const YearsStore = types
 	})
 	.views(self => ({
 
+		get yearsCollectionFilePath() {
+			const store = getRoot(self);
+			const library = store.library;
+			const path = ipc.sendSync('pathJoin', [library.collectionPath, 'years.json']);
+			return path;
+		},
+
 		get nbYears() {
 			return Object.entries(self.by_id).length;
 		},
@@ -85,7 +92,10 @@ export const YearsStore = types
 			// Chargement des années
 			// ---
 
-			// TODO
+			const raw = store._readJsonFile(self.yearsCollectionFilePath, {
+				by_id: {},
+			});
+			self.update(raw);
 
 			if (callback) {
 				callback();

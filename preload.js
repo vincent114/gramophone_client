@@ -4,14 +4,14 @@ const { contextBridge, ipcRenderer } = require('electron');
 // Exports
 // ======================================================================================================
 
-contextBridge.exposeInMainWorld('electron', {
+contextBridge.exposeInMainWorld('ipc', {
 
 	send: (apiKey, params) => {
 		ipcRenderer.send(apiKey, params);
 	},
 
-	sendSync: (apiKey, ...arg) => {
-		return ipcRenderer.sendSync(apiKey, arg);
+	sendSync: (apiKey, ...args) => {
+		return ipcRenderer.sendSync(apiKey, args);
 	},
 
 	once: (apiKey, callback) => {

@@ -77,6 +77,7 @@ const RootStore = types
 			// La bibliothèque est-elle entièrement chargée ?
 			// ---
 
+			const app = self.app;
 			const library = self.library;
 
 			if (!library.loaded) { return; }
@@ -90,6 +91,7 @@ const RootStore = types
 			if (!self.playlists.loaded) { return; }
 
 			self.loaded = true;
+			app.removeTask('load_library')
 
 			if (library.source_folder.folder_available && library.auto_scan_enabled) {
 				library.scan(true);
@@ -163,6 +165,49 @@ const RootStore = types
 
 		},
 
+		// -
+
+		_readJsonFile: (filePath, defaultDatas) => {
+
+			// Lit le fichier JSON passé en paramètres et renvoie un dictionnaire
+			// ---
+
+			let datas = (defaultDatas) ? defaultDatas : {};
+
+			// On s'assure que le fichier existe
+			if (!ipc.sendSync('existsSync', filePath)) {
+				ipc.sendSync('writeJSONSync', filePath, datas, {
+					spaces: 4
+				});
+			}
+
+			// Lecture des données du fichier
+			try {
+				datas = ipc.sendSync('readJsonSync', filePath);
+			} catch(err) {
+				console.error(err);
+			}
+			return datas;
+		},
+
+		_writeJsonFile: (filePath, datas) => {
+
+			// Ecrit le dictionnaire dans le fichier json passés en paramètres
+			// ---
+
+			const self = this;
+
+			ipc.once('writeJSON', (ret) => {
+				console.log(ret);
+			});
+
+			ipc.send('writeJSON', {
+				filePath: filePath,
+				datas: datas,
+				options: {spaces: 4},
+			});
+		},
+
 	}))
 
 
@@ -211,6 +256,7 @@ let initSnapshot = makeInitSnapshot(routes, {
 	'app': {
 		'context': 'home', // TODO : Last context ?
 		'kind': 'electron',
+		'tasks': ['load_library'],
 		'menu': {
 			'pinned': false,
 		},
@@ -260,8 +306,6 @@ const Root = observer(() => {
 
 	// Render
 	// ==================================================================================================
-
-	console.log(window.process);
 
 	return (
 		<RootStoreContext.Provider value={rootStore}>

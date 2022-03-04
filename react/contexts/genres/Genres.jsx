@@ -57,6 +57,13 @@ export const GenresStore = types
 	})
 	.views(self => ({
 
+		get genresCollectionFilePath() {
+			const store = getRoot(self);
+			const library = store.library;
+			const path = ipc.sendSync('pathJoin', [library.collectionPath, 'genres.json']);
+			return path;
+		},
+
 		get nbGenres() {
 			return Object.entries(self.by_id).length;
 		},
@@ -71,7 +78,7 @@ export const GenresStore = types
 		// -
 
 		update: (raw) => {
-			self.by_id = [];
+			self.by_id = {};
 			for (const [genreId, genreRaw] of Object.entries(raw.by_id)) {
 				const genre = GenreStore.create({});
 				genre.update(genreRaw);
@@ -85,7 +92,10 @@ export const GenresStore = types
 			// Chargement des morceaux
 			// ---
 
-			// TODO
+			const raw = store._readJsonFile(self.genresCollectionFilePath, {
+				by_id: {},
+			});
+			self.update(raw);
 
 			if (callback) {
 				callback();

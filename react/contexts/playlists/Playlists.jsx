@@ -65,6 +65,13 @@ export const PlaylistsStore = types
 	})
 	.views(self => ({
 
+		get playlistsCollectionFilePath() {
+			const store = getRoot(self);
+			const library = store.library;
+			const path = ipc.sendSync('pathJoin', [library.collectionPath, 'playlists.json']);
+			return path;
+		},
+
 		get nbPlaylists() {
 			return Object.entries(self.by_id).length;
 		},
@@ -79,7 +86,7 @@ export const PlaylistsStore = types
 		// -
 
 		update: (raw) => {
-			self.by_id = [];
+			self.by_id = {};
 			for (const [playlistId, playlistRaw] of Object.entries(raw.by_id)) {
 				const playlist = PlaylistStore.create({});
 				playlist.update(playlistRaw);
@@ -93,7 +100,10 @@ export const PlaylistsStore = types
 			// Chargement des playlists
 			// ---
 
-			// TODO
+			const raw = store._readJsonFile(self.playlistsCollectionFilePath, {
+				by_id: {},
+			});
+			self.update(raw);
 
 			if (callback) {
 				callback();
