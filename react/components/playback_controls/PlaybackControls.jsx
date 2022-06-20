@@ -21,6 +21,12 @@ export const PlaybackControls = observer((props) => {
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
 
+	// From ... props
+
+	let style = (props.style) ? props.style : {};
+
+	// ...
+
 	// Events
 	// ==================================================================================================
 
@@ -36,12 +42,6 @@ export const PlaybackControls = observer((props) => {
 		// TODO
 	}
 
-	// -
-
-	const handleQueueClick = () => {
-		// TODO
-	}
-
 	// Render
 	// ==================================================================================================
 
@@ -52,13 +52,8 @@ export const PlaybackControls = observer((props) => {
 				"h-col",
 				"flex-0",
 			)}
+			style={style}
 		>
-			<IconButton>
-				<Icon
-					name="volume_up"
-					color="white"
-				/>
-			</IconButton>
 			<IconButton>
 				<Icon
 					name="skip_previous"
@@ -78,13 +73,6 @@ export const PlaybackControls = observer((props) => {
 					name="skip_next"
 					color="white"
 					onClick={() => handleNextClick()}
-				/>
-			</IconButton>
-			<IconButton>
-				<Icon
-					name="queue_music"
-					color="white"
-					onClick={() => handleQueueClick()}
 				/>
 			</IconButton>
 		</div>

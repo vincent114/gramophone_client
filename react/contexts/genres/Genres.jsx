@@ -6,7 +6,6 @@ import clsx from 'clsx';
 import { Helper } from 'nexus/ui/helper/Helper';
 import { HeaderTitle } from 'nexus/layout/header/Header';
 import { MenuItem } from 'nexus/layout/menu/Menu';
-import { Icon } from 'nexus/ui/icon/Icon';
 
 import './Genres.css';
 
@@ -92,6 +91,8 @@ export const GenresStore = types
 			// Chargement des morceaux
 			// ---
 
+			const store = getRoot(self);
+
 			const raw = store._readJsonFile(self.genresCollectionFilePath, {
 				by_id: {},
 			});
@@ -146,7 +147,7 @@ export const GenresMenuItem = observer((props) => {
 
 	const genresContext = 'genres';
 
-	// Evènements
+	// Events
 	// ==================================================================================================
 
 	const handleMenuItemClick = () => {
@@ -159,7 +160,7 @@ export const GenresMenuItem = observer((props) => {
 
 	return (
 		<MenuItem
-			icon={<Icon name="local_bar" width="120px" />}
+			iconName="local_bar"
 			label="Genres"
 			activeContexts={[genresContext]}
 			callbackClick={handleMenuItemClick}

@@ -65,6 +65,12 @@ export const RenderAdminFolders = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const library = store.library;
+
+	// From ... store
+
+	const sourceFolder = library.source_folder;
+	const localFolder = library.local_folder;
 
 	// ...
 

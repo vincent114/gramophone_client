@@ -144,8 +144,6 @@ ipcMain.on("existsSync", (event, [fileOrFolderPath]) => {
 	// Le dossier / fichier passé en paramètres existe-t-il ?
 	// ---
 
-	console.log("existsSync");
-	console.log(fileOrFolderPath);
 	event.returnValue = fs.existsSync(fileOrFolderPath);
 });
 

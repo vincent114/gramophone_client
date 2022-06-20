@@ -11,6 +11,9 @@ import { SearchHeaderMiddle } from 'nexus/contexts/search/Search';
 import { AboutHeaderLeft } from 'nexus/contexts/about/About';
 import { AdminHeaderLeft } from 'nexus/contexts/admin/Admin';
 
+import { Icon } from 'nexus/ui/icon/Icon';
+import { IconButton } from 'nexus/ui/button/Button';
+
 import { ArtistsHeaderLeft } from 'gramophone_client/contexts/artists/Artists';
 import { AlbumsHeaderLeft } from 'gramophone_client/contexts/albums/Albums';
 import { TracksHeaderLeft } from 'gramophone_client/contexts/tracks/Tracks';
@@ -41,6 +44,13 @@ export const ContextualHeader = observer((props) => {
 	const homeContext = app.homeContext;
 	const authContext = app.authContext;
 
+	// Events
+	// ==================================================================================================
+
+	const handleQueueClick = () => {
+
+	}
+
 	// Render
 	// ==================================================================================================
 
@@ -54,7 +64,13 @@ export const ContextualHeader = observer((props) => {
 
 		if (breakPoint650 && context != 'search') { return; }
 
-		headerMiddle = <SearchHeaderMiddle />
+		headerRight = (
+			<SearchHeaderMiddle
+				style={{
+					marginRight: '10px',
+				}}
+			/>
+		)
 	}
 
 	// -------------------------------------------------
@@ -134,11 +150,32 @@ export const ContextualHeader = observer((props) => {
 	renderHeaderAbout();
 	renderHeaderAdmin();
 
+	headerLeft = (
+		<React.Fragment>
+			<PlaybackControls
+				style={{
+					marginLeft: '40px',
+				}}
+			/>
+		</React.Fragment>
+	)
+
 	headerRight = (
 		<React.Fragment>
 			{headerRight}
-			{headerRight && <HeaderDivider />}
-			<PlaybackControls />
+			<IconButton>
+				<Icon
+					name="volume_up"
+					color="white"
+				/>
+			</IconButton>
+			<IconButton>
+				<Icon
+					name="queue_music"
+					color="white"
+					onClick={() => handleQueueClick()}
+				/>
+			</IconButton>
 		</React.Fragment>
 	)
 

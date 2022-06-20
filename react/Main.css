@@ -2,6 +2,15 @@
 /* Gramophone App */
 /* ================================================================================================== */
 
-.nx-header {
+.nx-header,
+.ui-dark .nx-header {
 	box-shadow: none;
+}
+
+.nx-header-grooves {
+	opacity: 1;
+}
+
+.nx-header-toolbar {
+	background: linear-gradient(rgba(46, 139, 130, 0.8), rgba(2, 77, 85, 0.8));
 }

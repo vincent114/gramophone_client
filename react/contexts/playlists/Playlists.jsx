@@ -6,7 +6,6 @@ import clsx from 'clsx';
 import { Helper } from 'nexus/ui/helper/Helper';
 import { HeaderTitle } from 'nexus/layout/header/Header';
 import { MenuItem } from 'nexus/layout/menu/Menu';
-import { Icon } from 'nexus/ui/icon/Icon';
 
 import './Playlists.css';
 
@@ -100,6 +99,8 @@ export const PlaylistsStore = types
 			// Chargement des playlists
 			// ---
 
+			const store = getRoot(self);
+
 			const raw = store._readJsonFile(self.playlistsCollectionFilePath, {
 				by_id: {},
 			});
@@ -154,7 +155,7 @@ export const PlaylistsMenuItem = observer((props) => {
 
 	const playlistsContext = 'playlists';
 
-	// Evènements
+	// Events
 	// ==================================================================================================
 
 	const handleMenuItemClick = () => {
@@ -167,7 +168,7 @@ export const PlaylistsMenuItem = observer((props) => {
 
 	return (
 		<MenuItem
-			icon={<Icon name="playlist_play" width="120px" />}
+			iconName="playlist_play"
 			label="Playlists"
 			activeContexts={[playlistsContext]}
 			callbackClick={handleMenuItemClick}

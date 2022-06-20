@@ -6,7 +6,6 @@ import clsx from 'clsx';
 import { Helper } from 'nexus/ui/helper/Helper';
 import { HeaderTitle } from 'nexus/layout/header/Header';
 import { MenuItem } from 'nexus/layout/menu/Menu';
-import { Icon } from 'nexus/ui/icon/Icon';
 
 import './Albums.css';
 
@@ -160,7 +159,7 @@ export const AlbumsMenuItem = observer((props) => {
 
 	const albumsContext = 'albums';
 
-	// Evènements
+	// Events
 	// ==================================================================================================
 
 	const handleMenuItemClick = () => {
@@ -173,7 +172,7 @@ export const AlbumsMenuItem = observer((props) => {
 
 	return (
 		<MenuItem
-			icon={<Icon name="album" width="120px" />}
+			iconName="album"
 			label="Albums"
 			activeContexts={[albumsContext]}
 			callbackClick={handleMenuItemClick}

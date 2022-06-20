@@ -6,7 +6,6 @@ import clsx from 'clsx';
 import { Helper } from 'nexus/ui/helper/Helper';
 import { HeaderTitle } from 'nexus/layout/header/Header';
 import { MenuItem } from 'nexus/layout/menu/Menu';
-import { Icon } from 'nexus/ui/icon/Icon';
 
 import './Years.css';
 
@@ -92,6 +91,8 @@ export const YearsStore = types
 			// Chargement des années
 			// ---
 
+			const store = getRoot(self);
+
 			const raw = store._readJsonFile(self.yearsCollectionFilePath, {
 				by_id: {},
 			});
@@ -146,7 +147,7 @@ export const YearsMenuItem = observer((props) => {
 
 	const yearsContext = 'years';
 
-	// Evènements
+	// Events
 	// ==================================================================================================
 
 	const handleMenuItemClick = () => {
@@ -159,7 +160,7 @@ export const YearsMenuItem = observer((props) => {
 
 	return (
 		<MenuItem
-			icon={<Icon name="date_range" width="120px" />}
+			iconName="date_range"
 			label="Années"
 			activeContexts={[yearsContext]}
 			callbackClick={handleMenuItemClick}

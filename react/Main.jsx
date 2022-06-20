@@ -22,10 +22,6 @@ import { LibraryStore } from 'gramophone_client/models/Library';
 
 import './Main.css';
 
-// const electron = require('electron');
-// const remote = electron.remote;
-// const { app } = remote;
-
 
 // Models
 // -------------------------------------------------------------------------------------------------------------
@@ -91,7 +87,7 @@ const RootStore = types
 			if (!self.playlists.loaded) { return; }
 
 			self.loaded = true;
-			app.removeTask('load_library')
+			app.removeTask('load_library');
 
 			if (library.source_folder.folder_available && library.auto_scan_enabled) {
 				library.scan(true);
@@ -261,19 +257,20 @@ let initSnapshot = makeInitSnapshot(routes, {
 			'pinned': false,
 		},
 		'theme': {
-			'variant': 'light',
-			'palette': {
-				'default': {
-					'main': '#000000',
-					'contrastText': '#fff',
-				},
+			'palette_light': {
 				'primary': {
 					'main': '#009688',
-					'contrastText': '#fff',
 				},
 				'secondary': {
 					'main': '#607d8b',
-					'contrastText': '#fff',
+				},
+			},
+			'palette_dark': {
+				'primary': {
+					'main': '#009688',
+				},
+				'secondary': {
+					'main': '#607d8b',
 				},
 			}
 		}

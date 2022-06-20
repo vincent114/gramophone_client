@@ -163,6 +163,9 @@ export const LibraryStore = types
 
 			quickScan = (quickScan == true && self.last_full_scan) ? true : false;
 
+			console.log('scan');
+			console.log(quickScan);
+
 			// TODO
 		},
 
