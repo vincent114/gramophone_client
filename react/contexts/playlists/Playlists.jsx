@@ -111,6 +111,19 @@ export const PlaylistsStore = types
 			}
 		},
 
+		save: (callback) => {
+
+			// Sauvegarde des playlists
+			// ---
+
+			const store = getRoot(self);
+			store._writeJsonFile(self.playlistsCollectionFilePath, self.toJSON());
+
+			if (callback) {
+				callback();
+			}
+		},
+
 	}))
 
 

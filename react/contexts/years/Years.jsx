@@ -42,6 +42,12 @@ export const YearStore = types
 			}
 		},
 
+		addAlbumId: (albumId) => {
+			if (self.albums_ids.indexOf(albumId) == -1) {
+				self.albums_ids.push(albumId);
+			}
+		},
+
 	}))
 
 // ***** YearsStore *****
@@ -102,6 +108,45 @@ export const YearsStore = types
 				callback();
 			}
 		},
+
+		save: (callback) => {
+
+			// Sauvegarde des années
+			// ---
+
+			const store = getRoot(self);
+			store._writeJsonFile(self.yearsCollectionFilePath, self.toJSON());
+
+			if (callback) {
+				callback();
+			}
+		},
+
+		index: (metas) => {
+
+			// Indexation d'une année
+			// ---
+
+			let added = false;
+
+			let yearId = metas.yearID;
+			let year = self.by_id.get(yearId);
+
+			if (!year) {
+				year = YearStore.create({});
+				year.setField('id', yearId);
+				added = true;
+			}
+
+			const tags = metas.fileTags;
+
+			year.setField('name', `${tags.year}`);
+
+			year.addAlbumId(metas.albumID);
+
+			self.by_id.set(yearId, year);
+			return added;
+		}
 
 	}))
 

@@ -11,8 +11,10 @@ const {
 const windowStateKeeper = require('electron-window-state');
 const path = require('path');
 const fs = require('fs-extra');
+const { fork } = require('child_process');
 
 let mainWindow = null;
+let indexer = null;
 
 
 // Functions
@@ -96,6 +98,61 @@ ipcMain.on("chooseFolder", (event) => {
 	});
 });
 
+ipcMain.on("startIndexer", (event, [scope, folders, collectionFiles, collectionCoversPath]) => {
+
+	// Démarrage du processus d'indexation
+	// ---
+
+	indexer = fork('indexer.js', {
+		cwd: __dirname,
+	});
+
+	// On a un retour du processus de scan
+	indexer.on('message', (datas) => {
+
+		// Scan en cours ?
+		if (datas.status == 'working') {
+			mainWindow.webContents.send("indexTrack", datas.processResults);
+		}
+
+		// Scan terminé ?
+		if (datas.status == 'done') {
+			mainWindow.webContents.send("scanDone");
+		}
+	});
+
+	// Scan en erreur ?
+	indexer.on('exit', (code) => {
+		if (code) {
+			mainWindow.webContents.send("scanError", code);
+		}
+	});
+
+	indexer.send({
+		"scope": scope,
+		"folders": folders,
+		"collectionFiles": collectionFiles,
+		"collectionCoversPath": collectionCoversPath,
+	});
+});
+
+ipcMain.on("writeJSON", (event, [filePath, datas, options]) => {
+
+	// Ecrit des données dans le fichier passé en paramètres
+	// ---
+
+	options = (options) ? options : {};
+
+	fs.writeJson(filePath, datas, options)
+	.then(() => {
+		mainWindow.webContents.send("writeJSONDone", {});
+	})
+	.catch(err => {
+		console.error(err);
+	})
+});
+
+
 // ipc sync events
 // -------------------------------------------------------------------
 
@@ -167,4 +224,15 @@ ipcMain.on("writeJSONSync", (event, [filePath, datas, options]) => {
 	options = (options) ? options : {};
 
 	event.returnValue = fs.writeJSONSync(filePath, datas, options);
+});
+
+// ***** shell *****
+// *****************
+
+ipcMain.on("showItemInFolder", (event, [fullPath]) => {
+
+	// Met en évidence le fichier ou le dossier passé en paramètres dans le Finder / Explorateur
+	// ---
+
+	event.returnValue = shell.showItemInFolder(fullPath);
 });

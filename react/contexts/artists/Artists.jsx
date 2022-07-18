@@ -42,6 +42,12 @@ export const ArtistStore = types
 			}
 		},
 
+		addAlbumId: (albumId) => {
+			if (self.albums_ids.indexOf(albumId) == -1) {
+				self.albums_ids.push(albumId);
+			}
+		},
+
 	}))
 
 // ***** ArtistsStore *****
@@ -102,6 +108,45 @@ export const ArtistsStore = types
 				callback();
 			}
 		},
+
+		save: (callback) => {
+
+			// Sauvegarde des artistes
+			// ---
+
+			const store = getRoot(self);
+			store._writeJsonFile(self.artistsCollectionFilePath, self.toJSON());
+
+			if (callback) {
+				callback();
+			}
+		},
+
+		index: (metas) => {
+
+			// Indexation d'un artiste
+			// ---
+
+			let added = false;
+
+			let artistId = metas.artistID;
+			let artist = self.by_id.get(artistId);
+
+			if (!artist) {
+				artist = ArtistStore.create({});
+				artist.setField('id', artistId);
+				added = true;
+			}
+
+			const tags = metas.fileTags;
+
+			artist.setField('name', tags.albumartist);
+
+			artist.addAlbumId(metas.albumID);
+
+			self.by_id.set(artistId, artist);
+			return added;
+		}
 
 	}))
 

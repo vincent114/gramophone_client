@@ -93,7 +93,7 @@ const RootStore = types
 			app.removeTask('load_library');
 
 			if (library.isSourceAvailable && library.auto_scan_enabled) {
-				library.scan(true);
+				library.startScan(true);
 			}
 		},
 
@@ -111,6 +111,26 @@ const RootStore = types
 			self.years.load(self.afterLoad);
 			self.genres.load(self.afterLoad);
 			self.playlists.load(self.afterLoad);
+		},
+
+		save: (callback) => {
+
+			// Sauvegarde des données
+			// ---
+
+			self.library.save();
+
+			self.artists.save();
+			self.albums.save();
+			self.tracks.save();
+
+			self.years.save();
+			self.genres.save();
+			self.playlists.save();
+
+			if (callback) {
+				callback();
+			}
 		},
 
 		navigateTo: (navContext, contextId, contextUrl, contextExtras, callback) => {
@@ -196,15 +216,15 @@ const RootStore = types
 
 			const self = this;
 
-			ipc.once('writeJSON', (ret) => {
+			ipc.once('writeJSONDone', (ret) => {
 				console.log(ret);
 			});
 
-			ipc.send('writeJSON', {
-				filePath: filePath,
-				datas: datas,
-				options: {spaces: 4},
-			});
+			ipc.send('writeJSON', [
+				filePath,
+				datas,
+				{spaces: 4},
+			]);
 		},
 
 	}))

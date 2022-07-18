@@ -36,8 +36,9 @@ export const HomePage = observer((props) => {
 		ipc.once('folderChoosed', (folders) => {
 			for (const folder of folders) {
 				library.addFolder("source", folder);
+				library.refreshAvailability();
 				library.save(() => {
-					library.scan();
+					library.startScan();
 				});
 			}
 		});

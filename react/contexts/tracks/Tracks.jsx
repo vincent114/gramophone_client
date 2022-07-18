@@ -3,9 +3,12 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
-import { Helper } from 'nexus/ui/helper/Helper';
 import { HeaderTitle } from 'nexus/layout/header/Header';
 import { MenuItem } from 'nexus/layout/menu/Menu';
+
+import { Helper } from 'nexus/ui/helper/Helper';
+
+import { dateTools } from 'nexus/utils/DateTools';
 
 import './Tracks.css';
 
@@ -136,6 +139,60 @@ export const TracksStore = types
 			if (callback) {
 				callback();
 			}
+		},
+
+		save: (callback) => {
+
+			// Sauvegarde des morceaux
+			// ---
+
+			const store = getRoot(self);
+			store._writeJsonFile(self.tracksCollectionFilePath, self.toJSON());
+
+			if (callback) {
+				callback();
+			}
+		},
+
+		index: (metas) => {
+
+			// Indexation d'un morceau
+			// ---
+
+			let added = false;
+
+			let trackId = metas.trackID;
+			let track = self.by_id.get(trackId);
+
+			if (!track) {
+				track = TrackStore.create({});
+				track.setField('id', trackId);
+				track.setField('ts_added', dateTools.getNowIso());
+				added = true;
+			}
+
+			const tags = metas.fileTags;
+			const filePathParts = (metas.filePath) ? metas.filePath.split('.') : [];
+
+			track.setField('name', tags.title);
+			track.setField('disk', tags.disk.no);
+			track.setField('track', tags.track.no);
+
+			track.setField('track_path', metas.filePath);
+			track.setField('track_type', (filePathParts.length > 0) ? filePathParts[filePathParts.length - 1] : '');
+
+			track.setField('ts_file', metas.fileMtime);
+
+			track.setField('artist', tags.artist);
+			track.setField('album', tags.album);
+
+			track.setField('album_id', metas.albumID);
+			track.setField('artist_id', metas.artistID);
+			track.setField('year_id', metas.yearID);
+			track.setField('genre_id', metas.genreID);
+
+			self.by_id.set(trackId, track);
+			return added;
 		},
 
 	}))

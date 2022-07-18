@@ -62,8 +62,9 @@ export const RenderAdminFolders = observer((props) => {
 		ipc.once('folderChoosed', (folders) => {
 			for (const folder of folders) {
 				library.addFolder(folderKey, folder);
+				library.refreshAvailability();
 				library.save(() => {
-					library.scan();
+					library.startScan();
 				});
 			}
 		});
@@ -71,11 +72,15 @@ export const RenderAdminFolders = observer((props) => {
 	}
 
 	const handleFolderClick = (folderPath) => {
-		console.log(folderPath);
+		ipc.send('showItemInFolder', [folderPath]);
 	}
 
 	const handleFolderDelete = (folderPath) => {
-		console.log(folderPath);
+		const CONFIRM_DELETE_MSG = `Voulez-vous vraiment retirer le dossier ${folderPath}`;
+		if (confirm(CONFIRM_DELETE_MSG)) {
+			library.removeFolder(folderPath);
+			library.save();
+		}
 	}
 
 	// Render
@@ -96,7 +101,7 @@ export const RenderAdminFolders = observer((props) => {
 
 	const sectionContent = (
 		<div>
-			<Heading>
+			<Heading variant="contained">
 				Dossiers source
 			</Heading>
 			<List>
@@ -105,13 +110,47 @@ export const RenderAdminFolders = observer((props) => {
 						key={`source-folder-${sourceFolderIdx}`}
 						hoverable={true}
 						onClick={() => handleFolderClick(sourceFolder.folder_path)}
-						callbackDelete={() => handleFolderDelete(sourceFolder.folder_path)}
+						callbackDelete={(e) => handleFolderDelete(sourceFolder.folder_path)}
 					>
 						<ListIcon name="folder" />
 						<ListText
 							primary={sourceFolder.label}
 							secondary={sourceFolder.folder_path}
 						/>
+						<Indicator
+							variant="contrasted"
+							color={(sourceFolder.folder_available) ? "success" : "error"}
+							className="flex-0"
+							style={{
+								marginRight: "10px",
+							}}
+						/>
+						<Indicator
+							variant="contrasted"
+							iconName="music_note"
+							color={(sourceFolder.nb_files > 0) ? "success" : "default"}
+							className="flex-0"
+							style={{
+								marginRight: "5px",
+								paddingLeft: "5px",
+								paddingRight: "10px",
+							}}
+						>
+							{sourceFolder.nb_files}
+						</Indicator>
+						<Indicator
+							variant="contrasted"
+							iconName="dangerous"
+							color={(sourceFolder.nb_files_ignored > 0) ? "error" : "default"}
+							className="flex-0"
+							style={{
+								marginRight: "5px",
+								paddingLeft: "5px",
+								paddingRight: "10px",
+							}}
+						>
+							{sourceFolder.nb_files_ignored}
+						</Indicator>
 					</ListItem>
 				))}
 			</List>
@@ -122,7 +161,7 @@ export const RenderAdminFolders = observer((props) => {
 				onClick={() => handleAddFolder("source")}
 			/>
 
-			<Heading>
+			<Heading variant="contained">
 				Dossier de recopie (optionnel)
 			</Heading>
 			<Switch
@@ -134,6 +173,7 @@ export const RenderAdminFolders = observer((props) => {
 				}}
 				callbackChange={handleParamsChange}
 			/>
+			<Divider spacing="small" />
 			{copyFolder.isSet && (
 				<List>
 					<ListItem
@@ -147,6 +187,40 @@ export const RenderAdminFolders = observer((props) => {
 							primary={copyFolder.label}
 							secondary={copyFolder.folder_path}
 						/>
+						<Indicator
+							variant="contrasted"
+							color={(copyFolder.folder_available) ? "success" : "error"}
+							className="flex-0"
+							style={{
+								marginRight: "10px",
+							}}
+						/>
+						<Indicator
+							variant="contrasted"
+							iconName="music_note"
+							color={(copyFolder.nb_files > 0) ? "success" : "default"}
+							className="flex-0"
+							style={{
+								marginRight: "5px",
+								paddingLeft: "5px",
+								paddingRight: "10px",
+							}}
+						>
+							{copyFolder.nb_files}
+						</Indicator>
+						<Indicator
+							variant="contrasted"
+							iconName="dangerous"
+							color={(copyFolder.nb_files_ignored > 0) ? "error" : "default"}
+							className="flex-0"
+							style={{
+								marginRight: "5px",
+								paddingLeft: "5px",
+								paddingRight: "10px",
+							}}
+						>
+							{copyFolder.nb_files_ignored}
+						</Indicator>
 					</ListItem>
 				</List>
 			)}
@@ -197,8 +271,18 @@ export const RenderAdminScan = observer((props) => {
 	// Events
 	// ==================================================================================================
 
-	const handleScanClick = (scope) => {
+	const handleParamsChange = () => {
+		library.save();
+	}
 
+	// -
+
+	const handleScanClick = (quick) => {
+		library.startScan(quick);
+	}
+
+	const handleCancelScanClick = () => {
+		library.stopScan();
 	}
 
 	// Render
@@ -219,11 +303,19 @@ export const RenderAdminScan = observer((props) => {
 
 	const sectionContent = (
 		<div>
+			<Switch
+				label="Scanner automatiquement au démarrage"
+				savePath={['library', 'auto_scan_enabled']}
+				callbackChange={handleParamsChange}
+			/>
+
+			<Divider spacing="medium" />
+
 			<Row align="center">
 				<Indicator
 					variant="contrasted"
 					padding="big"
-					severity={fullScanInfos.severity}
+					color={fullScanInfos.severity}
 					className="flex-0"
 					style={{
 						minWidth: "100px",
@@ -237,13 +329,23 @@ export const RenderAdminScan = observer((props) => {
 				>
 					{fullScanInfos.subtitle}
 				</Typography>
-				<IconButton
-					iconName="refresh"
-					color="info"
-					disabled={isLoading || nbFolders == 0}
-					className="flex-0"
-					onClick={() => handleScanClick("full")}
-				/>
+				{fullScanInfos.severity != "warning" && (
+					<IconButton
+						iconName="refresh"
+						color="info"
+						disabled={isLoading || nbFolders == 0}
+						className="flex-0"
+						onClick={() => handleScanClick()}
+					/>
+				)}
+				{fullScanInfos.severity == "warning" && (
+					<IconButton
+						iconName="clear"
+						color="error"
+						className="flex-0"
+						onClick={() => handleCancelScanClick()}
+					/>
+				)}
 			</Row>
 
 			<Divider spacing="medium" />
@@ -252,7 +354,7 @@ export const RenderAdminScan = observer((props) => {
 				<Indicator
 					variant="contrasted"
 					padding="big"
-					severity={quickScanInfos.severity}
+					color={quickScanInfos.severity}
 					className="flex-0"
 					style={{
 						minWidth: "100px",
@@ -266,13 +368,23 @@ export const RenderAdminScan = observer((props) => {
 				>
 					{quickScanInfos.subtitle}
 				</Typography>
-				<IconButton
-					iconName="refresh"
-					color="info"
-					disabled={isLoading || nbFolders == 0}
-					className="flex-0"
-					onClick={() => handleScanClick("quick")}
-				/>
+				{quickScanInfos.severity != "warning" && (
+					<IconButton
+						iconName="refresh"
+						color="info"
+						disabled={isLoading || nbFolders == 0}
+						className="flex-0"
+						onClick={() => handleScanClick(true)}
+					/>
+				)}
+				{quickScanInfos.severity == "warning" && (
+					<IconButton
+						iconName="clear"
+						color="error"
+						className="flex-0"
+						onClick={() => handleCancelScanClick()}
+					/>
+				)}
 			</Row>
 		</div>
 	)

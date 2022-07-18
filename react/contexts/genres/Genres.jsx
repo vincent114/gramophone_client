@@ -42,6 +42,12 @@ export const GenreStore = types
 			}
 		},
 
+		addAlbumId: (albumId) => {
+			if (self.albums_ids.indexOf(albumId) == -1) {
+				self.albums_ids.push(albumId);
+			}
+		},
+
 	}))
 
 // ***** GenresStore *****
@@ -102,6 +108,45 @@ export const GenresStore = types
 				callback();
 			}
 		},
+
+		save: (callback) => {
+
+			// Sauvegarde des genres
+			// ---
+
+			const store = getRoot(self);
+			store._writeJsonFile(self.genresCollectionFilePath, self.toJSON());
+
+			if (callback) {
+				callback();
+			}
+		},
+
+		index: (metas) => {
+
+			// Indexation d'un genre
+			// ---
+
+			let added = false;
+
+			let genreId = metas.genreID;
+			let genre = self.by_id.get(genreId);
+
+			if (!genre) {
+				genre = GenreStore.create({});
+				genre.setField('id', genreId);
+				added = true;
+			}
+
+			const tags = metas.fileTags;
+
+			genre.setField('name', tags.genre[0]);
+
+			genre.addAlbumId(metas.albumID);
+
+			self.by_id.set(genreId, genre);
+			return added;
+		}
 
 	}))
 

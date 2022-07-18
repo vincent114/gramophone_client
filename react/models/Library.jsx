@@ -8,6 +8,7 @@ import {
 	setToStorage
 } from 'nexus/utils/Storage';
 import { dateTools } from 'nexus/utils/DateTools';
+import { copyObj } from 'nexus/utils/Datas';
 
 
 // Models
@@ -31,7 +32,8 @@ export const LibraryIgnoredFileStore = types
 		// -
 
 		update: (raw) => {
-
+			self.file_path = raw.file_path;
+			self.reason = raw.reason;
 		},
 
 	}))
@@ -45,10 +47,10 @@ export const LibraryFolderStore = types
 		folder_path: types.maybeNull(types.string),
 		folder_available: false,
 
-		nb_files: types.maybeNull(types.integer),
-		nb_files_ignored: types.maybeNull(types.integer),
+		nb_files: types.maybeNull(types.integer, 0),
+		nb_files_ignored: types.maybeNull(types.integer, 0),
 
-		ignored_files: types.optional(types.array(types.string), []),
+		ignored_files: types.optional(types.array(LibraryIgnoredFileStore), []),
 	})
 	.views(self => ({
 
@@ -72,6 +74,17 @@ export const LibraryFolderStore = types
 			return false;
 		},
 
+		// -
+
+		hasIgnoredFile(filePath) {
+			for (const ignoredFile of self.ignored_files) {
+				if (ignoredFile.file_path == filePath) {
+					return ignoredFile;
+				}
+			}
+			return false;
+		},
+
 	}))
 	.actions(self => ({
 
@@ -84,13 +97,39 @@ export const LibraryFolderStore = types
 		update: (raw) => {
 			self.folder_path = raw.folder_path;
 
-			self.nb_files = raw.nb_files;
-			self.nb_files_ignored = raw.nb_files_ignored;
+			self.nb_files = (raw.nb_files) ? raw.nb_files : 0;
+			self.nb_files_ignored = (raw.nb_files_ignored) ? raw.nb_files_ignored : 0;
 
 			self.ignored_files = [];
 			for (const ignoredFileRaw of raw.ignored_files) {
 				const ignoredFile = LibraryIgnoredFileStore.create({});
+				ignoredFile.update(ignoredFileRaw);
+				self.ignored_files.push(ignoredFile);
+			}
+		},
 
+		unset: () => {
+			self.folder_path = "";
+			self.resetCounters();
+		},
+
+		resetCounters: () => {
+			self.nb_files = 0;
+			self.nb_files_ignored = 0;
+			self.ignored_files = [];
+		},
+
+		// -
+
+		addIgnoredFile: (filePath, reason) => {
+
+			// Ajoute un fichié ignoré
+			// ---
+
+			if (!self.hasIgnoredFile(filePath)) {
+				const newIgnoredFile = LibraryIgnoredFileStore.create({});
+				newIgnoredFile.setField('file_path', filePath);
+				newIgnoredFile.setField('reason', reason);
 			}
 		},
 
@@ -134,6 +173,35 @@ export const LibraryStore = types
 			return path;
 		},
 
+		get collectionFiles() {
+
+			// Compilation des dates de modifications des fichiers pour le scan rapide
+			// ---
+
+			const store = getRoot(self);
+			const tracks = store.tracks;
+
+			let files = {};
+			for (let [trackId, track] of tracks.by_id.entries()) {
+				files[track.track_path] = track.ts_file;
+			}
+			return files;
+		},
+
+		get folders() {
+
+			// Compatibilité avec indexer.js
+			// ---
+
+			let folders = {};
+			for (const sourceFolder of self.source_folders) {
+				folders[sourceFolder.folder_path] = {
+					'path': sourceFolder.folder_path,
+				};
+			}
+			return folders;
+		},
+
 		// -
 
 		get nbFolders() {
@@ -144,14 +212,21 @@ export const LibraryStore = types
 
 		get fullScanInfos() {
 
+			const store = getRoot(self);
+			const app = store.app;
+
 			let title = "Complet";
 			let subtitle = "Aucun scan effectué.";
 			let severity = "default";
 
 			if (self.last_full_scan) {
-				subtitle = `Dernier scan ${dateTools.calendarTime(self.last_full_scan)}`;
+				subtitle = `Dernier scan ${dateTools.calendarTime(self.last_full_scan).toLowerCase()}`;
 				// TODO : duration
 				severity = (self.last_full_scan_error) ? "error" : "success";
+			}
+			if (app.tasks.indexOf('scan_full') > -1) {
+				subtitle = "Scan en cours...";
+				severity = "warning";
 			}
 
 			return {
@@ -163,14 +238,21 @@ export const LibraryStore = types
 
 		get quickScanInfos() {
 
+			const store = getRoot(self);
+			const app = store.app;
+
 			let title = "Rapide";
 			let subtitle = "Aucun scan effectué.";
 			let severity = "default";
 
 			if (self.last_quick_scan) {
-				subtitle = `Dernier scan ${dateTools.calendarTime(self.last_quick_scan)}`;
+				subtitle = `Dernier scan ${dateTools.calendarTime(self.last_quick_scan).toLowerCase()}`;
 				// TODO : duration
 				severity = (self.last_quick_scan_error) ? "error" : "success";
+			}
+			if (app.tasks.indexOf('scan_quick') > -1) {
+				subtitle = "Scan en cours...";
+				severity = "warning";
 			}
 
 			return {
@@ -178,6 +260,28 @@ export const LibraryStore = types
 				"subtitle": subtitle,
 				"severity": severity,
 			}
+		},
+
+		// Getters
+		// -
+
+		getFolderIdx(folderPath) {
+			for (const folderIdx in self.source_folders) {
+				const folder = self.source_folders[folderIdx];
+				if (folder.folder_path == folderPath) {
+					return parseInt(folderIdx);
+				}
+			}
+			return -1;
+		},
+
+		getFolder(folderPath) {
+			for (const sourceFolder of self.source_folders) {
+				if (sourceFolder.folder_path == folderPath) {
+					return sourceFolder;
+				}
+			}
+			return LibraryFolderStore.create({});
 		},
 
 		// Bools
@@ -198,13 +302,13 @@ export const LibraryStore = types
 
 		// -
 
-		hasFolder(folder) {
+		hasFolder(folderPath) {
 			for (const sourceFolder of self.source_folders) {
-				if (sourceFolder.folder_path == folder) {
+				if (sourceFolder.folder_path == folderPath) {
 					return true;
 				}
 			}
-			if (self.copy_folder.folder_path == folder) {
+			if (self.copy_folder.folder_path == folderPath) {
 				return true;
 			}
 			return false;
@@ -224,7 +328,21 @@ export const LibraryStore = types
 			// Les dossiers sont-ils toujours accessibles ?
 			// ---
 
-			// TODO (folder_available)
+			for (const sourceFolder of self.source_folders) {
+				if (ipc.sendSync('existsSync', sourceFolder.folder_path)) {
+					sourceFolder.folder_available = true;
+				} else {
+					sourceFolder.folder_available = false;
+				}
+			}
+
+			if (self.copy_folder.isSet) {
+				if (ipc.sendSync('existsSync', self.copy_folder.folder_path)) {
+					self.copy_folder.folder_available = true;
+				} else {
+					self.copy_folder.folder_available = false;
+				}
+			}
 		},
 
 		update: (raw) => {
@@ -285,40 +403,181 @@ export const LibraryStore = types
 			}
 		},
 
-		scan: (quickScan) => {
-
-			// Scan des fichiers dans les dossiers
-			// ---
-
-			quickScan = (quickScan == true && self.last_full_scan) ? true : false;
-
-			console.log('scan');
-			console.log(quickScan);
-
-			// TODO
-		},
-
 		// -
 
-		addFolder: (folderKey, folder) => {
+		addFolder: (folderKey, folderPath) => {
 
 			// Ajoute un dossier
 			// ---
 
-			if (!self.hasFolder(folder)) {
+			if (!self.hasFolder(folderPath)) {
 
 				// Nouveau dossier source
 				if (folderKey == "source") {
 					const newSourceFolder = LibraryFolderStore.create({});
-					newSourceFolder.setField("folder_path", folder);
+					newSourceFolder.setField("folder_path", folderPath);
+					newSourceFolder.resetCounters();
 					self.source_folders.push(newSourceFolder);
 				}
 
 				// Remplacement dossier de recopie
 				if (folderKey == "copy") {
 					self.copy_folder = LibraryFolderStore.create({});
-					self.copy_folder.setField("folder_path", folder);
+					self.copy_folder.setField("folder_path", folderPath);
+					self.copy_folder.resetCounters();
 				}
+			}
+		},
+
+		removeFolder: (folderPath) => {
+
+			// Retire un dossier
+			// ---
+
+			const folderIdx = self.getFolderIdx(folderPath);
+			if (folderIdx > -1) {
+				self.source_folders.splice(folderIdx, 1);
+			}
+			if (self.copy_folder.folder_path == folderPath) {
+				self.copy_folder.unset();
+			}
+		},
+
+		// -
+
+		startScan: (quickScan) => {
+
+			// Scan des fichiers dans les dossiers surveillés, pour les indexer
+			// ---
+
+			const store = getRoot(self);
+			const app = store.app;
+			const snackbar = app.snackbar;
+			const tracks = store.tracks;
+
+			const scope = (quickScan == true && self.last_full_scan) ? "quick" : "full";
+			const taskId = `scan_${scope}`;
+
+			app.addTask(taskId);
+
+			window.scanScope = scope;
+			window.scanStartTime = new Date();
+
+			// Réinitialisation des compteurs sur les dossiers
+			if (scope == 'full') {
+				for (const sourceFolder of self.source_folders) {
+					sourceFolder.resetCounters();
+				}
+			}
+
+			if (!window.scanStopTime) {
+				ipc.on('indexTrack', (datas) => {
+					self.processMetadatas(datas);
+				});
+			}
+			ipc.once('scanDone', () => {
+				self.stopScan();
+			});
+			ipc.once('scanError', (code) => {
+				snackbar.update(true, `Une erreur est survenue (code ${code}).`, "error");
+				self.stopScan(true);
+			});
+			ipc.send('startIndexer', [
+				scope,
+				self.folders,
+				self.collectionFiles,
+				self.collectionCoversPath,
+			]);
+		},
+
+		stopScan: (isInError=false) => {
+
+			// Arrêt de l'indexation
+			// ---
+
+			const store = getRoot(self);
+			const app = store.app;
+
+			const taskId = `scan_${window.scanScope}`;
+
+			window.scanStopTime = new Date();
+
+			// Temps de scan
+			const scanDuration = window.scanStopTime - window.scanStartTime;
+			if (window.scanScope == 'full') {
+				self.last_full_scan = window.scanStartTime.toISOString();
+				self.last_full_scan_duration = scanDuration;
+				self.last_full_scan_error = isInError;
+			}
+			if (window.scanScope == 'quick') {
+				self.last_quick_scan = window.scanStartTime.toISOString();
+				self.last_quick_scan_duration = scanDuration;
+				self.last_quick_scan_error = isInError;
+			}
+
+			store.save(() => {
+				app.removeTask(taskId);
+			});
+		},
+
+		processMetadatas: (metas) => {
+
+			// Indexation des données passées en paramètres
+			// ---
+
+			const store = getRoot(self);
+			const tracks = store.tracks;
+			const albums = store.albums;
+			const artists = store.artists;
+			const years = store.years;
+			const genre = store.genres;
+
+			console.log('### index datas ###');
+			console.log(metas);
+
+			const scope = window.scanScope;
+			const sourceFolder = self.getFolder(metas.folderRoot);
+
+			if (metas.fileOk) {
+
+				// Fichier OK
+				// -
+
+				// Indexing :: TRACK
+				// ----------------------------------------------------------------------
+
+				const trackAdded = tracks.index(metas);
+				if (trackAdded || scope == 'full') {
+					sourceFolder.nb_files += 1;
+				}
+
+				// Indexing :: ALBUM
+				// ----------------------------------------------------------------------
+
+				albums.index(metas)
+
+				// Indexing :: ARTIST
+				// ----------------------------------------------------------------------
+
+				artists.index(metas);
+
+				// Indexing :: YEAR
+				// ----------------------------------------------------------------------
+
+				years.index(metas);
+
+				// Indexing :: GENRE
+				// ----------------------------------------------------------------------
+
+				genre.index(metas);
+
+			} else {
+
+				// Fichier en erreur
+				// -
+
+				sourceFolder.addIgnoredFile(metas.filePath, metas.fileError);
+				sourceFolder.nb_files_ignored = sourceFolder.ignored_files.length;
 			}
 		},
 

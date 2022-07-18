@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 4137:
+/***/ 2299:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1362,6 +1362,30 @@ var DarkModeIcon = function DarkModeIcon(props) {
     d: "M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"
   }));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Dangerous.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var DangerousIcon = function DangerousIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("path", {
+    d: "M0,0h24v24H0V0z",
+    fill: "none"
+  })), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("path", {
+    d: "M15.73,3H8.27L3,8.27v7.46L8.27,21h7.46L21,15.73V8.27L15.73,3z M19,14.9L14.9,19H9.1L5,14.9V9.1L9.1,5h5.8L19,9.1V14.9z M14.83,7.76L12,10.59L9.17,7.76L7.76,9.17L10.59,12l-2.83,2.83l1.41,1.41L12,13.41l2.83,2.83l1.41-1.41L13.41,12l2.83-2.83 L14.83,7.76z"
+  })));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/DateRange.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -2248,6 +2272,30 @@ var MenuBookIcon = function MenuBookIcon(props) {
   }), /*#__PURE__*/react.createElement("path", {
     d: "M17.5,14.33c-1.7,0-3.24,0.29-4.5,0.83v1.66c1.13-0.64,2.7-0.99,4.5-0.99c0.88,0,1.73,0.09,2.5,0.26v-1.52 C19.21,14.41,18.36,14.33,17.5,14.33z"
   })))));
+};
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/MusicNote.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var MusicNoteIcon = function MusicNoteIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M12 3l.01 10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4.01 4S14 19.21 14 17V7h4V3h-6zm-1.99 16c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"
+  }));
 };
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/NewReleases.jsx
  // Functions Components ReactJS
@@ -3649,6 +3697,8 @@ var Icon = __webpack_require__(3244);
 
 
 
+
+
  // Datas
 // -------------------------------------------------------------------------------------------------------------
 
@@ -3685,6 +3735,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'close_fullscreen': CloseFullscreenIcon,
   'code': CodeIcon,
   'dark_mode': DarkModeIcon,
+  'dangerous': DangerousIcon,
   'date_range': DateRangeIcon,
   'delete': DeleteIcon,
   'description': DescriptionIcon,
@@ -3720,6 +3771,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'memory': MemoryIcon,
   'menu': MenuIcon,
   'menu_book': MenuBookIcon,
+  'music_note': MusicNoteIcon,
   'new_releases': NewReleasesIcon,
   'newspaper': NewspaperIcon,
   'no_accounts': NoAccountsIcon,
@@ -5020,6 +5072,7 @@ var Severity = /*#__PURE__*/function () {
 
     this.key = severityKey;
     this.color = "";
+    this.color_dark = "";
     this.text_color = "";
     this.contrasted = "";
     this.icon_name = "";
@@ -5032,6 +5085,7 @@ var Severity = /*#__PURE__*/function () {
     key: "updateFromDef",
     value: function updateFromDef(def) {
       this.color = def.color;
+      this.color_dark = def.color_dark;
       this.text_color = def.text_color;
       this.contrasted = def.contrasted;
       this.icon_name = def.icon_name;
@@ -5059,6 +5113,7 @@ var Severity = /*#__PURE__*/function () {
 var SEVERITIES = {
   'default': {
     color: '#bdbdbd',
+    color_dark: '#878787',
     text_color: '#000000',
     contrasted: '#424242',
     icon_name: 'info'
@@ -5838,7 +5893,7 @@ var es_string_search = __webpack_require__(1256);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/date-fns/esm/format/index.js + 29 modules
 var format = __webpack_require__(8173);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/date-fns/esm/addDays/index.js
-var addDays = __webpack_require__(8484);
+var addDays = __webpack_require__(4763);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/date-fns/esm/subDays/index.js
 var subDays = __webpack_require__(5081);
 ;// CONCATENATED MODULE: ../../nexus/react/utils/DateTools.jsx
@@ -5852,7 +5907,11 @@ var subDays = __webpack_require__(5081);
 
 
 
- // Objects
+
+
+var moment = __webpack_require__(5440);
+
+moment.locale('fr'); // Objects
 // ======================================================================================================
 // ***** dateTools *****
 // *********************
@@ -6096,11 +6155,17 @@ var dateTools = {
 
     return weekKey;
   },
+  getNowIso: function getNowIso() {
+    // Now -> AAAA-MM-JJTHH:MM:SS.xxxxx
+    // ---
+    var now = new Date();
+    return now.toISOString();
+  },
   getTodayIso: function getTodayIso() {
     // Now -> AAAA-MM-JJ
     // ---
-    var now = new Date();
-    return now.toISOString().substring(0, 10);
+    var self = this;
+    return self.getNowIso().substring(0, 10);
   }
 };
 // EXTERNAL MODULE: ../../nexus/react/forms/field/Field.css
@@ -7281,7 +7346,7 @@ var Typography_Typography = (0,es/* observer */.Pi)(function (props) {
   }, children);
 });
 // EXTERNAL MODULE: ../../nexus/react/ui/alert/Alert.css
-var Alert = __webpack_require__(2306);
+var Alert = __webpack_require__(6075);
 ;// CONCATENATED MODULE: ../../nexus/react/ui/alert/Alert.jsx
 
 
@@ -7588,32 +7653,19 @@ var Indicator_Indicator = (0,es/* observer */.Pi)(function (props) {
 
   var variant = props.variant ? props.variant : 'default'; // default, contrasted, outlined
 
-  var severity = props.severity ? props.severity : 'default';
   var padding = props.padding ? props.padding : 'small'; // none, small, medium, big
 
   var iconName = props.iconName ? props.iconName : '';
   var href = props.href ? props.href : '';
   var children = props.children;
   var className = props.className ? props.className : '';
-  var color = props.color ? props.color : ''; // primary, secondary, #custom
+  var color = props.color ? props.color : 'default'; // primary, secondary, #custom
 
   var style = props.style ? props.style : {};
   var callbackClick = props.callbackClick; // ...
+  // Quelle couleur ?
 
-  var severityDef = SEVERITIES.getDef(severity); // Quelle couleur ?
-
-  if (color == 'primary') {
-    color = theme.palette.primary.main;
-  }
-
-  if (color == 'secondary') {
-    color = theme.palette.secondary.main;
-  }
-
-  if (!color) {
-    color = severityDef.color;
-  }
-
+  color = theme.getColorFromKey(color);
   style['color'] = color;
   style['backgroundColor'] = hexToRgbA(color, 0.1);
   style['border'] = '1px solid transparent';
@@ -7633,7 +7685,8 @@ var Indicator_Indicator = (0,es/* observer */.Pi)(function (props) {
 
   if (iconName) {
     icon = /*#__PURE__*/react.createElement(Icon_Icon, {
-      color: severity,
+      color: variant == "contrasted" ? "#FFFFFF" : severity,
+      size: "small",
       name: iconName,
       style: {
         flex: 'none',
@@ -7785,7 +7838,7 @@ var RenderSectionAvatar = (0,es/* observer */.Pi)(function (props) {
   }, sectionContent);
 });
 // EXTERNAL MODULE: ../../nexus/react/contexts/playground/display/PlaygroundChip.css
-var PlaygroundChip = __webpack_require__(9455);
+var PlaygroundChip = __webpack_require__(9768);
 ;// CONCATENATED MODULE: ../../nexus/react/contexts/playground/display/PlaygroundChip.jsx
 
 
@@ -7890,7 +7943,7 @@ var Link_Link = function Link(props) {
   }, children);
 };
 // EXTERNAL MODULE: ../../nexus/react/contexts/playground/display/PlaygroundIcon.css
-var PlaygroundIcon = __webpack_require__(9286);
+var PlaygroundIcon = __webpack_require__(9679);
 ;// CONCATENATED MODULE: ../../nexus/react/contexts/playground/display/PlaygroundIcon.jsx
 function PlaygroundIcon_slicedToArray(arr, i) { return PlaygroundIcon_arrayWithHoles(arr) || PlaygroundIcon_iterableToArrayLimit(arr, i) || PlaygroundIcon_unsupportedIterableToArray(arr, i) || PlaygroundIcon_nonIterableRest(); }
 
@@ -8086,17 +8139,17 @@ var RenderSectionIndicator = (0,es/* observer */.Pi)(function (props) {
   }, "secondary"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
     color: "#009688"
   }, "custom"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "default"
+    color: "default"
   }, "default"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "success"
+    color: "success"
   }, "success"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "info"
+    color: "info"
   }, "info"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "warning"
+    color: "warning"
   }, "warning"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "error"
+    color: "error"
   }, "error"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "hot"
+    color: "hot"
   }, "hot")), /*#__PURE__*/react.createElement(Heading_Heading, {
     style: {
       marginTop: '10px',
@@ -8112,22 +8165,22 @@ var RenderSectionIndicator = (0,es/* observer */.Pi)(function (props) {
     color: "#009688",
     variant: "contrasted"
   }, "custom"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "default",
+    color: "default",
     variant: "contrasted"
   }, "default"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "success",
+    color: "success",
     variant: "contrasted"
   }, "success"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "info",
+    color: "info",
     variant: "contrasted"
   }, "info"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "warning",
+    color: "warning",
     variant: "contrasted"
   }, "warning"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "error",
+    color: "error",
     variant: "contrasted"
   }, "error"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "hot",
+    color: "hot",
     variant: "contrasted"
   }, "hot")), /*#__PURE__*/react.createElement(Heading_Heading, {
     style: {
@@ -8144,22 +8197,22 @@ var RenderSectionIndicator = (0,es/* observer */.Pi)(function (props) {
     color: "#009688",
     variant: "outlined"
   }, "custom"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "default",
+    color: "default",
     variant: "outlined"
   }, "default"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "success",
+    color: "success",
     variant: "outlined"
   }, "success"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "info",
+    color: "info",
     variant: "outlined"
   }, "info"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "warning",
+    color: "warning",
     variant: "outlined"
   }, "warning"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "error",
+    color: "error",
     variant: "outlined"
   }, "error"), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "hot",
+    color: "hot",
     variant: "outlined"
   }, "hot"))); // -------------------------------------------------
 
@@ -8252,7 +8305,7 @@ var RenderSectionPopup = (0,es/* observer */.Pi)(function (props) {
   }, sectionContent);
 });
 // EXTERNAL MODULE: ../../nexus/react/ui/list/List.css
-var List = __webpack_require__(7883);
+var List = __webpack_require__(8817);
 ;// CONCATENATED MODULE: ../../nexus/react/ui/list/List.jsx
 function List_slicedToArray(arr, i) { return List_arrayWithHoles(arr) || List_iterableToArrayLimit(arr, i) || List_unsupportedIterableToArray(arr, i) || List_nonIterableRest(); }
 
@@ -8359,8 +8412,10 @@ var ListItem = (0,es/* observer */.Pi)(function (props) {
   var _React$useState = react.useState(defaultExpanded),
       _React$useState2 = List_slicedToArray(_React$useState, 2),
       expanded = _React$useState2[0],
-      setExpanded = _React$useState2[1]; // ...
+      setExpanded = _React$useState2[1]; // From ... store
 
+
+  var isLoading = app.isLoading; // ...
 
   if (expanded && !style.hasOwnProperty('backgroundColor')) {
     style['backgroundColor'] = theme.palette.primary.lightBackground;
@@ -8408,6 +8463,7 @@ var ListItem = (0,es/* observer */.Pi)(function (props) {
   }, props.children, callbackDelete && /*#__PURE__*/react.createElement(IconButton, {
     iconName: "delete",
     color: "error",
+    disabled: isLoading,
     onClick: function onClick(e) {
       e.preventDefault();
       e.stopPropagation();
@@ -11286,6 +11342,11 @@ var ThemeStore = mobx_state_tree_module/* types.model */.V5.model({
 
       if (SEVERITY_KEYS.includes(colorKey)) {
         var severity = SEVERITIES.get(colorKey);
+
+        if (self.mode == "dark" && severityColorField == "color" && severity.color_dark) {
+          return severity["color_dark"];
+        }
+
         return severity[severityColorField];
       }
 
@@ -13176,7 +13237,7 @@ var ChangelogReleaseItem_ChangelogReleaseItem = (0,es/* observer */.Pi)(function
     var plateform = PLATEFORMS_BY_KEYS[plateformKey];
     var assetLink = "".concat(staticUrl, "/file/").concat(asset.filename);
     return /*#__PURE__*/react.createElement(Indicator_Indicator, {
-      severity: "info",
+      color: "info",
       iconName: "folder_zip",
       style: {
         flex: 'none',
@@ -13187,7 +13248,7 @@ var ChangelogReleaseItem_ChangelogReleaseItem = (0,es/* observer */.Pi)(function
 
     }, plateform.label);
   }), releaseVersion && /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    severity: "hot",
+    color: "hot",
     style: {
       flex: 'none',
       marginLeft: '2px',
@@ -16908,6 +16969,11 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
 
       if (appKind == 'web' && !self.staticMode) {
         self.setBrowserURL(destination);
+      } // Sauvegarde du dernier contexte
+
+
+      if (appKind == 'electron') {
+        setToStorage('lastContext', newContext);
       } // Changement de contexte (all the magic of one paged apps appens here!)
 
 
@@ -17520,6 +17586,10 @@ var makeInitSnapshot = function makeInitSnapshot(routes, snapshot, callback) {
 
   if (!snapshot['app'].hasOwnProperty('context')) {
     snapshot['app']['context'] = matchResult.context;
+  }
+
+  if (snapshot['app'].kind == "electron") {
+    snapshot['app']['context'] = getFromStorage("lastContext", "home");
   }
 
   snapshot['app']['standaloneMode'] = standaloneMode;
@@ -18433,6 +18503,7 @@ function Artists_arrayLikeToArray(arr, len) { if (len == null || len > arr.lengt
 
 
 
+
  // Models
 // ======================================================================================================
 // ***** ArtistStore *****
@@ -18467,6 +18538,11 @@ var ArtistStore = mobx_state_tree_module/* types.model */.V5.model({
         _iterator.e(err);
       } finally {
         _iterator.f();
+      }
+    },
+    addAlbumId: function addAlbumId(albumId) {
+      if (self.albums_ids.indexOf(albumId) == -1) {
+        self.albums_ids.push(albumId);
       }
     }
   };
@@ -18527,6 +18603,36 @@ var ArtistsStore = mobx_state_tree_module/* types.model */.V5.model({
       if (callback) {
         callback();
       }
+    },
+    save: function save(callback) {
+      // Sauvegarde des artistes
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+
+      store._writeJsonFile(self.artistsCollectionFilePath, self.toJSON());
+
+      if (callback) {
+        callback();
+      }
+    },
+    index: function index(metas) {
+      // Indexation d'un artiste
+      // ---
+      var added = false;
+      var artistId = metas.artistID;
+      var artist = self.by_id.get(artistId);
+
+      if (!artist) {
+        artist = ArtistStore.create({});
+        artist.setField('id', artistId);
+        added = true;
+      }
+
+      var tags = metas.fileTags;
+      artist.setField('name', tags.albumartist);
+      artist.addAlbumId(metas.albumID);
+      self.by_id.set(artistId, artist);
+      return added;
     }
   };
 }); // Functions Components ReactJS
@@ -18637,6 +18743,7 @@ function Albums_arrayLikeToArray(arr, len) { if (len == null || len > arr.length
 
 
 
+
  // Models
 // ======================================================================================================
 // ***** AlbumStore *****
@@ -18649,7 +18756,7 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
   name: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   cover: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   folder: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
-  year: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  year: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.integer */.V5.integer),
   artist_id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   year_id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   genre_id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
@@ -18683,6 +18790,11 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
         _iterator.e(err);
       } finally {
         _iterator.f();
+      }
+    },
+    addTrackId: function addTrackId(trackId) {
+      if (self.tracks_ids.indexOf(trackId) == -1) {
+        self.tracks_ids.push(trackId);
       }
     }
   };
@@ -18743,6 +18855,42 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       if (callback) {
         callback();
       }
+    },
+    save: function save(callback) {
+      // Sauvegarde des albums
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+
+      store._writeJsonFile(self.albumsCollectionFilePath, self.toJSON());
+
+      if (callback) {
+        callback();
+      }
+    },
+    index: function index(metas) {
+      // Indexation d'un album
+      // ---
+      var added = false;
+      var albumId = metas.albumID;
+      var album = self.by_id.get(albumId);
+
+      if (!album) {
+        album = AlbumStore.create({});
+        album.setField('id', albumId);
+        added = true;
+      }
+
+      var tags = metas.fileTags;
+      album.setField('name', tags.album);
+      album.setField('cover', metas.coverFile);
+      album.setField('folder', metas.fileFolder);
+      album.setField('year', tags.year);
+      album.setField('artist_id', metas.artistID);
+      album.setField('year_id', metas.yearID);
+      album.setField('genre_id', metas.genreID);
+      album.addTrackId(metas.trackID);
+      self.by_id.set(albumId, album);
+      return added;
     }
   };
 }); // Functions Components ReactJS
@@ -18827,6 +18975,8 @@ function Tracks_arrayLikeToArray(arr, len) { if (len == null || len > arr.length
 function Tracks_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function Tracks_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
 
 
@@ -18961,6 +19111,48 @@ var TracksStore = mobx_state_tree_module/* types.model */.V5.model({
       if (callback) {
         callback();
       }
+    },
+    save: function save(callback) {
+      // Sauvegarde des morceaux
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+
+      store._writeJsonFile(self.tracksCollectionFilePath, self.toJSON());
+
+      if (callback) {
+        callback();
+      }
+    },
+    index: function index(metas) {
+      // Indexation d'un morceau
+      // ---
+      var added = false;
+      var trackId = metas.trackID;
+      var track = self.by_id.get(trackId);
+
+      if (!track) {
+        track = TrackStore.create({});
+        track.setField('id', trackId);
+        track.setField('ts_added', dateTools.getNowIso());
+        added = true;
+      }
+
+      var tags = metas.fileTags;
+      var filePathParts = metas.filePath ? metas.filePath.split('.') : [];
+      track.setField('name', tags.title);
+      track.setField('disk', tags.disk.no);
+      track.setField('track', tags.track.no);
+      track.setField('track_path', metas.filePath);
+      track.setField('track_type', filePathParts.length > 0 ? filePathParts[filePathParts.length - 1] : '');
+      track.setField('ts_file', metas.fileMtime);
+      track.setField('artist', tags.artist);
+      track.setField('album', tags.album);
+      track.setField('album_id', metas.albumID);
+      track.setField('artist_id', metas.artistID);
+      track.setField('year_id', metas.yearID);
+      track.setField('genre_id', metas.genreID);
+      self.by_id.set(trackId, track);
+      return added;
     }
   };
 }); // Functions Components ReactJS
@@ -19071,6 +19263,7 @@ function Years_arrayLikeToArray(arr, len) { if (len == null || len > arr.length)
 
 
 
+
  // Models
 // ======================================================================================================
 // ***** YearStore *****
@@ -19105,6 +19298,11 @@ var YearStore = mobx_state_tree_module/* types.model */.V5.model({
         _iterator.e(err);
       } finally {
         _iterator.f();
+      }
+    },
+    addAlbumId: function addAlbumId(albumId) {
+      if (self.albums_ids.indexOf(albumId) == -1) {
+        self.albums_ids.push(albumId);
       }
     }
   };
@@ -19165,6 +19363,36 @@ var YearsStore = mobx_state_tree_module/* types.model */.V5.model({
       if (callback) {
         callback();
       }
+    },
+    save: function save(callback) {
+      // Sauvegarde des années
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+
+      store._writeJsonFile(self.yearsCollectionFilePath, self.toJSON());
+
+      if (callback) {
+        callback();
+      }
+    },
+    index: function index(metas) {
+      // Indexation d'une année
+      // ---
+      var added = false;
+      var yearId = metas.yearID;
+      var year = self.by_id.get(yearId);
+
+      if (!year) {
+        year = YearStore.create({});
+        year.setField('id', yearId);
+        added = true;
+      }
+
+      var tags = metas.fileTags;
+      year.setField('name', "".concat(tags.year));
+      year.addAlbumId(metas.albumID);
+      self.by_id.set(yearId, year);
+      return added;
     }
   };
 }); // Functions Components ReactJS
@@ -19275,6 +19503,7 @@ function Genres_arrayLikeToArray(arr, len) { if (len == null || len > arr.length
 
 
 
+
  // Models
 // ======================================================================================================
 // ***** GenreStore *****
@@ -19309,6 +19538,11 @@ var GenreStore = mobx_state_tree_module/* types.model */.V5.model({
         _iterator.e(err);
       } finally {
         _iterator.f();
+      }
+    },
+    addAlbumId: function addAlbumId(albumId) {
+      if (self.albums_ids.indexOf(albumId) == -1) {
+        self.albums_ids.push(albumId);
       }
     }
   };
@@ -19369,6 +19603,36 @@ var GenresStore = mobx_state_tree_module/* types.model */.V5.model({
       if (callback) {
         callback();
       }
+    },
+    save: function save(callback) {
+      // Sauvegarde des genres
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+
+      store._writeJsonFile(self.genresCollectionFilePath, self.toJSON());
+
+      if (callback) {
+        callback();
+      }
+    },
+    index: function index(metas) {
+      // Indexation d'un genre
+      // ---
+      var added = false;
+      var genreId = metas.genreID;
+      var genre = self.by_id.get(genreId);
+
+      if (!genre) {
+        genre = GenreStore.create({});
+        genre.setField('id', genreId);
+        added = true;
+      }
+
+      var tags = metas.fileTags;
+      genre.setField('name', tags.genre[0]);
+      genre.addAlbumId(metas.albumID);
+      self.by_id.set(genreId, genre);
+      return added;
     }
   };
 }); // Functions Components ReactJS
@@ -19573,6 +19837,17 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
       });
 
       self.update(raw);
+
+      if (callback) {
+        callback();
+      }
+    },
+    save: function save(callback) {
+      // Sauvegarde des playlists
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+
+      store._writeJsonFile(self.playlistsCollectionFilePath, self.toJSON());
 
       if (callback) {
         callback();
@@ -19944,8 +20219,9 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var folder = _step.value;
           library.addFolder("source", folder);
+          library.refreshAvailability();
           library.save(function () {
-            library.scan();
+            library.startScan();
           });
         }
       } catch (err) {
@@ -20008,7 +20284,7 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
   }, renderHelper());
 });
 // EXTERNAL MODULE: ./contexts/search/Search.css
-var search_Search = __webpack_require__(4906);
+var search_Search = __webpack_require__(5090);
 ;// CONCATENATED MODULE: ./contexts/search/Search.jsx
 
 
@@ -20133,8 +20409,9 @@ var RenderAdminFolders = (0,es/* observer */.Pi)(function (props) {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var folder = _step.value;
           library.addFolder(folderKey, folder);
+          library.refreshAvailability();
           library.save(function () {
-            library.scan();
+            library.startScan();
           });
         }
       } catch (err) {
@@ -20147,11 +20424,16 @@ var RenderAdminFolders = (0,es/* observer */.Pi)(function (props) {
   };
 
   var handleFolderClick = function handleFolderClick(folderPath) {
-    console.log(folderPath);
+    ipc.send('showItemInFolder', [folderPath]);
   };
 
   var handleFolderDelete = function handleFolderDelete(folderPath) {
-    console.log(folderPath);
+    var CONFIRM_DELETE_MSG = "Voulez-vous vraiment retirer le dossier ".concat(folderPath);
+
+    if (confirm(CONFIRM_DELETE_MSG)) {
+      library.removeFolder(folderPath);
+      library.save();
+    }
   }; // Render
   // ==================================================================================================
   // Section -> Icon
@@ -20166,14 +20448,16 @@ var RenderAdminFolders = (0,es/* observer */.Pi)(function (props) {
   var sectionTitle = "Collection"; // Section -> Content
   // -------------------------------------------------
 
-  var sectionContent = /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Heading_Heading, null, "Dossiers source"), /*#__PURE__*/react.createElement(List_List, null, sourceFolders.map(function (sourceFolder, sourceFolderIdx) {
+  var sectionContent = /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Heading_Heading, {
+    variant: "contained"
+  }, "Dossiers source"), /*#__PURE__*/react.createElement(List_List, null, sourceFolders.map(function (sourceFolder, sourceFolderIdx) {
     return /*#__PURE__*/react.createElement(ListItem, {
       key: "source-folder-".concat(sourceFolderIdx),
       hoverable: true,
       onClick: function onClick() {
         return handleFolderClick(sourceFolder.folder_path);
       },
-      callbackDelete: function callbackDelete() {
+      callbackDelete: function callbackDelete(e) {
         return handleFolderDelete(sourceFolder.folder_path);
       }
     }, /*#__PURE__*/react.createElement(List_ListIcon, {
@@ -20181,7 +20465,34 @@ var RenderAdminFolders = (0,es/* observer */.Pi)(function (props) {
     }), /*#__PURE__*/react.createElement(ListText, {
       primary: sourceFolder.label,
       secondary: sourceFolder.folder_path
-    }));
+    }), /*#__PURE__*/react.createElement(Indicator_Indicator, {
+      variant: "contrasted",
+      color: sourceFolder.folder_available ? "success" : "error",
+      className: "flex-0",
+      style: {
+        marginRight: "10px"
+      }
+    }), /*#__PURE__*/react.createElement(Indicator_Indicator, {
+      variant: "contrasted",
+      iconName: "music_note",
+      color: sourceFolder.nb_files > 0 ? "success" : "default",
+      className: "flex-0",
+      style: {
+        marginRight: "5px",
+        paddingLeft: "5px",
+        paddingRight: "10px"
+      }
+    }, sourceFolder.nb_files), /*#__PURE__*/react.createElement(Indicator_Indicator, {
+      variant: "contrasted",
+      iconName: "dangerous",
+      color: sourceFolder.nb_files_ignored > 0 ? "error" : "default",
+      className: "flex-0",
+      style: {
+        marginRight: "5px",
+        paddingLeft: "5px",
+        paddingRight: "10px"
+      }
+    }, sourceFolder.nb_files_ignored));
   })), /*#__PURE__*/react.createElement(IconButton, {
     iconName: "add",
     color: "info",
@@ -20189,7 +20500,9 @@ var RenderAdminFolders = (0,es/* observer */.Pi)(function (props) {
     onClick: function onClick() {
       return handleAddFolder("source");
     }
-  }), /*#__PURE__*/react.createElement(Heading_Heading, null, "Dossier de recopie (optionnel)"), /*#__PURE__*/react.createElement(Switch_Switch, {
+  }), /*#__PURE__*/react.createElement(Heading_Heading, {
+    variant: "contained"
+  }, "Dossier de recopie (optionnel)"), /*#__PURE__*/react.createElement(Switch_Switch, {
     label: "Activer la copie \xE0 la demande",
     savePath: ['library', 'copy_enabled'],
     style: {
@@ -20197,6 +20510,8 @@ var RenderAdminFolders = (0,es/* observer */.Pi)(function (props) {
       marginLeft: '6px'
     },
     callbackChange: handleParamsChange
+  }), /*#__PURE__*/react.createElement(Divider_Divider, {
+    spacing: "small"
   }), copyFolder.isSet && /*#__PURE__*/react.createElement(List_List, null, /*#__PURE__*/react.createElement(ListItem, {
     key: "copy-folder",
     hoverable: true,
@@ -20211,7 +20526,34 @@ var RenderAdminFolders = (0,es/* observer */.Pi)(function (props) {
   }), /*#__PURE__*/react.createElement(ListText, {
     primary: copyFolder.label,
     secondary: copyFolder.folder_path
-  }))), !copyFolder.isSet && /*#__PURE__*/react.createElement(IconButton, {
+  }), /*#__PURE__*/react.createElement(Indicator_Indicator, {
+    variant: "contrasted",
+    color: copyFolder.folder_available ? "success" : "error",
+    className: "flex-0",
+    style: {
+      marginRight: "10px"
+    }
+  }), /*#__PURE__*/react.createElement(Indicator_Indicator, {
+    variant: "contrasted",
+    iconName: "music_note",
+    color: copyFolder.nb_files > 0 ? "success" : "default",
+    className: "flex-0",
+    style: {
+      marginRight: "5px",
+      paddingLeft: "5px",
+      paddingRight: "10px"
+    }
+  }, copyFolder.nb_files), /*#__PURE__*/react.createElement(Indicator_Indicator, {
+    variant: "contrasted",
+    iconName: "dangerous",
+    color: copyFolder.nb_files_ignored > 0 ? "error" : "default",
+    className: "flex-0",
+    style: {
+      marginRight: "5px",
+      paddingLeft: "5px",
+      paddingRight: "10px"
+    }
+  }, copyFolder.nb_files_ignored))), !copyFolder.isSet && /*#__PURE__*/react.createElement(IconButton, {
     iconName: "add",
     color: "info",
     disabled: isLoading || nbFolders == 0,
@@ -20241,7 +20583,18 @@ var RenderAdminScan = (0,es/* observer */.Pi)(function (props) {
   // Events
   // ==================================================================================================
 
-  var handleScanClick = function handleScanClick(scope) {}; // Render
+  var handleParamsChange = function handleParamsChange() {
+    library.save();
+  }; // -
+
+
+  var handleScanClick = function handleScanClick(quick) {
+    library.startScan(quick);
+  };
+
+  var handleCancelScanClick = function handleCancelScanClick() {
+    library.stopScan();
+  }; // Render
   // ==================================================================================================
   // Section -> Icon
   // -------------------------------------------------
@@ -20255,12 +20608,18 @@ var RenderAdminScan = (0,es/* observer */.Pi)(function (props) {
   var sectionTitle = "Scan"; // Section -> Content
   // -------------------------------------------------
 
-  var sectionContent = /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Row_Row, {
+  var sectionContent = /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Switch_Switch, {
+    label: "Scanner automatiquement au d\xE9marrage",
+    savePath: ['library', 'auto_scan_enabled'],
+    callbackChange: handleParamsChange
+  }), /*#__PURE__*/react.createElement(Divider_Divider, {
+    spacing: "medium"
+  }), /*#__PURE__*/react.createElement(Row_Row, {
     align: "center"
   }, /*#__PURE__*/react.createElement(Indicator_Indicator, {
     variant: "contrasted",
     padding: "big",
-    severity: fullScanInfos.severity,
+    color: fullScanInfos.severity,
     className: "flex-0",
     style: {
       minWidth: "100px"
@@ -20268,13 +20627,20 @@ var RenderAdminScan = (0,es/* observer */.Pi)(function (props) {
   }, fullScanInfos.title), /*#__PURE__*/react.createElement(Typography_Typography, {
     size: "small",
     variant: "description"
-  }, fullScanInfos.subtitle), /*#__PURE__*/react.createElement(IconButton, {
+  }, fullScanInfos.subtitle), fullScanInfos.severity != "warning" && /*#__PURE__*/react.createElement(IconButton, {
     iconName: "refresh",
     color: "info",
     disabled: isLoading || nbFolders == 0,
     className: "flex-0",
     onClick: function onClick() {
-      return handleScanClick("full");
+      return handleScanClick();
+    }
+  }), fullScanInfos.severity == "warning" && /*#__PURE__*/react.createElement(IconButton, {
+    iconName: "clear",
+    color: "error",
+    className: "flex-0",
+    onClick: function onClick() {
+      return handleCancelScanClick();
     }
   })), /*#__PURE__*/react.createElement(Divider_Divider, {
     spacing: "medium"
@@ -20283,7 +20649,7 @@ var RenderAdminScan = (0,es/* observer */.Pi)(function (props) {
   }, /*#__PURE__*/react.createElement(Indicator_Indicator, {
     variant: "contrasted",
     padding: "big",
-    severity: quickScanInfos.severity,
+    color: quickScanInfos.severity,
     className: "flex-0",
     style: {
       minWidth: "100px"
@@ -20291,13 +20657,20 @@ var RenderAdminScan = (0,es/* observer */.Pi)(function (props) {
   }, quickScanInfos.title), /*#__PURE__*/react.createElement(Typography_Typography, {
     size: "small",
     variant: "description"
-  }, quickScanInfos.subtitle), /*#__PURE__*/react.createElement(IconButton, {
+  }, quickScanInfos.subtitle), quickScanInfos.severity != "warning" && /*#__PURE__*/react.createElement(IconButton, {
     iconName: "refresh",
     color: "info",
     disabled: isLoading || nbFolders == 0,
     className: "flex-0",
     onClick: function onClick() {
-      return handleScanClick("quick");
+      return handleScanClick(true);
+    }
+  }), quickScanInfos.severity == "warning" && /*#__PURE__*/react.createElement(IconButton, {
+    iconName: "clear",
+    color: "error",
+    className: "flex-0",
+    onClick: function onClick() {
+      return handleCancelScanClick();
     }
   }))); // -------------------------------------------------
 
@@ -20357,11 +20730,25 @@ var Admin_AdminPage = (0,es/* observer */.Pi)(function (props) {
   }, renderPage(), renderHelper());
 });
 ;// CONCATENATED MODULE: ./models/Library.jsx
-function Library_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Library_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function Library_slicedToArray(arr, i) { return Library_arrayWithHoles(arr) || Library_iterableToArrayLimit(arr, i) || Library_unsupportedIterableToArray(arr, i) || Library_nonIterableRest(); }
+
+function Library_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function Library_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function Library_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function Library_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Library_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function Library_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Library_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Library_arrayLikeToArray(o, minLen); }
 
 function Library_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+
+
+
+
 
 
 
@@ -20399,7 +20786,10 @@ var LibraryIgnoredFileStore = mobx_state_tree_module/* types.model */.V5.model({
       self[field] = value;
     },
     // -
-    update: function update(raw) {}
+    update: function update(raw) {
+      self.file_path = raw.file_path;
+      self.reason = raw.reason;
+    }
   };
 }); // ***** LibraryFolderStore *****
 // ******************************
@@ -20409,9 +20799,9 @@ var TAG_LibraryFolderStore = function TAG_LibraryFolderStore() {};
 var LibraryFolderStore = mobx_state_tree_module/* types.model */.V5.model({
   folder_path: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   folder_available: false,
-  nb_files: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.integer */.V5.integer),
-  nb_files_ignored: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.integer */.V5.integer),
-  ignored_files: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), [])
+  nb_files: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.integer */.V5.integer, 0),
+  nb_files_ignored: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.integer */.V5.integer, 0),
+  ignored_files: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(LibraryIgnoredFileStore), [])
 }).views(function (self) {
   return {
     get label() {
@@ -20434,8 +20824,29 @@ var LibraryFolderStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       return false;
-    }
+    },
 
+    // -
+    hasIgnoredFile: function hasIgnoredFile(filePath) {
+      var _iterator = Library_createForOfIteratorHelper(self.ignored_files),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var ignoredFile = _step.value;
+
+          if (ignoredFile.file_path == filePath) {
+            return ignoredFile;
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      return false;
+    }
   };
 }).actions(function (self) {
   return {
@@ -20445,22 +20856,43 @@ var LibraryFolderStore = mobx_state_tree_module/* types.model */.V5.model({
     // -
     update: function update(raw) {
       self.folder_path = raw.folder_path;
-      self.nb_files = raw.nb_files;
-      self.nb_files_ignored = raw.nb_files_ignored;
+      self.nb_files = raw.nb_files ? raw.nb_files : 0;
+      self.nb_files_ignored = raw.nb_files_ignored ? raw.nb_files_ignored : 0;
       self.ignored_files = [];
 
-      var _iterator = Library_createForOfIteratorHelper(raw.ignored_files),
-          _step;
+      var _iterator2 = Library_createForOfIteratorHelper(raw.ignored_files),
+          _step2;
 
       try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var ignoredFileRaw = _step.value;
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var ignoredFileRaw = _step2.value;
           var ignoredFile = LibraryIgnoredFileStore.create({});
+          ignoredFile.update(ignoredFileRaw);
+          self.ignored_files.push(ignoredFile);
         }
       } catch (err) {
-        _iterator.e(err);
+        _iterator2.e(err);
       } finally {
-        _iterator.f();
+        _iterator2.f();
+      }
+    },
+    unset: function unset() {
+      self.folder_path = "";
+      self.resetCounters();
+    },
+    resetCounters: function resetCounters() {
+      self.nb_files = 0;
+      self.nb_files_ignored = 0;
+      self.ignored_files = [];
+    },
+    // -
+    addIgnoredFile: function addIgnoredFile(filePath, reason) {
+      // Ajoute un fichié ignoré
+      // ---
+      if (!self.hasIgnoredFile(filePath)) {
+        var newIgnoredFile = LibraryIgnoredFileStore.create({});
+        newIgnoredFile.setField('file_path', filePath);
+        newIgnoredFile.setField('reason', reason);
       }
     }
   };
@@ -20496,6 +20928,57 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
       return path;
     },
 
+    get collectionFiles() {
+      // Compilation des dates de modifications des fichiers pour le scan rapide
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var tracks = store.tracks;
+      var files = {};
+
+      var _iterator3 = Library_createForOfIteratorHelper(tracks.by_id.entries()),
+          _step3;
+
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var _step3$value = Library_slicedToArray(_step3.value, 2),
+              trackId = _step3$value[0],
+              track = _step3$value[1];
+
+          files[track.track_path] = track.ts_file;
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
+
+      return files;
+    },
+
+    get folders() {
+      // Compatibilité avec indexer.js
+      // ---
+      var folders = {};
+
+      var _iterator4 = Library_createForOfIteratorHelper(self.source_folders),
+          _step4;
+
+      try {
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+          var sourceFolder = _step4.value;
+          folders[sourceFolder.folder_path] = {
+            'path': sourceFolder.folder_path
+          };
+        }
+      } catch (err) {
+        _iterator4.e(err);
+      } finally {
+        _iterator4.f();
+      }
+
+      return folders;
+    },
+
     // -
     get nbFolders() {
       return self.source_folders.length;
@@ -20503,14 +20986,21 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
 
     // -
     get fullScanInfos() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
       var title = "Complet";
       var subtitle = "Aucun scan effectué.";
       var severity = "default";
 
       if (self.last_full_scan) {
-        subtitle = "Dernier scan ".concat(dateTools.calendarTime(self.last_full_scan)); // TODO : duration
+        subtitle = "Dernier scan ".concat(dateTools.calendarTime(self.last_full_scan).toLowerCase()); // TODO : duration
 
         severity = self.last_full_scan_error ? "error" : "success";
+      }
+
+      if (app.tasks.indexOf('scan_full') > -1) {
+        subtitle = "Scan en cours...";
+        severity = "warning";
       }
 
       return {
@@ -20521,14 +21011,21 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
     },
 
     get quickScanInfos() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
       var title = "Rapide";
       var subtitle = "Aucun scan effectué.";
       var severity = "default";
 
       if (self.last_quick_scan) {
-        subtitle = "Dernier scan ".concat(dateTools.calendarTime(self.last_quick_scan)); // TODO : duration
+        subtitle = "Dernier scan ".concat(dateTools.calendarTime(self.last_quick_scan).toLowerCase()); // TODO : duration
 
         severity = self.last_quick_scan_error ? "error" : "success";
+      }
+
+      if (app.tasks.indexOf('scan_quick') > -1) {
+        subtitle = "Scan en cours...";
+        severity = "warning";
       }
 
       return {
@@ -20538,24 +21035,58 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
       };
     },
 
+    // Getters
+    // -
+    getFolderIdx: function getFolderIdx(folderPath) {
+      for (var folderIdx in self.source_folders) {
+        var folder = self.source_folders[folderIdx];
+
+        if (folder.folder_path == folderPath) {
+          return parseInt(folderIdx);
+        }
+      }
+
+      return -1;
+    },
+    getFolder: function getFolder(folderPath) {
+      var _iterator5 = Library_createForOfIteratorHelper(self.source_folders),
+          _step5;
+
+      try {
+        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+          var sourceFolder = _step5.value;
+
+          if (sourceFolder.folder_path == folderPath) {
+            return sourceFolder;
+          }
+        }
+      } catch (err) {
+        _iterator5.e(err);
+      } finally {
+        _iterator5.f();
+      }
+
+      return LibraryFolderStore.create({});
+    },
+
     // Bools
     // -
     get isSourceAvailable() {
-      var _iterator2 = Library_createForOfIteratorHelper(self.source_folders),
-          _step2;
+      var _iterator6 = Library_createForOfIteratorHelper(self.source_folders),
+          _step6;
 
       try {
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          var sourceFolder = _step2.value;
+        for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+          var sourceFolder = _step6.value;
 
           if (sourceFolder.folder_available) {
             return true;
           }
         }
       } catch (err) {
-        _iterator2.e(err);
+        _iterator6.e(err);
       } finally {
-        _iterator2.f();
+        _iterator6.f();
       }
 
       return false;
@@ -20566,25 +21097,25 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
     },
 
     // -
-    hasFolder: function hasFolder(folder) {
-      var _iterator3 = Library_createForOfIteratorHelper(self.source_folders),
-          _step3;
+    hasFolder: function hasFolder(folderPath) {
+      var _iterator7 = Library_createForOfIteratorHelper(self.source_folders),
+          _step7;
 
       try {
-        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-          var sourceFolder = _step3.value;
+        for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+          var sourceFolder = _step7.value;
 
-          if (sourceFolder.folder_path == folder) {
+          if (sourceFolder.folder_path == folderPath) {
             return true;
           }
         }
       } catch (err) {
-        _iterator3.e(err);
+        _iterator7.e(err);
       } finally {
-        _iterator3.f();
+        _iterator7.f();
       }
 
-      if (self.copy_folder.folder_path == folder) {
+      if (self.copy_folder.folder_path == folderPath) {
         return true;
       }
 
@@ -20597,28 +21128,54 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
       self[field] = value;
     },
     // -
-    refreshAvailability: function refreshAvailability() {// Les dossiers sont-ils toujours accessibles ?
+    refreshAvailability: function refreshAvailability() {
+      // Les dossiers sont-ils toujours accessibles ?
       // ---
-      // TODO (folder_available)
+      var _iterator8 = Library_createForOfIteratorHelper(self.source_folders),
+          _step8;
+
+      try {
+        for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+          var sourceFolder = _step8.value;
+
+          if (ipc.sendSync('existsSync', sourceFolder.folder_path)) {
+            sourceFolder.folder_available = true;
+          } else {
+            sourceFolder.folder_available = false;
+          }
+        }
+      } catch (err) {
+        _iterator8.e(err);
+      } finally {
+        _iterator8.f();
+      }
+
+      if (self.copy_folder.isSet) {
+        if (ipc.sendSync('existsSync', self.copy_folder.folder_path)) {
+          self.copy_folder.folder_available = true;
+        } else {
+          self.copy_folder.folder_available = false;
+        }
+      }
     },
     update: function update(raw) {
       if (raw) {
         self.source_folders = [];
 
-        var _iterator4 = Library_createForOfIteratorHelper(raw.source_folders),
-            _step4;
+        var _iterator9 = Library_createForOfIteratorHelper(raw.source_folders),
+            _step9;
 
         try {
-          for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-            var sourceFolderRaw = _step4.value;
+          for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+            var sourceFolderRaw = _step9.value;
             var sourceFolder = LibraryFolderStore.create({});
             sourceFolder.update(sourceFolderRaw);
             self.source_folders.push(sourceFolder);
           }
         } catch (err) {
-          _iterator4.e(err);
+          _iterator9.e(err);
         } finally {
-          _iterator4.f();
+          _iterator9.f();
         }
 
         self.copy_folder = LibraryFolderStore.create({});
@@ -20661,30 +21218,154 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
         callback();
       }
     },
-    scan: function scan(quickScan) {
-      // Scan des fichiers dans les dossiers
-      // ---
-      quickScan = quickScan == true && self.last_full_scan ? true : false;
-      console.log('scan');
-      console.log(quickScan); // TODO
-    },
     // -
-    addFolder: function addFolder(folderKey, folder) {
+    addFolder: function addFolder(folderKey, folderPath) {
       // Ajoute un dossier
       // ---
-      if (!self.hasFolder(folder)) {
+      if (!self.hasFolder(folderPath)) {
         // Nouveau dossier source
         if (folderKey == "source") {
           var newSourceFolder = LibraryFolderStore.create({});
-          newSourceFolder.setField("folder_path", folder);
+          newSourceFolder.setField("folder_path", folderPath);
+          newSourceFolder.resetCounters();
           self.source_folders.push(newSourceFolder);
         } // Remplacement dossier de recopie
 
 
         if (folderKey == "copy") {
           self.copy_folder = LibraryFolderStore.create({});
-          self.copy_folder.setField("folder_path", folder);
+          self.copy_folder.setField("folder_path", folderPath);
+          self.copy_folder.resetCounters();
         }
+      }
+    },
+    removeFolder: function removeFolder(folderPath) {
+      // Retire un dossier
+      // ---
+      var folderIdx = self.getFolderIdx(folderPath);
+
+      if (folderIdx > -1) {
+        self.source_folders.splice(folderIdx, 1);
+      }
+
+      if (self.copy_folder.folder_path == folderPath) {
+        self.copy_folder.unset();
+      }
+    },
+    // -
+    startScan: function startScan(quickScan) {
+      // Scan des fichiers dans les dossiers surveillés, pour les indexer
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var snackbar = app.snackbar;
+      var tracks = store.tracks;
+      var scope = quickScan == true && self.last_full_scan ? "quick" : "full";
+      var taskId = "scan_".concat(scope);
+      app.addTask(taskId);
+      window.scanScope = scope;
+      window.scanStartTime = new Date(); // Réinitialisation des compteurs sur les dossiers
+
+      if (scope == 'full') {
+        var _iterator10 = Library_createForOfIteratorHelper(self.source_folders),
+            _step10;
+
+        try {
+          for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+            var sourceFolder = _step10.value;
+            sourceFolder.resetCounters();
+          }
+        } catch (err) {
+          _iterator10.e(err);
+        } finally {
+          _iterator10.f();
+        }
+      }
+
+      if (!window.scanStopTime) {
+        ipc.on('indexTrack', function (datas) {
+          self.processMetadatas(datas);
+        });
+      }
+
+      ipc.once('scanDone', function () {
+        self.stopScan();
+      });
+      ipc.once('scanError', function (code) {
+        snackbar.update(true, "Une erreur est survenue (code ".concat(code, ")."), "error");
+        self.stopScan(true);
+      });
+      ipc.send('startIndexer', [scope, self.folders, self.collectionFiles, self.collectionCoversPath]);
+    },
+    stopScan: function stopScan() {
+      var isInError = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      // Arrêt de l'indexation
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var taskId = "scan_".concat(window.scanScope);
+      window.scanStopTime = new Date(); // Temps de scan
+
+      var scanDuration = window.scanStopTime - window.scanStartTime;
+
+      if (window.scanScope == 'full') {
+        self.last_full_scan = window.scanStartTime.toISOString();
+        self.last_full_scan_duration = scanDuration;
+        self.last_full_scan_error = isInError;
+      }
+
+      if (window.scanScope == 'quick') {
+        self.last_quick_scan = window.scanStartTime.toISOString();
+        self.last_quick_scan_duration = scanDuration;
+        self.last_quick_scan_error = isInError;
+      }
+
+      store.save(function () {
+        app.removeTask(taskId);
+      });
+    },
+    processMetadatas: function processMetadatas(metas) {
+      // Indexation des données passées en paramètres
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var tracks = store.tracks;
+      var albums = store.albums;
+      var artists = store.artists;
+      var years = store.years;
+      var genre = store.genres;
+      console.log('### index datas ###');
+      console.log(metas);
+      var scope = window.scanScope;
+      var sourceFolder = self.getFolder(metas.folderRoot);
+
+      if (metas.fileOk) {
+        // Fichier OK
+        // -
+        // Indexing :: TRACK
+        // ----------------------------------------------------------------------
+        var trackAdded = tracks.index(metas);
+
+        if (trackAdded || scope == 'full') {
+          sourceFolder.nb_files += 1;
+        } // Indexing :: ALBUM
+        // ----------------------------------------------------------------------
+
+
+        albums.index(metas); // Indexing :: ARTIST
+        // ----------------------------------------------------------------------
+
+        artists.index(metas); // Indexing :: YEAR
+        // ----------------------------------------------------------------------
+
+        years.index(metas); // Indexing :: GENRE
+        // ----------------------------------------------------------------------
+
+        genre.index(metas);
+      } else {
+        // Fichier en erreur
+        // -
+        sourceFolder.addIgnoredFile(metas.filePath, metas.fileError);
+        sourceFolder.nb_files_ignored = sourceFolder.ignored_files.length;
       }
     }
   };
@@ -20784,7 +21465,7 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
       app.removeTask('load_library');
 
       if (library.isSourceAvailable && library.auto_scan_enabled) {
-        library.scan(true);
+        library.startScan(true);
       }
     },
     update: function update(datas) {
@@ -20797,6 +21478,21 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
       self.years.load(self.afterLoad);
       self.genres.load(self.afterLoad);
       self.playlists.load(self.afterLoad);
+    },
+    save: function save(callback) {
+      // Sauvegarde des données
+      // ---
+      self.library.save();
+      self.artists.save();
+      self.albums.save();
+      self.tracks.save();
+      self.years.save();
+      self.genres.save();
+      self.playlists.save();
+
+      if (callback) {
+        callback();
+      }
     },
     navigateTo: function navigateTo(navContext, contextId, contextUrl, contextExtras, callback) {
       // Herald own navigation function
@@ -20865,16 +21561,12 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
       // Ecrit le dictionnaire dans le fichier json passés en paramètres
       // ---
       var self = _this;
-      ipc.once('writeJSON', function (ret) {
+      ipc.once('writeJSONDone', function (ret) {
         console.log(ret);
       });
-      ipc.send('writeJSON', {
-        filePath: filePath,
-        datas: datas,
-        options: {
-          spaces: 4
-        }
-      });
+      ipc.send('writeJSON', [filePath, datas, {
+        spaces: 4
+      }]);
     }
   };
 }); // Init
@@ -21045,7 +21737,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
-/***/ 4906:
+/***/ 5090:
 /***/ (() => {
 
 // extracted by extract-css-chunks-webpack-plugin
@@ -21199,14 +21891,14 @@ window.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
-/***/ 9455:
+/***/ 9768:
 /***/ (() => {
 
 // extracted by extract-css-chunks-webpack-plugin
 
 /***/ }),
 
-/***/ 9286:
+/***/ 9679:
 /***/ (() => {
 
 // extracted by extract-css-chunks-webpack-plugin
@@ -21416,7 +22108,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
-/***/ 2306:
+/***/ 6075:
 /***/ (() => {
 
 // extracted by extract-css-chunks-webpack-plugin
@@ -21479,7 +22171,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
-/***/ 7883:
+/***/ 8817:
 /***/ (() => {
 
 // extracted by extract-css-chunks-webpack-plugin
@@ -21526,6 +22218,304 @@ window.addEventListener('DOMContentLoaded', function () {
 
 // extracted by extract-css-chunks-webpack-plugin
 
+/***/ }),
+
+/***/ 132:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var map = {
+	"./af": 6398,
+	"./af.js": 6398,
+	"./ar": 3185,
+	"./ar-dz": 4133,
+	"./ar-dz.js": 4133,
+	"./ar-kw": 4712,
+	"./ar-kw.js": 4712,
+	"./ar-ly": 1538,
+	"./ar-ly.js": 1538,
+	"./ar-ma": 5903,
+	"./ar-ma.js": 5903,
+	"./ar-sa": 3608,
+	"./ar-sa.js": 3608,
+	"./ar-tn": 6425,
+	"./ar-tn.js": 6425,
+	"./ar.js": 3185,
+	"./az": 6706,
+	"./az.js": 6706,
+	"./be": 6768,
+	"./be.js": 6768,
+	"./bg": 4519,
+	"./bg.js": 4519,
+	"./bm": 841,
+	"./bm.js": 841,
+	"./bn": 1454,
+	"./bn-bd": 669,
+	"./bn-bd.js": 669,
+	"./bn.js": 1454,
+	"./bo": 6718,
+	"./bo.js": 6718,
+	"./br": 4779,
+	"./br.js": 4779,
+	"./bs": 9455,
+	"./bs.js": 9455,
+	"./ca": 5752,
+	"./ca.js": 5752,
+	"./cs": 6061,
+	"./cs.js": 6061,
+	"./cv": 6105,
+	"./cv.js": 6105,
+	"./cy": 2127,
+	"./cy.js": 2127,
+	"./da": 7134,
+	"./da.js": 7134,
+	"./de": 7649,
+	"./de-at": 8746,
+	"./de-at.js": 8746,
+	"./de-ch": 9754,
+	"./de-ch.js": 9754,
+	"./de.js": 7649,
+	"./dv": 3238,
+	"./dv.js": 3238,
+	"./el": 6684,
+	"./el.js": 6684,
+	"./en-au": 6896,
+	"./en-au.js": 6896,
+	"./en-ca": 9770,
+	"./en-ca.js": 9770,
+	"./en-gb": 4981,
+	"./en-gb.js": 4981,
+	"./en-ie": 1661,
+	"./en-ie.js": 1661,
+	"./en-il": 7006,
+	"./en-il.js": 7006,
+	"./en-in": 7770,
+	"./en-in.js": 7770,
+	"./en-nz": 5846,
+	"./en-nz.js": 5846,
+	"./en-sg": 8696,
+	"./en-sg.js": 8696,
+	"./eo": 7514,
+	"./eo.js": 7514,
+	"./es": 1450,
+	"./es-do": 5872,
+	"./es-do.js": 5872,
+	"./es-mx": 1484,
+	"./es-mx.js": 1484,
+	"./es-us": 9076,
+	"./es-us.js": 9076,
+	"./es.js": 1450,
+	"./et": 9928,
+	"./et.js": 9928,
+	"./eu": 8484,
+	"./eu.js": 8484,
+	"./fa": 5236,
+	"./fa.js": 5236,
+	"./fi": 7957,
+	"./fi.js": 7957,
+	"./fil": 4754,
+	"./fil.js": 4754,
+	"./fo": 8168,
+	"./fo.js": 8168,
+	"./fr": 4065,
+	"./fr-ca": 117,
+	"./fr-ca.js": 117,
+	"./fr-ch": 7235,
+	"./fr-ch.js": 7235,
+	"./fr.js": 4065,
+	"./fy": 9156,
+	"./fy.js": 9156,
+	"./ga": 7031,
+	"./ga.js": 7031,
+	"./gd": 5202,
+	"./gd.js": 5202,
+	"./gl": 234,
+	"./gl.js": 234,
+	"./gom-deva": 1797,
+	"./gom-deva.js": 1797,
+	"./gom-latn": 6493,
+	"./gom-latn.js": 6493,
+	"./gu": 6126,
+	"./gu.js": 6126,
+	"./he": 9286,
+	"./he.js": 9286,
+	"./hi": 2763,
+	"./hi.js": 2763,
+	"./hr": 2748,
+	"./hr.js": 2748,
+	"./hu": 3659,
+	"./hu.js": 3659,
+	"./hy-am": 6093,
+	"./hy-am.js": 6093,
+	"./id": 2529,
+	"./id.js": 2529,
+	"./is": 6463,
+	"./is.js": 6463,
+	"./it": 1700,
+	"./it-ch": 5556,
+	"./it-ch.js": 5556,
+	"./it.js": 1700,
+	"./ja": 9421,
+	"./ja.js": 9421,
+	"./jv": 2598,
+	"./jv.js": 2598,
+	"./ka": 9254,
+	"./ka.js": 9254,
+	"./kk": 8331,
+	"./kk.js": 8331,
+	"./km": 8958,
+	"./km.js": 8958,
+	"./kn": 5598,
+	"./kn.js": 5598,
+	"./ko": 5217,
+	"./ko.js": 5217,
+	"./ku": 7457,
+	"./ku.js": 7457,
+	"./ky": 1029,
+	"./ky.js": 1029,
+	"./lb": 4906,
+	"./lb.js": 4906,
+	"./lo": 4385,
+	"./lo.js": 4385,
+	"./lt": 6291,
+	"./lt.js": 6291,
+	"./lv": 8956,
+	"./lv.js": 8956,
+	"./me": 7883,
+	"./me.js": 7883,
+	"./mi": 4564,
+	"./mi.js": 4564,
+	"./mk": 1472,
+	"./mk.js": 1472,
+	"./ml": 6696,
+	"./ml.js": 6696,
+	"./mn": 6610,
+	"./mn.js": 6610,
+	"./mr": 4229,
+	"./mr.js": 4229,
+	"./ms": 4552,
+	"./ms-my": 9202,
+	"./ms-my.js": 9202,
+	"./ms.js": 4552,
+	"./mt": 8438,
+	"./mt.js": 8438,
+	"./my": 370,
+	"./my.js": 370,
+	"./nb": 4774,
+	"./nb.js": 4774,
+	"./ne": 1151,
+	"./ne.js": 1151,
+	"./nl": 4807,
+	"./nl-be": 3343,
+	"./nl-be.js": 3343,
+	"./nl.js": 4807,
+	"./nn": 802,
+	"./nn.js": 802,
+	"./oc-lnc": 5279,
+	"./oc-lnc.js": 5279,
+	"./pa-in": 4566,
+	"./pa-in.js": 4566,
+	"./pl": 468,
+	"./pl.js": 468,
+	"./pt": 3853,
+	"./pt-br": 4372,
+	"./pt-br.js": 4372,
+	"./pt.js": 3853,
+	"./ro": 1695,
+	"./ro.js": 1695,
+	"./ru": 553,
+	"./ru.js": 553,
+	"./sd": 6640,
+	"./sd.js": 6640,
+	"./se": 7138,
+	"./se.js": 7138,
+	"./si": 2239,
+	"./si.js": 2239,
+	"./sk": 5207,
+	"./sk.js": 5207,
+	"./sl": 6732,
+	"./sl.js": 6732,
+	"./sq": 575,
+	"./sq.js": 575,
+	"./sr": 7488,
+	"./sr-cyrl": 3042,
+	"./sr-cyrl.js": 3042,
+	"./sr.js": 7488,
+	"./ss": 5141,
+	"./ss.js": 5141,
+	"./sv": 574,
+	"./sv.js": 574,
+	"./sw": 8582,
+	"./sw.js": 8582,
+	"./ta": 4762,
+	"./ta.js": 4762,
+	"./te": 4187,
+	"./te.js": 4187,
+	"./tet": 2159,
+	"./tet.js": 2159,
+	"./tg": 7021,
+	"./tg.js": 7021,
+	"./th": 5050,
+	"./th.js": 5050,
+	"./tk": 1307,
+	"./tk.js": 1307,
+	"./tl-ph": 3365,
+	"./tl-ph.js": 3365,
+	"./tlh": 2178,
+	"./tlh.js": 2178,
+	"./tr": 8797,
+	"./tr.js": 8797,
+	"./tzl": 7929,
+	"./tzl.js": 7929,
+	"./tzm": 4654,
+	"./tzm-latn": 1169,
+	"./tzm-latn.js": 1169,
+	"./tzm.js": 4654,
+	"./ug-cn": 4777,
+	"./ug-cn.js": 4777,
+	"./uk": 8166,
+	"./uk.js": 8166,
+	"./ur": 170,
+	"./ur.js": 170,
+	"./uz": 4266,
+	"./uz-latn": 38,
+	"./uz-latn.js": 38,
+	"./uz.js": 4266,
+	"./vi": 739,
+	"./vi.js": 739,
+	"./x-pseudo": 9637,
+	"./x-pseudo.js": 9637,
+	"./yo": 6173,
+	"./yo.js": 6173,
+	"./zh-cn": 111,
+	"./zh-cn.js": 111,
+	"./zh-hk": 2306,
+	"./zh-hk.js": 2306,
+	"./zh-mo": 7859,
+	"./zh-mo.js": 7859,
+	"./zh-tw": 5902,
+	"./zh-tw.js": 5902
+};
+
+
+function webpackContext(req) {
+	var id = webpackContextResolve(req);
+	return __webpack_require__(id);
+}
+function webpackContextResolve(req) {
+	if(!__webpack_require__.o(map, req)) {
+		var e = new Error("Cannot find module '" + req + "'");
+		e.code = 'MODULE_NOT_FOUND';
+		throw e;
+	}
+	return map[req];
+}
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 132;
+
 /***/ })
 
 /******/ 	});
@@ -21542,13 +22532,16 @@ window.addEventListener('DOMContentLoaded', function () {
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
+/******/ 			id: moduleId,
+/******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -21626,6 +22619,15 @@ window.addEventListener('DOMContentLoaded', function () {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/node module decorator */
+/******/ 	(() => {
+/******/ 		__webpack_require__.nmd = (module) => {
+/******/ 			module.paths = [];
+/******/ 			if (!module.children) module.children = [];
+/******/ 			return module;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */
 /******/ 	(() => {
 /******/ 		// no baseURI
@@ -21685,7 +22687,7 @@ window.addEventListener('DOMContentLoaded', function () {
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(3979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(4137)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(2299)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

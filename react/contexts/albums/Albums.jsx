@@ -23,7 +23,7 @@ export const AlbumStore = types
 		name: types.maybeNull(types.string),
 		cover: types.maybeNull(types.string),
 		folder: types.maybeNull(types.string),
-		year: types.maybeNull(types.string),
+		year: types.maybeNull(types.integer),
 
 		artist_id: types.maybeNull(types.string),
 		year_id: types.maybeNull(types.string),
@@ -50,6 +50,12 @@ export const AlbumStore = types
 			self.genre_id = raw.genre_id;
 			self.tracks_ids = [];
 			for (const trackId of raw.tracks_ids) {
+				self.tracks_ids.push(trackId);
+			}
+		},
+
+		addTrackId: (trackId) => {
+			if (self.tracks_ids.indexOf(trackId) == -1) {
 				self.tracks_ids.push(trackId);
 			}
 		},
@@ -114,6 +120,51 @@ export const AlbumsStore = types
 				callback();
 			}
 		},
+
+		save: (callback) => {
+
+			// Sauvegarde des albums
+			// ---
+
+			const store = getRoot(self);
+			store._writeJsonFile(self.albumsCollectionFilePath, self.toJSON());
+
+			if (callback) {
+				callback();
+			}
+		},
+
+		index: (metas) => {
+
+			// Indexation d'un album
+			// ---
+
+			let added = false;
+
+			let albumId = metas.albumID;
+			let album = self.by_id.get(albumId);
+
+			if (!album) {
+				album = AlbumStore.create({});
+				album.setField('id', albumId);
+				added = true;
+			}
+
+			const tags = metas.fileTags;
+
+			album.setField('name', tags.album);
+			album.setField('cover', metas.coverFile);
+			album.setField('folder', metas.fileFolder);
+			album.setField('year', tags.year);
+
+			album.setField('artist_id', metas.artistID);
+			album.setField('year_id', metas.yearID);
+			album.setField('genre_id', metas.genreID);
+			album.addTrackId(metas.trackID);
+
+			self.by_id.set(albumId, album);
+			return added;
+		}
 
 	}))
 
