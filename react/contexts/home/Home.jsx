@@ -27,7 +27,7 @@ export const HomePage = observer((props) => {
 	const loaded = store.loaded;
 	const isLoading = app.isLoading;
 
-	const nbTracks = tracks.nbTracks;
+	const nbFolders = library.nbFolders;
 
 	// Events
 	// ==================================================================================================
@@ -35,7 +35,10 @@ export const HomePage = observer((props) => {
 	const handleChooseLibrary = () => {
 		ipc.once('folderChoosed', (folders) => {
 			for (const folder of folders) {
-				library.addFolder(folder);
+				library.addFolder("source", folder);
+				library.save(() => {
+					library.scan();
+				});
 			}
 		});
 		ipc.send('chooseFolder');
@@ -52,7 +55,7 @@ export const HomePage = observer((props) => {
 		let helperSubtitle = "";
 		if (loaded) {
 			helperSubtitle = "Que souhaitez-vous écouter aujourd'hui ?";
-			if (nbTracks == 0) {
+			if (nbFolders == 0) {
 				helperSubtitle = "Pour commencer, sélectionnez ou glissez un dossier contenant de la musique.";
 			}
 		}
@@ -60,7 +63,7 @@ export const HomePage = observer((props) => {
 		// -------------------------------------------------
 
 		let helperContent = null;
-		if (loaded && nbTracks == 0) {
+		if (loaded && nbFolders == 0) {
 			helperContent = (
 				<Button
 					key="btn-choose-library"

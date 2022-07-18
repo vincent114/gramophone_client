@@ -64,7 +64,7 @@ export const YearsStore = types
 		},
 
 		get nbYears() {
-			return Object.entries(self.by_id).length;
+			return Object.entries(self.by_id.toJSON()).length;
 		},
 
 	}))

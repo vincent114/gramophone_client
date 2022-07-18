@@ -76,7 +76,7 @@ export const AlbumsStore = types
 		},
 
 		get nbAlbums() {
-			return Object.entries(self.by_id).length;
+			return Object.entries(self.by_id.toJSON()).length;
 		},
 
 	}))

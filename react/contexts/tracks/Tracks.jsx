@@ -99,7 +99,7 @@ export const TracksStore = types
 		},
 
 		get nbTracks() {
-			return Object.entries(self.by_id).length;
+			return Object.entries(self.by_id.toJSON()).length;
 		},
 
 	}))
@@ -113,7 +113,7 @@ export const TracksStore = types
 
 		update: (raw) => {
 			self.by_id = {};
-			for (const [trackId, trackRaw] of Object.entries(self.by_id)) {
+			for (const [trackId, trackRaw] of Object.entries(raw.by_id)) {
 				const track = TrackStore.create({});
 				track.update(trackRaw);
 				self.by_id.set(trackId, track);

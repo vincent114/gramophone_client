@@ -5,6 +5,9 @@ import { observer } from "mobx-react-lite";
 
 import { NxAppStore, NxApp, makeInitSnapshot } from 'nexus/NxApp';
 
+import { STATIC_SMAP } from 'nexus/models/services';
+import { copyObj } from 'nexus/utils/Datas';
+
 import { ContextualHeader } from 'gramophone_client/ui/ContextualHeader';
 import { ContextualMenu } from 'gramophone_client/ui/ContextualMenu';
 
@@ -89,7 +92,7 @@ const RootStore = types
 			self.loaded = true;
 			app.removeTask('load_library');
 
-			if (library.source_folder.folder_available && library.auto_scan_enabled) {
+			if (library.isSourceAvailable && library.auto_scan_enabled) {
 				library.scan(true);
 			}
 		},
@@ -283,12 +286,18 @@ export const RootStoreContext = React.createContext(rootStore);
 window.store = rootStore;
 window.storeContext = RootStoreContext;
 
+let staticRaw = {
+	'smap': copyObj(STATIC_SMAP),
+}
+staticRaw['smap']['me'] = copyObj(STATIC_SMAP['gramophone']);
+
 rootStore.app.init(
 	(datas) => {
 		rootStore.update(datas);
 	},
 	popups,
-	{}
+	{},
+	staticRaw
 );
 
 

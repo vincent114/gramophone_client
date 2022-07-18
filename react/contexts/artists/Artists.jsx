@@ -64,7 +64,7 @@ export const ArtistsStore = types
 		},
 
 		get nbArtists() {
-			return Object.entries(self.by_id).length;
+			return Object.entries(self.by_id.toJSON()).length;
 		},
 
 	}))

@@ -64,7 +64,7 @@ export const GenresStore = types
 		},
 
 		get nbGenres() {
-			return Object.entries(self.by_id).length;
+			return Object.entries(self.by_id.toJSON()).length;
 		},
 
 	}))
