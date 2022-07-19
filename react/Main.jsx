@@ -7,6 +7,7 @@ import { NxAppStore, NxApp, makeInitSnapshot } from 'nexus/NxApp';
 
 import { STATIC_SMAP } from 'nexus/models/services';
 import { copyObj } from 'nexus/utils/Datas';
+import { getFromStorage, setToStorage } from 'nexus/utils/Storage';
 
 import { ContextualHeader } from 'gramophone_client/ui/ContextualHeader';
 import { ContextualMenu } from 'gramophone_client/ui/ContextualMenu';
@@ -14,11 +15,16 @@ import { ContextualMenu } from 'gramophone_client/ui/ContextualMenu';
 import { HomePage } from 'gramophone_client/contexts/home/Home';
 import { SearchStore, SearchPage } from 'gramophone_client/contexts/search/Search';
 import { ArtistsStore, ArtistsPage } from 'gramophone_client/contexts/artists/Artists';
+import { ArtistPage } from 'gramophone_client/contexts/artist/Artist';
 import { AlbumsStore, AlbumsPage } from 'gramophone_client/contexts/albums/Albums';
+import { AlbumPage } from 'gramophone_client/contexts/album/Album';
 import { TracksStore, TracksPage } from 'gramophone_client/contexts/tracks/Tracks';
 import { YearsStore, YearsPage } from 'gramophone_client/contexts/years/Years';
+import { YearPage } from 'gramophone_client/contexts/year/Year';
 import { GenresStore, GenresPage } from 'gramophone_client/contexts/genres/Genres';
+import { GenrePage } from 'gramophone_client/contexts/genre/Genre';
 import { PlaylistsStore, PlaylistsPage } from 'gramophone_client/contexts/playlists/Playlists';
+import { PlaylistPage } from 'gramophone_client/contexts/playlist/Playlist';
 import { AdminPage } from 'gramophone_client/contexts/admin/Admin';
 
 import { LibraryStore } from 'gramophone_client/models/Library';
@@ -44,14 +50,23 @@ const RootStore = types
 		// -
 
 		artists: types.optional(ArtistsStore, {}),
+		artistId: types.maybeNull(types.string),
+
 		albums: types.optional(AlbumsStore, {}),
+		albumsId: types.maybeNull(types.string),
+
 		tracks: types.optional(TracksStore, {}),
 
 		// -
 
 		years: types.optional(YearsStore, {}),
+		yearId: types.maybeNull(types.string),
+
 		genres: types.optional(GenresStore, {}),
+		genreId: types.maybeNull(types.string),
+
 		playlists: types.optional(PlaylistsStore, {}),
+		playlistId: types.maybeNull(types.string),
 
 		// -
 
@@ -154,10 +169,22 @@ const RootStore = types
 			if (navContext == 'artists') {
 				app.navigate('/main.html', 'artists');
 			}
+			if (navContext == 'artist') {
+				setToStorage('lastArtistId', contextId);
+				app.navigate('/main.html', 'artist', [
+					{"op": "replace", "path": "/artistId", "value": contextId},
+				]);
+			}
 
 			// Albums
 			if (navContext == 'albums') {
 				app.navigate('/main.html', 'albums');
+			}
+			if (navContext == 'album') {
+				setToStorage('lastAlbumId', contextId);
+				app.navigate('/main.html', 'album', [
+					{"op": "replace", "path": "/albumId", "value": contextId},
+				]);
 			}
 
 			// Tracks
@@ -171,15 +198,33 @@ const RootStore = types
 			if (navContext == 'years') {
 				app.navigate('/main.html', 'years');
 			}
+			if (navContext == 'year') {
+				setToStorage('lastYearId', contextId);
+				app.navigate('/main.html', 'year', [
+					{"op": "replace", "path": "/yearId", "value": contextId},
+				]);
+			}
 
 			// Genres
 			if (navContext == 'genres') {
 				app.navigate('/main.html', 'genres');
 			}
+			if (navContext == 'genre') {
+				setToStorage('lastGenreId', contextId);
+				app.navigate('/main.html', 'genre', [
+					{"op": "replace", "path": "/genreId", "value": contextId},
+				]);
+			}
 
 			// Playlists
 			if (navContext == 'playlists') {
 				app.navigate('/main.html', 'playlists');
+			}
+			if (navContext == 'playlist') {
+				setToStorage('lastPlaylistId', contextId);
+				app.navigate('/main.html', 'playlist', [
+					{"op": "replace", "path": "/playlistId", "value": contextId},
+				]);
 			}
 
 		},
@@ -239,12 +284,20 @@ const RootStore = types
 let contexts = {
 	'home': HomePage,
 	'search': SearchPage,
+
 	'artists': ArtistsPage,
+	'artist': ArtistPage,
 	'albums': AlbumsPage,
+	'album': AlbumPage,
 	'tracks': TracksPage,
+
 	'years': YearsPage,
+	'year': YearPage,
 	'genres': GenresPage,
+	'genre': GenrePage,
 	'playlists': PlaylistsPage,
+	'playlist': PlaylistPage,
+
 	'admin': AdminPage,
 }
 
@@ -260,12 +313,17 @@ let routes = {
 	'home': '/main.html',
 
 	'artists': '/artists',
+	'artist:artistId': '/artist/:artistId',
 	'albums': '/albums',
+	'album:albumId': '/album/:albumId',
 	'tracks': '/tracks',
 
 	'years': '/years',
+	'year:yearId': '/year/:yearId',
 	'genres': '/genres',
+	'genre:genreId': '/genre/:genreId',
 	'playlists': '/playlists',
+	'playlist:playlistId': '/playlist/:playlistId',
 }
 
 // Store
@@ -297,7 +355,12 @@ let initSnapshot = makeInitSnapshot(routes, {
 				},
 			}
 		}
-	}
+	},
+	'artistId': getFromStorage('lastArtistId', ''),
+	'albumsId': getFromStorage('lastAlbumId', ''),
+	'yearId': getFromStorage('lastYearId', ''),
+	'genreId': getFromStorage('lastGenreId', ''),
+	'playlistId': getFromStorage('lastPlaylistId', ''),
 });
 
 export const rootStore = RootStore.create(initSnapshot);

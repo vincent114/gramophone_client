@@ -3,6 +3,8 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import { AlbumStore } from 'gramophone_client/contexts/album/Album';
+
 import { Helper } from 'nexus/ui/helper/Helper';
 import { HeaderTitle } from 'nexus/layout/header/Header';
 import { MenuItem } from 'nexus/layout/menu/Menu';
@@ -12,55 +14,6 @@ import './Albums.css';
 
 // Models
 // ======================================================================================================
-
-// ***** AlbumStore *****
-// **********************
-
-const TAG_AlbumStore = () => {}
-export const AlbumStore = types
-	.model({
-		id: types.maybeNull(types.string),
-		name: types.maybeNull(types.string),
-		cover: types.maybeNull(types.string),
-		folder: types.maybeNull(types.string),
-		year: types.maybeNull(types.integer),
-
-		artist_id: types.maybeNull(types.string),
-		year_id: types.maybeNull(types.string),
-		genre_id: types.maybeNull(types.string),
-		tracks_ids: types.optional(types.array(types.string), []),
-	})
-	.actions(self => ({
-
-		setField: (field, value) => {
-			self[field] = value;
-		},
-
-		// -
-
-		update: (raw) => {
-			self.id = raw.id;
-			self.name = raw.name;
-			self.cover = raw.cover;
-			self.folder = raw.folder;
-			self.year = raw.year;
-
-			self.artist_id = raw.artist_id;
-			self.year_id = raw.year_id;
-			self.genre_id = raw.genre_id;
-			self.tracks_ids = [];
-			for (const trackId of raw.tracks_ids) {
-				self.tracks_ids.push(trackId);
-			}
-		},
-
-		addTrackId: (trackId) => {
-			if (self.tracks_ids.indexOf(trackId) == -1) {
-				self.tracks_ids.push(trackId);
-			}
-		},
-
-	}))
 
 // ***** AlbumsStore *****
 // ***********************

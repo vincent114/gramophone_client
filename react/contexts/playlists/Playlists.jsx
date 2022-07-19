@@ -3,6 +3,8 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import { PlaylistStore } from 'gramophone_client/contexts/playlist/Playlist';
+
 import { Helper } from 'nexus/ui/helper/Helper';
 import { HeaderTitle } from 'nexus/layout/header/Header';
 import { MenuItem } from 'nexus/layout/menu/Menu';
@@ -12,45 +14,6 @@ import './Playlists.css';
 
 // Models
 // ======================================================================================================
-
-// ***** PlaylistStore *****
-// *************************
-
-const TAG_PlaylistStore = () => {}
-export const PlaylistStore = types
-	.model({
-		id: types.maybeNull(types.string),
-		name: types.maybeNull(types.string),
-
-		ts_playlist: types.maybeNull(types.string),
-
-		permanent: false,
-
-		tracks_ids: types.optional(types.array(types.string), []),
-	})
-	.actions(self => ({
-
-		setField: (field, value) => {
-			self[field] = value;
-		},
-
-		// -
-
-		update: (raw) => {
-			self.id = raw.id;
-			self.name = raw.name;
-
-			self.ts_playlist = raw.ts_playlist;
-
-			self.permanent = raw.permanent;
-
-			self.tracks_ids = [];
-			for (const trackId of raw.tracks_ids) {
-				self.tracks_ids.push(trackId);
-			}
-		},
-
-	}))
 
 // ***** PlaylistsStore *****
 // **************************

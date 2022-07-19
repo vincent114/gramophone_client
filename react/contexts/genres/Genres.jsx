@@ -3,6 +3,8 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import { GenreStore } from 'gramophone_client/contexts/genre/Genre';
+
 import { Helper } from 'nexus/ui/helper/Helper';
 import { HeaderTitle } from 'nexus/layout/header/Header';
 import { MenuItem } from 'nexus/layout/menu/Menu';
@@ -12,43 +14,6 @@ import './Genres.css';
 
 // Models
 // ======================================================================================================
-
-// ***** GenreStore *****
-// **********************
-
-const TAG_GenreStore = () => {}
-export const GenreStore = types
-	.model({
-		id: types.maybeNull(types.string),
-		name: types.maybeNull(types.string),
-
-		albums_ids: types.optional(types.array(types.string), []),
-	})
-	.actions(self => ({
-
-		setField: (field, value) => {
-			self[field] = value;
-		},
-
-		// -
-
-		update: (raw) => {
-			self.id = raw.id;
-			self.name = raw.name;
-
-			self.albums_ids = [];
-			for (const albumId of raw.albums_ids) {
-				self.albums_ids.push(albumId);
-			}
-		},
-
-		addAlbumId: (albumId) => {
-			if (self.albums_ids.indexOf(albumId) == -1) {
-				self.albums_ids.push(albumId);
-			}
-		},
-
-	}))
 
 // ***** GenresStore *****
 // ***********************

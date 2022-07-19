@@ -3,6 +3,8 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import { ArtistStore } from 'gramophone_client/contexts/artist/Artist';
+
 import { Heading } from 'nexus/forms/heading/Heading';
 import {
 	TableContainer,
@@ -31,53 +33,6 @@ import './Artists.css';
 
 // Models
 // ======================================================================================================
-
-// ***** ArtistStore *****
-// ***********************
-
-const TAG_ArtistStore = () => {}
-export const ArtistStore = types
-	.model({
-		id: types.maybeNull(types.string),
-		name: types.maybeNull(types.string),
-
-		albums_ids: types.optional(types.array(types.string), []),
-	})
-	.views(self => ({
-
-		get letter() {
-			if (self.name) {
-				return self.name[0].toLowerCase();
-			}
-			return "";
-		},
-
-	}))
-	.actions(self => ({
-
-		setField: (field, value) => {
-			self[field] = value;
-		},
-
-		// -
-
-		update: (raw) => {
-			self.id = raw.id;
-			self.name = raw.name;
-
-			self.albums_ids = [];
-			for (const albumId of raw.albums_ids) {
-				self.albums_ids.push(albumId);
-			}
-		},
-
-		addAlbumId: (albumId) => {
-			if (self.albums_ids.indexOf(albumId) == -1) {
-				self.albums_ids.push(albumId);
-			}
-		},
-
-	}))
 
 // ***** ArtistsStore *****
 // ************************
@@ -412,7 +367,7 @@ export const ArtistsMenuItem = observer((props) => {
 		<MenuItem
 			iconName="face"
 			label="Artistes"
-			activeContexts={[artistsContext]}
+			activeContexts={[artistsContext, 'artist']}
 			callbackClick={handleMenuItemClick}
 		/>
 	)
@@ -440,7 +395,7 @@ export const ArtistsPage = observer((props) => {
 
 	const renderPage = () => {
 
-		// Render :: Page -> que quand l'app est intitialisée (pour useEffect)
+		// Render :: Page
 		// ---
 
 		let pageContent = null;
