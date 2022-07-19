@@ -217,7 +217,7 @@ const RootStore = types
 			const self = this;
 
 			ipc.once('writeJSONDone', (ret) => {
-				console.log(ret);
+				// console.log(ret);
 			});
 
 			ipc.send('writeJSON', [
