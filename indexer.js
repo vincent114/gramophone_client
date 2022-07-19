@@ -159,7 +159,7 @@ class Indexer {
 								console.error(err);
 							}
 							fs.close(fd, function() {
-								console.log('wrote the file successfully');
+								// console.log('wrote the file successfully');
 							});
 						});
 					}

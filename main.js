@@ -136,34 +136,24 @@ ipcMain.on("startIndexer", (event, [scope, folders, collectionFiles, collectionC
 	});
 });
 
-ipcMain.on("readJson", (event, [filePath]) => {
+ipcMain.handle("readJson", async (event, [filePath]) => {
 
 	// Lit et parse le fichier json passé en paramètres
 	// ---
 
-	fs.readJson(filePath)
-	.then((datas) => {
-		mainWindow.webContents.send("readJSONDone", datas);
-	})
-	.catch(err => {
-		console.error(err);
-	})
+	const result = await fs.readJson(filePath);
+	return result;
 });
 
-ipcMain.on("writeJSON", (event, [filePath, datas, options]) => {
+ipcMain.handle("writeJSON", async (event, [filePath, datas, options]) => {
 
 	// Ecrit des données dans le fichier passé en paramètres
 	// ---
 
 	options = (options) ? options : {};
 
-	fs.writeJson(filePath, datas, options)
-	.then(() => {
-		mainWindow.webContents.send("writeJSONDone", {});
-	})
-	.catch(err => {
-		console.error(err);
-	})
+	const result = await fs.writeJson(filePath, datas, options);
+	return result;
 });
 
 
@@ -228,7 +218,6 @@ ipcMain.on("readJsonSync", (event, [filePath]) => {
 
 	event.returnValue = fs.readJsonSync(filePath);
 });
-
 
 ipcMain.on("writeJSONSync", (event, [filePath, datas, options]) => {
 

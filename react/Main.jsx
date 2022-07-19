@@ -35,7 +35,7 @@ import './Main.css';
 // Functions
 // ======================================================================================================
 
-function readJsonFile(filePath, defaultDatas) {
+function readJsonFile(filePath, defaultDatas, callback, verbose) {
 
 	// Lit le fichier JSON passé en paramètres et renvoie un dictionnaire
 	// ---
@@ -49,32 +49,46 @@ function readJsonFile(filePath, defaultDatas) {
 		});
 	}
 
+	if (verbose) {
+		console.log(`SEND readJson ${JSON.stringify(filePath)}`);
+	}
+
 	// Lecture des données du fichier
 	try {
-		datas = ipc.sendSync('readJsonSync', filePath);
+		ipc.invoke('readJson', [filePath]).then((result) => {
+			if (verbose) {
+				console.log(`CALLBACK readJson ${JSON.stringify(filePath)}`);
+				console.log(result);
+			}
+			if (callback) {
+				callback(result);
+			}
+		});
 	} catch(err) {
 		console.error(err);
 	}
-	return datas;
+	return null;
 }
 
-function writeJsonFile(filePath, datas) {
+function writeJsonFile(filePath, datas, callback) {
 
 	// Ecrit le dictionnaire dans le fichier json passés en paramètres
 	// ---
 
-	const self = this;
-
-	ipc.once('writeJSONDone', (ret) => {
-		// console.log(ret);
-	});
-
-	ipc.send('writeJSON', [
-		filePath,
-		datas,
-		{spaces: 4},
-	]);
-
+	try {
+		ipc.invoke('writeJSON', [
+			filePath,
+			datas,
+			{spaces: 4},
+		])
+		.then((result) => {
+			if (callback) {
+				callback(result);
+			}
+		});
+	} catch(err) {
+		console.error(err);
+	}
 	return null;
 }
 
@@ -166,13 +180,15 @@ const RootStore = types
 
 			self.library.load();
 
-			self.artists.load(self.afterLoad);
-			self.albums.load(self.afterLoad);
-			self.tracks.load(self.afterLoad);
+			setTimeout(() => {
+				self.artists.load(self.afterLoad);
+				self.albums.load(self.afterLoad);
+				self.tracks.load(self.afterLoad);
 
-			self.years.load(self.afterLoad);
-			self.genres.load(self.afterLoad);
-			self.playlists.load(self.afterLoad);
+				self.years.load(self.afterLoad);
+				self.genres.load(self.afterLoad);
+				self.playlists.load(self.afterLoad);
+			}, 250);
 		},
 
 		save: (callback) => {
@@ -278,8 +294,9 @@ const RootStore = types
 
 		// -
 
-		_readJsonFile: (filePath, defaultDatas) => {
-			return readJsonFile(filePath, defaultDatas)
+		_readJsonFile: (filePath, defaultDatas, callback) => {
+			const app = self.app;
+			return readJsonFile(filePath, defaultDatas, callback, app.debugMode);
 		},
 
 		_writeJsonFile: (filePath, datas) => {
@@ -350,7 +367,7 @@ let routes = {
 
 let initSnapshot = makeInitSnapshot(routes, {
 	'app': {
-		'context': 'home', // TODO : Last context ?
+		'context': getFromStorage("lastContext", "home"),
 		'kind': 'electron',
 		'tasks': ['load_library'],
 		'menu': {
@@ -387,6 +404,8 @@ export const RootStoreContext = React.createContext(rootStore);
 
 window.store = rootStore;
 window.storeContext = RootStoreContext;
+
+setToStorage('debugMode', true, 'bool');
 
 let staticRaw = {
 	'smap': copyObj(STATIC_SMAP),

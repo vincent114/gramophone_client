@@ -106,16 +106,21 @@ export const GenresStore = types
 			const store = getRoot(self);
 			const app = store.app;
 
-			const raw = store._readJsonFile(self.genresCollectionFilePath, {
-				by_id: {},
-			});
-			// self.update(raw);
-			app.saveValue(['genres', 'by_id'], raw.by_id, () => {
-				self.setField('loaded', true);
-				if (callback) {
-					callback();
+			store._readJsonFile(
+				self.genresCollectionFilePath,
+				{
+					by_id: {},
+				},
+				(raw) => {
+					// self.update(raw);
+					app.saveValue(['genres', 'by_id'], raw.by_id, () => {
+						self.setField('loaded', true);
+						if (callback) {
+							callback();
+						}
+					});
 				}
-			});
+			);
 		},
 
 		save: (callback) => {

@@ -101,16 +101,21 @@ export const AlbumsStore = types
 			const store = getRoot(self);
 			const app = store.app;
 
-			const raw = store._readJsonFile(self.albumsCollectionFilePath, {
-				by_id: {},
-			});
-			// self.update(raw);
-			app.saveValue(['albums', 'by_id'], raw.by_id, () => {
-				self.setField('loaded', true);
-				if (callback) {
-					callback();
+			store._readJsonFile(
+				self.albumsCollectionFilePath,
+				{
+					by_id: {},
+				},
+				(raw) => {
+					// self.update(raw);
+					app.saveValue(['albums', 'by_id'], raw.by_id, () => {
+						self.setField('loaded', true);
+						if (callback) {
+							callback();
+						}
+					});
 				}
-			});
+			);
 		},
 
 		save: (callback) => {
@@ -246,6 +251,9 @@ export const RenderAlbums = observer((props) => {
 						<ThumbnailGhost
 							key={`thumbnail-ghost-${letterIdx}-${i}`}
 							size="small"
+							style={{
+								marginRight: '16px',
+							}}
 						/>
 					)
 				}
@@ -304,6 +312,10 @@ export const RenderAlbums = observer((props) => {
 									title={album.name}
 									subtitle={album.linkedArtist.name}
 									size="small"
+									rootStyle={{
+										marginRight: '20px',
+										marginBottom: '30px',
+									}}
 									callbackClick={() => handleAlbumClick(album.id)}
 								/>
 							))}

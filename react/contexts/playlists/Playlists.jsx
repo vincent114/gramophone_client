@@ -79,16 +79,21 @@ export const PlaylistsStore = types
 			const store = getRoot(self);
 			const app = store.app;
 
-			const raw = store._readJsonFile(self.playlistsCollectionFilePath, {
-				by_id: {},
-			});
-			// self.update(raw);
-			app.saveValue(['playlists', 'by_id'], raw.by_id, () => {
-				self.setField('loaded', true);
-				if (callback) {
-					callback();
+			store._readJsonFile(
+				self.playlistsCollectionFilePath,
+				{
+					by_id: {},
+				},
+				(raw) => {
+					// self.update(raw);
+					app.saveValue(['playlists', 'by_id'], raw.by_id, () => {
+						self.setField('loaded', true);
+						if (callback) {
+							callback();
+						}
+					});
 				}
-			});
+			);
 		},
 
 		save: (callback) => {

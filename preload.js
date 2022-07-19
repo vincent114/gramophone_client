@@ -10,6 +10,10 @@ contextBridge.exposeInMainWorld('ipc', {
 		ipcRenderer.send(apiKey, params);
 	},
 
+	invoke: (apiKey, params) => {
+		return ipcRenderer.invoke(apiKey, params);
+	},
+
 	sendSync: (apiKey, ...args) => {
 		return ipcRenderer.sendSync(apiKey, args);
 	},

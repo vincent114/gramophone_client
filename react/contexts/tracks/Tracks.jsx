@@ -191,18 +191,21 @@ export const TracksStore = types
 			const store = getRoot(self);
 			const app = store.app;
 
-			const raw = store._readJsonFile(self.tracksCollectionFilePath, {
-				by_id: {},
-			});
-			// self.update(raw);
-			console.log("Loading... :: tracks");
-			app.saveValue(['tracks', 'by_id'], raw.by_id, () => {
-				self.setField('loaded', true);
-				console.log("Done !");
-				if (callback) {
-					callback();
+			store._readJsonFile(
+				self.tracksCollectionFilePath,
+				{
+					by_id: {},
+				},
+				(raw) => {
+					// self.update(raw);
+					app.saveValue(['tracks', 'by_id'], raw.by_id, () => {
+						self.setField('loaded', true);
+						if (callback) {
+							callback();
+						}
+					});
 				}
-			});
+			);
 		},
 
 		save: (callback) => {
@@ -281,8 +284,6 @@ export const RenderTracks = observer((props) => {
 
 	const nbTracks = tracks.nbTracks;
 	const tracksSorted = tracks.getSortedByField("name");
-
-	console.log(tracksSorted);
 
 	// ...
 

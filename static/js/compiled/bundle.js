@@ -8,6 +8,8 @@
 
 // UNUSED EXPORTS: RootStoreContext, rootStore
 
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/web.timers.js
+var web_timers = __webpack_require__(76213);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/react/index.js
 var react = __webpack_require__(63354);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/react-dom/index.js
@@ -24,8 +26,6 @@ var es_array_includes = __webpack_require__(20368);
 var es_array_index_of = __webpack_require__(66265);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.object.keys.js
 var es_object_keys = __webpack_require__(46627);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/web.timers.js
-var web_timers = __webpack_require__(76213);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.array.splice.js
 var es_array_splice = __webpack_require__(69343);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.array.concat.js
@@ -14723,11 +14723,9 @@ var Header_Header = (0,es/* observer */.Pi)(function (props) {
   if (isLoading) {
     spinner = /*#__PURE__*/react.createElement(Avatar_Avatar, {
       color: "transparent",
-      size: "small"
-    }, /*#__PURE__*/react.createElement(Icon_Icon, {
-      name: "hourglass_empty",
-      color: "white"
-    }));
+      iconName: "hourglass_empty",
+      iconColor: "white"
+    });
   }
 
   var homeBtn = null;
@@ -16870,6 +16868,7 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       }
     },
     update: function update(raw, callback) {
+      var appKind = self.kind;
       self.history = []; // User logged
 
       if (raw && raw.user) {
@@ -16884,14 +16883,14 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
         editMode = self.urlParams.edit == 'true' ? true : false;
       }
 
-      if (!self.account.is_editor) {
+      if (appKind == "web" && !self.account.is_editor) {
         editMode = false;
       } // Debug mode ?
 
 
       var debugMode = getFromStorage('debugMode', false, 'bool');
 
-      if (!self.account.is_admin) {
+      if (appKind == "web" && !self.account.is_admin) {
         debugMode = false;
       }
 
@@ -17704,10 +17703,6 @@ var makeInitSnapshot = function makeInitSnapshot(routes, snapshot, callback) {
 
   if (!snapshot['app'].hasOwnProperty('context')) {
     snapshot['app']['context'] = matchResult.context;
-  }
-
-  if (snapshot['app'].kind == "electron") {
-    snapshot['app']['context'] = getFromStorage("lastContext", "home");
   }
 
   snapshot['app']['standaloneMode'] = standaloneMode;
@@ -19291,17 +19286,17 @@ var ArtistsStore = mobx_state_tree_module/* types.model */.V5.model({
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
 
-      var raw = store._readJsonFile(self.artistsCollectionFilePath, {
+      store._readJsonFile(self.artistsCollectionFilePath, {
         by_id: {}
-      }); // self.update(raw);
+      }, function (raw) {
+        // self.update(raw);
+        app.saveValue(['artists', 'by_id'], raw.by_id, function () {
+          self.setField('loaded', true);
 
-
-      app.saveValue(['artists', 'by_id'], raw.by_id, function () {
-        self.setField('loaded', true);
-
-        if (callback) {
-          callback();
-        }
+          if (callback) {
+            callback();
+          }
+        });
       });
     },
     save: function save(callback) {
@@ -19739,6 +19734,7 @@ function Thumbnail_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
  // Datas
 // ======================================================================================================
 
@@ -19787,8 +19783,8 @@ var Thumbnail_Thumbnail = (0,es/* observer */.Pi)(function (props) {
   var disabled = props.disabled == true ? true : false;
   var callbackClick = props.callbackClick;
   var className = props.className ? props.className : "";
-  var rootStyle = props.rootStyle ? props.rootStyle : {};
-  var style = props.style ? props.style : {}; // ...
+  var rootStyle = props.rootStyle ? copyObj(props.rootStyle) : {};
+  var style = props.style ? copyObj(props.style) : {}; // ...
 
   style['padding'] = "0px";
 
@@ -19810,6 +19806,10 @@ var Thumbnail_Thumbnail = (0,es/* observer */.Pi)(function (props) {
   var imgStyle = {
     "width": style.width,
     "height": variant != 'fit' ? style.height : "unset"
+  }; // Footer
+
+  var footerStyle = {
+    "width": style.width
   }; // Events
   // ==================================================================================================
 
@@ -19856,7 +19856,8 @@ var Thumbnail_Thumbnail = (0,es/* observer */.Pi)(function (props) {
     src: src,
     style: imgStyle
   })), (title || subtitle) && /*#__PURE__*/react.createElement("div", {
-    className: "nx-thumbnail-footer"
+    className: "nx-thumbnail-footer",
+    style: footerStyle
   }, title && /*#__PURE__*/react.createElement("div", {
     className: "nx-thumbnail-title"
   }, title), subtitle && /*#__PURE__*/react.createElement("div", {
@@ -20029,17 +20030,17 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
 
-      var raw = store._readJsonFile(self.albumsCollectionFilePath, {
+      store._readJsonFile(self.albumsCollectionFilePath, {
         by_id: {}
-      }); // self.update(raw);
+      }, function (raw) {
+        // self.update(raw);
+        app.saveValue(['albums', 'by_id'], raw.by_id, function () {
+          self.setField('loaded', true);
 
-
-      app.saveValue(['albums', 'by_id'], raw.by_id, function () {
-        self.setField('loaded', true);
-
-        if (callback) {
-          callback();
-        }
+          if (callback) {
+            callback();
+          }
+        });
       });
     },
     save: function save(callback) {
@@ -20141,7 +20142,10 @@ var RenderAlbums = (0,es/* observer */.Pi)(function (props) {
     for (var i = 0; i < 10; i++) {
       letterGhosts.push( /*#__PURE__*/react.createElement(ThumbnailGhost, {
         key: "thumbnail-ghost-".concat(letterIdx, "-").concat(i),
-        size: "small"
+        size: "small",
+        style: {
+          marginRight: '16px'
+        }
       }));
     }
 
@@ -20187,6 +20191,10 @@ var RenderAlbums = (0,es/* observer */.Pi)(function (props) {
         title: album.name,
         subtitle: album.linkedArtist.name,
         size: "small",
+        rootStyle: {
+          marginRight: '20px',
+          marginBottom: '30px'
+        },
         callbackClick: function callbackClick() {
           return handleAlbumClick(album.id);
         }
@@ -20490,19 +20498,17 @@ var TracksStore = mobx_state_tree_module/* types.model */.V5.model({
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
 
-      var raw = store._readJsonFile(self.tracksCollectionFilePath, {
+      store._readJsonFile(self.tracksCollectionFilePath, {
         by_id: {}
-      }); // self.update(raw);
+      }, function (raw) {
+        // self.update(raw);
+        app.saveValue(['tracks', 'by_id'], raw.by_id, function () {
+          self.setField('loaded', true);
 
-
-      console.log("Loading... :: tracks");
-      app.saveValue(['tracks', 'by_id'], raw.by_id, function () {
-        self.setField('loaded', true);
-        console.log("Done !");
-
-        if (callback) {
-          callback();
-        }
+          if (callback) {
+            callback();
+          }
+        });
       });
     },
     save: function save(callback) {
@@ -20562,8 +20568,7 @@ var RenderTracks = (0,es/* observer */.Pi)(function (props) {
 
   var isLoading = store.isLoading;
   var nbTracks = tracks.nbTracks;
-  var tracksSorted = tracks.getSortedByField("name");
-  console.log(tracksSorted); // ...
+  var tracksSorted = tracks.getSortedByField("name"); // ...
   // Events
   // ==================================================================================================
 
@@ -20886,12 +20891,13 @@ function Card_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
  // Functions Components ReactJS
 // ======================================================================================================
 
 var CARD_SIZES = {
   "small": 140,
-  "normal": 200,
+  "normal": 170,
   "large": 400
 }; // Functions Components ReactJS
 // ======================================================================================================
@@ -20917,7 +20923,7 @@ var Card_Card = (0,es/* observer */.Pi)(function (props) {
   var children = props.children;
   var callbackClick = props.callbackClick;
   var className = props.className ? props.className : '';
-  var style = props.style ? props.style : {}; // ...
+  var style = props.style ? copyObj(props.style) : {}; // ...
 
   if (hover) {
     style['boxShadow'] = "0 0 10px ".concat(theme.palette.primary.main);
@@ -21167,17 +21173,17 @@ var YearsStore = mobx_state_tree_module/* types.model */.V5.model({
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
 
-      var raw = store._readJsonFile(self.yearsCollectionFilePath, {
+      store._readJsonFile(self.yearsCollectionFilePath, {
         by_id: {}
-      }); // self.update(raw);
+      }, function (raw) {
+        // self.update(raw);
+        app.saveValue(['years', 'by_id'], raw.by_id, function () {
+          self.setField('loaded', true);
 
-
-      app.saveValue(['years', 'by_id'], raw.by_id, function () {
-        self.setField('loaded', true);
-
-        if (callback) {
-          callback();
-        }
+          if (callback) {
+            callback();
+          }
+        });
       });
     },
     save: function save(callback) {
@@ -21270,12 +21276,15 @@ var RenderYears = (0,es/* observer */.Pi)(function (props) {
   }), decades.map(function (decade, decadeIdx) {
     var yearsDecade = groupedByDecade[decade]; // Fantômes flex
 
-    var letterGhosts = [];
+    var decadeGhosts = [];
 
     for (var i = 0; i < 10; i++) {
-      letterGhosts.push( /*#__PURE__*/react.createElement(CardGhost, {
+      decadeGhosts.push( /*#__PURE__*/react.createElement(CardGhost, {
         key: "thumbnail-ghost-".concat(decadeIdx, "-").concat(i),
-        size: "small"
+        size: "normal",
+        style: {
+          marginRight: '10px'
+        }
       }));
     }
 
@@ -21315,7 +21324,11 @@ var RenderYears = (0,es/* observer */.Pi)(function (props) {
     , null, yearsDecade.map(function (year, yearIdx) {
       return /*#__PURE__*/react.createElement(Card_Card, {
         key: "thumbnail-year-".concat(decadeIdx, "-").concat(yearIdx),
-        size: "small",
+        size: "normal",
+        style: {
+          marginRight: '10px',
+          marginBottom: '20px'
+        },
         callbackClick: function callbackClick() {
           return handleYearClick(year.id);
         }
@@ -21333,7 +21346,7 @@ var RenderYears = (0,es/* observer */.Pi)(function (props) {
           }
         })
       }));
-    }), letterGhosts));
+    }), decadeGhosts));
   }));
 }); // ***** YearsHeaderLeft *****
 // ***************************
@@ -21702,17 +21715,17 @@ var GenresStore = mobx_state_tree_module/* types.model */.V5.model({
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
 
-      var raw = store._readJsonFile(self.genresCollectionFilePath, {
+      store._readJsonFile(self.genresCollectionFilePath, {
         by_id: {}
-      }); // self.update(raw);
+      }, function (raw) {
+        // self.update(raw);
+        app.saveValue(['genres', 'by_id'], raw.by_id, function () {
+          self.setField('loaded', true);
 
-
-      app.saveValue(['genres', 'by_id'], raw.by_id, function () {
-        self.setField('loaded', true);
-
-        if (callback) {
-          callback();
-        }
+          if (callback) {
+            callback();
+          }
+        });
       });
     },
     save: function save(callback) {
@@ -22175,17 +22188,17 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
 
-      var raw = store._readJsonFile(self.playlistsCollectionFilePath, {
+      store._readJsonFile(self.playlistsCollectionFilePath, {
         by_id: {}
-      }); // self.update(raw);
+      }, function (raw) {
+        // self.update(raw);
+        app.saveValue(['playlists', 'by_id'], raw.by_id, function () {
+          self.setField('loaded', true);
 
-
-      app.saveValue(['playlists', 'by_id'], raw.by_id, function () {
-        self.setField('loaded', true);
-
-        if (callback) {
-          callback();
-        }
+          if (callback) {
+            callback();
+          }
+        });
       });
     },
     save: function save(callback) {
@@ -23714,9 +23727,14 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
       var isInError = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       // Arrêt de l'indexation
       // ---
-      console.log("Calling :: stopScan()");
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
+      var debugMode = app.debugMode;
+
+      if (debugMode) {
+        console.log("Calling :: stopScan()");
+      }
+
       var taskId = "scan_".concat(window.scanScope);
       window.scanStopTime = new Date(); // Temps de scan
 
@@ -23742,13 +23760,19 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
       // Indexation des données passées en paramètres
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var debugMode = app.debugMode;
       var tracks = store.tracks;
       var albums = store.albums;
       var artists = store.artists;
       var years = store.years;
       var genre = store.genres;
-      console.log('### index datas ###');
-      console.log(metas);
+
+      if (debugMode) {
+        console.log('### index datas ###');
+        console.log(metas);
+      }
+
       var scope = window.scanScope;
       var sourceFolder = self.getFolder(metas.folderRoot);
 
@@ -23812,10 +23836,11 @@ var Main = __webpack_require__(41729);
 
 
 
+
  // Functions
 // ======================================================================================================
 
-function readJsonFile(filePath, defaultDatas) {
+function readJsonFile(filePath, defaultDatas, callback, verbose) {
   // Lit le fichier JSON passé en paramètres et renvoie un dictionnaire
   // ---
   var datas = defaultDatas ? defaultDatas : {}; // On s'assure que le fichier existe
@@ -23824,27 +23849,46 @@ function readJsonFile(filePath, defaultDatas) {
     ipc.sendSync('writeJSONSync', filePath, datas, {
       spaces: 4
     });
+  }
+
+  if (verbose) {
+    console.log("SEND readJson ".concat(JSON.stringify(filePath)));
   } // Lecture des données du fichier
 
 
   try {
-    datas = ipc.sendSync('readJsonSync', filePath);
+    ipc.invoke('readJson', [filePath]).then(function (result) {
+      if (verbose) {
+        console.log("CALLBACK readJson ".concat(JSON.stringify(filePath)));
+        console.log(result);
+      }
+
+      if (callback) {
+        callback(result);
+      }
+    });
   } catch (err) {
     console.error(err);
   }
 
-  return datas;
+  return null;
 }
 
-function writeJsonFile(filePath, datas) {
+function writeJsonFile(filePath, datas, callback) {
   // Ecrit le dictionnaire dans le fichier json passés en paramètres
   // ---
-  var self = this;
-  ipc.once('writeJSONDone', function (ret) {// console.log(ret);
-  });
-  ipc.send('writeJSON', [filePath, datas, {
-    spaces: 4
-  }]);
+  try {
+    ipc.invoke('writeJSON', [filePath, datas, {
+      spaces: 4
+    }]).then(function (result) {
+      if (callback) {
+        callback(result);
+      }
+    });
+  } catch (err) {
+    console.error(err);
+  }
+
   return null;
 } // Models
 // -------------------------------------------------------------------------------------------------------------
@@ -23930,12 +23974,14 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
       // Gramophone-specific init datas
       // ---
       self.library.load();
-      self.artists.load(self.afterLoad);
-      self.albums.load(self.afterLoad);
-      self.tracks.load(self.afterLoad);
-      self.years.load(self.afterLoad);
-      self.genres.load(self.afterLoad);
-      self.playlists.load(self.afterLoad);
+      setTimeout(function () {
+        self.artists.load(self.afterLoad);
+        self.albums.load(self.afterLoad);
+        self.tracks.load(self.afterLoad);
+        self.years.load(self.afterLoad);
+        self.genres.load(self.afterLoad);
+        self.playlists.load(self.afterLoad);
+      }, 250);
     },
     save: function save(callback) {
       // Sauvegarde des données
@@ -24040,8 +24086,9 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
       }
     },
     // -
-    _readJsonFile: function _readJsonFile(filePath, defaultDatas) {
-      return readJsonFile(filePath, defaultDatas);
+    _readJsonFile: function _readJsonFile(filePath, defaultDatas, callback) {
+      var app = self.app;
+      return readJsonFile(filePath, defaultDatas, callback, app.debugMode);
     },
     _writeJsonFile: function _writeJsonFile(filePath, datas) {
       return writeJsonFile(filePath, datas);
@@ -24094,8 +24141,7 @@ var routes = {
 
 var initSnapshot = makeInitSnapshot(routes, {
   'app': {
-    'context': 'home',
-    // TODO : Last context ?
+    'context': getFromStorage("lastContext", "home"),
     'kind': 'electron',
     'tasks': ['load_library'],
     'menu': {
@@ -24130,6 +24176,7 @@ var rootStore = RootStore.create(initSnapshot);
 var RootStoreContext = /*#__PURE__*/react.createContext(rootStore);
 window.store = rootStore;
 window.storeContext = RootStoreContext;
+setToStorage('debugMode', true, 'bool');
 var staticRaw = {
   'smap': copyObj(services_STATIC_SMAP)
 };

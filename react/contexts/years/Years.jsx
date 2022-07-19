@@ -104,16 +104,21 @@ export const YearsStore = types
 			const store = getRoot(self);
 			const app = store.app;
 
-			const raw = store._readJsonFile(self.yearsCollectionFilePath, {
-				by_id: {},
-			});
-			// self.update(raw);
-			app.saveValue(['years', 'by_id'], raw.by_id, () => {
-				self.setField('loaded', true);
-				if (callback) {
-					callback();
+			store._readJsonFile(
+				self.yearsCollectionFilePath,
+				{
+					by_id: {},
+				},
+				(raw) => {
+					// self.update(raw);
+					app.saveValue(['years', 'by_id'], raw.by_id, () => {
+						self.setField('loaded', true);
+						if (callback) {
+							callback();
+						}
+					});
 				}
-			});
+			);
 		},
 
 		save: (callback) => {
@@ -237,12 +242,15 @@ export const RenderYears = observer((props) => {
 				const yearsDecade = groupedByDecade[decade];
 
 				// Fantômes flex
-				let letterGhosts = []
+				let decadeGhosts = []
 				for (var i = 0; i < 10; i++) {
-					letterGhosts.push(
+					decadeGhosts.push(
 						<CardGhost
 							key={`thumbnail-ghost-${decadeIdx}-${i}`}
-							size="small"
+							size="normal"
+							style={{
+								marginRight: '10px',
+							}}
 						/>
 					)
 				}
@@ -296,7 +304,11 @@ export const RenderYears = observer((props) => {
 							{yearsDecade.map((year, yearIdx) => (
 								<Card
 									key={`thumbnail-year-${decadeIdx}-${yearIdx}`}
-									size="small"
+									size="normal"
+									style={{
+										marginRight: '10px',
+										marginBottom: '20px',
+									}}
 									callbackClick={() => handleYearClick(year.id)}
 								>
 									<CardHeader
@@ -317,7 +329,7 @@ export const RenderYears = observer((props) => {
 									/>
 								</Card>
 							))}
-							{letterGhosts}
+							{decadeGhosts}
 						</Grid>
 
 					</Group>

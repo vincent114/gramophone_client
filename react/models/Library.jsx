@@ -510,10 +510,13 @@ export const LibraryStore = types
 			// Arrêt de l'indexation
 			// ---
 
-			console.log("Calling :: stopScan()");
-
 			const store = getRoot(self);
 			const app = store.app;
+			const debugMode = app.debugMode;
+
+			if (debugMode) {
+				console.log("Calling :: stopScan()");
+			}
 
 			const taskId = `scan_${window.scanScope}`;
 
@@ -543,14 +546,19 @@ export const LibraryStore = types
 			// ---
 
 			const store = getRoot(self);
+			const app = store.app;
+			const debugMode = app.debugMode;
+
 			const tracks = store.tracks;
 			const albums = store.albums;
 			const artists = store.artists;
 			const years = store.years;
 			const genre = store.genres;
 
-			console.log('### index datas ###');
-			console.log(metas);
+			if (debugMode) {
+				console.log('### index datas ###');
+				console.log(metas);
+			}
 
 			const scope = window.scanScope;
 			const sourceFolder = self.getFolder(metas.folderRoot);
