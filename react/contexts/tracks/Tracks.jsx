@@ -3,12 +3,22 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import {
+	TableContainer,
+	Table,
+	TableHead,
+	TableBody,
+	TableRow,
+	TableCell
+} from 'nexus/forms/table/Table';
+
 import { HeaderTitle } from 'nexus/layout/header/Header';
 import { MenuItem } from 'nexus/layout/menu/Menu';
 import { Ribbon } from 'nexus/layout/ribbon/Ribbon';
 
 import { Helper } from 'nexus/ui/helper/Helper';
 import { IconButton } from 'nexus/ui/button/Button';
+import { Paper } from 'nexus/ui/paper/Paper';
 
 import { dateTools } from 'nexus/utils/DateTools';
 
@@ -48,6 +58,33 @@ export const TrackStore = types
 		year_id: types.maybeNull(types.string),
 		genre_id: types.maybeNull(types.string),
 	})
+	.views(self => ({
+
+		get linkedAlbum() {
+			const store = getRoot(self);
+			const albums = store.albums;
+			return albums.getById(self.album_id);
+		},
+
+		get linkedArtist() {
+			const store = getRoot(self);
+			const artists = store.artists;
+			return artists.getById(self.artist_id);
+		},
+
+		get linkedYear() {
+			const store = getRoot(self);
+			const years = store.years;
+			return years.getById(self.year_id);
+		},
+
+		get linkedGenre() {
+			const store = getRoot(self);
+			const genres = store.genres;
+			return genres.getById(self.genre_id);
+		},
+
+	}))
 	.actions(self => ({
 
 		setField: (field, value) => {
@@ -107,6 +144,26 @@ export const TracksStore = types
 			return Object.entries(self.by_id.toJSON()).length;
 		},
 
+		// Getters
+		// -
+
+		getSortedByField(field) {
+			let tracks = [];
+			for (const [trackId, track] of self.by_id.entries()) {
+				tracks.push(track);
+			}
+			tracks.sort((a, b) => a[field] - a[field]);
+			return tracks;
+		},
+
+		getById(trackId) {
+			let track = self.by_id.get(trackId);
+			if (!track) {
+				track = TrackStore.create({});
+			}
+			return track;
+		},
+
 	}))
 	.actions(self => ({
 
@@ -132,15 +189,20 @@ export const TracksStore = types
 			// ---
 
 			const store = getRoot(self);
+			const app = store.app;
 
 			const raw = store._readJsonFile(self.tracksCollectionFilePath, {
 				by_id: {},
 			});
-			self.update(raw);
-
-			if (callback) {
-				callback();
-			}
+			// self.update(raw);
+			console.log("Loading... :: tracks");
+			app.saveValue(['tracks', 'by_id'], raw.by_id, () => {
+				self.setField('loaded', true);
+				console.log("Done !");
+				if (callback) {
+					callback();
+				}
+			});
 		},
 
 		save: (callback) => {
@@ -216,7 +278,11 @@ export const RenderTracks = observer((props) => {
 	// From ... store
 
 	const isLoading = store.isLoading;
+
 	const nbTracks = tracks.nbTracks;
+	const tracksSorted = tracks.getSortedByField("name");
+
+	console.log(tracksSorted);
 
 	// ...
 
@@ -224,6 +290,12 @@ export const RenderTracks = observer((props) => {
 	// ==================================================================================================
 
 	const handleThrowDiceClick = () => {
+		// TODO
+	}
+
+	// -
+
+	const handleTrackClick = (trackId) => {
 		// TODO
 	}
 
@@ -248,6 +320,68 @@ export const RenderTracks = observer((props) => {
 					</div>
 				)}
 			/>
+
+			<br/>
+
+			<TableContainer
+				component={Paper}
+				style={{
+					marginTop: '10px',
+					marginLeft: '20px',
+					marginRight: '20px',
+					padding: '0px',
+				}}
+			>
+				<Table>
+
+					<TableHead>
+						<TableRow>
+							<TableCell header={true}>
+								Title
+							</TableCell>
+							<TableCell header={true}>
+								Artiste
+							</TableCell>
+							<TableCell header={true}>
+								Album
+							</TableCell>
+							<TableCell header={true}>
+								Genre
+							</TableCell>
+							<TableCell header={true}>
+								Année
+							</TableCell>
+						</TableRow>
+					</TableHead>
+
+					<TableBody>
+						{tracksSorted.map((track, trackIdx) => (
+							<TableRow
+								key={`track-${trackIdx}`}
+								hoverable={true}
+								callbackClick={() => handleTrackClick(genre.id)}
+							>
+								<TableCell style={{maxWidth: '200px'}}>
+									{track.name}
+								</TableCell>
+								<TableCell>
+									{track.artist}
+								</TableCell>
+								<TableCell>
+									{track.album}
+								</TableCell>
+								<TableCell>
+									{track.linkedGenre.name}
+								</TableCell>
+								<TableCell>
+									{track.linkedYear.name}
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+
+				</Table>
+			</TableContainer>
 
 		</div>
 	)
@@ -360,7 +494,7 @@ export const TracksPage = observer((props) => {
 	}
 
 	return (
-		<div className="nx-page medium">
+		<div className="nx-page even large">
 			{renderPage()}
 			{renderHelper()}
 		</div>

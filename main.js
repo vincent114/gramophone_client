@@ -136,6 +136,20 @@ ipcMain.on("startIndexer", (event, [scope, folders, collectionFiles, collectionC
 	});
 });
 
+ipcMain.on("readJson", (event, [filePath]) => {
+
+	// Lit et parse le fichier json passé en paramètres
+	// ---
+
+	fs.readJson(filePath)
+	.then((datas) => {
+		mainWindow.webContents.send("readJSONDone", datas);
+	})
+	.catch(err => {
+		console.error(err);
+	})
+});
+
 ipcMain.on("writeJSON", (event, [filePath, datas, options]) => {
 
 	// Ecrit des données dans le fichier passé en paramètres

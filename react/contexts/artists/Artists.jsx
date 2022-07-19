@@ -104,15 +104,18 @@ export const ArtistsStore = types
 			// ---
 
 			const store = getRoot(self);
+			const app = store.app;
 
 			const raw = store._readJsonFile(self.artistsCollectionFilePath, {
 				by_id: {},
 			});
-			self.update(raw);
-
-			if (callback) {
-				callback();
-			}
+			// self.update(raw);
+			app.saveValue(['artists', 'by_id'], raw.by_id, () => {
+				self.setField('loaded', true);
+				if (callback) {
+					callback();
+				}
+			});
 		},
 
 		save: (callback) => {

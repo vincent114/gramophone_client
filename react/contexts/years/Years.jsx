@@ -8,9 +8,20 @@ import { YearStore } from 'gramophone_client/contexts/year/Year';
 import { HeaderTitle } from 'nexus/layout/header/Header';
 import { MenuItem } from 'nexus/layout/menu/Menu';
 import { Ribbon } from 'nexus/layout/ribbon/Ribbon';
+import {
+	GroupDivider,
+	Group,
+} from 'nexus/layout/group/Group';
+import { Grid } from 'nexus/layout/grid/Grid';
 
 import { Helper } from 'nexus/ui/helper/Helper';
 import { IconButton } from 'nexus/ui/button/Button';
+import { Avatar } from 'nexus/ui/avatar/Avatar';
+import {
+	Card,
+	CardGhost,
+	CardHeader
+} from 'nexus/ui/card/Card';
 
 import './Years.css';
 
@@ -41,6 +52,31 @@ export const YearsStore = types
 			return Object.entries(self.by_id.toJSON()).length;
 		},
 
+		// -
+
+		get groupedByDecade() {
+			let byDecade = {};
+			for (const [yearId, year] of self.by_id.entries()) {
+				const decade = year.decade;
+				if (!byDecade.hasOwnProperty(decade)) {
+					byDecade[decade] = [];
+				}
+				byDecade[decade].push(year);
+			}
+			return byDecade;
+		},
+
+		// Getters
+		// -
+
+		getById(yearId) {
+			let year = self.by_id.get(yearId);
+			if (!year) {
+				year = YearStore.create({});
+			}
+			return year;
+		},
+
 	}))
 	.actions(self => ({
 
@@ -66,15 +102,18 @@ export const YearsStore = types
 			// ---
 
 			const store = getRoot(self);
+			const app = store.app;
 
 			const raw = store._readJsonFile(self.yearsCollectionFilePath, {
 				by_id: {},
 			});
-			self.update(raw);
-
-			if (callback) {
-				callback();
-			}
+			// self.update(raw);
+			app.saveValue(['years', 'by_id'], raw.by_id, () => {
+				self.setField('loaded', true);
+				if (callback) {
+					callback();
+				}
+			});
 		},
 
 		save: (callback) => {
@@ -135,14 +174,39 @@ export const RenderYears = observer((props) => {
 	// From ... store
 
 	const isLoading = store.isLoading;
+
 	const nbYears = years.nbYears;
+	const groupedByDecade = years.groupedByDecade;
 
 	// ...
+
+	const decades = Object.keys(groupedByDecade);
+	decades.sort((a, b) => b - a);
 
 	// Events
 	// ==================================================================================================
 
 	const handleThrowDiceClick = () => {
+		// TODO
+	}
+
+	// -
+
+	const handleDecadeClick = (decade) => {
+		// TODO
+	}
+
+	const handleFocusClick = (decade) => {
+		// TODO
+	}
+
+	// -
+
+	const handleYearClick = (yearId) => {
+		store.navigateTo('year', yearId);
+	}
+
+	const handleShuffleClick = (yearId) => {
 		// TODO
 	}
 
@@ -167,6 +231,98 @@ export const RenderYears = observer((props) => {
 					</div>
 				)}
 			/>
+
+			{decades.map((decade, decadeIdx) => {
+
+				const yearsDecade = groupedByDecade[decade];
+
+				// Fantômes flex
+				let letterGhosts = []
+				for (var i = 0; i < 10; i++) {
+					letterGhosts.push(
+						<CardGhost
+							key={`thumbnail-ghost-${decadeIdx}-${i}`}
+							size="small"
+						/>
+					)
+				}
+
+				return (
+					<Group
+						id={`group-${decade}`}
+						key={`group-${decade}-${decadeIdx}`}
+						style={{
+							marginBottom: '40px',
+						}}
+					>
+
+						<GroupDivider
+							spacing="big"
+							left={(
+								<IconButton
+									color="secondary"
+									onClick={() => handleDecadeClick(decade)}
+								>
+									{`${decade}'s`}
+								</IconButton>
+							)}
+							center={(
+								<Avatar
+									size="small"
+									color="rgba(111, 126, 140, 0.1)"
+									textColor="typography"
+									style={{
+										fontSize: '14px',
+										color: 'gray',
+									}}
+								>
+									{yearsDecade.length}
+								</Avatar>
+							)}
+							right={(
+								<IconButton
+									iconName="arrow_forward"
+									onClick={() => handleFocusClick(decade)}
+								/>
+							)}
+						/>
+
+						<Grid
+							// style={{
+							// 	paddingLeft: '20px',
+							// 	paddingRight: '20px',
+							// }}
+						>
+							{yearsDecade.map((year, yearIdx) => (
+								<Card
+									key={`thumbnail-year-${decadeIdx}-${yearIdx}`}
+									size="small"
+									callbackClick={() => handleYearClick(year.id)}
+								>
+									<CardHeader
+										title={year.name}
+										subtitle={`${year.nbAlbums} ${(year.nbAlbums > 1) ? "albums" : "album"}`}
+										action={(
+											<IconButton
+												size="small"
+												iconName="shuffle"
+												color="info"
+												onClick={(e) => {
+													e.preventDefault();
+													e.stopPropagation();
+													handleShuffleClick(year.id);
+												}}
+											/>
+										)}
+									/>
+								</Card>
+							))}
+							{letterGhosts}
+						</Grid>
+
+					</Group>
+				)
+			})}
 
 		</div>
 	)

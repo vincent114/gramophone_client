@@ -22,6 +22,20 @@ export const YearStore = types
 
 		albums_ids: types.optional(types.array(types.string), []),
 	})
+	.views(self => ({
+
+		get decade() {
+			if (self.name && self.name.length >= 2) {
+				return `${self.name.substring(0, self.name.length - 1)}0`;
+			}
+			return "";
+		},
+
+		get nbAlbums() {
+			return self.albums_ids.length;
+		},
+
+	}))
 	.actions(self => ({
 
 		setField: (field, value) => {

@@ -71,6 +71,14 @@ export const GenresStore = types
 			return byLetter;
 		},
 
+		getById(genreId) {
+			let genre = self.by_id.get(genreId);
+			if (!genre) {
+				genre = GenreStore.create({});
+			}
+			return genre;
+		},
+
 	}))
 	.actions(self => ({
 
@@ -96,15 +104,18 @@ export const GenresStore = types
 			// ---
 
 			const store = getRoot(self);
+			const app = store.app;
 
 			const raw = store._readJsonFile(self.genresCollectionFilePath, {
 				by_id: {},
 			});
-			self.update(raw);
-
-			if (callback) {
-				callback();
-			}
+			// self.update(raw);
+			app.saveValue(['genres', 'by_id'], raw.by_id, () => {
+				self.setField('loaded', true);
+				if (callback) {
+					callback();
+				}
+			});
 		},
 
 		save: (callback) => {

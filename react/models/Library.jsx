@@ -378,11 +378,20 @@ export const LibraryStore = types
 			// Chargement des paramètres de la bibliothèque
 			// ---
 
+			const store = getRoot(self);
+			const app = store.app;
+
 			const params = getFromStorage('params', null, 'json');
 			if (!params) {
 				self.save();
 			}
 			self.update(params);
+			// app.saveValue(['library'], raw.by_id, () => {
+			// 	self.setField('loaded', true);
+			// 	if (callback) {
+			// 		callback();
+			// 	}
+			// });
 
 			ipc.sendSync('mkdirsSync', self.collectionPath);
 			ipc.sendSync('mkdirsSync', self.collectionCoversPath);
@@ -473,11 +482,17 @@ export const LibraryStore = types
 			if (!window.scanStopTime) {
 				ipc.on('indexTrack', (datas) => {
 					self.processMetadatas(datas);
+
+					// Timeout pour éviter les scans infinis
+					clearTimeout(window.timeoutScan);
+					window.timeoutScan = setTimeout(function() {
+						self.stopScan();
+					}, 5000);
 				});
 			}
-			ipc.once('scanDone', () => {
-				self.stopScan();
-			});
+			// ipc.once('scanDone', () => {
+			// 	self.stopScan();
+			// });
 			ipc.once('scanError', (code) => {
 				snackbar.update(true, `Une erreur est survenue (code ${code}).`, "error");
 				self.stopScan(true);
@@ -494,6 +509,8 @@ export const LibraryStore = types
 
 			// Arrêt de l'indexation
 			// ---
+
+			console.log("Calling :: stopScan()");
 
 			const store = getRoot(self);
 			const app = store.app;

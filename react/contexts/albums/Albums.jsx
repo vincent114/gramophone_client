@@ -66,6 +66,14 @@ export const AlbumsStore = types
 			return byLetter;
 		},
 
+		getById(albumId) {
+			let album = self.by_id.get(albumId);
+			if (!album) {
+				album = AlbumStore.create({});
+			}
+			return album;
+		},
+
 	}))
 	.actions(self => ({
 
@@ -91,15 +99,18 @@ export const AlbumsStore = types
 			// ---
 
 			const store = getRoot(self);
+			const app = store.app;
 
 			const raw = store._readJsonFile(self.albumsCollectionFilePath, {
 				by_id: {},
 			});
-			self.update(raw);
-
-			if (callback) {
-				callback();
-			}
+			// self.update(raw);
+			app.saveValue(['albums', 'by_id'], raw.by_id, () => {
+				self.setField('loaded', true);
+				if (callback) {
+					callback();
+				}
+			});
 		},
 
 		save: (callback) => {
@@ -233,7 +244,7 @@ export const RenderAlbums = observer((props) => {
 				for (var i = 0; i < 10; i++) {
 					letterGhosts.push(
 						<ThumbnailGhost
-							key={`thumbnail-ghost-${i}`}
+							key={`thumbnail-ghost-${letterIdx}-${i}`}
 							size="small"
 						/>
 					)
@@ -287,11 +298,11 @@ export const RenderAlbums = observer((props) => {
 						>
 							{albumsLetter.map((album, albumIdx) => (
 								<Thumbnail
-									key={`thumbnail-album-${albumIdx}`}
+									key={`thumbnail-album-${letterIdx}-${albumIdx}`}
 									src={album.cover}
 									iconName="album"
 									title={album.name}
-									subtitle={album.artist.name}
+									subtitle={album.linkedArtist.name}
 									size="small"
 									callbackClick={() => handleAlbumClick(album.id)}
 								/>

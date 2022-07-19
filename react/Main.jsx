@@ -32,6 +32,53 @@ import { LibraryStore } from 'gramophone_client/models/Library';
 import './Main.css';
 
 
+// Functions
+// ======================================================================================================
+
+function readJsonFile(filePath, defaultDatas) {
+
+	// Lit le fichier JSON passé en paramètres et renvoie un dictionnaire
+	// ---
+
+	let datas = (defaultDatas) ? defaultDatas : {};
+
+	// On s'assure que le fichier existe
+	if (!ipc.sendSync('existsSync', filePath)) {
+		ipc.sendSync('writeJSONSync', filePath, datas, {
+			spaces: 4
+		});
+	}
+
+	// Lecture des données du fichier
+	try {
+		datas = ipc.sendSync('readJsonSync', filePath);
+	} catch(err) {
+		console.error(err);
+	}
+	return datas;
+}
+
+function writeJsonFile(filePath, datas) {
+
+	// Ecrit le dictionnaire dans le fichier json passés en paramètres
+	// ---
+
+	const self = this;
+
+	ipc.once('writeJSONDone', (ret) => {
+		// console.log(ret);
+	});
+
+	ipc.send('writeJSON', [
+		filePath,
+		datas,
+		{spaces: 4},
+	]);
+
+	return null;
+}
+
+
 // Models
 // -------------------------------------------------------------------------------------------------------------
 
@@ -232,44 +279,11 @@ const RootStore = types
 		// -
 
 		_readJsonFile: (filePath, defaultDatas) => {
-
-			// Lit le fichier JSON passé en paramètres et renvoie un dictionnaire
-			// ---
-
-			let datas = (defaultDatas) ? defaultDatas : {};
-
-			// On s'assure que le fichier existe
-			if (!ipc.sendSync('existsSync', filePath)) {
-				ipc.sendSync('writeJSONSync', filePath, datas, {
-					spaces: 4
-				});
-			}
-
-			// Lecture des données du fichier
-			try {
-				datas = ipc.sendSync('readJsonSync', filePath);
-			} catch(err) {
-				console.error(err);
-			}
-			return datas;
+			return readJsonFile(filePath, defaultDatas)
 		},
 
 		_writeJsonFile: (filePath, datas) => {
-
-			// Ecrit le dictionnaire dans le fichier json passés en paramètres
-			// ---
-
-			const self = this;
-
-			ipc.once('writeJSONDone', (ret) => {
-				// console.log(ret);
-			});
-
-			ipc.send('writeJSON', [
-				filePath,
-				datas,
-				{spaces: 4},
-			]);
+			return writeJsonFile(filePath, datas);
 		},
 
 	}))
@@ -328,6 +342,11 @@ let routes = {
 
 // Store
 // -
+
+// const cwd = ipc.sendSync('getCwd');
+// const path = ipc.sendSync('pathJoin', [cwd, 'collection']);
+
+// console.log(path);
 
 let initSnapshot = makeInitSnapshot(routes, {
 	'app': {

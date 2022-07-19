@@ -39,10 +39,22 @@ export const AlbumStore = types
 
 		// -
 
-		get artist() {
+		get linkedArtist() {
 			const store = getRoot(self);
 			const artists = store.artists;
 			return artists.getById(self.artist_id);
+		},
+
+		get linkedYear() {
+			const store = getRoot(self);
+			const years = store.years;
+			return years.getById(self.year_id);
+		},
+
+		get linkedGenre() {
+			const store = getRoot(self);
+			const genres = store.genres;
+			return genres.getById(self.genre_id);
 		},
 
 	}))

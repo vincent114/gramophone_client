@@ -41,6 +41,17 @@ export const PlaylistsStore = types
 			return Object.entries(self.by_id.toJSON()).length;
 		},
 
+		// Getters
+		// -
+
+		getById(playlistId) {
+			let playlist = self.by_id.get(playlistId);
+			if (!playlist) {
+				playlist = PlaylistStore.create({});
+			}
+			return playlist;
+		},
+
 	}))
 	.actions(self => ({
 
@@ -66,15 +77,18 @@ export const PlaylistsStore = types
 			// ---
 
 			const store = getRoot(self);
+			const app = store.app;
 
 			const raw = store._readJsonFile(self.playlistsCollectionFilePath, {
 				by_id: {},
 			});
-			self.update(raw);
-
-			if (callback) {
-				callback();
-			}
+			// self.update(raw);
+			app.saveValue(['playlists', 'by_id'], raw.by_id, () => {
+				self.setField('loaded', true);
+				if (callback) {
+					callback();
+				}
+			});
 		},
 
 		save: (callback) => {
