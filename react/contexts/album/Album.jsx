@@ -28,6 +28,24 @@ export const AlbumStore = types
 		genre_id: types.maybeNull(types.string),
 		tracks_ids: types.optional(types.array(types.string), []),
 	})
+	.views(self => ({
+
+		get letter() {
+			if (self.name) {
+				return self.name[0].toLowerCase();
+			}
+			return "";
+		},
+
+		// -
+
+		get artist() {
+			const store = getRoot(self);
+			const artists = store.artists;
+			return artists.getById(self.artist_id);
+		},
+
+	}))
 	.actions(self => ({
 
 		setField: (field, value) => {
@@ -107,11 +125,11 @@ export const AlbumPage = observer((props) => {
 	// From ... store
 
 	const loaded = store.loaded;
-	const albumId = app.albumId;
+	const albumId = store.albumId;
 
 	// ...
 
-	const showHelper = (!loaded && !albumId) ? true : false;
+	const showHelper = (!loaded || !albumId) ? true : false;
 
 	// Render
 	// ==================================================================================================

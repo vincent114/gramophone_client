@@ -2050,8 +2050,24 @@
 	padding: 10px 10px 20px 10px;
 }
 
+.nx-page.even {
+	padding: 20px 20px 40px 20px;
+}
+
+/* ---------- */
+/* Page Sizes */
+/* ---------- */
+
 .nx-page.small {
 	max-width: 500px;
+}
+
+.nx-page.medium {
+	max-width: 1000px;
+}
+
+.nx-page.large {
+	max-width: 1400px;
 }
 
 /* Flex */
@@ -2547,6 +2563,67 @@
 }
 
 
+
+
+/* Thumbnail */
+/* ================================================================================================== */
+
+.nx-thumbnail.clickable {
+	cursor: pointer;
+}
+
+/* Content */
+/* -------------------------------------------------------------------------------- */
+
+.nx-thumbnail .nx-paper {
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+}
+
+.nx-thumbnail.clickable:active .nx-paper {
+	transform: scale(0.95);
+}
+
+.nx-thumbnail .nx-paper .nx-icon {
+	margin-left: auto;
+    margin-right: auto;
+}
+
+.nx-thumbnail .nx-paper img {
+/*	-webkit-background-size: cover;
+	background-size: cover;
+	background-position-x: center;
+	background-position-y: center;*/
+	object-fit: cover;
+}
+
+/* Footer */
+/* -------------------------------------------------------------------------------- */
+
+.nx-thumbnail-title {
+	font-size: 12px;
+	font-weight: bold;
+	padding: 10px 0px 5px 0px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	color: black;
+}
+.ui-dark .nx-thumbnail-title {
+	color: white;
+}
+
+.nx-thumbnail-subtitle {
+	font-size: 12px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	color: gray;
+}
+.ui-dark .nx-thumbnail-subtitle {
+	color: lightgray;
+}
 
 
 

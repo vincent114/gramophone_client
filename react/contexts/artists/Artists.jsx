@@ -5,7 +5,6 @@ import clsx from 'clsx';
 
 import { ArtistStore } from 'gramophone_client/contexts/artist/Artist';
 
-import { Heading } from 'nexus/forms/heading/Heading';
 import {
 	TableContainer,
 	Table,
@@ -70,6 +69,14 @@ export const ArtistsStore = types
 				byLetter[letter].push(artist);
 			}
 			return byLetter;
+		},
+
+		getById(artistId) {
+			let artist = self.by_id.get(artistId);
+			if (!artist) {
+				artist = ArtistStore.create({});
+			}
+			return artist;
 		},
 
 	}))
@@ -381,14 +388,16 @@ export const ArtistsPage = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const artists = store.artists;
 
 	// From ... store
 
 	const loaded = store.loaded;
+	const nbArtists = artists.nbArtists;
 
 	// ...
 
-	const showHelper = (!loaded) ? true : false;
+	const showHelper = (!loaded || nbArtists == 0) ? true : false;
 
 	// Renderers
 	// ==================================================================================================
@@ -399,7 +408,7 @@ export const ArtistsPage = observer((props) => {
 		// ---
 
 		let pageContent = null;
-		if (loaded) {
+		if (!showHelper) {
 			pageContent = <RenderArtists />
 		}
 		return pageContent;
@@ -419,7 +428,7 @@ export const ArtistsPage = observer((props) => {
 	}
 
 	return (
-		<div className="nx-page medium">
+		<div className="nx-page">
 			{renderPage()}
 			{renderHelper()}
 		</div>

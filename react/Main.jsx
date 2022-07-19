@@ -53,7 +53,7 @@ const RootStore = types
 		artistId: types.maybeNull(types.string),
 
 		albums: types.optional(AlbumsStore, {}),
-		albumsId: types.maybeNull(types.string),
+		albumId: types.maybeNull(types.string),
 
 		tracks: types.optional(TracksStore, {}),
 
@@ -357,7 +357,7 @@ let initSnapshot = makeInitSnapshot(routes, {
 		}
 	},
 	'artistId': getFromStorage('lastArtistId', ''),
-	'albumsId': getFromStorage('lastAlbumId', ''),
+	'albumId': getFromStorage('lastAlbumId', ''),
 	'yearId': getFromStorage('lastYearId', ''),
 	'genreId': getFromStorage('lastGenreId', ''),
 	'playlistId': getFromStorage('lastPlaylistId', ''),

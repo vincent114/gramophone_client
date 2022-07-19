@@ -22,6 +22,16 @@ export const GenreStore = types
 
 		albums_ids: types.optional(types.array(types.string), []),
 	})
+	.views(self => ({
+
+		get letter() {
+			if (self.name) {
+				return self.name[0].toLowerCase();
+			}
+			return "";
+		},
+
+	}))
 	.actions(self => ({
 
 		setField: (field, value) => {

@@ -5,9 +5,12 @@ import clsx from 'clsx';
 
 import { PlaylistStore } from 'gramophone_client/contexts/playlist/Playlist';
 
-import { Helper } from 'nexus/ui/helper/Helper';
 import { HeaderTitle } from 'nexus/layout/header/Header';
 import { MenuItem } from 'nexus/layout/menu/Menu';
+import { Ribbon } from 'nexus/layout/ribbon/Ribbon';
+
+import { Helper } from 'nexus/ui/helper/Helper';
+import { IconButton } from 'nexus/ui/button/Button';
 
 import './Playlists.css';
 
@@ -93,6 +96,56 @@ export const PlaylistsStore = types
 // Functions Components ReactJS
 // ======================================================================================================
 
+// ***** RenderPlaylists *****
+// ***************************
+
+const TAG_RenderPlaylists = () => {}
+export const RenderPlaylists = observer((props) => {
+
+	const store = React.useContext(window.storeContext);
+	const app = store.app;
+	const playlists = store.playlists;
+
+	// From ... store
+
+	const isLoading = store.isLoading;
+	const nbPlaylists = playlists.nbPlaylists;
+
+	// ...
+
+	// Events
+	// ==================================================================================================
+
+	const handleThrowDiceClick = () => {
+		// TODO
+	}
+
+	// Renderers
+	// ==================================================================================================
+
+	return (
+		<div>
+
+			<Ribbon
+				avatarIconName="playlist_play"
+				avatarIconColor="typography"
+				title={`${nbPlaylists} ${(nbPlaylists > 1) ? "Playlists" : "Playlist"}`}
+				right={(
+					<div className="h-col">
+						<IconButton
+							iconName="casino"
+							color="hot"
+							disabled={isLoading}
+							onClick={() => handleThrowDiceClick()}
+						/>
+					</div>
+				)}
+			/>
+
+		</div>
+	)
+})
+
 // ***** PlaylistsHeaderLeft *****
 // *******************************
 
@@ -146,7 +199,7 @@ export const PlaylistsMenuItem = observer((props) => {
 		<MenuItem
 			iconName="playlist_play"
 			label="Playlists"
-			activeContexts={[playlistsContext]}
+			activeContexts={[playlistsContext, "playlist"]}
 			callbackClick={handleMenuItemClick}
 		/>
 	)
@@ -160,9 +213,31 @@ export const PlaylistsPage = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const playlists = store.playlists;
+
+	// From ... store
+
+	const loaded = store.loaded;
+	const nbPlaylists = playlists.nbPlaylists;
+
+	// ...
+
+	const showHelper = (!loaded || nbPlaylists == 0) ? true : false;
 
 	// Renderers
 	// ==================================================================================================
+
+	const renderPage = () => {
+
+		// Render :: Page
+		// ---
+
+		let pageContent = null;
+		if (!showHelper) {
+			pageContent = <RenderPlaylists />
+		}
+		return pageContent;
+	}
 
 	const renderHelper = () => {
 
@@ -172,13 +247,14 @@ export const PlaylistsPage = observer((props) => {
 		return (
 			<Helper
 				iconName="playlist_play"
-				show={true}
+				show={showHelper}
 			/>
 		)
 	}
 
 	return (
 		<div className="nx-page">
+			{renderPage()}
 			{renderHelper()}
 		</div>
 	)

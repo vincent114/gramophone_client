@@ -5,9 +5,12 @@ import clsx from 'clsx';
 
 import { YearStore } from 'gramophone_client/contexts/year/Year';
 
-import { Helper } from 'nexus/ui/helper/Helper';
 import { HeaderTitle } from 'nexus/layout/header/Header';
 import { MenuItem } from 'nexus/layout/menu/Menu';
+import { Ribbon } from 'nexus/layout/ribbon/Ribbon';
+
+import { Helper } from 'nexus/ui/helper/Helper';
+import { IconButton } from 'nexus/ui/button/Button';
 
 import './Years.css';
 
@@ -119,6 +122,56 @@ export const YearsStore = types
 // Functions Components ReactJS
 // ======================================================================================================
 
+// ***** RenderYears *****
+// ***********************
+
+const TAG_RenderYears = () => {}
+export const RenderYears = observer((props) => {
+
+	const store = React.useContext(window.storeContext);
+	const app = store.app;
+	const years = store.years;
+
+	// From ... store
+
+	const isLoading = store.isLoading;
+	const nbYears = years.nbYears;
+
+	// ...
+
+	// Events
+	// ==================================================================================================
+
+	const handleThrowDiceClick = () => {
+		// TODO
+	}
+
+	// Render
+	// ==================================================================================================
+
+	return (
+		<div>
+
+			<Ribbon
+				avatarIconName="date_range"
+				avatarIconColor="typography"
+				title={`${nbYears} ${(nbYears > 1) ? "Années" : "Année"}`}
+				right={(
+					<div className="h-col">
+						<IconButton
+							iconName="casino"
+							color="hot"
+							disabled={isLoading}
+							onClick={() => handleThrowDiceClick()}
+						/>
+					</div>
+				)}
+			/>
+
+		</div>
+	)
+})
+
 // ***** YearsHeaderLeft *****
 // ***************************
 
@@ -172,7 +225,7 @@ export const YearsMenuItem = observer((props) => {
 		<MenuItem
 			iconName="date_range"
 			label="Années"
-			activeContexts={[yearsContext]}
+			activeContexts={[yearsContext, "year"]}
 			callbackClick={handleMenuItemClick}
 		/>
 	)
@@ -186,9 +239,31 @@ export const YearsPage = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const years = store.years;
+
+	// From ... store
+
+	const loaded = store.loaded;
+	const nbYears = years.nbYears;
+
+	// ...
+
+	const showHelper = (!loaded || nbYears == 0) ? true : false;
 
 	// Renderers
 	// ==================================================================================================
+
+	const renderPage = () => {
+
+		// Render :: Page
+		// ---
+
+		let pageContent = null;
+		if (!showHelper) {
+			pageContent = <RenderYears />
+		}
+		return pageContent;
+	}
 
 	const renderHelper = () => {
 
@@ -198,13 +273,14 @@ export const YearsPage = observer((props) => {
 		return (
 			<Helper
 				iconName="date_range"
-				show={true}
+				show={showHelper}
 			/>
 		)
 	}
 
 	return (
-		<div className="nx-page">
+		<div className="nx-page medium">
+			{renderPage()}
 			{renderHelper()}
 		</div>
 	)

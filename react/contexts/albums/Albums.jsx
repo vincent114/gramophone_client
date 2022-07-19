@@ -5,9 +5,22 @@ import clsx from 'clsx';
 
 import { AlbumStore } from 'gramophone_client/contexts/album/Album';
 
-import { Helper } from 'nexus/ui/helper/Helper';
 import { HeaderTitle } from 'nexus/layout/header/Header';
 import { MenuItem } from 'nexus/layout/menu/Menu';
+import { Ribbon } from 'nexus/layout/ribbon/Ribbon';
+import {
+	GroupDivider,
+	Group,
+} from 'nexus/layout/group/Group';
+import { Grid } from 'nexus/layout/grid/Grid';
+
+import { Helper } from 'nexus/ui/helper/Helper';
+import { IconButton } from 'nexus/ui/button/Button';
+import { Avatar } from 'nexus/ui/avatar/Avatar';
+import {
+	Thumbnail,
+	ThumbnailGhost
+} from 'nexus/ui/thumbnail/Thumbnail';
 
 import './Albums.css';
 
@@ -36,6 +49,21 @@ export const AlbumsStore = types
 
 		get nbAlbums() {
 			return Object.entries(self.by_id.toJSON()).length;
+		},
+
+		// Getters
+		// -
+
+		getByLetter() {
+			let byLetter = {};
+			for (const [albumId, album] of self.by_id.entries()) {
+				const letter = album.letter;
+				if (!byLetter.hasOwnProperty(letter)) {
+					byLetter[letter] = [];
+				}
+				byLetter[letter].push(album);
+			}
+			return byLetter;
 		},
 
 	}))
@@ -125,6 +153,160 @@ export const AlbumsStore = types
 // Functions Components ReactJS
 // ======================================================================================================
 
+// ***** RenderAlbums *****
+// ************************
+
+const TAG_RenderAlbums = () => {}
+export const RenderAlbums = observer((props) => {
+
+	const store = React.useContext(window.storeContext);
+	const app = store.app;
+	const albums = store.albums;
+
+	// From ... store
+
+	const isLoading = store.isLoading;
+
+	const nbAlbums = albums.nbAlbums;
+	const albumsByLetter = albums.getByLetter();
+
+	// ...
+
+	const letters = Object.keys(albumsByLetter);
+	letters.sort();
+
+	// Events
+	// ==================================================================================================
+
+	const handleThrowDiceClick = () => {
+		// TODO
+	}
+
+	// -
+
+	const handleLetterClick = (letter) => {
+		// TODO
+	}
+
+	const handleFocusClick = (letter) => {
+		// TODO
+	}
+
+	// -
+
+	const handleAlbumClick = (albumId) => {
+		store.navigateTo('album', albumId);
+	}
+
+	const handleShuffleClick = (albumId) => {
+		// TODO
+	}
+
+	// Render
+	// ==================================================================================================
+
+	return (
+		<div>
+
+			<Ribbon
+				avatarIconName="album"
+				avatarIconColor="typography"
+				title={`${nbAlbums} ${(nbAlbums > 1) ? "Albums" : "Album"}`}
+				right={(
+					<div className="h-col">
+						<IconButton
+							iconName="casino"
+							color="hot"
+							disabled={isLoading}
+							onClick={() => handleThrowDiceClick()}
+						/>
+					</div>
+				)}
+			/>
+
+			{letters.map((letter, letterIdx) => {
+
+				const albumsLetter = albumsByLetter[letter];
+
+				// Fantômes flex
+				let letterGhosts = []
+				for (var i = 0; i < 10; i++) {
+					letterGhosts.push(
+						<ThumbnailGhost
+							key={`thumbnail-ghost-${i}`}
+							size="small"
+						/>
+					)
+				}
+
+				return (
+					<Group
+						id={`group-${letter}`}
+						key={`group-${letter}-${letterIdx}`}
+						style={{
+							marginBottom: '40px',
+						}}
+					>
+
+						<GroupDivider
+							spacing="big"
+							left={(
+								<IconButton
+									color="secondary"
+									onClick={() => handleLetterClick(letter)}
+								>
+									{letter.toUpperCase()}
+								</IconButton>
+							)}
+							center={(
+								<Avatar
+									size="small"
+									color="rgba(111, 126, 140, 0.1)"
+									textColor="typography"
+									style={{
+										fontSize: '14px',
+										color: 'gray',
+									}}
+								>
+									{albumsLetter.length}
+								</Avatar>
+							)}
+							right={(
+								<IconButton
+									iconName="arrow_forward"
+									onClick={() => handleFocusClick(letter)}
+								/>
+							)}
+						/>
+
+						<Grid
+							style={{
+								paddingLeft: '20px',
+								paddingRight: '20px',
+							}}
+						>
+							{albumsLetter.map((album, albumIdx) => (
+								<Thumbnail
+									key={`thumbnail-album-${albumIdx}`}
+									src={album.cover}
+									iconName="album"
+									title={album.name}
+									subtitle={album.artist.name}
+									size="small"
+									callbackClick={() => handleAlbumClick(album.id)}
+								/>
+							))}
+							{letterGhosts}
+						</Grid>
+
+					</Group>
+				)
+			})}
+
+		</div>
+	)
+})
+
 // ***** AlbumsHeaderLeft *****
 // *****************************
 
@@ -178,7 +360,7 @@ export const AlbumsMenuItem = observer((props) => {
 		<MenuItem
 			iconName="album"
 			label="Albums"
-			activeContexts={[albumsContext]}
+			activeContexts={[albumsContext, "album"]}
 			callbackClick={handleMenuItemClick}
 		/>
 	)
@@ -192,9 +374,31 @@ export const AlbumsPage = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const albums = store.albums;
+
+	// From ... store
+
+	const loaded = store.loaded;
+	const nbAlbums = albums.nbAlbums;
+
+	// ...
+
+	const showHelper = (!loaded || nbAlbums == 0) ? true : false;
 
 	// Renderers
 	// ==================================================================================================
+
+	const renderPage = () => {
+
+		// Render :: Page
+		// ---
+
+		let pageContent = null;
+		if (!showHelper) {
+			pageContent = <RenderAlbums />
+		}
+		return pageContent;
+	}
 
 	const renderHelper = () => {
 
@@ -204,13 +408,14 @@ export const AlbumsPage = observer((props) => {
 		return (
 			<Helper
 				iconName="album"
-				show={true}
+				show={showHelper}
 			/>
 		)
 	}
 
 	return (
-		<div className="nx-page">
+		<div className="nx-page even large">
+			{renderPage()}
 			{renderHelper()}
 		</div>
 	)
