@@ -60,6 +60,20 @@ export const TrackStore = types
 	})
 	.views(self => ({
 
+		get discNumber() {
+			return (self.disk) ? self.disk : 0;
+		},
+
+		get trackNumber() {
+			return (self.track) ? self.track : 0;
+		},
+
+		get sortNumber() {
+			return `${self.discNumber}-${self.trackNumber}`;
+		},
+
+		// -
+
 		get linkedAlbum() {
 			const store = getRoot(self);
 			const albums = store.albums;
@@ -360,7 +374,7 @@ export const RenderTracks = observer((props) => {
 							<TableRow
 								key={`track-${trackIdx}`}
 								hoverable={true}
-								callbackClick={() => handleTrackClick(genre.id)}
+								callbackClick={() => handleTrackClick(track.id)}
 							>
 								<TableCell style={{maxWidth: '200px'}}>
 									{track.name}

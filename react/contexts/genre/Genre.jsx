@@ -31,6 +31,13 @@ export const GenreStore = types
 			return "";
 		},
 
+		get upperName() {
+			if (self.name) {
+				return self.name.toUpperCase();
+			}
+			return "";
+		},
+
 	}))
 	.actions(self => ({
 

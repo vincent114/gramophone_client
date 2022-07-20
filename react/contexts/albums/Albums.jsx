@@ -352,7 +352,7 @@ export const RenderAlbums = observer((props) => {
 
 				return (
 					<Group
-						id={`group-${letter}`}
+						id={`group-${letter}-${letterIdx}`}
 						key={`group-${letter}-${letterIdx}`}
 						style={{
 							marginBottom: '40px',

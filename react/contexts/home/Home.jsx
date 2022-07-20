@@ -174,6 +174,7 @@ export const RenderLastAdded = observer((props) => {
 					avatarIconColor="hot"
 					title="Ajouté dernièrement"
 					style={{
+						backgroundColor: 'transparent',
 						marginBottom: '20px',
 					}}
 				/>
@@ -224,6 +225,7 @@ export const HomePage = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const menu = app.menu;
 	const library = store.library;
 	const albums = store.albums;
 
@@ -231,6 +233,7 @@ export const HomePage = observer((props) => {
 
 	const loaded = store.loaded;
 	const isLoading = app.isLoading;
+	const menuPinned = menu.pinned;
 
 	const nbFolders = library.nbFolders;
 	const nbAlbums = albums.nbAlbums;
@@ -328,7 +331,9 @@ export const HomePage = observer((props) => {
 					helperSubtitle = "";
 					helperContent = (
 						<div>
-							<RenderHomeGrid />
+							{!menuPinned && (
+								<RenderHomeGrid />
+							)}
 							<RenderLastAdded />
 							<RenderLastListened />
 						</div>

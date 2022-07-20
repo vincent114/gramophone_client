@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 32318:
+/***/ 89983:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1712,6 +1712,54 @@ var FaceIcon = function FaceIcon(props) {
     d: "M10.25 13c0 .69-.56 1.25-1.25 1.25S7.75 13.69 7.75 13s.56-1.25 1.25-1.25 1.25.56 1.25 1.25zM15 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm7 .25c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10zM10.66 4.12C12.06 6.44 14.6 8 17.5 8c.46 0 .91-.05 1.34-.12C17.44 5.56 14.9 4 12 4c-.46 0-.91.05-1.34.12zM4.42 9.47c1.71-.97 3.03-2.55 3.66-4.44C6.37 6 5.05 7.58 4.42 9.47zM20 12c0-.78-.12-1.53-.33-2.24-.7.15-1.42.24-2.17.24-3.13 0-5.92-1.44-7.76-3.69C8.69 8.87 6.6 10.88 4 11.86c.01.04 0 .09 0 .14 0 4.41 3.59 8 8 8s8-3.59 8-8z"
   }));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Favorite.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var FavoriteIcon = function FavoriteIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+  }));
+};
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/FavoriteBorder.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var FavoriteBorderIcon = function FavoriteBorderIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"
+  }));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Feedback.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -2286,6 +2334,54 @@ var MenuIcon = function MenuIcon(props) {
     d: "M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
   }));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/MoreHoriz.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var MoreHorizIcon = function MoreHorizIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+  }));
+};
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/MoreVert.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var MoreVertIcon = function MoreVertIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+  }));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/MenuBook.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -2639,6 +2735,30 @@ var PictureAsPdfIcon = function PictureAsPdfIcon(props) {
     fill: "none"
   }), /*#__PURE__*/react.createElement("path", {
     d: "M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm12 6V9c0-.55-.45-1-1-1h-2v5h2c.55 0 1-.45 1-1zm-2-3h1v3h-1V9zm4 2h1v-1h-1V9h1V8h-2v5h1zm-8 0h1c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1H9v5h1v-2zm0-2h1v1h-1V9z"
+  }));
+};
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/PlayArrow.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var PlayArrowIcon = function PlayArrowIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M10 8.64L15.27 12 10 15.36V8.64M8 5v14l11-7L8 5z"
   }));
 };
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/PlayCircleFilled.jsx
@@ -3221,6 +3341,57 @@ var SportsEsportsIcon = function SportsEsportsIcon(props) {
     r: "1"
   }))));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Star.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var StarIcon = function StarIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("path", {
+    d: "M0,0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M0,0h24v24H0V0z",
+    fill: "none"
+  })), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("path", {
+    d: "M12,17.27L18.18,21l-1.64-7.03L22,9.24l-7.19-0.61L12,2L9.19,8.63L2,9.24l5.46,4.73L5.82,21L12,17.27z"
+  })));
+};
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/StarOutline.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var StarOutlineIcon = function StarOutlineIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+  }));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Storage.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -3769,6 +3940,13 @@ var Icon = __webpack_require__(73244);
 
 
 
+
+
+
+
+
+
+
  // Datas
 // -------------------------------------------------------------------------------------------------------------
 
@@ -3818,6 +3996,8 @@ var ICON_KEYS_TO_COMPONENT = {
   'explore': ExploreIcon,
   'extension': ExtensionIcon,
   'face': FaceIcon,
+  'favorite': FavoriteIcon,
+  'favorite_border': FavoriteBorderIcon,
   'feedback_black': FeedbackIcon,
   'file_download': FileDownloadIcon,
   'folder': FolderIcon,
@@ -3841,6 +4021,8 @@ var ICON_KEYS_TO_COMPONENT = {
   'lock_open': LockOpenIcon,
   'memory': MemoryIcon,
   'menu': MenuIcon,
+  'more_horiz': MoreHorizIcon,
+  'more_vert': MoreVertIcon,
   'menu_book': MenuBookIcon,
   'music_note': MusicNoteIcon,
   'new_releases': NewReleasesIcon,
@@ -3854,6 +4036,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'person_add': PersonAddIcon,
   'person_search': PersonSearchIcon,
   'picture_as_pdf': PictureAsPdfIcon,
+  'play_arrow': PlayArrowIcon,
   'play_circle_filled': PlayCircleFilledIcon,
   'playlist_play': PlaylistPlayIcon,
   'power_setting': PowerSettingIcon,
@@ -3876,6 +4059,8 @@ var ICON_KEYS_TO_COMPONENT = {
   'smart_button': SmartButtonIcon,
   'source': SourceIcon,
   'sports_esports': SportsEsportsIcon,
+  'star': StarIcon,
+  'star_outline': StarOutlineIcon,
   'storage': StorageIcon,
   'terrain': TerrainIcon,
   'text_fields': TextFieldsIcon,
@@ -7053,9 +7238,9 @@ var Field_Field = (0,es/* observer */.Pi)(function (props) {
       iconName: checkboxIconName,
       iconColor: checkboxIconColor,
       style: {
-        marginLeft: '-8px'
+        marginLeft: label ? "-8px" : "0px"
       }
-    }), /*#__PURE__*/react.createElement("div", {
+    }), label && /*#__PURE__*/react.createElement("div", {
       className: "nx-field-label-aside"
     }, label));
   }; // -------------------------------------------------
@@ -7336,7 +7521,6 @@ var RenderSectionField = (0,es/* observer */.Pi)(function (props) {
     component: "checkbox",
     label: "Test checkbox",
     ghostLabel: false,
-    datas: CHOICES_TEST,
     savePath: ['app', 'playground', 'value_checkbox'],
     disabled: isLoading // callbackChange={handleFieldChange}
     ,
@@ -18999,14 +19183,14 @@ var TableCell = function TableCell(props) {
   var header = props.header == true ? true : false;
   var align = props.align ? props.align : "left";
   var width = props.width ? props.width : "";
+  var size = props.size ? props.size : "";
   var children = props.children;
   var className = props.className ? props.className : '';
   var style = props.style ? copyObj(props.style) : {};
   var inheritStyle = props.inheritStyle ? copyObj(props.inheritStyle) : {}; // ...
-
-  if (header && !style.hasOwnProperty('backgroundColor')) {
-    style['backgroundColor'] = "#f7f7f7";
-  }
+  // if (header && !style.hasOwnProperty('backgroundColor')) {
+  // 	style['backgroundColor'] = "rgba(0, 0, 0, 0.03)";
+  // }
 
   for (var _i2 = 0, _Object$entries = Object.entries(inheritStyle); _i2 < _Object$entries.length; _i2++) {
     var _Object$entries$_i = Table_slicedToArray(_Object$entries[_i2], 2),
@@ -19022,7 +19206,7 @@ var TableCell = function TableCell(props) {
 
   if (header) {
     tableCellContent = /*#__PURE__*/react.createElement("th", {
-      className: (0,clsx_m/* default */.Z)("nx-table-cell", className),
+      className: (0,clsx_m/* default */.Z)("nx-table-cell", size, className),
       width: width,
       style: style,
       align: align
@@ -19031,7 +19215,7 @@ var TableCell = function TableCell(props) {
 
   if (!header) {
     tableCellContent = /*#__PURE__*/react.createElement("td", {
-      className: (0,clsx_m/* default */.Z)("nx-table-cell", className),
+      className: (0,clsx_m/* default */.Z)("nx-table-cell", size, className),
       width: width,
       style: style,
       align: align
@@ -19060,6 +19244,7 @@ var Ribbon_Ribbon = (0,es/* observer */.Pi)(function (props) {
   // From ... props
   var avatarIconName = props.avatarIconName ? props.avatarIconName : "";
   var avatarIconColor = props.avatarIconColor ? props.avatarIconColor : "default";
+  var left = props.left;
   var title = props.title ? props.title : "";
   var right = props.right;
   var children = props.children;
@@ -19084,7 +19269,7 @@ var Ribbon_Ribbon = (0,es/* observer */.Pi)(function (props) {
   return /*#__PURE__*/react.createElement("div", {
     className: (0,clsx_m/* default */.Z)("nx-ribbon", className),
     style: style
-  }, ribbonAvatar, title && /*#__PURE__*/react.createElement(Typography_Typography, {
+  }, left, ribbonAvatar, title && /*#__PURE__*/react.createElement(Typography_Typography, {
     variant: "title" // color="info"
     ,
     className: (0,clsx_m/* default */.Z)("nx-ribbon-title", {
@@ -19610,6 +19795,19 @@ function Album_arrayLikeToArray(arr, len) { if (len == null || len > arr.length)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
  // Models
 // ======================================================================================================
 // ***** AlbumStore *****
@@ -19638,6 +19836,10 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       return "";
     },
 
+    get nbTracks() {
+      return self.tracks_ids.length;
+    },
+
     // -
     get linkedArtist() {
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
@@ -19655,8 +19857,82 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var genres = store.genres;
       return genres.getById(self.genre_id);
-    }
+    },
 
+    // -
+    get firstTrack() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var tracks = store.tracks;
+      var firstTrackId = "";
+      var sortedTracks = self.getSortedByNumber();
+
+      if (sortedTracks.length > 0) {
+        firstTrackId = sortedTracks[0].id;
+      }
+
+      return tracks.getById(firstTrackId);
+    },
+
+    // Getters
+    // -
+    getSortedByNumber: function getSortedByNumber() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var tracks = store.tracks;
+      var tracksList = [];
+
+      var _iterator = Album_createForOfIteratorHelper(self.tracks_ids),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var trackId = _step.value;
+          var track = tracks.by_id.get(trackId);
+
+          if (track) {
+            tracksList.push(track);
+          }
+        } // tracksList.sort((a, b) => a.sortNumber - b.sortNumber);
+
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      tracksList.sort(function (a, b) {
+        if (a.sortNumber > b.sortNumber) return 1;
+        if (a.sortNumber < b.sortNumber) return -1;
+        return 0;
+      });
+      return tracksList;
+    },
+    // -
+    groupedByDisc: function groupedByDisc() {
+      var byDisc = {};
+      var tracks = self.getSortedByNumber();
+
+      var _iterator2 = Album_createForOfIteratorHelper(tracks),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var track = _step2.value;
+          var discNumber = track.discNumber;
+
+          if (!byDisc.hasOwnProperty(discNumber)) {
+            byDisc[discNumber] = [];
+          }
+
+          byDisc[discNumber].push(track);
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+
+      return byDisc;
+    }
   };
 }).actions(function (self) {
   return {
@@ -19676,18 +19952,18 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       self.genre_id = raw.genre_id;
       self.tracks_ids = [];
 
-      var _iterator = Album_createForOfIteratorHelper(raw.tracks_ids),
-          _step;
+      var _iterator3 = Album_createForOfIteratorHelper(raw.tracks_ids),
+          _step3;
 
       try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var trackId = _step.value;
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var trackId = _step3.value;
           self.tracks_ids.push(trackId);
         }
       } catch (err) {
-        _iterator.e(err);
+        _iterator3.e(err);
       } finally {
-        _iterator.f();
+        _iterator3.f();
       }
     },
     addTrackId: function addTrackId(trackId) {
@@ -19710,12 +19986,244 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
 
   var isLoading = app.isLoading;
   var albumId = store.albumId;
-  var album = albums.by_id.get(albumId); // ...
+  var album = albums.by_id.get(albumId);
+  var albumCover = album.cover;
+  var albumName = album.name;
+  var albumArtist = album.linkedArtist;
+  var artistName = albumArtist.name;
+  var albumGenre = album.linkedGenre;
+  var genreName = albumGenre.upperName;
+  var albumYear = album.linkedYear;
+  var yearName = albumYear.name;
+  var tracksByDiscs = album.groupedByDisc();
+  var nbAlbumTracks = album.nbTracks; // ...
 
-  console.log(album.toJSON()); // Render
+  var discs = Object.keys(tracksByDiscs);
+  var nbDiscs = discs.length;
+  discs.sort(); // Events
   // ==================================================================================================
 
-  return /*#__PURE__*/react.createElement("div", null);
+  var handlePlayAlbumClick = function handlePlayAlbumClick() {// TODO
+  };
+
+  var handleThrowDiceClick = function handleThrowDiceClick() {// TODO
+  }; // -
+
+
+  var handleDiscClick = function handleDiscClick(disc) {// TODO
+  };
+
+  var handleFocusDisc = function handleFocusDisc(disc) {// TODO
+  }; // -
+
+
+  var handleFavoriteClicked = function handleFavoriteClicked(track) {
+    track.setField('favorite', !track.favorite);
+  };
+
+  var handleStarredClicked = function handleStarredClicked(track) {
+    track.setField('starred', !track.starred);
+  };
+
+  var handleTrackMore = function handleTrackMore(trackId) {
+    // TODO
+    console.log(trackId);
+  }; // Render
+  // ==================================================================================================
+
+
+  return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Row_Row, {
+    align: "stretch",
+    spacing: "large",
+    style: {
+      marginBottom: '40px'
+    }
+  }, albumCover && /*#__PURE__*/react.createElement("img", {
+    className: "g-album-cover",
+    src: albumCover
+  }), /*#__PURE__*/react.createElement(Column_Column, {
+    align: "stretch"
+  }, /*#__PURE__*/react.createElement("div", null), /*#__PURE__*/react.createElement("div", {
+    className: "flex-1"
+  }, albumName && /*#__PURE__*/react.createElement(Typography_Typography, {
+    className: "g-album-name",
+    size: "x-big"
+  }, albumName), artistName && /*#__PURE__*/react.createElement(Typography_Typography, {
+    className: "g-album-artist",
+    size: "x-big",
+    color: "hot",
+    style: {
+      marginTop: '4px'
+    }
+  }, artistName), (genreName || yearName) && /*#__PURE__*/react.createElement(Row_Row, {
+    align: "center",
+    style: {
+      marginTop: '10px'
+    }
+  }, genreName && /*#__PURE__*/react.createElement(Typography_Typography, {
+    variant: "description",
+    size: "small" // color="hot"
+    ,
+    className: "flex-0"
+  }, genreName), genreName && yearName && /*#__PURE__*/react.createElement(Typography_Typography, {
+    variant: "description",
+    size: "small",
+    className: "flex-0"
+  }, "\u2022"), yearName && /*#__PURE__*/react.createElement(Typography_Typography, {
+    variant: "description",
+    size: "small" // color="hot"
+    ,
+    className: "flex-0"
+  }, yearName))), /*#__PURE__*/react.createElement("div", null), /*#__PURE__*/react.createElement("div", {
+    className: "flex-0"
+  }, /*#__PURE__*/react.createElement(Ribbon_Ribbon, {
+    title: "".concat(nbAlbumTracks, " ").concat(nbAlbumTracks > 1 ? "Titres" : "Titre"),
+    left: /*#__PURE__*/react.createElement("div", {
+      className: "h-col"
+    }, /*#__PURE__*/react.createElement(IconButton, {
+      iconName: "play_arrow",
+      color: "hot",
+      disabled: isLoading,
+      onClick: function onClick() {
+        return handlePlayAlbumClick();
+      }
+    }), /*#__PURE__*/react.createElement(IconButton, {
+      iconName: "casino",
+      color: "hot",
+      disabled: isLoading,
+      style: {
+        marginRight: '20px'
+      },
+      onClick: function onClick() {
+        return handleThrowDiceClick();
+      }
+    })),
+    right: /*#__PURE__*/react.createElement("div", {
+      className: "h-col"
+    }, /*#__PURE__*/react.createElement(IconButton, {
+      iconName: "more_horiz",
+      color: "typography",
+      disabled: isLoading,
+      onClick: function onClick() {
+        return handleThrowDiceClick();
+      }
+    }))
+  })))), discs.map(function (disc, discIdx) {
+    var discTracks = tracksByDiscs[disc];
+    return /*#__PURE__*/react.createElement(Group_Group, {
+      id: "group-".concat(disc, "-").concat(discIdx),
+      key: "group-".concat(disc, "-").concat(discIdx)
+    }, nbDiscs > 1 && /*#__PURE__*/react.createElement(Group_GroupDivider, {
+      spacing: "big",
+      left: /*#__PURE__*/react.createElement(IconButton, {
+        iconName: "album",
+        onClick: function onClick() {
+          return handleDiscClick(disc);
+        }
+      }),
+      center: /*#__PURE__*/react.createElement(Avatar_Avatar, {
+        size: "small",
+        color: "rgba(111, 126, 140, 0.1)",
+        textColor: "typography",
+        style: {
+          fontSize: '14px',
+          color: 'gray'
+        }
+      }, disc),
+      right: /*#__PURE__*/react.createElement(IconButton, {
+        iconName: "arrow_forward",
+        onClick: function onClick() {
+          return handleFocusDisc(disc);
+        }
+      })
+    }), /*#__PURE__*/react.createElement(TableContainer, {
+      component: Paper_Paper,
+      style: {
+        marginTop: '60px',
+        marginLeft: '16px',
+        marginRight: '16px',
+        padding: '0px'
+      }
+    }, /*#__PURE__*/react.createElement(Table_Table, null, /*#__PURE__*/react.createElement(TableHead, null, /*#__PURE__*/react.createElement(TableRow, null, /*#__PURE__*/react.createElement(TableCell, {
+      header: true,
+      width: 42,
+      align: "center"
+    }), /*#__PURE__*/react.createElement(TableCell, {
+      header: true,
+      width: 42,
+      align: "center"
+    }), /*#__PURE__*/react.createElement(TableCell, {
+      header: true,
+      width: 42,
+      align: "center"
+    }, "Mix"), /*#__PURE__*/react.createElement(TableCell, {
+      header: true,
+      width: 42
+    }, "N\xB0"), /*#__PURE__*/react.createElement(TableCell, {
+      header: true
+    }, "Titre"), /*#__PURE__*/react.createElement(TableCell, {
+      header: true,
+      width: 42,
+      align: "right"
+    }))), /*#__PURE__*/react.createElement(TableBody, null, discTracks.map(function (track, trackIdx) {
+      return /*#__PURE__*/react.createElement(TableRow, {
+        key: "track-".concat(disc, "-").concat(trackIdx),
+        hoverable: true
+      }, /*#__PURE__*/react.createElement(TableCell, {
+        width: 42,
+        align: "center",
+        size: "tiny"
+      }, /*#__PURE__*/react.createElement(Field_Field, {
+        component: "checkbox",
+        ghostLabel: false,
+        savePath: ['tracks', 'by_id', track.id, 'checked'],
+        disabled: isLoading
+      })), /*#__PURE__*/react.createElement(TableCell, {
+        width: 42,
+        align: "center",
+        size: "tiny"
+      }, /*#__PURE__*/react.createElement(IconButton, {
+        size: "small",
+        iconName: track.favorite ? "favorite" : "favorite_border",
+        color: track.favorite ? "error" : null,
+        disabled: isLoading,
+        onClick: function onClick() {
+          return handleFavoriteClicked(track);
+        }
+      })), /*#__PURE__*/react.createElement(TableCell, {
+        width: 42,
+        align: "center",
+        size: "tiny"
+      }, /*#__PURE__*/react.createElement(IconButton, {
+        size: "small",
+        iconName: track.starred ? "star" : "star_outline",
+        color: track.starred ? "warning" : null,
+        disabled: isLoading,
+        onClick: function onClick() {
+          return handleStarredClicked(track);
+        }
+      })), /*#__PURE__*/react.createElement(TableCell, {
+        width: 42,
+        size: "tiny"
+      }, track.track), /*#__PURE__*/react.createElement(TableCell, {
+        size: "tiny"
+      }, track.name), /*#__PURE__*/react.createElement(TableCell, {
+        width: 42,
+        align: "right",
+        size: "tiny"
+      }, /*#__PURE__*/react.createElement(IconButton, {
+        size: "small",
+        iconName: "more_horiz",
+        color: "typography" // style={{
+        // 	marginRight: '-5px'
+        // }}
+        ,
+        onClick: function onClick() {
+          return handleTrackMore(track.id);
+        }
+      })));
+    })))));
+  }));
 }); // ***** AlbumPage *****
 // *********************
 
@@ -19754,7 +20262,7 @@ var AlbumPage = (0,es/* observer */.Pi)(function (props) {
 
 
   return /*#__PURE__*/react.createElement("div", {
-    className: "c-page"
+    className: "nx-page medium"
   }, renderPage(), renderHelper());
 });
 // EXTERNAL MODULE: ../../nexus/react/ui/thumbnail/Thumbnail.css
@@ -20283,7 +20791,7 @@ var RenderAlbums = (0,es/* observer */.Pi)(function (props) {
     }
 
     return /*#__PURE__*/react.createElement(Group_Group, {
-      id: "group-".concat(letter),
+      id: "group-".concat(letter, "-").concat(letterIdx),
       key: "group-".concat(letter, "-").concat(letterIdx),
       style: {
         marginBottom: '40px'
@@ -20493,6 +21001,19 @@ var TrackStore = mobx_state_tree_module/* types.model */.V5.model({
   genre_id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string)
 }).views(function (self) {
   return {
+    get discNumber() {
+      return self.disk ? self.disk : 0;
+    },
+
+    get trackNumber() {
+      return self.track ? self.track : 0;
+    },
+
+    get sortNumber() {
+      return "".concat(self.discNumber, "-").concat(self.trackNumber);
+    },
+
+    // -
     get linkedAlbum() {
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var albums = store.albums;
@@ -20750,7 +21271,7 @@ var RenderTracks = (0,es/* observer */.Pi)(function (props) {
       key: "track-".concat(trackIdx),
       hoverable: true,
       callbackClick: function callbackClick() {
-        return handleTrackClick(genre.id);
+        return handleTrackClick(track.id);
       }
     }, /*#__PURE__*/react.createElement(TableCell, {
       style: {
@@ -21615,6 +22136,14 @@ var GenreStore = mobx_state_tree_module/* types.model */.V5.model({
     get letter() {
       if (self.name) {
         return self.name[0].toLowerCase();
+      }
+
+      return "";
+    },
+
+    get upperName() {
+      if (self.name) {
+        return self.name.toUpperCase();
       }
 
       return "";
@@ -22898,6 +23427,7 @@ var RenderLastAdded = (0,es/* observer */.Pi)(function (props) {
       avatarIconColor: "hot",
       title: "Ajout\xE9 derni\xE8rement",
       style: {
+        backgroundColor: 'transparent',
         marginBottom: '20px'
       }
     }), /*#__PURE__*/react.createElement(Grid_Grid, {
@@ -22938,11 +23468,13 @@ var TAG_HomePage = function TAG_HomePage() {};
 var HomePage = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
+  var menu = app.menu;
   var library = store.library;
   var albums = store.albums; // From ... store
 
   var loaded = store.loaded;
   var isLoading = app.isLoading;
+  var menuPinned = menu.pinned;
   var nbFolders = library.nbFolders;
   var nbAlbums = albums.nbAlbums; // ...
   // Events
@@ -23031,7 +23563,7 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
         } else {
           helperTitle = "Que souhaitez-vous écouter aujourd'hui ?";
           helperSubtitle = "";
-          helperContent = /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(RenderHomeGrid, null), /*#__PURE__*/react.createElement(RenderLastAdded, null), /*#__PURE__*/react.createElement(RenderLastListened, null));
+          helperContent = /*#__PURE__*/react.createElement("div", null, !menuPinned && /*#__PURE__*/react.createElement(RenderHomeGrid, null), /*#__PURE__*/react.createElement(RenderLastAdded, null), /*#__PURE__*/react.createElement(RenderLastListened, null));
 
           if (nbAlbums >= 6) {
             helperInFlux = true;
@@ -25679,7 +26211,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(32318)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(89983)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
