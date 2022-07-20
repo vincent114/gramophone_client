@@ -1,4 +1,5 @@
 import React from 'react';
+import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
@@ -12,10 +13,130 @@ import { Ribbon } from 'nexus/layout/ribbon/Ribbon';
 import { Grid } from 'nexus/layout/grid/Grid';
 
 import { Helper } from 'nexus/ui/helper/Helper';
-import { Button } from 'nexus/ui/button/Button';
+import { IconButton, Button } from 'nexus/ui/button/Button';
 import { ThumbnailGhost } from 'nexus/ui/thumbnail/Thumbnail';
+import { Popover } from 'nexus/ui/popover/Popover';
+import { Icon } from 'nexus/ui/icon/Icon';
+import {
+	List,
+	ListItem,
+	ListIcon,
+	ListText
+} from 'nexus/ui/list/List';
+import { Typography } from 'nexus/ui/typography/Typography';
+
+import { setToStorage } from 'nexus/utils/Storage';
 
 import './Home.css';
+
+
+// Datas
+// ======================================================================================================
+
+const NB_SHOWCASED = 6;
+
+const HOME_SECTIONS = [
+	{
+		"value": "showcased",
+		"label": "Mis en avant",
+		"icon": "tips_and_updates",
+	},
+	{
+		"value": "new",
+		"label": "Ajouté dernièrement",
+		"icon": "new_releases",
+	},
+	{
+		"value": "history",
+		"label": "Écouté récemment",
+		"icon": "history",
+	},
+]
+
+export let HOME_SECTIONS_BY_KEYS = {};
+for (const homeSectionItem of HOME_SECTIONS) {
+	HOME_SECTIONS_BY_KEYS[homeSectionItem.value] = homeSectionItem;
+}
+
+
+// Models
+// ======================================================================================================
+
+// ***** HomeStore *****
+// *********************
+
+const TAG_HomeStore = () => {}
+export const HomeStore = types
+	.model({
+		sectionDisplayed: types.optional(types.array(types.string), []),
+	})
+	.views(self => ({
+
+		get sectionHidden() {
+			let hiddenKeys = [];
+			for (const homeSection of HOME_SECTIONS) {
+				if (self.sectionDisplayed.indexOf(homeSection.value) == -1) {
+					hiddenKeys.push(homeSection.value);
+				}
+			}
+			return hiddenKeys;
+		},
+
+		// Bools
+		// -
+
+		get displayedShowcase() {
+			if (self.sectionDisplayed.indexOf("showcased") > -1) {
+				return true;
+			}
+			return false;
+		},
+
+		get displayedNew() {
+			if (self.sectionDisplayed.indexOf("new") > -1) {
+				return true;
+			}
+			return false;
+		},
+
+		get displayedHistory() {
+			if (self.sectionDisplayed.indexOf("history") > -1) {
+				return true;
+			}
+			return false;
+		},
+
+	}))
+	.actions(self => ({
+
+		setField: (field, value) => {
+			self[field] = value;
+		},
+
+		// -
+
+		save: () => {
+			setToStorage('homeSectionDisplayed', self.sectionDisplayed.toJSON(), 'json');
+		},
+
+		// -
+
+		displaySection: (sectionKey) => {
+			if (self.sectionDisplayed.indexOf(sectionKey) == -1) {
+				self.sectionDisplayed.push(sectionKey);
+				self.save();
+			}
+		},
+
+		hideSection: (sectionKey) => {
+			const sectionIdx = self.sectionDisplayed.indexOf(sectionKey);
+			if (sectionIdx > -1) {
+				self.sectionDisplayed.splice(sectionIdx, 1);
+				self.save();
+			}
+		},
+
+	}))
 
 
 // Functions Components ReactJS
@@ -129,22 +250,37 @@ export const RenderHomeGrid = observer((props) => {
 	)
 })
 
-// ***** RenderLastAdded *****
+// ***** RenderShowcased *****
 // ***************************
 
-const TAG_RenderLastAdded = () => {}
-export const RenderLastAdded = observer((props) => {
+const TAG_RenderShowcased = () => {}
+export const RenderShowcased = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const home = store.home;
 	const albums = store.albums;
 
-	// From ... store
+	// From ... state
 
-	const lastAdded = albums.getLastAdded(6);
+	let [showcased, setShowcased] = React.useState(albums.getRandomly(NB_SHOWCASED));
+
+	// ...
+
+	const homeSectionDef = HOME_SECTIONS_BY_KEYS["showcased"];
 
 	// Events
 	// ==================================================================================================
+
+	const handleRefreshShowcased = () => {
+		setShowcased(albums.getRandomly(NB_SHOWCASED));
+	}
+
+	const handleCloseClick = () => {
+		home.hideSection(homeSectionDef.value);
+	}
+
+	// -
 
 	const handleAlbumClick = (albumId) => {
 		store.navigateTo('album', albumId);
@@ -153,36 +289,139 @@ export const RenderLastAdded = observer((props) => {
 	// Render
 	// ==================================================================================================
 
-	let lastAddedContent = null;
-	if (lastAdded.length > 0) {
+	// Fantômes flex
+	let ghosts = []
+	for (var i = 0; i < 10; i++) {
+		ghosts.push(
+			<ThumbnailGhost
+				key={`ghost-last-added-${i}`}
+				size="small"
+			/>
+		)
+	}
 
-		// Fantômes flex
-		let ghosts = []
-		for (var i = 0; i < 10; i++) {
-			ghosts.push(
-				<ThumbnailGhost
-					key={`ghost-last-added-${i}`}
-					size="small"
-				/>
-			)
-		}
+	return (
+		<div>
+			<Ribbon
+				avatarIconName={homeSectionDef.icon}
+				avatarIconColor="hot"
+				title={homeSectionDef.label}
+				right={(
+					<div className="h-col">
+						<IconButton
+							iconName="model_training"
+							color="info"
+							onClick={() => handleRefreshShowcased()}
+						/>
+						<IconButton
+							iconName="close"
+							color="default"
+							onClick={() => handleCloseClick()}
+						/>
+					</div>
+				)}
+				style={{
+					backgroundColor: 'transparent',
+					marginBottom: '20px',
+				}}
+			/>
 
-		lastAddedContent = (
-			<div>
-				<Ribbon
-					avatarIconName="new_releases"
-					avatarIconColor="hot"
-					title="Ajouté dernièrement"
-					style={{
-						backgroundColor: 'transparent',
-						marginBottom: '20px',
-					}}
-				/>
+			{showcased.length > 0 && (
 				<Grid
 					justify="space-between"
 					style={{
 						paddingLeft: '16px',
 						paddingRight: '16px',
+						marginBottom: '40px',
+					}}
+				>
+					{showcased.map((album, albumIdx) => (
+						<AlbumThumbnail
+							key={`thumbnail-showcased-${albumIdx}`}
+							album={album}
+							callbackClick={() => handleAlbumClick(album.id)}
+						/>
+					))}
+					{ghosts}
+				</Grid>
+			)}
+		</div>
+	)
+})
+
+// ***** RenderLastAdded *****
+// ***************************
+
+const TAG_RenderLastAdded = () => {}
+export const RenderLastAdded = observer((props) => {
+
+	const store = React.useContext(window.storeContext);
+	const app = store.app;
+	const home = store.home;
+	const albums = store.albums;
+
+	// From ... store
+
+	const lastAdded = albums.getLastAdded(6);
+
+	// ...
+
+	const homeSectionDef = HOME_SECTIONS_BY_KEYS["new"];
+
+	// Events
+	// ==================================================================================================
+
+	const handleCloseClick = () => {
+		home.hideSection(homeSectionDef.value);
+	}
+
+	// -
+
+	const handleAlbumClick = (albumId) => {
+		store.navigateTo('album', albumId);
+	}
+
+	// Render
+	// ==================================================================================================
+
+	// Fantômes flex
+	let ghosts = []
+	for (var i = 0; i < 10; i++) {
+		ghosts.push(
+			<ThumbnailGhost
+				key={`ghost-last-added-${i}`}
+				size="small"
+			/>
+		)
+	}
+
+	return (
+		<div>
+			<Ribbon
+				avatarIconName={homeSectionDef.icon}
+				avatarIconColor="hot"
+				title={homeSectionDef.label}
+				right={(
+					<div className="h-col">
+						<IconButton
+							iconName="close"
+							color="default"
+							onClick={() => handleCloseClick()}
+						/>
+					</div>
+				)}
+				style={{
+					backgroundColor: 'transparent',
+					marginBottom: '20px',
+				}}
+			/>
+			{lastAdded.length > 0 && (
+				<Grid
+					justify="space-between"
+					style={{
+						paddingLeft: '16px',
+						paddingRight: '16px',
+						marginBottom: '40px',
 					}}
 				>
 					{lastAdded.map((album, albumIdx) => (
@@ -194,10 +433,9 @@ export const RenderLastAdded = observer((props) => {
 					))}
 					{ghosts}
 				</Grid>
-			</div>
-		)
-	}
-	return lastAddedContent;
+			)}
+		</div>
+	)
 })
 
 // ***** RenderLastListened *****
@@ -208,13 +446,95 @@ export const RenderLastListened = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const home = store.home;
+
+	// From ... store
+
+	const recentHistory = []; // TODO
+
+	// ...
+
+	const homeSectionDef = HOME_SECTIONS_BY_KEYS["history"];
+
+	// Events
+	// ==================================================================================================
+
+	const handleCloseClick = () => {
+		home.hideSection(homeSectionDef.value);
+	}
+
+	// -
+
+	const handleAlbumClick = (albumId) => {
+		store.navigateTo('album', albumId);
+	}
 
 	// Render
 	// ==================================================================================================
 
-	let lastListenedContent = null;
+	// Fantômes flex
+	let ghosts = []
+	for (var i = 0; i < 10; i++) {
+		ghosts.push(
+			<ThumbnailGhost
+				key={`ghost-last-added-${i}`}
+				size="small"
+			/>
+		)
+	}
 
-	return lastListenedContent;
+	return (
+		<div>
+			<Ribbon
+				avatarIconName={homeSectionDef.icon}
+				avatarIconColor="hot"
+				title={homeSectionDef.label}
+				right={(
+					<div className="h-col">
+						<IconButton
+							iconName="close"
+							color="default"
+							onClick={() => handleCloseClick()}
+						/>
+					</div>
+				)}
+				style={{
+					backgroundColor: 'transparent',
+					marginBottom: '20px',
+				}}
+			/>
+			{recentHistory.length > 0 && (
+				<Grid
+					justify="space-between"
+					style={{
+						paddingLeft: '16px',
+						paddingRight: '16px',
+						marginBottom: '40px',
+					}}
+				>
+					{recentHistory.map((album, albumIdx) => (
+						<AlbumThumbnail
+							key={`thumbnail-history-${albumIdx}`}
+							album={album}
+							callbackClick={() => handleAlbumClick(album.id)}
+						/>
+					))}
+					{ghosts}
+				</Grid>
+			)}
+			{(recentHistory.length == 0 && false) && (
+				<Typography
+					style={{
+						paddingLeft: '16px',
+						paddingRight: '16px',
+						marginBottom: '40px',
+					}}
+				>
+					Rien pour le moment.
+				</Typography>
+			)}
+		</div>
+	)
 })
 
 // ***** HomePage *****
@@ -226,14 +546,24 @@ export const HomePage = observer((props) => {
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
 	const menu = app.menu;
+	const home = store.home;
 	const library = store.library;
 	const albums = store.albums;
+
+	// From ... states
+
+	const [anchorAddSection, setAnchorAddSection] = React.useState(null);
 
 	// From ... store
 
 	const loaded = store.loaded;
 	const isLoading = app.isLoading;
 	const menuPinned = menu.pinned;
+
+	const sectionHidden = home.sectionHidden;
+	const displayedShowcase = home.displayedShowcase;
+	const displayedNew = home.displayedNew;
+	const displayedHistory = home.displayedHistory;
 
 	const nbFolders = library.nbFolders;
 	const nbAlbums = albums.nbAlbums;
@@ -242,6 +572,22 @@ export const HomePage = observer((props) => {
 
 	// Events
 	// ==================================================================================================
+
+	const handleAddClick = (event) => {
+		setAnchorAddSection(event.currentTarget);
+	}
+
+	const handleCloseAdd = () => {
+		setAnchorAddSection(null);
+	}
+
+	// -
+
+	const handleAddSectionClick = (sectionKey) => {
+		home.displaySection(sectionKey);
+	}
+
+	// -
 
 	const handleScan = () => {
 		library.startScan();
@@ -334,11 +680,58 @@ export const HomePage = observer((props) => {
 							{!menuPinned && (
 								<RenderHomeGrid />
 							)}
-							<RenderLastAdded />
-							<RenderLastListened />
+							{displayedShowcase && <RenderShowcased />}
+							{displayedNew && <RenderLastAdded/>}
+							{displayedHistory && <RenderLastListened />}
+							{sectionHidden.length > 0 && (
+								<div data-flex="0">
+									<IconButton
+										iconName="add"
+										// color="info"
+										onClick={(e) => handleAddClick(e)}
+									/>
+									<Popover
+										id="pop-add-section"
+										open={Boolean(anchorAddSection)}
+										anchorEl={anchorAddSection}
+										onClose={handleCloseAdd}
+										anchorOrigin={{
+											vertical: 'bottom',
+											horizontal: 'center',
+										}}
+										transformOrigin={{
+											vertical: 'top',
+											horizontal: 'left',
+										}}
+										style={{
+											width: '240px',
+										}}
+									>
+										<List>
+											{sectionHidden.map((sectionKey, sectionIdx) => {
+												const homeSectionDef = HOME_SECTIONS_BY_KEYS[sectionKey];
+												return (
+													<ListItem
+														key={`menu-item-${sectionKey}`}
+														onClick={() => handleAddSectionClick(sectionKey)}
+													>
+														<ListIcon
+															name={homeSectionDef.icon}
+															color="typography"
+														/>
+														<ListText>
+															{homeSectionDef.label}
+														</ListText>
+													</ListItem>
+												)
+											})}
+										</List>
+									</Popover>
+								</div>
+							)}
 						</div>
 					)
-					if (nbAlbums >= 6) {
+					if (displayedShowcase || displayedNew || displayedHistory) {
 						helperInFlux = true;
 					}
 				}

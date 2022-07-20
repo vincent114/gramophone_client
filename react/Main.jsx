@@ -12,7 +12,7 @@ import { getFromStorage, setToStorage } from 'nexus/utils/Storage';
 import { ContextualHeader } from 'gramophone_client/ui/ContextualHeader';
 import { ContextualMenu } from 'gramophone_client/ui/ContextualMenu';
 
-import { HomePage } from 'gramophone_client/contexts/home/Home';
+import { HomeStore, HomePage } from 'gramophone_client/contexts/home/Home';
 import { SearchStore, SearchPage } from 'gramophone_client/contexts/search/Search';
 import { ArtistsStore, ArtistsPage } from 'gramophone_client/contexts/artists/Artists';
 import { ArtistPage } from 'gramophone_client/contexts/artist/Artist';
@@ -103,6 +103,8 @@ const TAG_RootStore = () => {}
 const RootStore = types
 	.model({
 		app: types.optional(NxAppStore, {}),
+
+		home: types.optional(HomeStore, {}),
 
 		// -
 
@@ -390,7 +392,22 @@ let initSnapshot = makeInitSnapshot(routes, {
 					'main': '#607d8b',
 				},
 			}
-		}
+		},
+		'scrollIgnoredContexts': [
+			'home',
+			'about',
+			'admin',
+
+			'artist',
+			'album',
+			'years',
+			'year',
+			'genre',
+			'playlist',
+		],
+	},
+	'home': {
+		'sectionDisplayed': getFromStorage('homeSectionDisplayed', ['showcased'], 'json'),
 	},
 	'artistId': getFromStorage('lastArtistId', ''),
 	'albumId': getFromStorage('lastAlbumId', ''),

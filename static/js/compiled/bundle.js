@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 88935:
+/***/ 73578:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -211,7 +211,7 @@ var STATIC_SMAP = {
     admin_role: null
   }
 }; // Models
-// -------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 // ***** ServiceInfoStore *****
 // ****************************
 
@@ -432,14 +432,288 @@ var ServicesStore = mobx_state_tree_module/* types.model */.V5.model({
     }
   };
 });
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.parse-int.js
-var es_parse_int = __webpack_require__(2317);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.array-buffer.slice.js
+var es_array_buffer_slice = __webpack_require__(2739);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.uint8-array.js
+var es_typed_array_uint8_array = __webpack_require__(92994);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.copy-within.js
+var es_typed_array_copy_within = __webpack_require__(93977);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.every.js
+var es_typed_array_every = __webpack_require__(6373);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.fill.js
+var es_typed_array_fill = __webpack_require__(66242);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.filter.js
+var es_typed_array_filter = __webpack_require__(14964);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.find.js
+var es_typed_array_find = __webpack_require__(56492);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.find-index.js
+var es_typed_array_find_index = __webpack_require__(93687);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.for-each.js
+var es_typed_array_for_each = __webpack_require__(51026);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.includes.js
+var es_typed_array_includes = __webpack_require__(13230);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.index-of.js
+var es_typed_array_index_of = __webpack_require__(53883);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.iterator.js
+var es_typed_array_iterator = __webpack_require__(5785);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.join.js
+var es_typed_array_join = __webpack_require__(5180);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.last-index-of.js
+var es_typed_array_last_index_of = __webpack_require__(26056);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.map.js
+var es_typed_array_map = __webpack_require__(30183);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.reduce.js
+var es_typed_array_reduce = __webpack_require__(15970);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.reduce-right.js
+var es_typed_array_reduce_right = __webpack_require__(54847);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.reverse.js
+var es_typed_array_reverse = __webpack_require__(19944);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.set.js
+var es_typed_array_set = __webpack_require__(60247);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.slice.js
+var es_typed_array_slice = __webpack_require__(17528);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.some.js
+var es_typed_array_some = __webpack_require__(33996);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.sort.js
+var es_typed_array_sort = __webpack_require__(59494);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.subarray.js
+var es_typed_array_subarray = __webpack_require__(24134);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.to-locale-string.js
+var es_typed_array_to_locale_string = __webpack_require__(29041);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.to-string.js
+var es_typed_array_to_string = __webpack_require__(90618);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.date.to-string.js
 var es_date_to_string = __webpack_require__(74961);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.date.to-iso-string.js
-var es_date_to_iso_string = __webpack_require__(52308);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.regexp.to-string.js
 var es_regexp_to_string = __webpack_require__(46965);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.array.sort.js
+var es_array_sort = __webpack_require__(1691);
+;// CONCATENATED MODULE: ../../nexus/react/utils/Datas.jsx
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Datas_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function Datas_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Datas_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Datas_arrayLikeToArray(o, minLen); }
+
+function Datas_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Functions
+// ======================================================================================================
+function uuid() {
+  // Collision free V4 UUIDS
+  // ---
+  var tmp,
+      buf = new Uint8Array(16);
+
+  try {
+    window.crypto.getRandomValues(buf);
+  } catch (e) {
+    // IE Stuff (testé avec IE11)
+    var crypto = window.msCrypto;
+    crypto.getRandomValues(buf);
+  }
+
+  buf[6] = buf[6] & 0x0f | 0x40;
+  buf[8] = buf[8] & 0x3f | 0x80;
+  var ret = '';
+
+  for (var idx = 0; idx < 16; idx++) {
+    tmp = buf[idx].toString(16);
+
+    if (tmp.length == 1) {
+      ret += '0' + tmp;
+    } else {
+      ret += tmp;
+    }
+  }
+
+  return ret;
+}
+function copyObj(srcObj) {
+  // Recopie d'objet passé en paramètres
+  // ---
+  var copy = JSON.parse(JSON.stringify(srcObj));
+  return copy;
+}
+function encodeBase64(str) {
+  var buff = new Buffer(str);
+  var base64data = buff.toString('base64');
+  return base64data;
+}
+function decodeBase64(str) {
+  var buff = new Buffer(str, 'base64');
+  var decodedData = buff.toString('ascii');
+  return decodedData;
+}
+function extendArray(array_dest, array_src, get_a_new_one) {
+  // Ajoute les éléments d'une liste dans une autre liste
+  // ---
+  if (get_a_new_one == true) {
+    var new_array = copyObj(array_dest);
+  } else {
+    var new_array = array_dest;
+  }
+
+  for (var idx_item in array_src) {
+    new_array.push(array_src[idx_item]);
+  }
+
+  return new_array;
+}
+function sortObjects(objects, sortField, sortDirection) {
+  sortDirection = sortDirection ? sortDirection : 'asc'; // Tri croissant
+
+  if (sortDirection == 'asc') {
+    objects.sort(function (a, b) {
+      if (a[sortField] > b[sortField]) return 1;
+      if (a[sortField] < b[sortField]) return -1;
+      return 0;
+    });
+  } // Tri décroissant
+
+
+  if (sortDirection == 'desc') {
+    objects.sort(function (a, b) {
+      if (a[sortField] < b[sortField]) return 1;
+      if (a[sortField] > b[sortField]) return -1;
+      return 0;
+    });
+  }
+
+  return objects;
+}
+var applyValue = function applyValue(node, path, value) {
+  // Enregistrement d'une valeur à partir d'un objet et d'un chemin
+  // ---
+  var saveTarget = node;
+
+  for (var idx_path in path) {
+    var target = path[idx_path];
+
+    if (idx_path == path.length - 1) {
+      saveTarget[target] = value;
+    } else {
+      if (!saveTarget.hasOwnProperty(target)) {
+        saveTarget[target] = {};
+      }
+
+      saveTarget = saveTarget[target];
+    }
+  }
+};
+var convertToJSONPath = function convertToJSONPath(path) {
+  // Convertion d'un chemin sous forme de liste en JSON Path pour mobx-state-tree
+  // ---
+  // https://mobx-state-tree.js.org/API/#applypatch
+  // http://jsonpatch.com
+  var jsonPath = '';
+
+  var _iterator = _createForOfIteratorHelper(path),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var pathItem = _step.value;
+      jsonPath = "".concat(jsonPath, "/").concat(pathItem);
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return jsonPath;
+};
+
+function _genRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function Datas_getRandomNumber(max) {
+  var forbiddenNumbers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+  // Renvoie un nombre aléatoire
+  // ---
+  var randomNumber = _genRandomNumber(1, max);
+
+  while (forbiddenNumbers.indexOf(randomNumber) > -1) {
+    randomNumber = _genRandomNumber(1, max);
+  }
+
+  return randomNumber;
+}
+;// CONCATENATED MODULE: ../../nexus/react/models/Helpers.jsx
+
+
+
+
+ // Models
+// ======================================================================================================
+// ***** ServicesStore *****
+// *************************
+
+var TAG_HelpersStore = function TAG_HelpersStore() {};
+
+var HelpersStore = mobx_state_tree_module/* types.model */.V5.model({}).views(function (self) {
+  return {
+    // Getters
+    // -
+    getRandomNumber: function getRandomNumber(max) {
+      var forbiddenNumbers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+      return Datas_getRandomNumber(max, forbiddenNumbers);
+    }
+  };
+}).actions(function (self) {
+  return {
+    generateUUID: function generateUUID() {
+      return uuid();
+    }
+  };
+});
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.parse-int.js
+var es_parse_int = __webpack_require__(2317);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.date.to-iso-string.js
+var es_date_to_iso_string = __webpack_require__(52308);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.string.trim.js
 var es_string_trim = __webpack_require__(83269);
 ;// CONCATENATED MODULE: ../../nexus/react/utils/Helpers.jsx
@@ -515,7 +789,7 @@ function initTrimFunction() {
   }
 }
 ;// CONCATENATED MODULE: ../../nexus/react/utils/Storage.jsx
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Storage_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function Storage_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Storage_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function Storage_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Storage_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Storage_arrayLikeToArray(o, minLen); }
 
@@ -546,7 +820,7 @@ function getFromCookies(field) {
   var cookie = document.cookie;
   var cookies = cookie.split(' ');
 
-  var _iterator = _createForOfIteratorHelper(cookies),
+  var _iterator = Storage_createForOfIteratorHelper(cookies),
       _step;
 
   try {
@@ -2334,6 +2608,62 @@ var MenuIcon = function MenuIcon(props) {
     d: "M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
   }));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/MenuBook.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var MenuBookIcon = function MenuBookIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("rect", {
+    fill: "none",
+    height: "24",
+    width: "24"
+  })), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("g", null), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("path", {
+    d: "M21,5c-1.11-0.35-2.33-0.5-3.5-0.5c-1.95,0-4.05,0.4-5.5,1.5c-1.45-1.1-3.55-1.5-5.5-1.5S2.45,4.9,1,6v14.65 c0,0.25,0.25,0.5,0.5,0.5c0.1,0,0.15-0.05,0.25-0.05C3.1,20.45,5.05,20,6.5,20c1.95,0,4.05,0.4,5.5,1.5c1.35-0.85,3.8-1.5,5.5-1.5 c1.65,0,3.35,0.3,4.75,1.05c0.1,0.05,0.15,0.05,0.25,0.05c0.25,0,0.5-0.25,0.5-0.5V6C22.4,5.55,21.75,5.25,21,5z M21,18.5 c-1.1-0.35-2.3-0.5-3.5-0.5c-1.7,0-4.15,0.65-5.5,1.5V8c1.35-0.85,3.8-1.5,5.5-1.5c1.2,0,2.4,0.15,3.5,0.5V18.5z"
+  }), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("path", {
+    d: "M17.5,10.5c0.88,0,1.73,0.09,2.5,0.26V9.24C19.21,9.09,18.36,9,17.5,9c-1.7,0-3.24,0.29-4.5,0.83v1.66 C14.13,10.85,15.7,10.5,17.5,10.5z"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M13,12.49v1.66c1.13-0.64,2.7-0.99,4.5-0.99c0.88,0,1.73,0.09,2.5,0.26V11.9c-0.79-0.15-1.64-0.24-2.5-0.24 C15.8,11.66,14.26,11.96,13,12.49z"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M17.5,14.33c-1.7,0-3.24,0.29-4.5,0.83v1.66c1.13-0.64,2.7-0.99,4.5-0.99c0.88,0,1.73,0.09,2.5,0.26v-1.52 C19.21,14.41,18.36,14.33,17.5,14.33z"
+  })))));
+};
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/ModelTraining.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var ModelTrainingIcon = function ModelTrainingIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("rect", {
+    fill: "none",
+    height: "24",
+    width: "24"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M15.5,13.5c0,2-2.5,3.5-2.5,5h-2c0-1.5-2.5-3-2.5-5c0-1.93,1.57-3.5,3.5-3.5h0C13.93,10,15.5,11.57,15.5,13.5z M13,19.5h-2 V21h2V19.5z M19,13c0,1.68-0.59,3.21-1.58,4.42l1.42,1.42C20.18,17.27,21,15.23,21,13c0-2.74-1.23-5.19-3.16-6.84l-1.42,1.42 C17.99,8.86,19,10.82,19,13z M16,5l-4-4v3c0,0,0,0,0,0c-4.97,0-9,4.03-9,9c0,2.23,0.82,4.27,2.16,5.84l1.42-1.42 C5.59,16.21,5,14.68,5,13c0-3.86,3.14-7,7-7c0,0,0,0,0,0v3L16,5z"
+  })));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/MoreHoriz.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -2381,37 +2711,6 @@ var MoreVertIcon = function MoreVertIcon(props) {
   }), /*#__PURE__*/react.createElement("path", {
     d: "M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
   }));
-};
-;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/MenuBook.jsx
- // Functions Components ReactJS
-// ======================================================================================================
-
-var MenuBookIcon = function MenuBookIcon(props) {
-  // From ... props
-  var color = props.color ? props.color : '#000000';
-  var height = props.height ? props.height : 24;
-  var width = props.width ? props.width : 24; // Render
-  // ==================================================================================================
-
-  return /*#__PURE__*/react.createElement("svg", {
-    xmlns: "http://www.w3.org/2000/svg",
-    height: height,
-    viewBox: "0 0 24 24",
-    width: width,
-    fill: color
-  }, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("rect", {
-    fill: "none",
-    height: "24",
-    width: "24"
-  })), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("g", null), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("path", {
-    d: "M21,5c-1.11-0.35-2.33-0.5-3.5-0.5c-1.95,0-4.05,0.4-5.5,1.5c-1.45-1.1-3.55-1.5-5.5-1.5S2.45,4.9,1,6v14.65 c0,0.25,0.25,0.5,0.5,0.5c0.1,0,0.15-0.05,0.25-0.05C3.1,20.45,5.05,20,6.5,20c1.95,0,4.05,0.4,5.5,1.5c1.35-0.85,3.8-1.5,5.5-1.5 c1.65,0,3.35,0.3,4.75,1.05c0.1,0.05,0.15,0.05,0.25,0.05c0.25,0,0.5-0.25,0.5-0.5V6C22.4,5.55,21.75,5.25,21,5z M21,18.5 c-1.1-0.35-2.3-0.5-3.5-0.5c-1.7,0-4.15,0.65-5.5,1.5V8c1.35-0.85,3.8-1.5,5.5-1.5c1.2,0,2.4,0.15,3.5,0.5V18.5z"
-  }), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("path", {
-    d: "M17.5,10.5c0.88,0,1.73,0.09,2.5,0.26V9.24C19.21,9.09,18.36,9,17.5,9c-1.7,0-3.24,0.29-4.5,0.83v1.66 C14.13,10.85,15.7,10.5,17.5,10.5z"
-  }), /*#__PURE__*/react.createElement("path", {
-    d: "M13,12.49v1.66c1.13-0.64,2.7-0.99,4.5-0.99c0.88,0,1.73,0.09,2.5,0.26V11.9c-0.79-0.15-1.64-0.24-2.5-0.24 C15.8,11.66,14.26,11.96,13,12.49z"
-  }), /*#__PURE__*/react.createElement("path", {
-    d: "M17.5,14.33c-1.7,0-3.24,0.29-4.5,0.83v1.66c1.13-0.64,2.7-0.99,4.5-0.99c0.88,0,1.73,0.09,2.5,0.26v-1.52 C19.21,14.41,18.36,14.33,17.5,14.33z"
-  })))));
 };
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/MusicNote.jsx
  // Functions Components ReactJS
@@ -3489,6 +3788,32 @@ var TextSnippetIcon = function TextSnippetIcon(props) {
     d: "M14.17,5L19,9.83V19H5V5L14.17,5L14.17,5 M14.17,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V9.83 c0-0.53-0.21-1.04-0.59-1.41l-4.83-4.83C15.21,3.21,14.7,3,14.17,3L14.17,3z M7,15h10v2H7V15z M7,11h10v2H7V11z M7,7h7v2H7V7z"
   })));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/TipsAndUpdates.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var TipsAndUpdatesIcon = function TipsAndUpdatesIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("rect", {
+    fill: "none",
+    height: "24",
+    width: "24",
+    y: "0"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M7,20h4c0,1.1-0.9,2-2,2S7,21.1,7,20z M5,19h8v-2H5V19z M16.5,9.5c0,3.82-2.66,5.86-3.77,6.5H5.27 C4.16,15.36,1.5,13.32,1.5,9.5C1.5,5.36,4.86,2,9,2S16.5,5.36,16.5,9.5z M14.5,9.5C14.5,6.47,12.03,4,9,4S3.5,6.47,3.5,9.5 c0,2.47,1.49,3.89,2.35,4.5h6.3C13.01,13.39,14.5,11.97,14.5,9.5z M21.37,7.37L20,8l1.37,0.63L22,10l0.63-1.37L24,8l-1.37-0.63L22,6 L21.37,7.37z M19,6l0.94-2.06L22,3l-2.06-0.94L19,0l-0.94,2.06L16,3l2.06,0.94L19,6z"
+  }));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/ToggleOff.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -3947,6 +4272,8 @@ var Icon = __webpack_require__(73244);
 
 
 
+
+
  // Datas
 // -------------------------------------------------------------------------------------------------------------
 
@@ -4021,9 +4348,10 @@ var ICON_KEYS_TO_COMPONENT = {
   'lock_open': LockOpenIcon,
   'memory': MemoryIcon,
   'menu': MenuIcon,
+  'menu_book': MenuBookIcon,
+  'model_training': ModelTrainingIcon,
   'more_horiz': MoreHorizIcon,
   'more_vert': MoreVertIcon,
-  'menu_book': MenuBookIcon,
   'music_note': MusicNoteIcon,
   'new_releases': NewReleasesIcon,
   'newspaper': NewspaperIcon,
@@ -4065,6 +4393,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'terrain': TerrainIcon,
   'text_fields': TextFieldsIcon,
   'text_snippet': TextSnippetIcon,
+  'tips_and_updates': TipsAndUpdatesIcon,
   'toggle_off': ToggleOffIcon,
   'toggle_on': ToggleOnIcon,
   'tune': TuneIcon,
@@ -4664,236 +4993,6 @@ var hexToCssFilter = function hexToCssFilter(hex) {
   var solver = new Solver(color);
   var result = solver.solve();
   return result.filter;
-};
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.array-buffer.slice.js
-var es_array_buffer_slice = __webpack_require__(2739);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.uint8-array.js
-var es_typed_array_uint8_array = __webpack_require__(92994);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.copy-within.js
-var es_typed_array_copy_within = __webpack_require__(93977);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.every.js
-var es_typed_array_every = __webpack_require__(6373);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.fill.js
-var es_typed_array_fill = __webpack_require__(66242);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.filter.js
-var es_typed_array_filter = __webpack_require__(14964);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.find.js
-var es_typed_array_find = __webpack_require__(56492);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.find-index.js
-var es_typed_array_find_index = __webpack_require__(93687);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.for-each.js
-var es_typed_array_for_each = __webpack_require__(51026);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.includes.js
-var es_typed_array_includes = __webpack_require__(13230);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.index-of.js
-var es_typed_array_index_of = __webpack_require__(53883);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.iterator.js
-var es_typed_array_iterator = __webpack_require__(5785);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.join.js
-var es_typed_array_join = __webpack_require__(5180);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.last-index-of.js
-var es_typed_array_last_index_of = __webpack_require__(26056);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.map.js
-var es_typed_array_map = __webpack_require__(30183);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.reduce.js
-var es_typed_array_reduce = __webpack_require__(15970);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.reduce-right.js
-var es_typed_array_reduce_right = __webpack_require__(54847);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.reverse.js
-var es_typed_array_reverse = __webpack_require__(19944);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.set.js
-var es_typed_array_set = __webpack_require__(60247);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.slice.js
-var es_typed_array_slice = __webpack_require__(17528);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.some.js
-var es_typed_array_some = __webpack_require__(33996);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.sort.js
-var es_typed_array_sort = __webpack_require__(59494);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.subarray.js
-var es_typed_array_subarray = __webpack_require__(24134);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.to-locale-string.js
-var es_typed_array_to_locale_string = __webpack_require__(29041);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.typed-array.to-string.js
-var es_typed_array_to_string = __webpack_require__(90618);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.array.sort.js
-var es_array_sort = __webpack_require__(1691);
-;// CONCATENATED MODULE: ../../nexus/react/utils/Datas.jsx
-function Datas_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Datas_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function Datas_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Datas_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Datas_arrayLikeToArray(o, minLen); }
-
-function Datas_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Datas
-// -------------------------------------------------------------------------------------------------------------
-var ileDeFrance = (/* unused pure expression or super */ null && (['75', '77', '78', '91', '92', '93', '94', '95'])); // Functions
-// -------------------------------------------------------------------------------------------------------------
-
-function uuid() {
-  // Collision free V4 UUIDS
-  // ---
-  var tmp,
-      buf = new Uint8Array(16);
-
-  try {
-    window.crypto.getRandomValues(buf);
-  } catch (e) {
-    // IE Stuff (testé avec IE11)
-    var crypto = window.msCrypto;
-    crypto.getRandomValues(buf);
-  }
-
-  buf[6] = buf[6] & 0x0f | 0x40;
-  buf[8] = buf[8] & 0x3f | 0x80;
-  var ret = '';
-
-  for (var idx = 0; idx < 16; idx++) {
-    tmp = buf[idx].toString(16);
-
-    if (tmp.length == 1) {
-      ret += '0' + tmp;
-    } else {
-      ret += tmp;
-    }
-  }
-
-  return ret;
-}
-function copyObj(srcObj) {
-  // Recopie d'objet passé en paramètres
-  // ---
-  var copy = JSON.parse(JSON.stringify(srcObj));
-  return copy;
-}
-function encodeBase64(str) {
-  var buff = new Buffer(str);
-  var base64data = buff.toString('base64');
-  return base64data;
-}
-function decodeBase64(str) {
-  var buff = new Buffer(str, 'base64');
-  var decodedData = buff.toString('ascii');
-  return decodedData;
-}
-function extendArray(array_dest, array_src, get_a_new_one) {
-  // Ajoute les éléments d'une liste dans une autre liste
-  // ---
-  if (get_a_new_one == true) {
-    var new_array = copyObj(array_dest);
-  } else {
-    var new_array = array_dest;
-  }
-
-  for (var idx_item in array_src) {
-    new_array.push(array_src[idx_item]);
-  }
-
-  return new_array;
-}
-function sortObjects(objects, sortField, sortDirection) {
-  sortDirection = sortDirection ? sortDirection : 'asc'; // Tri croissant
-
-  if (sortDirection == 'asc') {
-    objects.sort(function (a, b) {
-      if (a[sortField] > b[sortField]) return 1;
-      if (a[sortField] < b[sortField]) return -1;
-      return 0;
-    });
-  } // Tri décroissant
-
-
-  if (sortDirection == 'desc') {
-    objects.sort(function (a, b) {
-      if (a[sortField] < b[sortField]) return 1;
-      if (a[sortField] > b[sortField]) return -1;
-      return 0;
-    });
-  }
-
-  return objects;
-}
-var applyValue = function applyValue(node, path, value) {
-  // Enregistrement d'une valeur à partir d'un objet et d'un chemin
-  // ---
-  var saveTarget = node;
-
-  for (var idx_path in path) {
-    var target = path[idx_path];
-
-    if (idx_path == path.length - 1) {
-      saveTarget[target] = value;
-    } else {
-      if (!saveTarget.hasOwnProperty(target)) {
-        saveTarget[target] = {};
-      }
-
-      saveTarget = saveTarget[target];
-    }
-  }
-};
-var convertToJSONPath = function convertToJSONPath(path) {
-  // Convertion d'un chemin sous forme de liste en JSON Path pour mobx-state-tree
-  // ---
-  // https://mobx-state-tree.js.org/API/#applypatch
-  // http://jsonpatch.com
-  var jsonPath = '';
-
-  var _iterator = Datas_createForOfIteratorHelper(path),
-      _step;
-
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var pathItem = _step.value;
-      jsonPath = "".concat(jsonPath, "/").concat(pathItem);
-    }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
-  }
-
-  return jsonPath;
 };
 // EXTERNAL MODULE: ../../nexus/react/ui/button/Button.css
 var Button = __webpack_require__(12181);
@@ -14759,10 +14858,10 @@ var HeaderUserMenu = (0,es/* observer */.Pi)(function (props) {
     headerUserMenuContent = /*#__PURE__*/react.createElement("div", {
       "data-flex": "0"
     }, /*#__PURE__*/react.createElement(IconButton, {
+      disabled: isLoading,
       onClick: function onClick(e) {
         return handleAccount(e);
-      },
-      disabled: isLoading
+      }
     }, /*#__PURE__*/react.createElement(Icon_Icon, {
       name: isLogged ? "account_circle" : "no_accounts",
       color: "white"
@@ -16758,6 +16857,7 @@ function NxApp_arrayLikeToArray(arr, len) { if (len == null || len > arr.length)
 
 
 
+
  // Models
 // -------------------------------------------------------------------------------------------------------------
 // ***** NxAppStore *****
@@ -16776,6 +16876,7 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
   editMode: false,
   standaloneMode: false,
   services: mobx_state_tree_module/* types.optional */.V5.optional(ServicesStore, {}),
+  helpers: mobx_state_tree_module/* types.optional */.V5.optional(HelpersStore, {}),
   // URLs
   authUrl: '/login',
   authContext: 'auth',
@@ -16835,6 +16936,7 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
   portal: mobx_state_tree_module/* types.optional */.V5.optional(PortalStore, {}),
   snackbar: mobx_state_tree_module/* types.optional */.V5.optional(SnackbarStore, {}),
   popup: mobx_state_tree_module/* types.optional */.V5.optional(PopupStore, {}),
+  scrollIgnoredContexts: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), []),
   // Common
   // -
   notifications: mobx_state_tree_module/* types.optional */.V5.optional(NotificationsStore, {}),
@@ -16889,11 +16991,6 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       return '/static';
-    },
-
-    // -
-    generateUUID: function generateUUID() {
-      return uuid();
     },
 
     // Bools
@@ -16976,8 +17073,13 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
     getScrollKey: function getScrollKey() {
       // Uniq key to identify scroll context
       // ---
-      var url = document.location.pathname;
-      return url;
+      var scrollKey = document.location.pathname;
+
+      if (self.kind == 'electron' || self.staticMode) {
+        scrollKey = "scroll.".concat(self.context);
+      }
+
+      return scrollKey;
     },
     getValue: function getValue(path, notFoundValue, source) {
       // Récupère la valeur derrière le chemin passé en paramètres
@@ -17116,7 +17218,7 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       extras = extras ? extras : {};
       window.urlParams = {};
       window.verboseRender = false;
-      window.verboseScroll = false;
+      window.verboseScroll = true;
       initWeekFunctions();
       initTrimFunction();
       self.updatePopups(popups);
@@ -17553,14 +17655,19 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       }, 500);
     },
     removeScrollEvent: function removeScrollEvent() {
-      document.getElementById("main").removeEventListener("scroll", self.handleScroll);
+      document.getElementById("nx-main").removeEventListener("scroll", self.handleScroll);
     },
     attachScrollEvent: function attachScrollEvent() {
-      document.getElementById("main").addEventListener("scroll", self.handleScroll);
+      document.getElementById("nx-main").addEventListener("scroll", self.handleScroll);
     },
     saveScroll: function saveScroll(scroll) {
       // Save scroll value
       // ---
+      // Scroll ignoré pour le contexte courant ?
+      if (self.scrollIgnoredContexts.indexOf(self.context) > -1) {
+        return;
+      }
+
       var context = self.context;
       var scrollKey = self.getScrollKey();
 
@@ -17573,29 +17680,37 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
     restoreScroll: function restoreScroll() {
       // Restore scroll value
       // ---
-      var scrollKey = self.getScrollKey();
-      var scroll = getFromStorage(scrollKey, 0, 'int');
+      var main = document.getElementById("nx-main");
+      var scroll = 0;
 
-      if (window.infiniteScrollCallback) {
-        scroll = 0;
+      if (self.scrollIgnoredContexts.indexOf(self.context) == -1) {
+        var scrollKey = self.getScrollKey();
+        scroll = getFromStorage(scrollKey, 0, 'int');
+
+        if (window.infiniteScrollCallback) {
+          scroll = 0;
+        }
+
+        if (window.verboseScroll) {
+          console.log("Restore scroll ".concat(scrollKey, " : ").concat(scroll));
+        }
       }
-
-      if (window.verboseScroll) {
-        console.log("Restore scroll ".concat(scrollKey, " : ").concat(scroll));
-      }
-
-      var main = document.getElementById("main");
 
       if (main) {
         self.removeScrollEvent();
-        main.scrollTop = scroll;
+        main.scrollTop = scroll; // main.scrollTo({
+        // 	left: 0,
+        // 	top: scroll,
+        // 	behavior: "smooth"
+        // });
+
         self.attachScrollEvent();
       }
     },
     scrollToTop: function scrollToTop() {
       // Smooth scroll to the top of the page
       // ---
-      var main = document.getElementById("main");
+      var main = document.getElementById("nx-main");
 
       if (main) {
         main.scrollTo({
@@ -17608,7 +17723,7 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
     scrollToBottom: function scrollToBottom() {
       // Smooth scroll to the bottom of the page
       // ---
-      var main = document.getElementById("main");
+      var main = document.getElementById("nx-main");
 
       if (main) {
         main.scrollTo({
@@ -18190,7 +18305,7 @@ var NxApp_NxApp = (0,es/* observer */.Pi)(function (props) {
     clearTimeout(window.scrollTimeoutRestore);
     setTimeout(function () {
       app.restoreScroll();
-    }, 250); // JS Ready
+    }, 500); // JS Ready
 
     var body = document.body;
     body.classList.add("jsready");
@@ -18434,7 +18549,7 @@ var services_STATIC_SMAP = {
     admin_role: null
   }
 }; // Models
-// -------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 // ***** ServiceInfoStore *****
 // ****************************
 
@@ -20207,6 +20322,8 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       return album;
     },
     getLastAdded: function getLastAdded(maxAlbums) {
+      // Récupération des derniers albums rajoutés
+      // ---
       var lastAdded = [];
 
       for (var lastAddedIdx in self.last_added_ids) {
@@ -20223,6 +20340,39 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       return lastAdded;
+    },
+    getRandomly: function getRandomly(howMany) {
+      // Récupération aléatoire d'un certain nombre d'albums
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var helpers = app.helpers; // Il y en a-t-il assez ?
+
+      var nbAlbums = self.nbAlbums;
+
+      if (howMany > nbAlbums) {
+        howMany = nbAlbums;
+      }
+
+      var albumIds = Array.from(self.by_id.keys());
+      var randomAlbums = [];
+      var randomAlbumsIdxs = [];
+
+      while (randomAlbums.length < howMany) {
+        var randomIdx = helpers.getRandomNumber(albumIds.length);
+
+        if (randomAlbumsIdxs.indexOf(randomIdx) == -1) {
+          var albumId = albumIds[randomIdx];
+          var album = self.by_id.get(albumId);
+
+          if (album) {
+            randomAlbums.push(album);
+            randomAlbumsIdxs.push(randomIdx);
+          }
+        }
+      }
+
+      return randomAlbums;
     }
   };
 }).actions(function (self) {
@@ -23698,7 +23848,33 @@ var ContextualMenu = (0,es/* observer */.Pi)(function (props) {
 // EXTERNAL MODULE: ./contexts/home/Home.css
 var home_Home = __webpack_require__(8319);
 ;// CONCATENATED MODULE: ./contexts/home/Home.jsx
-function Home_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Home_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function Home_slicedToArray(arr, i) { return Home_arrayWithHoles(arr) || Home_iterableToArrayLimit(arr, i) || Home_unsupportedIterableToArray(arr, i) || Home_nonIterableRest(); }
+
+function Home_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function Home_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function Home_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function Home_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Home_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function Home_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Home_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Home_arrayLikeToArray(o, minLen); }
 
@@ -23722,14 +23898,116 @@ function Home_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) 
 
 
 
+ // Datas
+// ======================================================================================================
+
+var NB_SHOWCASED = 6;
+var HOME_SECTIONS = [{
+  "value": "showcased",
+  "label": "Mis en avant",
+  "icon": "tips_and_updates"
+}, {
+  "value": "new",
+  "label": "Ajouté dernièrement",
+  "icon": "new_releases"
+}, {
+  "value": "history",
+  "label": "Écouté récemment",
+  "icon": "history"
+}];
+var HOME_SECTIONS_BY_KEYS = {};
+
+for (var Home_i = 0, _HOME_SECTIONS = HOME_SECTIONS; Home_i < _HOME_SECTIONS.length; Home_i++) {
+  var homeSectionItem = _HOME_SECTIONS[Home_i];
+  HOME_SECTIONS_BY_KEYS[homeSectionItem.value] = homeSectionItem;
+} // Models
+// ======================================================================================================
+// ***** HomeStore *****
+// *********************
 
 
+var TAG_HomeStore = function TAG_HomeStore() {};
 
+var HomeStore = mobx_state_tree_module/* types.model */.V5.model({
+  sectionDisplayed: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), [])
+}).views(function (self) {
+  return {
+    get sectionHidden() {
+      var hiddenKeys = [];
 
+      var _iterator = Home_createForOfIteratorHelper(HOME_SECTIONS),
+          _step;
 
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var homeSection = _step.value;
 
+          if (self.sectionDisplayed.indexOf(homeSection.value) == -1) {
+            hiddenKeys.push(homeSection.value);
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
 
- // Functions Components ReactJS
+      return hiddenKeys;
+    },
+
+    // Bools
+    // -
+    get displayedShowcase() {
+      if (self.sectionDisplayed.indexOf("showcased") > -1) {
+        return true;
+      }
+
+      return false;
+    },
+
+    get displayedNew() {
+      if (self.sectionDisplayed.indexOf("new") > -1) {
+        return true;
+      }
+
+      return false;
+    },
+
+    get displayedHistory() {
+      if (self.sectionDisplayed.indexOf("history") > -1) {
+        return true;
+      }
+
+      return false;
+    }
+
+  };
+}).actions(function (self) {
+  return {
+    setField: function setField(field, value) {
+      self[field] = value;
+    },
+    // -
+    save: function save() {
+      setToStorage('homeSectionDisplayed', self.sectionDisplayed.toJSON(), 'json');
+    },
+    // -
+    displaySection: function displaySection(sectionKey) {
+      if (self.sectionDisplayed.indexOf(sectionKey) == -1) {
+        self.sectionDisplayed.push(sectionKey);
+        self.save();
+      }
+    },
+    hideSection: function hideSection(sectionKey) {
+      var sectionIdx = self.sectionDisplayed.indexOf(sectionKey);
+
+      if (sectionIdx > -1) {
+        self.sectionDisplayed.splice(sectionIdx, 1);
+        self.save();
+      }
+    }
+  };
+}); // Functions Components ReactJS
 // ======================================================================================================
 // ***** RenderHomeGrid *****
 // **************************
@@ -23815,6 +24093,90 @@ var RenderHomeGrid = (0,es/* observer */.Pi)(function (props) {
     spacing: "medium",
     responsive: false
   }, navCardYears, navCardGenres, navCardPlaylists));
+}); // ***** RenderShowcased *****
+// ***************************
+
+var TAG_RenderShowcased = function TAG_RenderShowcased() {};
+
+var RenderShowcased = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var home = store.home;
+  var albums = store.albums; // From ... state
+
+  var _React$useState = react.useState(albums.getRandomly(NB_SHOWCASED)),
+      _React$useState2 = Home_slicedToArray(_React$useState, 2),
+      showcased = _React$useState2[0],
+      setShowcased = _React$useState2[1]; // ...
+
+
+  var homeSectionDef = HOME_SECTIONS_BY_KEYS["showcased"]; // Events
+  // ==================================================================================================
+
+  var handleRefreshShowcased = function handleRefreshShowcased() {
+    setShowcased(albums.getRandomly(NB_SHOWCASED));
+  };
+
+  var handleCloseClick = function handleCloseClick() {
+    home.hideSection(homeSectionDef.value);
+  }; // -
+
+
+  var handleAlbumClick = function handleAlbumClick(albumId) {
+    store.navigateTo('album', albumId);
+  }; // Render
+  // ==================================================================================================
+  // Fantômes flex
+
+
+  var ghosts = [];
+
+  for (var i = 0; i < 10; i++) {
+    ghosts.push( /*#__PURE__*/react.createElement(ThumbnailGhost, {
+      key: "ghost-last-added-".concat(i),
+      size: "small"
+    }));
+  }
+
+  return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Ribbon_Ribbon, {
+    avatarIconName: homeSectionDef.icon,
+    avatarIconColor: "hot",
+    title: homeSectionDef.label,
+    right: /*#__PURE__*/react.createElement("div", {
+      className: "h-col"
+    }, /*#__PURE__*/react.createElement(IconButton, {
+      iconName: "model_training",
+      color: "info",
+      onClick: function onClick() {
+        return handleRefreshShowcased();
+      }
+    }), /*#__PURE__*/react.createElement(IconButton, {
+      iconName: "close",
+      color: "default",
+      onClick: function onClick() {
+        return handleCloseClick();
+      }
+    })),
+    style: {
+      backgroundColor: 'transparent',
+      marginBottom: '20px'
+    }
+  }), showcased.length > 0 && /*#__PURE__*/react.createElement(Grid_Grid, {
+    justify: "space-between",
+    style: {
+      paddingLeft: '16px',
+      paddingRight: '16px',
+      marginBottom: '40px'
+    }
+  }, showcased.map(function (album, albumIdx) {
+    return /*#__PURE__*/react.createElement(AlbumThumbnail, {
+      key: "thumbnail-showcased-".concat(albumIdx),
+      album: album,
+      callbackClick: function callbackClick() {
+        return handleAlbumClick(album.id);
+      }
+    });
+  }), ghosts));
 }); // ***** RenderLastAdded *****
 // ***************************
 
@@ -23823,56 +24185,68 @@ var TAG_RenderLastAdded = function TAG_RenderLastAdded() {};
 var RenderLastAdded = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
+  var home = store.home;
   var albums = store.albums; // From ... store
 
-  var lastAdded = albums.getLastAdded(6); // Events
+  var lastAdded = albums.getLastAdded(6); // ...
+
+  var homeSectionDef = HOME_SECTIONS_BY_KEYS["new"]; // Events
   // ==================================================================================================
+
+  var handleCloseClick = function handleCloseClick() {
+    home.hideSection(homeSectionDef.value);
+  }; // -
+
 
   var handleAlbumClick = function handleAlbumClick(albumId) {
     store.navigateTo('album', albumId);
   }; // Render
   // ==================================================================================================
+  // Fantômes flex
 
 
-  var lastAddedContent = null;
+  var ghosts = [];
 
-  if (lastAdded.length > 0) {
-    // Fantômes flex
-    var ghosts = [];
-
-    for (var i = 0; i < 10; i++) {
-      ghosts.push( /*#__PURE__*/react.createElement(ThumbnailGhost, {
-        key: "ghost-last-added-".concat(i),
-        size: "small"
-      }));
-    }
-
-    lastAddedContent = /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Ribbon_Ribbon, {
-      avatarIconName: "new_releases",
-      avatarIconColor: "hot",
-      title: "Ajout\xE9 derni\xE8rement",
-      style: {
-        backgroundColor: 'transparent',
-        marginBottom: '20px'
-      }
-    }), /*#__PURE__*/react.createElement(Grid_Grid, {
-      justify: "space-between",
-      style: {
-        paddingLeft: '16px',
-        paddingRight: '16px'
-      }
-    }, lastAdded.map(function (album, albumIdx) {
-      return /*#__PURE__*/react.createElement(AlbumThumbnail, {
-        key: "thumbnail-last-added-".concat(albumIdx),
-        album: album,
-        callbackClick: function callbackClick() {
-          return handleAlbumClick(album.id);
-        }
-      });
-    }), ghosts));
+  for (var i = 0; i < 10; i++) {
+    ghosts.push( /*#__PURE__*/react.createElement(ThumbnailGhost, {
+      key: "ghost-last-added-".concat(i),
+      size: "small"
+    }));
   }
 
-  return lastAddedContent;
+  return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Ribbon_Ribbon, {
+    avatarIconName: homeSectionDef.icon,
+    avatarIconColor: "hot",
+    title: homeSectionDef.label,
+    right: /*#__PURE__*/react.createElement("div", {
+      className: "h-col"
+    }, /*#__PURE__*/react.createElement(IconButton, {
+      iconName: "close",
+      color: "default",
+      onClick: function onClick() {
+        return handleCloseClick();
+      }
+    })),
+    style: {
+      backgroundColor: 'transparent',
+      marginBottom: '20px'
+    }
+  }), lastAdded.length > 0 && /*#__PURE__*/react.createElement(Grid_Grid, {
+    justify: "space-between",
+    style: {
+      paddingLeft: '16px',
+      paddingRight: '16px',
+      marginBottom: '40px'
+    }
+  }, lastAdded.map(function (album, albumIdx) {
+    return /*#__PURE__*/react.createElement(AlbumThumbnail, {
+      key: "thumbnail-last-added-".concat(albumIdx),
+      album: album,
+      callbackClick: function callbackClick() {
+        return handleAlbumClick(album.id);
+      }
+    });
+  }), ghosts));
 }); // ***** RenderLastListened *****
 // ******************************
 
@@ -23880,11 +24254,69 @@ var TAG_RenderLastListened = function TAG_RenderLastListened() {};
 
 var RenderLastListened = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
-  var app = store.app; // Render
+  var app = store.app;
+  var home = store.home; // From ... store
+
+  var recentHistory = []; // TODO
+  // ...
+
+  var homeSectionDef = HOME_SECTIONS_BY_KEYS["history"]; // Events
   // ==================================================================================================
 
-  var lastListenedContent = null;
-  return lastListenedContent;
+  var handleCloseClick = function handleCloseClick() {
+    home.hideSection(homeSectionDef.value);
+  }; // -
+
+
+  var handleAlbumClick = function handleAlbumClick(albumId) {
+    store.navigateTo('album', albumId);
+  }; // Render
+  // ==================================================================================================
+  // Fantômes flex
+
+
+  var ghosts = [];
+
+  for (var i = 0; i < 10; i++) {
+    ghosts.push( /*#__PURE__*/react.createElement(ThumbnailGhost, {
+      key: "ghost-last-added-".concat(i),
+      size: "small"
+    }));
+  }
+
+  return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Ribbon_Ribbon, {
+    avatarIconName: homeSectionDef.icon,
+    avatarIconColor: "hot",
+    title: homeSectionDef.label,
+    right: /*#__PURE__*/react.createElement("div", {
+      className: "h-col"
+    }, /*#__PURE__*/react.createElement(IconButton, {
+      iconName: "close",
+      color: "default",
+      onClick: function onClick() {
+        return handleCloseClick();
+      }
+    })),
+    style: {
+      backgroundColor: 'transparent',
+      marginBottom: '20px'
+    }
+  }), recentHistory.length > 0 && /*#__PURE__*/react.createElement(Grid_Grid, {
+    justify: "space-between",
+    style: {
+      paddingLeft: '16px',
+      paddingRight: '16px',
+      marginBottom: '40px'
+    }
+  }, recentHistory.map(function (album, albumIdx) {
+    return /*#__PURE__*/react.createElement(AlbumThumbnail, {
+      key: "thumbnail-history-".concat(albumIdx),
+      album: album,
+      callbackClick: function callbackClick() {
+        return handleAlbumClick(album.id);
+      }
+    });
+  }), ghosts), recentHistory.length == 0 && false && /*#__PURE__*/0);
 }); // ***** HomePage *****
 // ********************
 
@@ -23894,16 +24326,41 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
   var menu = app.menu;
+  var home = store.home;
   var library = store.library;
-  var albums = store.albums; // From ... store
+  var albums = store.albums; // From ... states
+
+  var _React$useState3 = react.useState(null),
+      _React$useState4 = Home_slicedToArray(_React$useState3, 2),
+      anchorAddSection = _React$useState4[0],
+      setAnchorAddSection = _React$useState4[1]; // From ... store
+
 
   var loaded = store.loaded;
   var isLoading = app.isLoading;
   var menuPinned = menu.pinned;
+  var sectionHidden = home.sectionHidden;
+  var displayedShowcase = home.displayedShowcase;
+  var displayedNew = home.displayedNew;
+  var displayedHistory = home.displayedHistory;
   var nbFolders = library.nbFolders;
   var nbAlbums = albums.nbAlbums; // ...
   // Events
   // ==================================================================================================
+
+  var handleAddClick = function handleAddClick(event) {
+    setAnchorAddSection(event.currentTarget);
+  };
+
+  var handleCloseAdd = function handleCloseAdd() {
+    setAnchorAddSection(null);
+  }; // -
+
+
+  var handleAddSectionClick = function handleAddSectionClick(sectionKey) {
+    home.displaySection(sectionKey);
+  }; // -
+
 
   var handleScan = function handleScan() {
     library.startScan();
@@ -23911,12 +24368,12 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
 
   var handleChooseLibrary = function handleChooseLibrary() {
     ipc.once('folderChoosed', function (folders) {
-      var _iterator = Home_createForOfIteratorHelper(folders),
-          _step;
+      var _iterator2 = Home_createForOfIteratorHelper(folders),
+          _step2;
 
       try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var folder = _step.value;
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var folder = _step2.value;
           library.addFolder("source", folder);
           library.refreshAvailability();
           library.save(function () {
@@ -23924,9 +24381,9 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
           });
         }
       } catch (err) {
-        _iterator.e(err);
+        _iterator2.e(err);
       } finally {
-        _iterator.f();
+        _iterator2.f();
       }
     });
     ipc.send('chooseFolder');
@@ -23988,9 +24445,44 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
         } else {
           helperTitle = "Que souhaitez-vous écouter aujourd'hui ?";
           helperSubtitle = "";
-          helperContent = /*#__PURE__*/react.createElement("div", null, !menuPinned && /*#__PURE__*/react.createElement(RenderHomeGrid, null), /*#__PURE__*/react.createElement(RenderLastAdded, null), /*#__PURE__*/react.createElement(RenderLastListened, null));
+          helperContent = /*#__PURE__*/react.createElement("div", null, !menuPinned && /*#__PURE__*/react.createElement(RenderHomeGrid, null), displayedShowcase && /*#__PURE__*/react.createElement(RenderShowcased, null), displayedNew && /*#__PURE__*/react.createElement(RenderLastAdded, null), displayedHistory && /*#__PURE__*/react.createElement(RenderLastListened, null), sectionHidden.length > 0 && /*#__PURE__*/react.createElement("div", {
+            "data-flex": "0"
+          }, /*#__PURE__*/react.createElement(IconButton, {
+            iconName: "add" // color="info"
+            ,
+            onClick: function onClick(e) {
+              return handleAddClick(e);
+            }
+          }), /*#__PURE__*/react.createElement(Popover_Popover, {
+            id: "pop-add-section",
+            open: Boolean(anchorAddSection),
+            anchorEl: anchorAddSection,
+            onClose: handleCloseAdd,
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'center'
+            },
+            transformOrigin: {
+              vertical: 'top',
+              horizontal: 'left'
+            },
+            style: {
+              width: '240px'
+            }
+          }, /*#__PURE__*/react.createElement(List_List, null, sectionHidden.map(function (sectionKey, sectionIdx) {
+            var homeSectionDef = HOME_SECTIONS_BY_KEYS[sectionKey];
+            return /*#__PURE__*/react.createElement(ListItem, {
+              key: "menu-item-".concat(sectionKey),
+              onClick: function onClick() {
+                return handleAddSectionClick(sectionKey);
+              }
+            }, /*#__PURE__*/react.createElement(List_ListIcon, {
+              name: homeSectionDef.icon,
+              color: "typography"
+            }), /*#__PURE__*/react.createElement(ListText, null, homeSectionDef.label));
+          })))));
 
-          if (nbAlbums >= 6) {
+          if (displayedShowcase || displayedNew || displayedHistory) {
             helperInFlux = true;
           }
         }
@@ -25229,6 +25721,7 @@ var TAG_RootStore = function TAG_RootStore() {};
 
 var RootStore = mobx_state_tree_module/* types.model */.V5.model({
   app: mobx_state_tree_module/* types.optional */.V5.optional(NxAppStore, {}),
+  home: mobx_state_tree_module/* types.optional */.V5.optional(HomeStore, {}),
   // -
   search: mobx_state_tree_module/* types.optional */.V5.optional(SearchStore, {}),
   // -
@@ -25493,7 +25986,11 @@ var initSnapshot = makeInitSnapshot(routes, {
           'main': '#607d8b'
         }
       }
-    }
+    },
+    'scrollIgnoredContexts': ['home', 'about', 'admin', 'artist', 'album', 'years', 'year', 'genre', 'playlist']
+  },
+  'home': {
+    'sectionDisplayed': getFromStorage('homeSectionDisplayed', ['showcased'], 'json')
   },
   'artistId': getFromStorage('lastArtistId', ''),
   'albumId': getFromStorage('lastAlbumId', ''),
@@ -26643,7 +27140,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(88935)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(73578)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

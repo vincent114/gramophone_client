@@ -85,6 +85,10 @@ export const AlbumsStore = types
 		},
 
 		getLastAdded(maxAlbums) {
+
+			// Récupération des derniers albums rajoutés
+			// ---
+
 			let lastAdded = [];
 			for (const lastAddedIdx in self.last_added_ids) {
 				if (lastAdded.length < maxAlbums) {
@@ -98,6 +102,40 @@ export const AlbumsStore = types
 				}
 			}
 			return lastAdded;
+		},
+
+		getRandomly(howMany) {
+
+			// Récupération aléatoire d'un certain nombre d'albums
+			// ---
+
+			const store = getRoot(self);
+			const app = store.app;
+			const helpers = app.helpers;
+
+			// Il y en a-t-il assez ?
+			const nbAlbums = self.nbAlbums;
+			if (howMany > nbAlbums) {
+				howMany = nbAlbums;
+			}
+
+			const albumIds = Array.from(self.by_id.keys());
+
+			let randomAlbums = [];
+			let randomAlbumsIdxs = [];
+
+			while (randomAlbums.length < howMany) {
+				const randomIdx = helpers.getRandomNumber(albumIds.length);
+				if (randomAlbumsIdxs.indexOf(randomIdx) == -1) {
+					const albumId = albumIds[randomIdx];
+					const album = self.by_id.get(albumId);
+					if (album) {
+						randomAlbums.push(album);
+						randomAlbumsIdxs.push(randomIdx);
+					}
+				}
+			}
+			return randomAlbums;
 		},
 
 	}))
