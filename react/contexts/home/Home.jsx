@@ -69,6 +69,10 @@ const TAG_HomeStore = () => {}
 export const HomeStore = types
 	.model({
 		sectionDisplayed: types.optional(types.array(types.string), []),
+
+		showcasedIds: types.optional(types.array(types.string), []),
+
+		initialized: false,
 	})
 	.views(self => ({
 
@@ -106,6 +110,23 @@ export const HomeStore = types
 			return false;
 		},
 
+		// Getter
+		// -
+
+		getShowcased() {
+			const store = getRoot(self);
+			const albums = store.albums;
+
+			let showcased = [];
+			for (const albumId of self.showcasedIds) {
+				const album = albums.by_id.get(albumId);
+				if (album) {
+					showcased.push(album);
+				}
+			}
+			return showcased;
+		},
+
 	}))
 	.actions(self => ({
 
@@ -114,6 +135,11 @@ export const HomeStore = types
 		},
 
 		// -
+
+		init: () => {
+			self.refreshShowcased();
+			self.initialized = true;
+		},
 
 		save: () => {
 			setToStorage('homeSectionDisplayed', self.sectionDisplayed.toJSON(), 'json');
@@ -134,6 +160,14 @@ export const HomeStore = types
 				self.sectionDisplayed.splice(sectionIdx, 1);
 				self.save();
 			}
+		},
+
+		// -
+
+		refreshShowcased: () => {
+			const store = getRoot(self);
+			const albums = store.albums;
+			self.showcasedIds = albums.getRandomly(NB_SHOWCASED, false);
 		},
 
 	}))
@@ -261,9 +295,9 @@ export const RenderShowcased = observer((props) => {
 	const home = store.home;
 	const albums = store.albums;
 
-	// From ... state
+	// From ... store
 
-	let [showcased, setShowcased] = React.useState(albums.getRandomly(NB_SHOWCASED));
+	const showcased = home.getShowcased();
 
 	// ...
 
@@ -273,7 +307,7 @@ export const RenderShowcased = observer((props) => {
 	// ==================================================================================================
 
 	const handleRefreshShowcased = () => {
-		setShowcased(albums.getRandomly(NB_SHOWCASED));
+		home.refreshShowcased();
 	}
 
 	const handleCloseClick = () => {
@@ -557,6 +591,7 @@ export const HomePage = observer((props) => {
 	// From ... store
 
 	const loaded = store.loaded;
+	const initialized = home.initialized;
 	const isLoading = app.isLoading;
 	const menuPinned = menu.pinned;
 
@@ -567,6 +602,14 @@ export const HomePage = observer((props) => {
 
 	const nbFolders = library.nbFolders;
 	const nbAlbums = albums.nbAlbums;
+
+	// ...
+
+	React.useEffect(() => {
+		if (loaded && !initialized) {
+			home.init();
+		}
+	}, [loaded, initialized]);
 
 	// ...
 

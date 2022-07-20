@@ -104,7 +104,7 @@ export const AlbumsStore = types
 			return lastAdded;
 		},
 
-		getRandomly(howMany) {
+		getRandomly(howMany, load=true) {
 
 			// Récupération aléatoire d'un certain nombre d'albums
 			// ---
@@ -123,6 +123,7 @@ export const AlbumsStore = types
 
 			let randomAlbums = [];
 			let randomAlbumsIdxs = [];
+			let randomAlbumsIds = [];
 
 			while (randomAlbums.length < howMany) {
 				const randomIdx = helpers.getRandomNumber(albumIds.length);
@@ -132,10 +133,11 @@ export const AlbumsStore = types
 					if (album) {
 						randomAlbums.push(album);
 						randomAlbumsIdxs.push(randomIdx);
+						randomAlbumsIds.push(album.id);
 					}
 				}
 			}
-			return randomAlbums;
+			return (load) ? randomAlbums : randomAlbumsIds;
 		},
 
 	}))

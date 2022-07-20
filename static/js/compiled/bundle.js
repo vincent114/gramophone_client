@@ -20342,6 +20342,7 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       return lastAdded;
     },
     getRandomly: function getRandomly(howMany) {
+      var load = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       // Récupération aléatoire d'un certain nombre d'albums
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
@@ -20357,6 +20358,7 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       var albumIds = Array.from(self.by_id.keys());
       var randomAlbums = [];
       var randomAlbumsIdxs = [];
+      var randomAlbumsIds = [];
 
       while (randomAlbums.length < howMany) {
         var randomIdx = helpers.getRandomNumber(albumIds.length);
@@ -20368,11 +20370,12 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
           if (album) {
             randomAlbums.push(album);
             randomAlbumsIdxs.push(randomIdx);
+            randomAlbumsIds.push(album.id);
           }
         }
       }
 
-      return randomAlbums;
+      return load ? randomAlbums : randomAlbumsIds;
     }
   };
 }).actions(function (self) {
@@ -23929,7 +23932,9 @@ for (var Home_i = 0, _HOME_SECTIONS = HOME_SECTIONS; Home_i < _HOME_SECTIONS.len
 var TAG_HomeStore = function TAG_HomeStore() {};
 
 var HomeStore = mobx_state_tree_module/* types.model */.V5.model({
-  sectionDisplayed: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), [])
+  sectionDisplayed: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), []),
+  showcasedIds: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), []),
+  initialized: false
 }).views(function (self) {
   return {
     get sectionHidden() {
@@ -23979,8 +23984,35 @@ var HomeStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       return false;
-    }
+    },
 
+    // Getter
+    // -
+    getShowcased: function getShowcased() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var albums = store.albums;
+      var showcased = [];
+
+      var _iterator2 = Home_createForOfIteratorHelper(self.showcasedIds),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var albumId = _step2.value;
+          var album = albums.by_id.get(albumId);
+
+          if (album) {
+            showcased.push(album);
+          }
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+
+      return showcased;
+    }
   };
 }).actions(function (self) {
   return {
@@ -23988,6 +24020,10 @@ var HomeStore = mobx_state_tree_module/* types.model */.V5.model({
       self[field] = value;
     },
     // -
+    init: function init() {
+      self.refreshShowcased();
+      self.initialized = true;
+    },
     save: function save() {
       setToStorage('homeSectionDisplayed', self.sectionDisplayed.toJSON(), 'json');
     },
@@ -24005,6 +24041,12 @@ var HomeStore = mobx_state_tree_module/* types.model */.V5.model({
         self.sectionDisplayed.splice(sectionIdx, 1);
         self.save();
       }
+    },
+    // -
+    refreshShowcased: function refreshShowcased() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var albums = store.albums;
+      self.showcasedIds = albums.getRandomly(NB_SHOWCASED, false);
     }
   };
 }); // Functions Components ReactJS
@@ -24102,19 +24144,15 @@ var RenderShowcased = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
   var home = store.home;
-  var albums = store.albums; // From ... state
+  var albums = store.albums; // From ... store
 
-  var _React$useState = react.useState(albums.getRandomly(NB_SHOWCASED)),
-      _React$useState2 = Home_slicedToArray(_React$useState, 2),
-      showcased = _React$useState2[0],
-      setShowcased = _React$useState2[1]; // ...
-
+  var showcased = home.getShowcased(); // ...
 
   var homeSectionDef = HOME_SECTIONS_BY_KEYS["showcased"]; // Events
   // ==================================================================================================
 
   var handleRefreshShowcased = function handleRefreshShowcased() {
-    setShowcased(albums.getRandomly(NB_SHOWCASED));
+    home.refreshShowcased();
   };
 
   var handleCloseClick = function handleCloseClick() {
@@ -24330,13 +24368,14 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
   var library = store.library;
   var albums = store.albums; // From ... states
 
-  var _React$useState3 = react.useState(null),
-      _React$useState4 = Home_slicedToArray(_React$useState3, 2),
-      anchorAddSection = _React$useState4[0],
-      setAnchorAddSection = _React$useState4[1]; // From ... store
+  var _React$useState = react.useState(null),
+      _React$useState2 = Home_slicedToArray(_React$useState, 2),
+      anchorAddSection = _React$useState2[0],
+      setAnchorAddSection = _React$useState2[1]; // From ... store
 
 
   var loaded = store.loaded;
+  var initialized = home.initialized;
   var isLoading = app.isLoading;
   var menuPinned = menu.pinned;
   var sectionHidden = home.sectionHidden;
@@ -24345,6 +24384,12 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
   var displayedHistory = home.displayedHistory;
   var nbFolders = library.nbFolders;
   var nbAlbums = albums.nbAlbums; // ...
+
+  react.useEffect(function () {
+    if (loaded && !initialized) {
+      home.init();
+    }
+  }, [loaded, initialized]); // ...
   // Events
   // ==================================================================================================
 
@@ -24368,12 +24413,12 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
 
   var handleChooseLibrary = function handleChooseLibrary() {
     ipc.once('folderChoosed', function (folders) {
-      var _iterator2 = Home_createForOfIteratorHelper(folders),
-          _step2;
+      var _iterator3 = Home_createForOfIteratorHelper(folders),
+          _step3;
 
       try {
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          var folder = _step2.value;
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var folder = _step3.value;
           library.addFolder("source", folder);
           library.refreshAvailability();
           library.save(function () {
@@ -24381,9 +24426,9 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
           });
         }
       } catch (err) {
-        _iterator2.e(err);
+        _iterator3.e(err);
       } finally {
-        _iterator2.f();
+        _iterator3.f();
       }
     });
     ipc.send('chooseFolder');
