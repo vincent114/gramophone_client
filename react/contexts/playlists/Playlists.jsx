@@ -199,6 +199,10 @@ export const PlaylistsMenuItem = observer((props) => {
 	const app = store.app;
 	const menu = app.menu;
 
+	// From ... props
+
+	const disabled = props.disabled;
+
 	// ...
 
 	const playlistsContext = 'playlists';
@@ -218,6 +222,7 @@ export const PlaylistsMenuItem = observer((props) => {
 		<MenuItem
 			iconName="playlist_play"
 			label="Playlists"
+			disabled={disabled}
 			activeContexts={[playlistsContext, "playlist"]}
 			callbackClick={handleMenuItemClick}
 		/>

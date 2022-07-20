@@ -363,6 +363,10 @@ export const ArtistsMenuItem = observer((props) => {
 	const app = store.app;
 	const menu = app.menu;
 
+	// From ... props
+
+	const disabled = props.disabled;
+
 	// ...
 
 	const artistsContext = 'artists';
@@ -382,6 +386,7 @@ export const ArtistsMenuItem = observer((props) => {
 		<MenuItem
 			iconName="face"
 			label="Artistes"
+			disabled={disabled}
 			activeContexts={[artistsContext, 'artist']}
 			callbackClick={handleMenuItemClick}
 		/>

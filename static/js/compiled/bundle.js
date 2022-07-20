@@ -5411,11 +5411,9 @@ var Helper_Helper = (0,es/* observer */.Pi)(function (props) {
   var styleContent = props.styleContent ? props.styleContent : {}; // Render
   // ==================================================================================================
 
-  var titleColor = themeMode == 'light' ? 'black' : 'white';
-
-  if (severity && severity != 'default' && SEVERITY_COLORS_CONTRASTED.hasOwnProperty(severity)) {
-    titleColor = SEVERITY_COLORS_CONTRASTED[severity];
-  }
+  var titleColor = themeMode == 'light' ? 'black' : 'white'; // if (severity && severity != 'default' && SEVERITY_COLORS_CONTRASTED.hasOwnProperty(severity)) {
+  // 	titleColor = SEVERITY_COLORS_CONTRASTED[severity];
+  // }
 
   var subtitleColor = 'gray';
   var subtitleIcon = null;
@@ -5677,7 +5675,9 @@ var TAG_HomeMenuItem = function TAG_HomeMenuItem() {};
 var HomeMenuItem = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var menu = app.menu; // From ... store
+  var menu = app.menu; // From ... props
+
+  var disabled = props.disabled; // From ... store
 
   var breakPoint650 = app.breakPoint650;
   var homeContext = app.homeContext; // Events
@@ -5696,6 +5696,7 @@ var HomeMenuItem = (0,es/* observer */.Pi)(function (props) {
     homeMenuItemContent = /*#__PURE__*/react.createElement(MenuItem, {
       iconName: "home",
       label: "Accueil",
+      disabled: disabled,
       activeContexts: [homeContext],
       callbackClick: handleMenuItemClick
     });
@@ -8006,6 +8007,7 @@ var Grid = __webpack_require__(13058);
 ;// CONCATENATED MODULE: ../../nexus/react/layout/grid/Grid.jsx
 
 
+
  // Functions Components ReactJS
 // ----------------------------------------------------------------------------------------------------------------------------
 // ***** Grid *****
@@ -8015,10 +8017,17 @@ var TAG_Grid = function TAG_Grid() {};
 
 var Grid_Grid = function Grid(props) {
   // From ... props
+  var justify = props.justify ? props.justify : "space-around"; // space-around, space-between
+
   var children = props.children;
   var className = props.className ? props.className : '';
-  var style = props.style ? props.style : {}; // Render
+  var style = props.style ? copyObj(props.style) : {}; // ...
+
+  if (!style.hasOwnProperty("justifyContent")) {
+    style["justifyContent"] = justify;
+  } // Render
   // ==================================================================================================
+
 
   return /*#__PURE__*/react.createElement("div", {
     className: (0,clsx_m/* default */.Z)("nx-grid", className),
@@ -10568,7 +10577,7 @@ var MenuItem = (0,es/* observer */.Pi)(function (props) {
   var iconName = props.iconName;
   var label = props.label;
   var activeContexts = props.activeContexts ? props.activeContexts : [];
-  var disabled = props.disabled == true ? props.disabled : isLoading;
+  var disabled = props.disabled != undefined ? props.disabled : isLoading;
   var style = props.style ? props.style : {};
   var styleLabel = {
     'color': themeMode == 'light' ? 'black' : 'white'
@@ -11129,7 +11138,9 @@ var TAG_AboutMenuItem = function TAG_AboutMenuItem() {};
 
 var AboutMenuItem = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
-  var app = store.app; // From ... store
+  var app = store.app; // From ... props
+
+  var disabled = props.disabled; // From ... store
 
   var aboutContext = app.aboutContext; // Events
   // ==================================================================================================
@@ -11144,6 +11155,7 @@ var AboutMenuItem = (0,es/* observer */.Pi)(function (props) {
   return /*#__PURE__*/react.createElement(MenuItem, {
     iconName: "code",
     label: "A propos",
+    disabled: disabled,
     activeContexts: [aboutContext],
     callbackClick: handleMenuItemClick
   });
@@ -11845,7 +11857,9 @@ var TAG_AdminMenuItem = function TAG_AdminMenuItem() {};
 var AdminMenuItem = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var account = app.account; // From ... store
+  var account = app.account; // From ... props
+
+  var disabled = props.disabled; // From ... store
 
   var appKind = app.kind;
   var isAdmin = account.is_admin;
@@ -11867,6 +11881,7 @@ var AdminMenuItem = (0,es/* observer */.Pi)(function (props) {
     adminMenuItemContent = /*#__PURE__*/react.createElement(MenuItem, {
       iconName: "setting",
       label: adminTitle,
+      disabled: disabled,
       activeContexts: [adminContext],
       callbackClick: handleMenuItemClick
     });
@@ -17494,6 +17509,40 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       return self._fetchDatas(input, init, quiet, method, params, false);
     },
     // -
+    applyPatches: function applyPatches(pathsAndValues, callbackPatched) {
+      // Application de patchs à l'arbre MobxStateTree
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var patchesList = [];
+
+      var _iterator3 = NxApp_createForOfIteratorHelper(pathsAndValues),
+          _step3;
+
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var _step3$value = NxApp_slicedToArray(_step3.value, 2),
+              _path = _step3$value[0],
+              value = _step3$value[1];
+
+          patchesList.push({
+            "op": "replace",
+            "path": convertToJSONPath(_path),
+            "value": value
+          });
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
+
+      console.log(patchesList);
+      (0,mobx_state_tree_module/* applyPatch */.af)(store, patchesList);
+
+      if (callbackPatched) {
+        callbackPatched();
+      }
+    },
     saveValue: function saveValue(path, value, callbackSaved) {
       // Sauvegarde de la nouvelle valeur à travers un arbre MobxStateTree
       // ---
@@ -17510,7 +17559,7 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       }
     },
     saveValues: (0,mobx_state_tree_module/* flow */.ls)( /*#__PURE__*/regeneratorRuntime.mark(function saveValues(pathsAndValues) {
-      var _iterator3, _step3, _step3$value, savePath, value;
+      var _iterator4, _step4, _step4$value, savePath, value;
 
       return regeneratorRuntime.wrap(function saveValues$(_context) {
         while (1) {
@@ -17518,17 +17567,17 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
             case 0:
               // Modifie en chaine plusieurs valeurs à l'aide du flow de mobx-state-tree
               // ---
-              _iterator3 = NxApp_createForOfIteratorHelper(pathsAndValues);
+              _iterator4 = NxApp_createForOfIteratorHelper(pathsAndValues);
 
               try {
-                for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-                  _step3$value = NxApp_slicedToArray(_step3.value, 2), savePath = _step3$value[0], value = _step3$value[1];
+                for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+                  _step4$value = NxApp_slicedToArray(_step4.value, 2), savePath = _step4$value[0], value = _step4$value[1];
                   self.saveValue(savePath, value);
                 }
               } catch (err) {
-                _iterator3.e(err);
+                _iterator4.e(err);
               } finally {
-                _iterator3.f();
+                _iterator4.f();
               }
 
             case 2:
@@ -17592,21 +17641,21 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       var errors = self.errors;
       var clearedErrors = [];
 
-      var _iterator4 = NxApp_createForOfIteratorHelper(errors),
-          _step4;
+      var _iterator5 = NxApp_createForOfIteratorHelper(errors),
+          _step5;
 
       try {
-        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-          var error = _step4.value;
+        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+          var error = _step5.value;
 
           if (JSON.stringify(error.path) != JSON.stringify(savePath)) {
             clearedErrors.push(error);
           }
         }
       } catch (err) {
-        _iterator4.e(err);
+        _iterator5.e(err);
       } finally {
-        _iterator4.f();
+        _iterator5.f();
       }
 
       self.setField('errors', clearedErrors);
@@ -18557,7 +18606,9 @@ var TAG_SearchMenuItem = function TAG_SearchMenuItem() {};
 
 var SearchMenuItem = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
-  var app = store.app; // From ... store
+  var app = store.app; // From ... props
+
+  var disabled = props.disabled; // From ... store
 
   var searchContext = app.searchContext; // Events
   // ==================================================================================================
@@ -18572,6 +18623,7 @@ var SearchMenuItem = (0,es/* observer */.Pi)(function (props) {
   return /*#__PURE__*/react.createElement(MenuItem, {
     iconName: "search",
     label: "Rechercher",
+    disabled: disabled,
     activeContexts: [searchContext],
     callbackClick: handleMenuItemClick
   });
@@ -19467,7 +19519,9 @@ var TAG_ArtistsMenuItem = function TAG_ArtistsMenuItem() {};
 var ArtistsMenuItem = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var menu = app.menu; // ...
+  var menu = app.menu; // From ... props
+
+  var disabled = props.disabled; // ...
 
   var artistsContext = 'artists'; // Events
   // ==================================================================================================
@@ -19482,6 +19536,7 @@ var ArtistsMenuItem = (0,es/* observer */.Pi)(function (props) {
   return /*#__PURE__*/react.createElement(MenuItem, {
     iconName: "face",
     label: "Artistes",
+    disabled: disabled,
     activeContexts: [artistsContext, 'artist'],
     callbackClick: handleMenuItemClick
   });
@@ -19568,6 +19623,7 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
   cover: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   folder: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   year: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.integer */.V5.integer),
+  ts_added: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   artist_id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   year_id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   genre_id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
@@ -19614,6 +19670,7 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       self.cover = raw.cover;
       self.folder = raw.folder;
       self.year = raw.year;
+      self.ts_added = raw.ts_added;
       self.artist_id = raw.artist_id;
       self.year_id = raw.year_id;
       self.genre_id = raw.genre_id;
@@ -19940,6 +19997,9 @@ function Albums_arrayLikeToArray(arr, len) { if (len == null || len > arr.length
 
 
 
+
+
+
  // Models
 // ======================================================================================================
 // ***** AlbumsStore *****
@@ -19949,6 +20009,7 @@ var TAG_AlbumsStore = function TAG_AlbumsStore() {};
 
 var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
   by_id: mobx_state_tree_module/* types.map */.V5.map(AlbumStore),
+  last_added_ids: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), []),
   loaded: false
 }).views(function (self) {
   return {
@@ -19959,13 +20020,17 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       return path;
     },
 
+    get albumsList() {
+      return self.by_id.toJSON().values();
+    },
+
     get nbAlbums() {
       return Object.entries(self.by_id.toJSON()).length;
     },
 
     // Getters
     // -
-    getByLetter: function getByLetter() {
+    groupedByLetter: function groupedByLetter() {
       var byLetter = {};
 
       var _iterator = Albums_createForOfIteratorHelper(self.by_id.entries()),
@@ -19993,6 +20058,7 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
 
       return byLetter;
     },
+    // -
     getById: function getById(albumId) {
       var album = self.by_id.get(albumId);
 
@@ -20001,6 +20067,24 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       return album;
+    },
+    getLastAdded: function getLastAdded(maxAlbums) {
+      var lastAdded = [];
+
+      for (var lastAddedIdx in self.last_added_ids) {
+        if (lastAdded.length < maxAlbums) {
+          var albumId = self.last_added_ids[lastAddedIdx];
+          var album = self.by_id.get(albumId);
+
+          if (album) {
+            lastAdded.push(album);
+          }
+        } else {
+          break;
+        }
+      }
+
+      return lastAdded;
     }
   };
 }).actions(function (self) {
@@ -20031,10 +20115,17 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       var app = store.app;
 
       store._readJsonFile(self.albumsCollectionFilePath, {
-        by_id: {}
+        by_id: {},
+        last_added_ids: []
       }, function (raw) {
         // self.update(raw);
-        app.saveValue(['albums', 'by_id'], raw.by_id, function () {
+        // app.saveValue(['albums', 'by_id'], raw.by_id, () => {
+        // 	self.setField('loaded', true);
+        // 	if (callback) {
+        // 		callback();
+        // 	}
+        // });
+        app.applyPatches([[['albums', 'by_id'], raw.by_id], [['albums', 'last_added_ids'], raw.last_added_ids]], function () {
           self.setField('loaded', true);
 
           if (callback) {
@@ -20064,7 +20155,13 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       if (!album) {
         album = AlbumStore.create({});
         album.setField('id', albumId);
+        album.setField('ts_added', dateTools.getNowIso());
+        self.addLastAddedId(albumId);
         added = true;
+      } else {
+        if (self.last_added_ids.length < 10) {
+          self.addLastAddedId(albumId);
+        }
       }
 
       var tags = metas.fileTags;
@@ -20078,11 +20175,47 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       album.addTrackId(metas.trackID);
       self.by_id.set(albumId, album);
       return added;
+    },
+    // -
+    addLastAddedId: function addLastAddedId(albumId) {
+      if (self.last_added_ids.indexOf(albumId) > -1) {
+        return;
+      }
+
+      if (self.last_added_ids.length >= 10) {
+        self.last_added_ids.splice(0, 1);
+      }
+
+      self.last_added_ids.push(albumId);
     }
   };
 }); // Functions Components ReactJS
 // ======================================================================================================
-// ***** RenderAlbums *****
+// ***** AlbumThumbnail *****
+// **************************
+
+var TAG_AlbumThumbnail = function TAG_AlbumThumbnail() {};
+
+var AlbumThumbnail = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app; // From ... props
+
+  var album = props.album;
+  var callbackClick = props.callbackClick;
+  var style = props.style ? props.style : style; // ...
+  // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement(Thumbnail_Thumbnail, {
+    src: album.cover,
+    iconName: "album",
+    title: album.name,
+    subtitle: album.linkedArtist.name,
+    size: "small",
+    rootStyle: style,
+    callbackClick: callbackClick
+  });
+}); // ***** RenderAlbums *****
 // ************************
 
 var TAG_RenderAlbums = function TAG_RenderAlbums() {};
@@ -20094,7 +20227,7 @@ var RenderAlbums = (0,es/* observer */.Pi)(function (props) {
 
   var isLoading = store.isLoading;
   var nbAlbums = albums.nbAlbums;
-  var albumsByLetter = albums.getByLetter(); // ...
+  var albumsByLetter = albums.groupedByLetter(); // ...
 
   var letters = Object.keys(albumsByLetter);
   letters.sort(); // Events
@@ -20184,14 +20317,10 @@ var RenderAlbums = (0,es/* observer */.Pi)(function (props) {
         paddingRight: '20px'
       }
     }, albumsLetter.map(function (album, albumIdx) {
-      return /*#__PURE__*/react.createElement(Thumbnail_Thumbnail, {
+      return /*#__PURE__*/react.createElement(AlbumThumbnail, {
         key: "thumbnail-album-".concat(letterIdx, "-").concat(albumIdx),
-        src: album.cover,
-        iconName: "album",
-        title: album.name,
-        subtitle: album.linkedArtist.name,
-        size: "small",
-        rootStyle: {
+        album: album,
+        style: {
           marginRight: '20px',
           marginBottom: '30px'
         },
@@ -20226,7 +20355,9 @@ var TAG_AlbumsMenuItem = function TAG_AlbumsMenuItem() {};
 var AlbumsMenuItem = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var menu = app.menu; // ...
+  var menu = app.menu; // From ... props
+
+  var disabled = props.disabled; // ...
 
   var albumsContext = 'albums'; // Events
   // ==================================================================================================
@@ -20241,6 +20372,7 @@ var AlbumsMenuItem = (0,es/* observer */.Pi)(function (props) {
   return /*#__PURE__*/react.createElement(MenuItem, {
     iconName: "album",
     label: "Albums",
+    disabled: disabled,
     activeContexts: [albumsContext, "album"],
     callbackClick: handleMenuItemClick
   });
@@ -20651,7 +20783,9 @@ var TAG_TracksMenuItem = function TAG_TracksMenuItem() {};
 var TracksMenuItem = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var menu = app.menu; // ...
+  var menu = app.menu; // From ... props
+
+  var disabled = props.disabled; // ...
 
   var tracksContext = 'tracks'; // Events
   // ==================================================================================================
@@ -20666,6 +20800,7 @@ var TracksMenuItem = (0,es/* observer */.Pi)(function (props) {
   return /*#__PURE__*/react.createElement(MenuItem, {
     iconName: "audiotrack",
     label: "Titres",
+    disabled: disabled,
     activeContexts: [tracksContext],
     callbackClick: handleMenuItemClick
   });
@@ -21373,7 +21508,9 @@ var TAG_YearsMenuItem = function TAG_YearsMenuItem() {};
 var YearsMenuItem = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var menu = app.menu; // ...
+  var menu = app.menu; // From ... props
+
+  var disabled = props.disabled; // ...
 
   var yearsContext = 'years'; // Events
   // ==================================================================================================
@@ -21388,6 +21525,7 @@ var YearsMenuItem = (0,es/* observer */.Pi)(function (props) {
   return /*#__PURE__*/react.createElement(MenuItem, {
     iconName: "date_range",
     label: "Ann\xE9es",
+    disabled: disabled,
     activeContexts: [yearsContext, "year"],
     callbackClick: handleMenuItemClick
   });
@@ -21895,7 +22033,9 @@ var TAG_GenresMenuItem = function TAG_GenresMenuItem() {};
 var GenresMenuItem = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var menu = app.menu; // ...
+  var menu = app.menu; // From ... props
+
+  var disabled = props.disabled; // ...
 
   var genresContext = 'genres'; // Events
   // ==================================================================================================
@@ -21910,6 +22050,7 @@ var GenresMenuItem = (0,es/* observer */.Pi)(function (props) {
   return /*#__PURE__*/react.createElement(MenuItem, {
     iconName: "local_bar",
     label: "Genres",
+    disabled: disabled,
     activeContexts: [genresContext, "genre"],
     callbackClick: handleMenuItemClick
   });
@@ -22275,7 +22416,9 @@ var TAG_PlaylistsMenuItem = function TAG_PlaylistsMenuItem() {};
 var PlaylistsMenuItem = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var menu = app.menu; // ...
+  var menu = app.menu; // From ... props
+
+  var disabled = props.disabled; // ...
 
   var playlistsContext = 'playlists'; // Events
   // ==================================================================================================
@@ -22290,6 +22433,7 @@ var PlaylistsMenuItem = (0,es/* observer */.Pi)(function (props) {
   return /*#__PURE__*/react.createElement(MenuItem, {
     iconName: "playlist_play",
     label: "Playlists",
+    disabled: disabled,
     activeContexts: [playlistsContext, "playlist"],
     callbackClick: handleMenuItemClick
   });
@@ -22575,24 +22719,31 @@ var ContextualMenu = (0,es/* observer */.Pi)(function (props) {
   var breakPoint650 = app.breakPoint650; // Render
   // ==================================================================================================
 
-  return /*#__PURE__*/react.createElement(Menu_Menu, null, /*#__PURE__*/react.createElement(HomeMenuItem, null), /*#__PURE__*/react.createElement(SearchMenuItem, null), /*#__PURE__*/react.createElement(MenuDivider, null), /*#__PURE__*/react.createElement(ArtistsMenuItem, null), /*#__PURE__*/react.createElement(AlbumsMenuItem, null), /*#__PURE__*/react.createElement(TracksMenuItem, null), /*#__PURE__*/react.createElement(MenuDivider, null), /*#__PURE__*/react.createElement(YearsMenuItem, null), /*#__PURE__*/react.createElement(GenresMenuItem, null), /*#__PURE__*/react.createElement(PlaylistsMenuItem, null), /*#__PURE__*/react.createElement(MenuDivider, null), /*#__PURE__*/react.createElement(AboutMenuItem, null), /*#__PURE__*/react.createElement(AdminMenuItem, null));
+  return /*#__PURE__*/react.createElement(Menu_Menu, null, /*#__PURE__*/react.createElement(HomeMenuItem, {
+    disabled: false
+  }), /*#__PURE__*/react.createElement(SearchMenuItem, {
+    disabled: false
+  }), /*#__PURE__*/react.createElement(MenuDivider, null), /*#__PURE__*/react.createElement(ArtistsMenuItem, {
+    disabled: false
+  }), /*#__PURE__*/react.createElement(AlbumsMenuItem, {
+    disabled: false
+  }), /*#__PURE__*/react.createElement(TracksMenuItem, {
+    disabled: false
+  }), /*#__PURE__*/react.createElement(MenuDivider, null), /*#__PURE__*/react.createElement(YearsMenuItem, {
+    disabled: false
+  }), /*#__PURE__*/react.createElement(GenresMenuItem, {
+    disabled: false
+  }), /*#__PURE__*/react.createElement(PlaylistsMenuItem, {
+    disabled: false
+  }), /*#__PURE__*/react.createElement(MenuDivider, null), /*#__PURE__*/react.createElement(AboutMenuItem, {
+    disabled: false
+  }), /*#__PURE__*/react.createElement(AdminMenuItem, {
+    disabled: false
+  }));
 });
 // EXTERNAL MODULE: ./contexts/home/Home.css
 var home_Home = __webpack_require__(8319);
 ;// CONCATENATED MODULE: ./contexts/home/Home.jsx
-
-
-
-
-
-
-
-
-
-
-
-
-
 function Home_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Home_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function Home_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Home_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Home_arrayLikeToArray(o, minLen); }
@@ -22604,9 +22755,182 @@ function Home_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  // Functions Components ReactJS
-// -------------------------------------------------------------------------------------------------------------
-// ***** HomePage *****
+// ======================================================================================================
+// ***** RenderHomeGrid *****
+// **************************
+
+var TAG_RenderHomeGrid = function TAG_RenderHomeGrid() {};
+
+var RenderHomeGrid = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app; // Renderers
+  // ==================================================================================================
+  // HomeGrid -> Artistes
+  // ---
+
+  var navCardArtists = /*#__PURE__*/react.createElement(NavCard_NavCard, {
+    key: "nav-card-artists",
+    icon: "face",
+    label: "Artistes",
+    onClick: function onClick() {
+      return store.navigateTo('artists');
+    }
+  }); // HomeGrid -> Albums
+  // ---
+
+  var navCardAlbums = /*#__PURE__*/react.createElement(NavCard_NavCard, {
+    key: "nav-card-albums",
+    icon: "album",
+    label: "Albums",
+    onClick: function onClick() {
+      return store.navigateTo('albums');
+    }
+  }); // HomeGrid -> Titres
+  // ---
+
+  var navCardTracks = /*#__PURE__*/react.createElement(NavCard_NavCard, {
+    key: "nav-card-tracks",
+    icon: "audiotrack",
+    label: "Titres",
+    onClick: function onClick() {
+      return store.navigateTo('tracks');
+    }
+  }); // HomeGrid -> Années
+  // ---
+
+  var navCardYears = /*#__PURE__*/react.createElement(NavCard_NavCard, {
+    key: "nav-card-years",
+    icon: "date_range",
+    label: "Ann\xE9es",
+    onClick: function onClick() {
+      return store.navigateTo('years');
+    }
+  }); // HomeGrid -> Genres
+  // ---
+
+  var navCardGenres = /*#__PURE__*/react.createElement(NavCard_NavCard, {
+    key: "nav-card-genres",
+    icon: "local_bar",
+    label: "Genres",
+    onClick: function onClick() {
+      return store.navigateTo('genres');
+    }
+  }); // HomeGrid -> Playlists
+  // ---
+
+  var navCardPlaylists = /*#__PURE__*/react.createElement(NavCard_NavCard, {
+    key: "nav-card-playlists",
+    icon: "playlist_play",
+    label: "Playlists",
+    onClick: function onClick() {
+      return store.navigateTo('playlists');
+    }
+  }); // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement(Row_Row, {
+    spacing: "medium",
+    style: {
+      marginTop: '30px',
+      marginBottom: '40px'
+    }
+  }, /*#__PURE__*/react.createElement(Row_Row, {
+    spacing: "medium",
+    responsive: false
+  }, navCardArtists, navCardAlbums, navCardTracks), /*#__PURE__*/react.createElement(Row_Row, {
+    spacing: "medium",
+    responsive: false
+  }, navCardYears, navCardGenres, navCardPlaylists));
+}); // ***** RenderLastAdded *****
+// ***************************
+
+var TAG_RenderLastAdded = function TAG_RenderLastAdded() {};
+
+var RenderLastAdded = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var albums = store.albums; // From ... store
+
+  var lastAdded = albums.getLastAdded(6); // Events
+  // ==================================================================================================
+
+  var handleAlbumClick = function handleAlbumClick(albumId) {
+    store.navigateTo('album', albumId);
+  }; // Render
+  // ==================================================================================================
+
+
+  var lastAddedContent = null;
+
+  if (lastAdded.length > 0) {
+    // Fantômes flex
+    var ghosts = [];
+
+    for (var i = 0; i < 10; i++) {
+      ghosts.push( /*#__PURE__*/react.createElement(ThumbnailGhost, {
+        key: "ghost-last-added-".concat(i),
+        size: "small"
+      }));
+    }
+
+    lastAddedContent = /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Ribbon_Ribbon, {
+      avatarIconName: "new_releases",
+      avatarIconColor: "hot",
+      title: "Ajout\xE9 derni\xE8rement",
+      style: {
+        marginBottom: '20px'
+      }
+    }), /*#__PURE__*/react.createElement(Grid_Grid, {
+      justify: "space-between",
+      style: {
+        paddingLeft: '16px',
+        paddingRight: '16px'
+      }
+    }, lastAdded.map(function (album, albumIdx) {
+      return /*#__PURE__*/react.createElement(AlbumThumbnail, {
+        key: "thumbnail-last-added-".concat(albumIdx),
+        album: album,
+        callbackClick: function callbackClick() {
+          return handleAlbumClick(album.id);
+        }
+      });
+    }), ghosts));
+  }
+
+  return lastAddedContent;
+}); // ***** RenderLastListened *****
+// ******************************
+
+var TAG_RenderLastListened = function TAG_RenderLastListened() {};
+
+var RenderLastListened = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app; // Render
+  // ==================================================================================================
+
+  var lastListenedContent = null;
+  return lastListenedContent;
+}); // ***** HomePage *****
 // ********************
 
 var TAG_HomePage = function TAG_HomePage() {};
@@ -22614,13 +22938,19 @@ var TAG_HomePage = function TAG_HomePage() {};
 var HomePage = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var tracks = store.tracks;
-  var library = store.library; // From ... store
+  var library = store.library;
+  var albums = store.albums; // From ... store
 
   var loaded = store.loaded;
   var isLoading = app.isLoading;
-  var nbFolders = library.nbFolders; // Events
+  var nbFolders = library.nbFolders;
+  var nbAlbums = albums.nbAlbums; // ...
+  // Events
   // ==================================================================================================
+
+  var handleScan = function handleScan() {
+    library.startScan();
+  };
 
   var handleChooseLibrary = function handleChooseLibrary() {
     ipc.once('folderChoosed', function (folders) {
@@ -22650,30 +22980,64 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
   var renderHelper = function renderHelper() {
     // Render :: Helper
     // ---
-    var helperSubtitle = "";
-
-    if (loaded) {
-      helperSubtitle = "Que souhaitez-vous écouter aujourd'hui ?";
-
-      if (nbFolders == 0) {
-        helperSubtitle = "Pour commencer, sélectionnez ou glissez un dossier contenant de la musique.";
-      }
-    } // -------------------------------------------------
-
-
+    var helperTitle = "Bienvenue sur Gramophone !";
+    var helperSeverity = null;
+    var helperSubtitle = "Chargement de votre discothèque en cours...";
+    var helperInFlux = false;
     var helperContent = null;
 
-    if (loaded && nbFolders == 0) {
-      helperContent = /*#__PURE__*/react.createElement(Button_Button, {
-        key: "btn-choose-library",
-        id: "btn-choose-library",
-        variant: "contained",
-        color: "secondary",
-        disabled: isLoading,
-        onClick: function onClick() {
-          return handleChooseLibrary();
+    if (loaded) {
+      if (nbFolders == 0) {
+        helperSeverity = "info";
+        helperSubtitle = "Pour commencer, sélectionnez un dossier contenant de la musique.";
+        helperContent = /*#__PURE__*/react.createElement(Button_Button, {
+          key: "btn-choose-library",
+          id: "btn-choose-library",
+          variant: "contained",
+          color: "secondary",
+          startAdornment: "folder",
+          disabled: isLoading,
+          onClick: function onClick() {
+            return handleChooseLibrary();
+          }
+        }, "S\xE9lectionner un dossier ...");
+      } else {
+        if (nbAlbums == 0) {
+          helperSeverity = "warning";
+          helperSubtitle = /*#__PURE__*/react.createElement("div", null, "Aucune musique n'a \xE9t\xE9 trouv\xE9e ! \uD83D\uDE31", /*#__PURE__*/react.createElement("br", null), "Lan\xE7ez un scan ou bien s\xE9lectionnez un autre dossier.");
+          helperContent = /*#__PURE__*/react.createElement(Column_Column, {
+            align: "stretch"
+          }, /*#__PURE__*/react.createElement(Button_Button, {
+            key: "btn-scan",
+            id: "btn-scan",
+            variant: "contained",
+            color: "secondary",
+            startAdornment: "youtube_searched_for",
+            disabled: isLoading,
+            onClick: function onClick() {
+              return handleScan();
+            }
+          }, "Scanner ..."), /*#__PURE__*/react.createElement(Button_Button, {
+            key: "btn-choose-library",
+            id: "btn-choose-library",
+            variant: "contained",
+            color: "secondary",
+            startAdornment: "folder",
+            disabled: isLoading,
+            onClick: function onClick() {
+              return handleChooseLibrary();
+            }
+          }, "S\xE9lectionner un dossier ..."));
+        } else {
+          helperTitle = "Que souhaitez-vous écouter aujourd'hui ?";
+          helperSubtitle = "";
+          helperContent = /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(RenderHomeGrid, null), /*#__PURE__*/react.createElement(RenderLastAdded, null), /*#__PURE__*/react.createElement(RenderLastListened, null));
+
+          if (nbAlbums >= 6) {
+            helperInFlux = true;
+          }
         }
-      }, "S\xE9lectionner un dossier ...");
+      }
     } // -------------------------------------------------
 
 
@@ -22682,17 +23046,22 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
         className: "nx-helper-icon",
         src: "static/favicons/android-icon-192x192.png"
       }),
-      title: "Bienvenue sur Gramophone !",
+      title: helperTitle,
       subtitle: helperSubtitle,
+      severity: helperSeverity,
       show: true,
+      inFlux: helperInFlux,
       style: {
-        maxWidth: '400px'
+        maxWidth: loaded && nbFolders > 0 && nbAlbums > 0 ? '1000px' : '400px',
+        width: loaded && nbFolders > 0 ? '100%' : 'unset',
+        paddingLeft: '20px',
+        paddingRight: '20px'
       }
     }, helperContent);
   };
 
   return /*#__PURE__*/react.createElement("div", {
-    className: "nx-page"
+    className: "nx-page medium"
   }, renderHelper());
 });
 // EXTERNAL MODULE: ./contexts/search/Search.css
@@ -23681,6 +24050,7 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
       var app = store.app;
       var snackbar = app.snackbar;
       var tracks = store.tracks;
+      var albums = store.albums;
       var scope = quickScan == true && self.last_full_scan ? "quick" : "full";
       var taskId = "scan_".concat(scope);
       app.addTask(taskId);
@@ -23688,6 +24058,8 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
       window.scanStartTime = new Date(); // Réinitialisation des compteurs sur les dossiers
 
       if (scope == 'full') {
+        albums.setField('last_added_ids', []);
+
         var _iterator10 = Library_createForOfIteratorHelper(self.source_folders),
             _step10;
 

@@ -45,25 +45,25 @@ export const ContextualMenu = observer((props) => {
 
 	return (
 		<Menu>
-			<HomeMenuItem />
-			<SearchMenuItem />
+			<HomeMenuItem disabled={false} />
+			<SearchMenuItem disabled={false} />
 
 			<MenuDivider />
 
-			<ArtistsMenuItem />
-			<AlbumsMenuItem />
-			<TracksMenuItem />
+			<ArtistsMenuItem disabled={false} />
+			<AlbumsMenuItem disabled={false} />
+			<TracksMenuItem disabled={false} />
 
 			<MenuDivider />
 
-			<YearsMenuItem />
-			<GenresMenuItem />
-			<PlaylistsMenuItem />
+			<YearsMenuItem disabled={false} />
+			<GenresMenuItem disabled={false} />
+			<PlaylistsMenuItem disabled={false} />
 
 			<MenuDivider />
 
-			<AboutMenuItem />
-			<AdminMenuItem />
+			<AboutMenuItem disabled={false} />
+			<AdminMenuItem disabled={false} />
 		</Menu>
 	)
 })

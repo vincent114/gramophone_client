@@ -362,6 +362,10 @@ export const GenresMenuItem = observer((props) => {
 	const app = store.app;
 	const menu = app.menu;
 
+	// From ... props
+
+	const disabled = props.disabled;
+
 	// ...
 
 	const genresContext = 'genres';
@@ -381,6 +385,7 @@ export const GenresMenuItem = observer((props) => {
 		<MenuItem
 			iconName="local_bar"
 			label="Genres"
+			disabled={disabled}
 			activeContexts={[genresContext, "genre"]}
 			callbackClick={handleMenuItemClick}
 		/>

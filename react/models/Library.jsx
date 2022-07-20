@@ -463,6 +463,7 @@ export const LibraryStore = types
 			const app = store.app;
 			const snackbar = app.snackbar;
 			const tracks = store.tracks;
+			const albums = store.albums;
 
 			const scope = (quickScan == true && self.last_full_scan) ? "quick" : "full";
 			const taskId = `scan_${scope}`;
@@ -474,6 +475,7 @@ export const LibraryStore = types
 
 			// Réinitialisation des compteurs sur les dossiers
 			if (scope == 'full') {
+				albums.setField('last_added_ids', []);
 				for (const sourceFolder of self.source_folders) {
 					sourceFolder.resetCounters();
 				}

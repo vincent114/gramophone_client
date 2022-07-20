@@ -23,6 +23,8 @@ export const AlbumStore = types
 		folder: types.maybeNull(types.string),
 		year: types.maybeNull(types.integer),
 
+		ts_added: types.maybeNull(types.string),
+
 		artist_id: types.maybeNull(types.string),
 		year_id: types.maybeNull(types.string),
 		genre_id: types.maybeNull(types.string),
@@ -72,6 +74,8 @@ export const AlbumStore = types
 			self.cover = raw.cover;
 			self.folder = raw.folder;
 			self.year = raw.year;
+
+			self.ts_added = raw.ts_added;
 
 			self.artist_id = raw.artist_id;
 			self.year_id = raw.year_id;

@@ -22,6 +22,8 @@ import {
 	ThumbnailGhost
 } from 'nexus/ui/thumbnail/Thumbnail';
 
+import { dateTools } from 'nexus/utils/DateTools';
+
 import './Albums.css';
 
 
@@ -36,6 +38,8 @@ export const AlbumsStore = types
 	.model({
 		by_id: types.map(AlbumStore),
 
+		last_added_ids: types.optional(types.array(types.string), []),
+
 		loaded: false,
 	})
 	.views(self => ({
@@ -47,6 +51,10 @@ export const AlbumsStore = types
 			return path;
 		},
 
+		get albumsList() {
+			return self.by_id.toJSON().values();
+		},
+
 		get nbAlbums() {
 			return Object.entries(self.by_id.toJSON()).length;
 		},
@@ -54,7 +62,7 @@ export const AlbumsStore = types
 		// Getters
 		// -
 
-		getByLetter() {
+		groupedByLetter() {
 			let byLetter = {};
 			for (const [albumId, album] of self.by_id.entries()) {
 				const letter = album.letter;
@@ -66,12 +74,30 @@ export const AlbumsStore = types
 			return byLetter;
 		},
 
+		// -
+
 		getById(albumId) {
 			let album = self.by_id.get(albumId);
 			if (!album) {
 				album = AlbumStore.create({});
 			}
 			return album;
+		},
+
+		getLastAdded(maxAlbums) {
+			let lastAdded = [];
+			for (const lastAddedIdx in self.last_added_ids) {
+				if (lastAdded.length < maxAlbums) {
+					const albumId = self.last_added_ids[lastAddedIdx];
+					const album = self.by_id.get(albumId);
+					if (album) {
+						lastAdded.push(album);
+					}
+				} else {
+					break;
+				}
+			}
+			return lastAdded;
 		},
 
 	}))
@@ -105,15 +131,28 @@ export const AlbumsStore = types
 				self.albumsCollectionFilePath,
 				{
 					by_id: {},
+					last_added_ids: [],
 				},
 				(raw) => {
 					// self.update(raw);
-					app.saveValue(['albums', 'by_id'], raw.by_id, () => {
-						self.setField('loaded', true);
-						if (callback) {
-							callback();
+					// app.saveValue(['albums', 'by_id'], raw.by_id, () => {
+					// 	self.setField('loaded', true);
+					// 	if (callback) {
+					// 		callback();
+					// 	}
+					// });
+					app.applyPatches(
+						[
+							[['albums', 'by_id'], raw.by_id],
+							[['albums', 'last_added_ids'], raw.last_added_ids],
+						],
+						() => {
+							self.setField('loaded', true);
+							if (callback) {
+								callback();
+							}
 						}
-					});
+					);
 				}
 			);
 		},
@@ -144,7 +183,13 @@ export const AlbumsStore = types
 			if (!album) {
 				album = AlbumStore.create({});
 				album.setField('id', albumId);
+				album.setField('ts_added', dateTools.getNowIso());
+				self.addLastAddedId(albumId);
 				added = true;
+			} else {
+				if (self.last_added_ids.length < 10) {
+					self.addLastAddedId(albumId);
+				}
 			}
 
 			const tags = metas.fileTags;
@@ -161,13 +206,60 @@ export const AlbumsStore = types
 
 			self.by_id.set(albumId, album);
 			return added;
-		}
+		},
+
+		// -
+
+		addLastAddedId: (albumId) => {
+			if (self.last_added_ids.indexOf(albumId) > -1) {
+				return;
+			}
+			if (self.last_added_ids.length >= 10) {
+				self.last_added_ids.splice(0, 1);
+			}
+			self.last_added_ids.push(albumId);
+		},
 
 	}))
 
 
 // Functions Components ReactJS
 // ======================================================================================================
+
+// ***** AlbumThumbnail *****
+// **************************
+
+const TAG_AlbumThumbnail = () => {}
+export const AlbumThumbnail = observer((props) => {
+
+	const store = React.useContext(window.storeContext);
+	const app = store.app;
+
+	// From ... props
+
+	const album = props.album;
+
+	const callbackClick = props.callbackClick;
+
+	let style = (props.style) ? props.style : style;
+
+	// ...
+
+	// Render
+	// ==================================================================================================
+
+	return (
+		<Thumbnail
+			src={album.cover}
+			iconName="album"
+			title={album.name}
+			subtitle={album.linkedArtist.name}
+			size="small"
+			rootStyle={style}
+			callbackClick={callbackClick}
+		/>
+	)
+})
 
 // ***** RenderAlbums *****
 // ************************
@@ -184,7 +276,7 @@ export const RenderAlbums = observer((props) => {
 	const isLoading = store.isLoading;
 
 	const nbAlbums = albums.nbAlbums;
-	const albumsByLetter = albums.getByLetter();
+	const albumsByLetter = albums.groupedByLetter();
 
 	// ...
 
@@ -305,14 +397,10 @@ export const RenderAlbums = observer((props) => {
 							}}
 						>
 							{albumsLetter.map((album, albumIdx) => (
-								<Thumbnail
+								<AlbumThumbnail
 									key={`thumbnail-album-${letterIdx}-${albumIdx}`}
-									src={album.cover}
-									iconName="album"
-									title={album.name}
-									subtitle={album.linkedArtist.name}
-									size="small"
-									rootStyle={{
+									album={album}
+									style={{
 										marginRight: '20px',
 										marginBottom: '30px',
 									}}
@@ -364,6 +452,10 @@ export const AlbumsMenuItem = observer((props) => {
 	const app = store.app;
 	const menu = app.menu;
 
+	// From ... props
+
+	const disabled = props.disabled;
+
 	// ...
 
 	const albumsContext = 'albums';
@@ -383,6 +475,7 @@ export const AlbumsMenuItem = observer((props) => {
 		<MenuItem
 			iconName="album"
 			label="Albums"
+			disabled={disabled}
 			activeContexts={[albumsContext, "album"]}
 			callbackClick={handleMenuItemClick}
 		/>

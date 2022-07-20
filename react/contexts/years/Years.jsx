@@ -374,6 +374,10 @@ export const YearsMenuItem = observer((props) => {
 	const app = store.app;
 	const menu = app.menu;
 
+	// From ... props
+
+	const disabled = props.disabled;
+
 	// ...
 
 	const yearsContext = 'years';
@@ -393,6 +397,7 @@ export const YearsMenuItem = observer((props) => {
 		<MenuItem
 			iconName="date_range"
 			label="Années"
+			disabled={disabled}
 			activeContexts={[yearsContext, "year"]}
 			callbackClick={handleMenuItemClick}
 		/>
