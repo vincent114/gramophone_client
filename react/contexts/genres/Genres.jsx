@@ -26,6 +26,7 @@ import { Helper } from 'nexus/ui/helper/Helper';
 import { IconButton } from 'nexus/ui/button/Button';
 import { Avatar } from 'nexus/ui/avatar/Avatar';
 import { Paper } from 'nexus/ui/paper/Paper';
+import { Typography } from 'nexus/ui/typography/Typography';
 
 import './Genres.css';
 
@@ -296,10 +297,24 @@ export const RenderGenres = observer((props) => {
 											hoverable={true}
 											callbackClick={() => handleGenreClick(genre.id)}
 										>
-											<TableCell>
+											<TableCell
+												size="small"
+											>
 												{genre.name}
 											</TableCell>
 											<TableCell
+												size="small"
+												width="100px"
+											>
+												<Typography
+													size="small"
+													variant="description"
+												>
+													{`${genre.nbAlbums} ${(genre.nbAlbums > 1) ? "albums" : "album"}`}
+												</Typography>
+											</TableCell>
+											<TableCell
+												size="small"
 												width="48px"
 											>
 												<IconButton

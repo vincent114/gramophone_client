@@ -3,7 +3,16 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import { AlbumThumbnail } from 'gramophone_client/contexts/albums/Albums';
+
+import { Ribbon } from 'nexus/layout/ribbon/Ribbon';
+import { Row } from 'nexus/layout/row/Row';
+import { Grid } from 'nexus/layout/grid/Grid';
+
 import { Helper } from 'nexus/ui/helper/Helper';
+import { IconButton } from 'nexus/ui/button/Button';
+import { Typography } from 'nexus/ui/typography/Typography';
+import { ThumbnailGhost } from 'nexus/ui/thumbnail/Thumbnail';
 
 import './Year.css';
 
@@ -33,6 +42,30 @@ export const YearStore = types
 
 		get nbAlbums() {
 			return self.albums_ids.length;
+		},
+
+		// Getters
+		// -
+
+		getAlbums() {
+			const store = getRoot(self);
+			const albums = store.albums;
+
+			let albumsList = [];
+			for (const albumId of self.albums_ids) {
+				const album = albums.by_id.get(albumId);
+				if (album) {
+					albumsList.push(album);
+				}
+			}
+			albumsList.sort(function (a, b) {
+				if (a.name > b.name)
+					return 1;
+				if (a.name < b.name)
+					return -1;
+				return 0;
+			});
+			return albumsList;
 		},
 
 	}))
@@ -82,16 +115,102 @@ export const RenderYear = observer((props) => {
 
 	const yearId = store.yearId;
 	const year = years.by_id.get(yearId);
+	const yearName = year.name;
+
+	const nbAlbums = year.nbAlbums;
+	const albums = year.getAlbums();
 
 	// ...
 
-	console.log(year.toJSON());
+	// Events
+	// ==================================================================================================
+
+	const handleThrowDiceClick = () => {
+		// TODO
+	}
+
+	// -
+
+	const handleAlbumClick = (albumId) => {
+		store.navigateTo("album", albumId);
+	}
 
 	// Render
 	// ==================================================================================================
 
+	// Fantômes flex
+	let ghosts = []
+	for (var i = 0; i < 10; i++) {
+		ghosts.push(
+			<ThumbnailGhost
+				key={`thumbnail-ghost-${i}`}
+				size="small"
+				style={{
+					marginRight: '16px',
+				}}
+			/>
+		)
+	}
+
 	return (
 		<div>
+
+			<Ribbon
+				avatarIconName="face"
+				avatarIconColor="typography"
+				title={yearName}
+				right={(
+					<div className="h-col">
+						<IconButton
+							iconName="casino"
+							color="hot"
+							disabled={isLoading}
+							onClick={() => handleThrowDiceClick()}
+						/>
+					</div>
+				)}
+			>
+				<Row>
+					<Typography
+						variant="description"
+						// size="small"
+						className="flex-0"
+						style={{
+							marginLeft: '10px'
+						}}
+					>
+						•
+					</Typography>
+					<Typography
+						variant="description"
+						// size="small"
+						className="flex-0"
+					>
+						{nbAlbums} {(nbAlbums > 1) ? "albums" : "album"}
+					</Typography>
+				</Row>
+			</Ribbon>
+
+			<Grid
+				style={{
+					marginTop: '40px',
+					paddingLeft: '20px',
+					paddingRight: '20px',
+				}}
+			>
+				{albums.map((album, albumIdx) => (
+					<AlbumThumbnail
+						key={`thumbnail-album-${albumIdx}`}
+						album={album}
+						style={{
+							marginRight: '20px',
+							marginBottom: '30px',
+						}}
+						callbackClick={() => handleAlbumClick(album.id)}
+					/>
+				))}
+				{ghosts}
+			</Grid>
 
 		</div>
 	)
@@ -146,7 +265,7 @@ export const YearPage = observer((props) => {
 	// -------------------------------------------------
 
 	return (
-		<div className="c-page">
+		<div className="nx-page medium">
 			{renderPage()}
 			{renderHelper()}
 		</div>

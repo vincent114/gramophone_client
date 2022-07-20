@@ -26,6 +26,7 @@ import { Helper } from 'nexus/ui/helper/Helper';
 import { IconButton } from 'nexus/ui/button/Button';
 import { Avatar } from 'nexus/ui/avatar/Avatar';
 import { Paper } from 'nexus/ui/paper/Paper';
+import { Typography } from 'nexus/ui/typography/Typography';
 
 import './Artists.css';
 
@@ -297,11 +298,25 @@ export const RenderArtists = observer((props) => {
 											hoverable={true}
 											callbackClick={() => handleArtistClick(artist.id)}
 										>
-											<TableCell>
+											<TableCell
+												size="small"
+											>
 												{artist.name}
 											</TableCell>
 											<TableCell
+												size="small"
+												width="100px"
+											>
+												<Typography
+													size="small"
+													variant="description"
+												>
+													{`${artist.nbAlbums} ${(artist.nbAlbums > 1) ? "albums" : "album"}`}
+												</Typography>
+											</TableCell>
+											<TableCell
 												width="48px"
+												size="small"
 											>
 												<IconButton
 													size="small"

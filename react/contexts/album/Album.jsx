@@ -3,6 +3,8 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import { TrackRow } from 'gramophone_client/contexts/track/Track';
+
 import { Indicator } from 'nexus/forms/indicator/Indicator';
 import {
 	TableContainer,
@@ -12,7 +14,6 @@ import {
 	TableRow,
 	TableCell
 } from 'nexus/forms/table/Table';
-import { Field } from 'nexus/forms/field/Field';
 
 import { Row } from 'nexus/layout/row/Row';
 import { Column } from 'nexus/layout/column/Column';
@@ -239,21 +240,6 @@ export const RenderAlbum = observer((props) => {
 		// TODO
 	}
 
-	// -
-
-	const handleFavoriteClicked = (track) => {
-		track.setField('favorite', !track.favorite);
-	}
-
-	const handleStarredClicked = (track) => {
-		track.setField('starred', !track.starred);
-	}
-
-	const handleTrackMore = (trackId) => {
-		// TODO
-		console.log(trackId);
-	}
-
 	// Render
 	// ==================================================================================================
 
@@ -383,6 +369,9 @@ export const RenderAlbum = observer((props) => {
 					<Group
 						id={`group-${disc}-${discIdx}`}
 						key={`group-${disc}-${discIdx}`}
+						style={{
+							marginTop: '40px',
+						}}
 					>
 
 						{nbDiscs > 1 && (
@@ -419,9 +408,9 @@ export const RenderAlbum = observer((props) => {
 						<TableContainer
 							component={Paper}
 							style={{
-								marginTop: '60px',
-								marginLeft: '16px',
-								marginRight: '16px',
+								marginTop: (nbDiscs == 1) ? '60px' : '20px',
+								marginLeft: (nbDiscs == 1) ? '0px' : '16px',
+								marginRight: (nbDiscs == 1) ? '0px' : '16px',
 								padding: '0px',
 							}}
 						>
@@ -468,75 +457,10 @@ export const RenderAlbum = observer((props) => {
 
 								<TableBody>
 									{discTracks.map((track, trackIdx) => (
-										<TableRow
+										<TrackRow
 											key={`track-${disc}-${trackIdx}`}
-											hoverable={true}
-										>
-											<TableCell
-												width={42}
-												align="center"
-												size="tiny"
-											>
-												<Field
-													component='checkbox'
-													ghostLabel={false}
-													savePath={['tracks', 'by_id', track.id, 'checked']}
-													disabled={isLoading}
-												/>
-											</TableCell>
-											<TableCell
-												width={42}
-												align="center"
-												size="tiny"
-											>
-												<IconButton
-													size="small"
-													iconName={(track.favorite) ? "favorite" : "favorite_border"}
-													color={(track.favorite) ? "error" : null}
-													disabled={isLoading}
-													onClick={() => handleFavoriteClicked(track)}
-												/>
-											</TableCell>
-											<TableCell
-												width={42}
-												align="center"
-												size="tiny"
-											>
-												<IconButton
-													size="small"
-													iconName={(track.starred) ? "star" : "star_outline"}
-													color={(track.starred) ? "warning" : null}
-													disabled={isLoading}
-													onClick={() => handleStarredClicked(track)}
-												/>
-											</TableCell>
-											<TableCell
-												width={42}
-												size="tiny"
-											>
-												{track.track}
-											</TableCell>
-											<TableCell
-												size="tiny"
-											>
-												{track.name}
-											</TableCell>
-											<TableCell
-												width={42}
-												align="right"
-												size="tiny"
-											>
-												<IconButton
-													size="small"
-													iconName="more_horiz"
-													color="typography"
-													// style={{
-													// 	marginRight: '-5px'
-													// }}
-													onClick={() => handleTrackMore(track.id)}
-												/>
-											</TableCell>
-										</TableRow>
+											track={track}
+										/>
 									))}
 								</TableBody>
 

@@ -3,6 +3,8 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import { TrackStore } from 'gramophone_client/contexts/track/Track';
+
 import {
 	TableContainer,
 	Table,
@@ -27,113 +29,6 @@ import './Tracks.css';
 
 // Models
 // ======================================================================================================
-
-// ***** TrackStore *****
-// **********************
-
-const TAG_TrackStore = () => {}
-export const TrackStore = types
-	.model({
-		id: types.maybeNull(types.string),
-		name: types.maybeNull(types.string),
-		disk: types.frozen(null),
-		track: types.frozen(null),
-
-		track_path: types.maybeNull(types.string),
-		track_type: types.maybeNull(types.string),
-		track_available: true,
-
-		ts_file: types.maybeNull(types.string),
-		ts_added: types.maybeNull(types.string),
-
-		artist: types.maybeNull(types.string),
-		album: types.maybeNull(types.string),
-
-		checked: true,
-		favorite: false,
-		starred: false,
-
-		album_id: types.maybeNull(types.string),
-		artist_id: types.maybeNull(types.string),
-		year_id: types.maybeNull(types.string),
-		genre_id: types.maybeNull(types.string),
-	})
-	.views(self => ({
-
-		get discNumber() {
-			return (self.disk) ? self.disk : 0;
-		},
-
-		get trackNumber() {
-			return (self.track) ? self.track : 0;
-		},
-
-		get sortNumber() {
-			return `${self.discNumber}-${self.trackNumber}`;
-		},
-
-		// -
-
-		get linkedAlbum() {
-			const store = getRoot(self);
-			const albums = store.albums;
-			return albums.getById(self.album_id);
-		},
-
-		get linkedArtist() {
-			const store = getRoot(self);
-			const artists = store.artists;
-			return artists.getById(self.artist_id);
-		},
-
-		get linkedYear() {
-			const store = getRoot(self);
-			const years = store.years;
-			return years.getById(self.year_id);
-		},
-
-		get linkedGenre() {
-			const store = getRoot(self);
-			const genres = store.genres;
-			return genres.getById(self.genre_id);
-		},
-
-	}))
-	.actions(self => ({
-
-		setField: (field, value) => {
-			self[field] = value;
-		},
-
-		// -
-
-		update: (raw) => {
-			self.id = raw.id;
-			self.name = raw.name;
-			self.disk = raw.disk;
-			self.track = raw.track;
-
-			self.track_path = raw.track_path;
-			self.track_type = raw.track_type;
-			self.track_available = raw.track_available;
-
-			self.ts_file = raw.ts_file;
-			self.ts_added = raw.ts_added;
-
-			self.artist = raw.artist;
-			self.album = raw.album;
-
-			self.checked = raw.checked;
-			self.favorite = raw.favorite;
-			self.starred = raw.starred;
-
-			self.album_id = raw.album_id;
-			self.artist_id = raw.artist_id;
-			self.year_id = raw.year_id;
-			self.genre_id = raw.genre_id;
-		},
-
-	}))
 
 // ***** TracksStore *****
 // ***********************
