@@ -401,6 +401,77 @@ export const RenderAdminScan = observer((props) => {
 	)
 })
 
+// ***** RenderSectionPlayback *****
+// *********************************
+
+const TAG_RenderSectionPlayback = () => {}
+export const RenderSectionPlayback = observer((props) => {
+
+	const store = React.useContext(window.storeContext);
+	const app = store.app;
+	const library = store.library;
+
+	// From ... store
+
+	const isLoading = app.isLoading;
+
+	// ...
+
+	// Events
+	// ==================================================================================================
+
+	const handleParamsChange = () => {
+		library.save();
+	}
+
+	// Render
+	// ==================================================================================================
+
+	// Section -> Icon
+	// -------------------------------------------------
+
+	const sectionIcon = <Icon name="headphones" />
+
+	// Section -> Title
+	// -------------------------------------------------
+
+	const sectionTitle = "Lecture aléatoire";
+
+	// Section -> Content
+	// -------------------------------------------------
+
+	const sectionContent = (
+		<div>
+			<Switch
+				label="Qu'à partir des titres favoris"
+				savePath={['library', 'shuffle_only_favorites']}
+				callbackChange={handleParamsChange}
+			/>
+			<Switch
+				label="Ignorer les bandes originales"
+				savePath={['library', 'shuffle_ignore_soudtracks']}
+				callbackChange={handleParamsChange}
+			/>
+			<Switch
+				label="Ignorer les titres déselectionnés"
+				savePath={['library', 'shuffle_ignore_hidden']}
+				callbackChange={handleParamsChange}
+			/>
+		</div>
+	)
+
+	// -------------------------------------------------
+
+	return (
+		<Section
+			icon={sectionIcon}
+			title={sectionTitle}
+		>
+			{sectionContent}
+		</Section>
+	)
+})
+
 // ***** RenderAdmin *****
 // ***********************
 
@@ -419,6 +490,7 @@ export const RenderAdmin = observer((props) => {
 		<React.Fragment>
 			<RenderAdminFolders />
 			<RenderAdminScan />
+			<RenderSectionPlayback />
 			<RenderSectionTheme />
 		</React.Fragment>
 	)

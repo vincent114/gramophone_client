@@ -125,15 +125,17 @@ export const AlbumsStore = types
 			let randomAlbumsIdxs = [];
 			let randomAlbumsIds = [];
 
-			while (randomAlbums.length < howMany) {
-				const randomIdx = helpers.getRandomNumber(albumIds.length);
+			while (randomAlbumsIds.length < howMany) {
+				const randomIdx = helpers.getRandomNumber(albumIds.length) - 1;
 				if (randomAlbumsIdxs.indexOf(randomIdx) == -1) {
 					const albumId = albumIds[randomIdx];
-					const album = self.by_id.get(albumId);
-					if (album) {
-						randomAlbums.push(album);
-						randomAlbumsIdxs.push(randomIdx);
-						randomAlbumsIds.push(album.id);
+					randomAlbumsIdxs.push(randomIdx);
+					randomAlbumsIds.push(albumId);
+					if (load) {
+						const album = self.by_id.get(albumId);
+						if (album) {
+							randomAlbums.push(album);
+						}
 					}
 				}
 			}

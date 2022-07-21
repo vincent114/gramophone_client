@@ -155,6 +155,7 @@ export const LibraryStore = types
 		last_quick_scan_duration: types.maybeNull(types.integer),
 		last_quick_scan_error: false,
 
+		shuffle_only_favorites: false,
 		shuffle_ignore_soudtracks: true,
 		shuffle_ignore_hidden: true,
 
@@ -367,6 +368,7 @@ export const LibraryStore = types
 				self.last_quick_scan_duration = raw.last_quick_scan_duration;
 				self.last_quick_scan_error = raw.last_quick_scan_error;
 
+				self.shuffle_only_favorites = raw.shuffle_only_favorites;
 				self.shuffle_ignore_soudtracks = raw.shuffle_ignore_soudtracks;
 				self.shuffle_ignore_hidden = raw.shuffle_ignore_hidden;
 			}

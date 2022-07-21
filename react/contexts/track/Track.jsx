@@ -104,6 +104,50 @@ export const TrackStore = types
 			return genres.getById(self.genre_id);
 		},
 
+		// Bools
+		// -
+
+		get isPlayerCandidate() {
+
+			// Titre candidat à la lecture ordonnée ?
+			// ---
+
+			if (!self.checked) {
+				return false;
+			}
+			return true;
+		},
+
+		get isShuffleCandidate() {
+
+			// Titre candidat à la lecture aléatoire ?
+			// ---
+
+			const store = getRoot(self);
+			const library = store.library;
+
+			const shuffleOnlyFavorites = library.shuffle_only_favorites;
+			const shuffleIgnoreSoudtracks = library.shuffle_ignore_soudtracks;
+			const shuffleIgnoreHidden = library.shuffle_ignore_hidden;
+
+			// Que des favoris ?
+			if (shuffleOnlyFavorites && !self.favorite) {
+				return false;
+			}
+
+			// Pas de soundtrack ?
+			if (shuffleIgnoreSoudtracks && ['soundtrack', 'soundtracks'].indexOf(self.genre_id) == -1) {
+				return false;
+			}
+
+			// Pas de titre désectionné ?
+			if (shuffleIgnoreHidden && !self.checked) {
+				return false;
+			}
+
+			return true;
+		},
+
 	}))
 	.actions(self => ({
 

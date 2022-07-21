@@ -127,6 +127,52 @@ export const AlbumStore = types
 			return tracksList;
 		},
 
+		getPlayable(load=true) {
+			let tracksList = [];
+			const tracks = self.getSortedByNumber();
+			for (const track of tracks) {
+				if (track.isPlayerCandidate) {
+					if (load) {
+						tracksList.push(track);
+					} else {
+						tracksList.push(track.id);
+					}
+				}
+			}
+			return tracksList;
+		},
+
+		getTracksRandomly(load=true) {
+
+			const store = getRoot(self);
+			const app = store.app;
+			const helpers = app.helpers;
+			const tracks = store.tracks;
+
+			const tracksIds = self.tracks_ids.toJSON();
+			const howMany = tracksIds.length;
+
+			let randomTracks = [];
+			let randomTracksIdxs = [];
+			let randomTracksIds = [];
+
+			while (randomTracksIds.length < howMany) {
+				const randomIdx = helpers.getRandomNumber(howMany) - 1;
+				if (randomTracksIdxs.indexOf(randomIdx) == -1) {
+					const trackId = tracksIds[randomIdx];
+					randomTracksIdxs.push(randomIdx);
+					randomTracksIds.push(trackId);
+					if (load) {
+						const track = tracks.by_id.get(trackId);
+						if (track) {
+							randomTracks.push(track);
+						}
+					}
+				}
+			}
+			return (load) ? randomTracks : randomTracksIds;
+		},
+
 		// -
 
 		groupedByDisc() {
@@ -173,6 +219,49 @@ export const AlbumStore = types
 			if (self.tracks_ids.indexOf(trackId) == -1) {
 				self.tracks_ids.push(trackId);
 			}
+		},
+
+		// -
+
+		play: () => {
+
+			// Lecture de tous les morceaux de l'album dans l'ordre
+			// ---
+
+			const store = getRoot(self);
+			const player = store.player;
+
+			const playbackIds = self.getPlayable(false);
+			player.clear();
+			player.populate(playbackIds);
+			player.read();
+		},
+
+		queue: () => {
+
+			// Ajout des morceau dans l'ordre dans la liste de lecture
+			// ---
+
+			const store = getRoot(self);
+			const player = store.player;
+
+			const playbackIds = self.getPlayable(false);
+			player.populate(playbackIds);
+		},
+
+		shuffle: () => {
+
+			// Lecture aléatoire de tous les morceaux de l'album
+			// ---
+
+			const store = getRoot(self);
+			const player = store.player;
+
+			const playbackIds = self.getTracksRandomly(false);
+			console.log(playbackIds);
+			player.clear();
+			player.populate(playbackIds);
+			player.read();
 		},
 
 	}))
@@ -223,11 +312,15 @@ export const RenderAlbum = observer((props) => {
 	// ==================================================================================================
 
 	const handlePlayAlbumClick = () => {
-		// TODO
+		album.play();
+	}
+
+	const handleQueueAlbumClick = () => {
+		album.queue();
 	}
 
 	const handleThrowDiceClick = () => {
-		// TODO
+		album.shuffle();
 	}
 
 	// -
@@ -332,13 +425,16 @@ export const RenderAlbum = observer((props) => {
 									<IconButton
 										iconName="play_arrow"
 										color="hot"
-										disabled={isLoading}
 										onClick={() => handlePlayAlbumClick()}
+									/>
+									<IconButton
+										iconName="playlist_add"
+										color="hot"
+										onClick={() => handleQueueAlbumClick()}
 									/>
 									<IconButton
 										iconName="casino"
 										color="hot"
-										disabled={isLoading}
 										style={{
 											marginRight: '20px',
 										}}

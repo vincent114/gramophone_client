@@ -26,7 +26,7 @@ import { PlaybackControls } from 'gramophone_client/components/playback_controls
 
 
 // Functions Components ReactJS
-// -------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 
 // ***** ContextualHeader *****
 // ****************************
@@ -36,6 +36,7 @@ export const ContextualHeader = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const player = store.player;
 
 	// From ... store
 
@@ -44,11 +45,15 @@ export const ContextualHeader = observer((props) => {
 	const homeContext = app.homeContext;
 	const authContext = app.authContext;
 
+	const drawerOpen = player.drawerOpen;
+
+	// ...
+
 	// Events
 	// ==================================================================================================
 
 	const handleQueueClick = () => {
-
+		player.toggleDrawer();
 	}
 
 	// Render
@@ -169,11 +174,12 @@ export const ContextualHeader = observer((props) => {
 					color="white"
 				/>
 			</IconButton>
-			<IconButton>
+			<IconButton
+				onClick={() => handleQueueClick()}
+			>
 				<Icon
 					name="queue_music"
-					color="white"
-					onClick={() => handleQueueClick()}
+					color={(drawerOpen) ? "info" : "white"}
 				/>
 			</IconButton>
 		</React.Fragment>

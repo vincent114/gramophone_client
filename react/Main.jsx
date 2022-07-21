@@ -9,6 +9,8 @@ import { STATIC_SMAP } from 'nexus/models/services';
 import { copyObj } from 'nexus/utils/Datas';
 import { getFromStorage, setToStorage } from 'nexus/utils/Storage';
 
+import { PlayerDrawer } from 'gramophone_client/components/player_drawer/PlayerDrawer';
+
 import { ContextualHeader } from 'gramophone_client/ui/ContextualHeader';
 import { ContextualMenu } from 'gramophone_client/ui/ContextualMenu';
 
@@ -28,6 +30,7 @@ import { PlaylistPage } from 'gramophone_client/contexts/playlist/Playlist';
 import { AdminPage } from 'gramophone_client/contexts/admin/Admin';
 
 import { LibraryStore } from 'gramophone_client/models/Library';
+import { PlayerStore } from 'gramophone_client/models/Player';
 
 import './Main.css';
 
@@ -104,6 +107,8 @@ const RootStore = types
 	.model({
 		app: types.optional(NxAppStore, {}),
 
+		// -
+
 		home: types.optional(HomeStore, {}),
 
 		// -
@@ -134,19 +139,20 @@ const RootStore = types
 		// -
 
 		library: types.optional(LibraryStore, {}),
+		player: types.optional(PlayerStore, {}),
 
 		loaded: false,
 
 	})
-	.views(self => ({
+	// .views(self => ({
 
-		get ajaxGramophone() {
-			const app = self.app;
-			const services = app.services;
-			return services.getAjaxBase('gramophone');
-		},
+	// 	get ajaxGramophone() {
+	// 		const app = self.app;
+	// 		const services = app.services;
+	// 		return services.getAjaxBase('gramophone');
+	// 	},
 
-	}))
+	// }))
 	.actions(self => ({
 
 		afterLoad: () => {
@@ -362,11 +368,6 @@ let routes = {
 // Store
 // -
 
-// const cwd = ipc.sendSync('getCwd');
-// const path = ipc.sendSync('pathJoin', [cwd, 'collection']);
-
-// console.log(path);
-
 let initSnapshot = makeInitSnapshot(routes, {
 	'app': {
 		'context': getFromStorage("lastContext", "home"),
@@ -457,6 +458,7 @@ const Root = observer(() => {
 				header={ContextualHeader}
 				menu={ContextualMenu}
 				contexts={contexts}
+				right={<PlayerDrawer />}
 				popups={popups}
 			/>
 		</RootStoreContext.Provider>
