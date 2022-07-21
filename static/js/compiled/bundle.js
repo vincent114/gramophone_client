@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 25794:
+/***/ 9519:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1863,6 +1863,30 @@ var EmailIcon = function EmailIcon(props) {
     fill: "none"
   }), /*#__PURE__*/react.createElement("path", {
     d: "M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"
+  }));
+};
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Equalizer.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var EqualizerIcon = function EqualizerIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M10 20h4V4h-4v16zm-6 0h4v-8H4v8zM16 9v11h4V9h-4z"
   }));
 };
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/ExpandLess.jsx
@@ -3741,6 +3765,31 @@ var StarOutlineIcon = function StarOutlineIcon(props) {
     d: "M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
   }));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/StopCircle.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var StopCircleIcon = function StopCircleIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("rect", {
+    fill: "none",
+    height: "24",
+    width: "24"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M12,2C6.48,2,2,6.48,2,12c0,5.52,4.48,10,10,10s10-4.48,10-10C22,6.48,17.52,2,12,2z M16,16H8V8h8V16z"
+  }));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Storage.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -4326,6 +4375,8 @@ var Icon = __webpack_require__(73244);
 
 
 
+
+
  // Datas
 // -------------------------------------------------------------------------------------------------------------
 
@@ -4370,6 +4421,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'dynamic_feed': DynamicFeedIcon,
   'edit_attributes': EditAttributesIcon,
   'email': EmailIcon,
+  'equalizer': EqualizerIcon,
   'expand_less': ExpandLessIcon,
   'expand_more': ExpandMoreIcon,
   'explore': ExploreIcon,
@@ -4443,6 +4495,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'sports_esports': SportsEsportsIcon,
   'star': StarIcon,
   'star_outline': StarOutlineIcon,
+  'stop_circle': StopCircleIcon,
   'storage': StorageIcon,
   'terrain': TerrainIcon,
   'text_fields': TextFieldsIcon,
@@ -7778,6 +7831,7 @@ var Typography_Typography = (0,es/* observer */.Pi)(function (props) {
   var variant = props.variant ? props.variant : ''; // title, subtitle, description
 
   var ellipsis = props.ellipsis == false ? false : true;
+  var onClick = props.onClick;
   var className = props.className ? props.className : '';
   var style = props.style ? copyObj(props.style) : {};
   var color = props.color ? props.color : 'default'; // ...
@@ -7799,9 +7853,12 @@ var Typography_Typography = (0,es/* observer */.Pi)(function (props) {
 
   return /*#__PURE__*/react.createElement("div", {
     className: (0,clsx_m/* default */.Z)("nx-typography", size, variant, {
+      "clickable": onClick != undefined
+    }, {
       "ellipsis": ellipsis
     }, className),
-    style: style
+    style: style,
+    onClick: onClick
   }, children);
 });
 // EXTERNAL MODULE: ../../nexus/react/ui/alert/Alert.css
@@ -8516,7 +8573,7 @@ var RenderSectionIcon = (0,es/* observer */.Pi)(function (props) {
     }),
     endAdornment: /*#__PURE__*/react.createElement(react.Fragment, null, searchIcons && /*#__PURE__*/react.createElement(IconButton, {
       iconName: "clear",
-      size: "small",
+      size: "tiny",
       onClick: function onClick() {
         return handleClearSearch();
       }
@@ -15057,8 +15114,8 @@ var Header_Header = (0,es/* observer */.Pi)(function (props) {
   var menuBtn = /*#__PURE__*/react.createElement(IconButton, {
     onClick: function onClick() {
       return handleMenuClick();
-    },
-    disabled: isLoading
+    } // disabled={isLoading}
+
   }, /*#__PURE__*/react.createElement(Icon_Icon, {
     name: "menu",
     color: "white"
@@ -18907,6 +18964,7 @@ var PlayerItem_PlayerItem = (0,es/* observer */.Pi)(function (props) {
 
 
 
+
 function Player_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Player_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function Player_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Player_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Player_arrayLikeToArray(o, minLen); }
@@ -18933,8 +18991,10 @@ var DRAWER_VIEWS_ITEMS = [{
 var TAG_PlayerStore = function TAG_PlayerStore() {};
 
 var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
+  isPlaying: false,
   sliderCurrent: 0,
   sliderMax: 0,
+  volume: 25,
   // -
   playList: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), []),
   playIdx: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.integer */.V5.integer, -1),
@@ -18981,6 +19041,23 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
       return tracksList;
     },
 
+    get playTrackId() {
+      if (self.playIdx > -1 && self.playIdx <= self.playList.length - 1) {
+        return self.playList[self.playIdx];
+      }
+
+      return "";
+    },
+
+    get playTrack() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var tracks = store.tracks;
+      var playTrackId = self.playTrackId;
+      var playTrack = tracks.by_id.get(playTrackId);
+      return playTrack;
+    },
+
+    // -
     get historyTracks() {
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var tracks = store.tracks;
@@ -19010,9 +19087,6 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
     // -
     getTrackIdx: function getTrackIdx(trackId) {
       return self.playList.indexOf(trackId);
-    },
-    getHistoryTrackIdx: function getHistoryTrackIdx(trackId) {
-      return self.historyList.indexOf(trackId);
     }
   };
 }).actions(function (self) {
@@ -19083,7 +19157,100 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
         }
       }
 
-      self.playIdx = trackIdx; // self.audioPlay();
+      self.playIdx = trackIdx;
+      self.audioPlay();
+    },
+    readNext: function readNext() {// TODO
+    },
+    // -
+    _stopSlideInterval: function _stopSlideInterval() {
+      clearInterval(window.audioInterval);
+    },
+    _startSlideInterval: function _startSlideInterval() {
+      // Slide toute les secondes
+      // ---
+      self._stopSlideInterval();
+
+      window.audioInterval = setInterval(function () {
+        self.setField('sliderCurrent', window.audio.currentTime);
+      }, 1000);
+    },
+    audioPlay: function audioPlay() {
+      // Lit le titre courant
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var track = self.playTrack;
+
+      if (!track) {
+        return;
+      }
+
+      var volume = self.volume; // Initialisation + chargement fichier source
+
+      if (!window.audio) {
+        window.audio = new Audio(track.track_path);
+        window.audio.volume = volume / 100;
+      }
+
+      window.audio.oncanplay = function () {
+        if (window.audio && window.audio.duration) {
+          self.setField("sliderMax", window.audio.duration);
+        }
+      }; // Slide
+
+
+      self._startSlideInterval(); // Passage automatique à la suite de la liste de lecture
+
+
+      window.audio.onended = function () {
+        self.readNext();
+      }; // Lecture
+
+
+      window.audio.play();
+      self.isPlaying = true; // Notification
+
+      var focused = document.hasFocus();
+
+      if (!focused) {
+        var options = {
+          title: track.name,
+          body: track.artist + ' - ' + track.album,
+          silent: true
+        }; // Jaquette d'album
+
+        var album = track.linkedAlbum;
+
+        if (album.cover) {
+          options['icon'] = album.cover;
+        }
+
+        var notification = new Notification(options.title, options);
+
+        notification.onclick = function () {
+          store.navigateTo('album', track.album_id);
+        };
+      }
+    },
+    audioPause: function audioPause() {
+      // Met en pause la lecture du titre en cours
+      // ---
+      if (window.audio) {
+        clearInterval(window.audioInterval);
+        window.audio.pause();
+        self.setField("isPlaying", false);
+      }
+    },
+    audioStop: function audioStop() {
+      // Stoppe la lecture du titre en cours
+      // ---
+      if (window.audio) {
+        clearInterval(window.audioInterval);
+        window.audio.pause();
+        window.audio.currentTime = 0;
+        window.audio = null;
+        self.setField("isPlaying", false);
+      }
     }
   };
 });
@@ -19118,6 +19285,7 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
 
   var handleClearList = function handleClearList() {
     if (drawerView == "current") {
+      player.audioStop();
       player.clear();
     }
 
@@ -19488,6 +19656,8 @@ var TableRow = (0,es/* observer */.Pi)(function (props) {
   var hoverable = props.hoverable == true ? true : false;
   var disabled = props.disabled == true ? true : false;
   var children = props.children;
+  var callbackEnter = props.callbackEnter;
+  var callbackLeave = props.callbackLeave;
   var callbackClick = props.callbackClick;
   var className = props.className ? props.className : '';
   var style = props.style ? props.style : {}; // ...
@@ -19507,11 +19677,19 @@ var TableRow = (0,es/* observer */.Pi)(function (props) {
   var handleMouseEnter = function handleMouseEnter(evt) {
     if (!disabled) {
       setHover(true);
+
+      if (callbackEnter) {
+        callbackEnter(evt);
+      }
     }
   };
 
   var handleMouseLeave = function handleMouseLeave(evt) {
     setHover(false);
+
+    if (callbackLeave) {
+      callbackLeave(evt);
+    }
   };
 
   var handlePointerDown = function handlePointerDown(evt) {
@@ -19619,6 +19797,30 @@ var TableCell = function TableCell(props) {
 // EXTERNAL MODULE: ./contexts/track/Track.css
 var Track = __webpack_require__(77834);
 ;// CONCATENATED MODULE: ./contexts/track/Track.jsx
+function Track_slicedToArray(arr, i) { return Track_arrayWithHoles(arr) || Track_iterableToArrayLimit(arr, i) || Track_unsupportedIterableToArray(arr, i) || Track_nonIterableRest(); }
+
+function Track_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function Track_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Track_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Track_arrayLikeToArray(o, minLen); }
+
+function Track_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function Track_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function Track_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -19750,6 +19952,20 @@ var TrackStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       return true;
+    },
+
+    get isPlaying() {
+      // Le titre est-il en train d'être lu ?
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var player = store.player;
+      var playTrackId = player.playTrackId;
+
+      if (self.id == playTrackId) {
+        return true;
+      }
+
+      return false;
     }
 
   };
@@ -19789,21 +20005,61 @@ var TAG_TrackRow = function TAG_TrackRow() {};
 
 var TrackRow = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
-  var app = store.app; // From ... props
+  var app = store.app;
+  var tracks = store.tracks;
+  var player = store.player; // From ... state
+
+  var _React$useState = react.useState(false),
+      _React$useState2 = Track_slicedToArray(_React$useState, 2),
+      hover = _React$useState2[0],
+      setHover = _React$useState2[1]; // From ... props
+
 
   var track = props.track; // From ... store
 
   var isLoading = app.isLoading; // ...
+
+  var favorite = track.favorite;
+  var starred = track.starred;
+  var isPlaying = track.isPlaying;
+  var linkedAlbum = track.linkedAlbum; // ...
   // Events
   // ==================================================================================================
 
+  var handleEnter = function handleEnter(evt) {
+    setHover(true);
+  };
+
+  var handleLeave = function handleLeave(evt) {
+    setHover(false);
+  }; // -
+
+
+  var handleCheckedChanged = function handleCheckedChanged() {
+    tracks.save();
+  };
+
   var handleFavoriteClicked = function handleFavoriteClicked(track) {
     track.setField('favorite', !track.favorite);
+    tracks.save();
   };
 
   var handleStarredClicked = function handleStarredClicked(track) {
     track.setField('starred', !track.starred);
+    tracks.save();
   };
+
+  var handlePlayClicked = function handlePlayClicked(track) {
+    player.audioStop();
+    player.clear();
+    linkedAlbum.play(track.id);
+  };
+
+  var handleStopClicked = function handleStopClicked(track) {
+    player.audioStop();
+    player.clear();
+  }; // -
+
 
   var handleTrackMore = function handleTrackMore(trackId) {
     // TODO
@@ -19813,21 +20069,26 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
 
 
   return /*#__PURE__*/react.createElement(TableRow, {
-    hoverable: true
+    hoverable: true,
+    callbackEnter: handleEnter,
+    callbackLeave: handleLeave
   }, /*#__PURE__*/react.createElement(TableCell, {
-    width: 42,
+    width: 56,
     align: "center",
     size: "tiny"
   }, /*#__PURE__*/react.createElement(Field_Field, {
     component: "checkbox",
     ghostLabel: false,
     savePath: ['tracks', 'by_id', track.id, 'checked'],
-    disabled: isLoading
+    disabled: isLoading,
+    callbackChange: function callbackChange() {
+      return handleCheckedChanged();
+    }
   })), /*#__PURE__*/react.createElement(TableCell, {
-    width: 42,
+    width: 56,
     align: "center",
     size: "tiny"
-  }, /*#__PURE__*/react.createElement(IconButton, {
+  }, (hover || favorite) && /*#__PURE__*/react.createElement(IconButton, {
     size: "small",
     iconName: track.favorite ? "favorite" : "favorite_border",
     color: track.favorite ? "error" : null,
@@ -19836,10 +20097,10 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
       return handleFavoriteClicked(track);
     }
   })), /*#__PURE__*/react.createElement(TableCell, {
-    width: 42,
+    width: 56,
     align: "center",
     size: "tiny"
-  }, /*#__PURE__*/react.createElement(IconButton, {
+  }, (hover || starred) && /*#__PURE__*/react.createElement(IconButton, {
     size: "small",
     iconName: track.starred ? "star" : "star_outline",
     color: track.starred ? "warning" : null,
@@ -19848,14 +20109,34 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
       return handleStarredClicked(track);
     }
   })), /*#__PURE__*/react.createElement(TableCell, {
-    width: 42,
+    width: 56,
     size: "tiny",
-    fontSize: "13px"
-  }, track.track), /*#__PURE__*/react.createElement(TableCell, {
+    fontSize: "13px",
+    align: "center"
+  }, !isPlaying && !hover && /*#__PURE__*/react.createElement("span", null, track.track), !isPlaying && hover && /*#__PURE__*/react.createElement(IconButton, {
+    size: "small",
+    iconName: "play_circle_filled",
+    color: "hot",
+    onClick: function onClick() {
+      return handlePlayClicked(track);
+    }
+  }), isPlaying && !hover && /*#__PURE__*/react.createElement(Avatar_Avatar, {
+    size: "small",
+    color: "transparent",
+    iconName: "equalizer",
+    iconColor: "hot"
+  }), isPlaying && hover && /*#__PURE__*/react.createElement(IconButton, {
+    size: "small",
+    iconName: "stop_circle",
+    color: "hot",
+    onClick: function onClick() {
+      return handleStopClicked(track);
+    }
+  })), /*#__PURE__*/react.createElement(TableCell, {
     size: "tiny",
     fontSize: "13px"
   }, track.name), /*#__PURE__*/react.createElement(TableCell, {
-    width: 42,
+    width: 56,
     align: "right",
     size: "tiny"
   }, /*#__PURE__*/react.createElement(IconButton, {
@@ -20170,28 +20451,38 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
     },
     getPlayable: function getPlayable() {
       var load = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+      var trackIdOrigin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var tracksList = [];
-      var tracks = self.getSortedByNumber();
+      var tracks = self.getSortedByNumber(); // A partir d'un certain titre ou depuis le début ?
 
-      var _iterator2 = Album_createForOfIteratorHelper(tracks),
-          _step2;
+      var startIdx = 0;
 
-      try {
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          var track = _step2.value;
+      if (trackIdOrigin != null) {
+        for (var trackIdx in tracks) {
+          var track = tracks[trackIdx];
 
-          if (track.isPlayerCandidate) {
-            if (load) {
-              tracksList.push(track);
-            } else {
-              tracksList.push(track.id);
-            }
+          if (track.id == trackIdOrigin) {
+            startIdx = trackIdx;
+            break;
           }
         }
-      } catch (err) {
-        _iterator2.e(err);
-      } finally {
-        _iterator2.f();
+      } // Récupération des titres
+
+
+      for (var _trackIdx in tracks) {
+        var _track = tracks[_trackIdx];
+
+        if (_trackIdx < startIdx) {
+          continue;
+        }
+
+        if (_track.isPlayerCandidate) {
+          if (load) {
+            tracksList.push(_track);
+          } else {
+            tracksList.push(_track.id);
+          }
+        }
       }
 
       return tracksList;
@@ -20233,12 +20524,12 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       var byDisc = {};
       var tracks = self.getSortedByNumber();
 
-      var _iterator3 = Album_createForOfIteratorHelper(tracks),
-          _step3;
+      var _iterator2 = Album_createForOfIteratorHelper(tracks),
+          _step2;
 
       try {
-        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-          var track = _step3.value;
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var track = _step2.value;
           var discNumber = track.discNumber;
 
           if (!byDisc.hasOwnProperty(discNumber)) {
@@ -20248,9 +20539,9 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
           byDisc[discNumber].push(track);
         }
       } catch (err) {
-        _iterator3.e(err);
+        _iterator2.e(err);
       } finally {
-        _iterator3.f();
+        _iterator2.f();
       }
 
       return byDisc;
@@ -20274,18 +20565,18 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       self.genre_id = raw.genre_id;
       self.tracks_ids = [];
 
-      var _iterator4 = Album_createForOfIteratorHelper(raw.tracks_ids),
-          _step4;
+      var _iterator3 = Album_createForOfIteratorHelper(raw.tracks_ids),
+          _step3;
 
       try {
-        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-          var trackId = _step4.value;
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var trackId = _step3.value;
           self.tracks_ids.push(trackId);
         }
       } catch (err) {
-        _iterator4.e(err);
+        _iterator3.e(err);
       } finally {
-        _iterator4.f();
+        _iterator3.f();
       }
     },
     addTrackId: function addTrackId(trackId) {
@@ -20294,12 +20585,13 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       }
     },
     // -
-    play: function play() {
+    play: function play(trackId) {
       // Lecture de tous les morceaux de l'album dans l'ordre
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var player = store.player;
-      var playbackIds = self.getPlayable(false);
+      var playbackIds = self.getPlayable(false, trackId);
+      player.audioStop();
       player.clear();
       player.populate(playbackIds);
       player.read();
@@ -20318,7 +20610,7 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var player = store.player;
       var playbackIds = self.getTracksRandomly(false);
-      console.log(playbackIds);
+      player.audioStop();
       player.clear();
       player.populate(playbackIds);
       player.read();
@@ -20354,6 +20646,19 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
   var nbDiscs = discs.length;
   discs.sort(); // Events
   // ==================================================================================================
+
+  var handleArtistClick = function handleArtistClick() {
+    store.navigateTo('artist', albumArtist.id);
+  };
+
+  var handleGenreClick = function handleGenreClick() {
+    store.navigateTo('genre', albumGenre.id);
+  };
+
+  var handleYearClick = function handleYearClick() {
+    store.navigateTo('year', albumYear.id);
+  }; // -
+
 
   var handlePlayAlbumClick = function handlePlayAlbumClick() {
     album.play();
@@ -20398,6 +20703,9 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
     color: "hot",
     style: {
       marginTop: '4px'
+    },
+    onClick: function onClick() {
+      return handleArtistClick();
     }
   }, artistName), (genreName || yearName) && /*#__PURE__*/react.createElement(Row_Row, {
     align: "center",
@@ -20406,18 +20714,22 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
     }
   }, genreName && /*#__PURE__*/react.createElement(Typography_Typography, {
     variant: "description",
-    size: "small" // color="hot"
-    ,
-    className: "flex-0"
+    size: "small",
+    className: "flex-0",
+    onClick: function onClick() {
+      return handleGenreClick();
+    }
   }, genreName), genreName && yearName && /*#__PURE__*/react.createElement(Typography_Typography, {
     variant: "description",
     size: "small",
     className: "flex-0"
   }, "\u2022"), yearName && /*#__PURE__*/react.createElement(Typography_Typography, {
     variant: "description",
-    size: "small" // color="hot"
-    ,
-    className: "flex-0"
+    size: "small",
+    className: "flex-0",
+    onClick: function onClick() {
+      return handleYearClick();
+    }
   }, yearName))), /*#__PURE__*/react.createElement("div", null), /*#__PURE__*/react.createElement("div", {
     className: "flex-0"
   }, /*#__PURE__*/react.createElement(Ribbon_Ribbon, {
@@ -20451,10 +20763,8 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
     }, /*#__PURE__*/react.createElement(IconButton, {
       iconName: "more_horiz",
       color: "typography",
-      disabled: isLoading,
-      onClick: function onClick() {
-        return handleThrowDiceClick();
-      }
+      disabled: isLoading // onClick={() => handleThrowDiceClick()}
+
     }))
   })))), discs.map(function (disc, discIdx) {
     var discTracks = tracksByDiscs[disc];
@@ -20497,24 +20807,25 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
       }
     }, /*#__PURE__*/react.createElement(Table_Table, null, /*#__PURE__*/react.createElement(TableHead, null, /*#__PURE__*/react.createElement(TableRow, null, /*#__PURE__*/react.createElement(TableCell, {
       header: true,
-      width: 42,
+      width: 56,
       align: "center"
     }), /*#__PURE__*/react.createElement(TableCell, {
       header: true,
-      width: 42,
+      width: 56,
       align: "center"
     }), /*#__PURE__*/react.createElement(TableCell, {
       header: true,
-      width: 42,
+      width: 56,
       align: "center"
     }, "Mix"), /*#__PURE__*/react.createElement(TableCell, {
       header: true,
-      width: 42
+      width: 56,
+      align: "center"
     }, "N\xB0"), /*#__PURE__*/react.createElement(TableCell, {
       header: true
     }, "Titre"), /*#__PURE__*/react.createElement(TableCell, {
       header: true,
-      width: 42,
+      width: 56,
       align: "right"
     }))), /*#__PURE__*/react.createElement(TableBody, null, discTracks.map(function (track, trackIdx) {
       return /*#__PURE__*/react.createElement(TrackRow, {
@@ -27812,7 +28123,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(25794)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(9519)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

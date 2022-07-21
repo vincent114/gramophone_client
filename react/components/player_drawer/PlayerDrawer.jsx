@@ -38,6 +38,7 @@ export const PlayerDrawer = observer((props) => {
 
 	const handleClearList = () => {
 		if (drawerView == "current") {
+			player.audioStop();
 			player.clear();
 		}
 		if (drawerView == "history") {

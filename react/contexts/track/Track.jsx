@@ -11,6 +11,7 @@ import {
 import { Field } from 'nexus/forms/field/Field';
 
 import { IconButton } from 'nexus/ui/button/Button';
+import { Avatar } from 'nexus/ui/avatar/Avatar';
 
 import './Track.css';
 
@@ -148,6 +149,21 @@ export const TrackStore = types
 			return true;
 		},
 
+		get isPlaying() {
+
+			// Le titre est-il en train d'être lu ?
+			// ---
+
+			const store = getRoot(self);
+			const player = store.player;
+			const playTrackId = player.playTrackId;
+
+			if (self.id == playTrackId) {
+				return true;
+			}
+			return false;
+		},
+
 	}))
 	.actions(self => ({
 
@@ -197,6 +213,12 @@ export const TrackRow = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const tracks = store.tracks;
+	const player = store.player;
+
+	// From ... state
+
+	let [hover, setHover] = React.useState(false);
 
 	// From ... props
 
@@ -208,16 +230,53 @@ export const TrackRow = observer((props) => {
 
 	// ...
 
+	const favorite = track.favorite;
+	const starred = track.starred;
+	const isPlaying = track.isPlaying;
+
+	const linkedAlbum = track.linkedAlbum;
+
+	// ...
+
 	// Events
 	// ==================================================================================================
 
+	const handleEnter = (evt) => {
+		setHover(true);
+	}
+
+	const handleLeave = (evt) => {
+		setHover(false);
+	}
+
+	// -
+
+	const handleCheckedChanged = () => {
+		tracks.save();
+	}
+
 	const handleFavoriteClicked = (track) => {
 		track.setField('favorite', !track.favorite);
+		tracks.save();
 	}
 
 	const handleStarredClicked = (track) => {
 		track.setField('starred', !track.starred);
+		tracks.save();
 	}
+
+	const handlePlayClicked = (track) => {
+		player.audioStop();
+		player.clear();
+		linkedAlbum.play(track.id);
+	}
+
+	const handleStopClicked = (track) => {
+		player.audioStop();
+		player.clear();
+	}
+
+	// -
 
 	const handleTrackMore = (trackId) => {
 		// TODO
@@ -230,9 +289,11 @@ export const TrackRow = observer((props) => {
 	return (
 		<TableRow
 			hoverable={true}
+			callbackEnter={handleEnter}
+			callbackLeave={handleLeave}
 		>
 			<TableCell
-				width={42}
+				width={56}
 				align="center"
 				size="tiny"
 			>
@@ -241,40 +302,72 @@ export const TrackRow = observer((props) => {
 					ghostLabel={false}
 					savePath={['tracks', 'by_id', track.id, 'checked']}
 					disabled={isLoading}
+					callbackChange={() => handleCheckedChanged()}
 				/>
 			</TableCell>
 			<TableCell
-				width={42}
+				width={56}
 				align="center"
 				size="tiny"
 			>
-				<IconButton
-					size="small"
-					iconName={(track.favorite) ? "favorite" : "favorite_border"}
-					color={(track.favorite) ? "error" : null}
-					disabled={isLoading}
-					onClick={() => handleFavoriteClicked(track)}
-				/>
+				{(hover || favorite) && (
+					<IconButton
+						size="small"
+						iconName={(track.favorite) ? "favorite" : "favorite_border"}
+						color={(track.favorite) ? "error" : null}
+						disabled={isLoading}
+						onClick={() => handleFavoriteClicked(track)}
+					/>
+				)}
 			</TableCell>
 			<TableCell
-				width={42}
+				width={56}
 				align="center"
 				size="tiny"
 			>
-				<IconButton
-					size="small"
-					iconName={(track.starred) ? "star" : "star_outline"}
-					color={(track.starred) ? "warning" : null}
-					disabled={isLoading}
-					onClick={() => handleStarredClicked(track)}
-				/>
+				{(hover || starred) && (
+					<IconButton
+						size="small"
+						iconName={(track.starred) ? "star" : "star_outline"}
+						color={(track.starred) ? "warning" : null}
+						disabled={isLoading}
+						onClick={() => handleStarredClicked(track)}
+					/>
+				)}
 			</TableCell>
 			<TableCell
-				width={42}
+				width={56}
 				size="tiny"
 				fontSize="13px"
+				align="center"
 			>
-				{track.track}
+				{(!isPlaying && !hover) && (
+					<span>{track.track}</span>
+				)}
+				{(!isPlaying && hover) && (
+					<IconButton
+						size="small"
+						iconName="play_circle_filled"
+						color="hot"
+						onClick={() => handlePlayClicked(track)}
+					/>
+				)}
+				{(isPlaying && !hover) && (
+					<Avatar
+						size="small"
+						color="transparent"
+						iconName="equalizer"
+						iconColor="hot"
+					/>
+				)}
+				{(isPlaying && hover) && (
+					<IconButton
+						size="small"
+						iconName="stop_circle"
+						color="hot"
+						onClick={() => handleStopClicked(track)}
+					/>
+				)}
 			</TableCell>
 			<TableCell
 				size="tiny"
@@ -283,7 +376,7 @@ export const TrackRow = observer((props) => {
 				{track.name}
 			</TableCell>
 			<TableCell
-				width={42}
+				width={56}
 				align="right"
 				size="tiny"
 			>

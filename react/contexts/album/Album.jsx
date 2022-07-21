@@ -127,10 +127,28 @@ export const AlbumStore = types
 			return tracksList;
 		},
 
-		getPlayable(load=true) {
+		getPlayable(load=true, trackIdOrigin=null) {
 			let tracksList = [];
 			const tracks = self.getSortedByNumber();
-			for (const track of tracks) {
+
+			// A partir d'un certain titre ou depuis le début ?
+			let startIdx = 0;
+			if (trackIdOrigin != null) {
+				for (const trackIdx in tracks) {
+					const track = tracks[trackIdx];
+					if (track.id == trackIdOrigin) {
+						startIdx = trackIdx;
+						break;
+					}
+				}
+			}
+
+			// Récupération des titres
+			for (const trackIdx in tracks) {
+				const track = tracks[trackIdx];
+				if (trackIdx < startIdx) {
+					continue;
+				}
 				if (track.isPlayerCandidate) {
 					if (load) {
 						tracksList.push(track);
@@ -223,7 +241,7 @@ export const AlbumStore = types
 
 		// -
 
-		play: () => {
+		play: (trackId) => {
 
 			// Lecture de tous les morceaux de l'album dans l'ordre
 			// ---
@@ -231,7 +249,8 @@ export const AlbumStore = types
 			const store = getRoot(self);
 			const player = store.player;
 
-			const playbackIds = self.getPlayable(false);
+			const playbackIds = self.getPlayable(false, trackId);
+			player.audioStop();
 			player.clear();
 			player.populate(playbackIds);
 			player.read();
@@ -258,7 +277,7 @@ export const AlbumStore = types
 			const player = store.player;
 
 			const playbackIds = self.getTracksRandomly(false);
-			console.log(playbackIds);
+			player.audioStop();
 			player.clear();
 			player.populate(playbackIds);
 			player.read();
@@ -310,6 +329,20 @@ export const RenderAlbum = observer((props) => {
 
 	// Events
 	// ==================================================================================================
+
+	const handleArtistClick = () => {
+		store.navigateTo('artist', albumArtist.id);
+	}
+
+	const handleGenreClick = () => {
+		store.navigateTo('genre', albumGenre.id);
+	}
+
+	const handleYearClick = () => {
+		store.navigateTo('year', albumYear.id);
+	}
+
+	// -
 
 	const handlePlayAlbumClick = () => {
 		album.play();
@@ -371,6 +404,7 @@ export const RenderAlbum = observer((props) => {
 								style={{
 									marginTop: '4px',
 								}}
+								onClick={() => handleArtistClick()}
 							>
 								{artistName}
 							</Typography>
@@ -386,9 +420,8 @@ export const RenderAlbum = observer((props) => {
 									<Typography
 										variant="description"
 										size="small"
-										// color="hot"
 										className="flex-0"
-
+										onClick={() => handleGenreClick()}
 									>
 										{genreName}
 									</Typography>
@@ -406,9 +439,8 @@ export const RenderAlbum = observer((props) => {
 									<Typography
 										variant="description"
 										size="small"
-										// color="hot"
 										className="flex-0"
-
+										onClick={() => handleYearClick()}
 									>
 										{yearName}
 									</Typography>
@@ -448,7 +480,7 @@ export const RenderAlbum = observer((props) => {
 										iconName="more_horiz"
 										color="typography"
 										disabled={isLoading}
-										onClick={() => handleThrowDiceClick()}
+										// onClick={() => handleThrowDiceClick()}
 									/>
 								</div>
 							)}
@@ -516,26 +548,27 @@ export const RenderAlbum = observer((props) => {
 									<TableRow>
 										<TableCell
 											header={true}
-											width={42}
+											width={56}
 											align="center"
 										>
 										</TableCell>
 										<TableCell
 											header={true}
-											width={42}
+											width={56}
 											align="center"
 										>
 										</TableCell>
 										<TableCell
 											header={true}
-											width={42}
+											width={56}
 											align="center"
 										>
 											Mix
 										</TableCell>
 										<TableCell
 											header={true}
-											width={42}
+											width={56}
+											align="center"
 										>
 											N°
 										</TableCell>
@@ -544,7 +577,7 @@ export const RenderAlbum = observer((props) => {
 										</TableCell>
 										<TableCell
 											header={true}
-											width={42}
+											width={56}
 											align="right"
 										>
 										</TableCell>
