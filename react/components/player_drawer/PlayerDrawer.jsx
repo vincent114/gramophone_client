@@ -37,13 +37,12 @@ export const PlayerDrawer = observer((props) => {
 	// ==================================================================================================
 
 	const handleClearList = () => {
-		if (drawerView == "current") {
-			player.audioStop();
-			player.clear();
-		}
-		if (drawerView == "history") {
-			player.clearHistory();
-		}
+		player.audioStop();
+		player.clear();
+	}
+
+	const handleClearHistory = () => {
+		player.clearHistory();
 	}
 
 	// Render
@@ -52,7 +51,7 @@ export const PlayerDrawer = observer((props) => {
 	let playerDrawerContent = null;
 	if (drawerOpen || true) {
 
-		const playTracks = player.playTracks;
+		const remainingPlayTracks = player.remainingPlayTracks;
 		const historyTracks = player.historyTracks;
 
 		playerDrawerContent = (
@@ -74,7 +73,7 @@ export const PlayerDrawer = observer((props) => {
 
 				{drawerView == "current" && (
 					<React.Fragment>
-						{playTracks.length > 0 && (
+						{remainingPlayTracks.length > 0 && (
 							<Button
 								id="btn-clear-current-list"
 								color="secondary"
@@ -84,11 +83,11 @@ export const PlayerDrawer = observer((props) => {
 								}}
 								onClick={() => handleClearList()}
 							>
-								Effacer la file
+								Effacer
 							</Button>
 						)}
 						<div className="g-player-drawer-list">
-							{playTracks.map((track, trackIdx) => (
+							{remainingPlayTracks.map((track, trackIdx) => (
 								<PlayerItem
 									key={`player-current-trac-${trackIdx}`}
 									track={track}
@@ -104,19 +103,34 @@ export const PlayerDrawer = observer((props) => {
 				)}
 
 				{drawerView == "history" && (
-					<div className="g-player-drawer-list">
-						{historyTracks.map((track, trackIdx) => (
-							<PlayerItem
-								key={`player-history-trac-${trackIdx}`}
-								track={track}
+					<React.Fragment>
+						{historyTracks.length > 0 && (
+							<Button
+								id="btn-clear-history-list"
+								color="secondary"
 								style={{
-									paddingLeft: '10px',
-									paddingRight: '10px',
-									marginBottom: '5px',
+									'marginLeft': '10px',
+									'marginRight': '10px',
 								}}
-							/>
-						))}
-					</div>
+								onClick={() => handleClearHistory()}
+							>
+								Effacer
+							</Button>
+						)}
+						<div className="g-player-drawer-list">
+							{historyTracks.map((track, trackIdx) => (
+								<PlayerItem
+									key={`player-history-trac-${trackIdx}`}
+									track={track}
+									style={{
+										paddingLeft: '10px',
+										paddingRight: '10px',
+										marginBottom: '5px',
+									}}
+								/>
+							))}
+						</div>
+					</React.Fragment>
 				)}
 
 			</div>

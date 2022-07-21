@@ -52,7 +52,7 @@ export const ContextualMenu = observer((props) => {
 
 			<ArtistsMenuItem disabled={false} />
 			<AlbumsMenuItem disabled={false} />
-			<TracksMenuItem disabled={false} />
+			{false && <TracksMenuItem disabled={false} />}
 
 			<MenuDivider />
 

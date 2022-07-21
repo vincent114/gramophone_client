@@ -215,14 +215,14 @@ export const RenderHomeGrid = observer((props) => {
 	// HomeGrid -> Titres
 	// ---
 
-	const navCardTracks = (
-		<NavCard
-			key="nav-card-tracks"
-			icon="audiotrack"
-			label="Titres"
-			onClick={() => store.navigateTo('tracks')}
-		/>
-	)
+	// const navCardTracks = (
+	// 	<NavCard
+	// 		key="nav-card-tracks"
+	// 		icon="audiotrack"
+	// 		label="Titres"
+	// 		onClick={() => store.navigateTo('tracks')}
+	// 	/>
+	// )
 
 	// HomeGrid -> Années
 	// ---
@@ -270,12 +270,19 @@ export const RenderHomeGrid = observer((props) => {
 				marginBottom: '40px',
 			}}
 		>
-			<Row spacing="medium" responsive={false}>
+			<Row
+				spacing="medium"
+				responsive={false}
+				className="flex-2"
+			>
 				{navCardArtists}
 				{navCardAlbums}
-				{navCardTracks}
 			</Row>
-			<Row spacing="medium" responsive={false}>
+			<Row
+				spacing="medium"
+				responsive={false}
+				className="flex-3"
+			>
 				{navCardYears}
 				{navCardGenres}
 				{navCardPlaylists}

@@ -31,6 +31,8 @@ export const PlayerStore = types
 
 		isPlaying: false,
 
+		repeatMode: false,
+
 		sliderCurrent: 0,
 		sliderMax: 0,
 
@@ -39,10 +41,9 @@ export const PlayerStore = types
 		// -
 
 		playList: types.optional(types.array(types.string), []),
-		playIdx: types.maybeNull(types.integer, -1),
+		playIdx: -1, // L'index de lecture courante
 
 		historyList: types.optional(types.array(types.string), []),
-		historyIdx: types.maybeNull(types.integer, -1),
 
 		drawerOpen: false,
 		drawerView: 'current', // current, history
@@ -54,8 +55,22 @@ export const PlayerStore = types
 			return self.playList.length;
 		},
 
-		get nbTracksHistory() {
-			return self.historyList.length;
+		// -
+
+		get previousTrackId() {
+			const previousTrackIdx = self.playIdx - 1;
+			if (previousTrackIdx > -1) {
+				return self.playList[previousTrackIdx];
+			}
+			return "";
+		},
+
+		get nextTrackId() {
+			const nextTrackIdx = self.playIdx + 1;
+			if (nextTrackIdx < self.playList.length) {
+				return self.playList[nextTrackIdx];
+			}
+			return "";
 		},
 
 		// Getters
@@ -67,6 +82,26 @@ export const PlayerStore = types
 
 			let tracksList = [];
 			for (const trackId of self.playList) {
+				const track = tracks.by_id.get(trackId);
+				if (track) {
+					tracksList.push(track);
+				}
+			}
+			return tracksList;
+		},
+
+		get remainingPlayTracks() {
+			const store = getRoot(self);
+			const tracks = store.tracks;
+
+			const playIdx = self.playIdx;
+
+			let tracksList = [];
+			for (const trackIdx in self.playList) {
+				if (trackIdx <= playIdx) {
+					continue;
+				}
+				const trackId = self.playList[trackIdx];
 				const track = tracks.by_id.get(trackId);
 				if (track) {
 					tracksList.push(track);
@@ -146,7 +181,18 @@ export const PlayerStore = types
 
 		clearHistory: () => {
 			self.historyList = [];
-			self.historyIdx = -1;
+		},
+
+		addHistory: (trackId) => {
+
+			// Ajoute un élément à l'historique de lecture
+			// ---
+
+			// 100 maximum
+			if (self.historyList.length == 100) {
+				self.historyList.splice(self.historyList.length - 1, 1);
+			}
+			self.historyList.splice(0, 0, trackId);
 		},
 
 		// -
@@ -174,11 +220,41 @@ export const PlayerStore = types
 			}
 
 			self.playIdx = trackIdx;
+			if (self.isPlaying) {
+				self.audioStop();
+			}
+			self.addHistory(trackId);
 			self.audioPlay();
 		},
 
+		readPrevious: () => {
+
+			// Lecture du titre précédent
+			// ---
+
+			const previousTrackId = self.previousTrackId;
+			if (previousTrackId) {
+				if (window.audio.currentTime < 10) {
+					self.read(previousTrackId);
+				} else {
+					self.audioSeek(0, true);
+				}
+			} else {
+				self.audioStop();
+			}
+		},
+
 		readNext: () => {
-			// TODO
+
+			// Lecture du titre suivant
+			// ---
+
+			const nextTrackId = self.nextTrackId;
+			if (nextTrackId) {
+				self.read(nextTrackId);
+			} else {
+				self.audioStop();
+			}
 		},
 
 		// -
@@ -280,6 +356,19 @@ export const PlayerStore = types
 				window.audio = null;
 				self.setField("isPlaying", false);
 			}
+		},
+
+		audioSeek: (value, affectAudio) => {
+
+			// Saut sur le titre en cours
+			// ---
+
+			self._stopSlideInterval();
+			if (window.audio && affectAudio == true) {
+				window.audio.currentTime = value;
+				self._startSlideInterval();
+			}
+			self.setField("sliderCurrent", value);
 		},
 
 	}))

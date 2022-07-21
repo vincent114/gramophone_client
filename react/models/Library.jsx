@@ -157,7 +157,6 @@ export const LibraryStore = types
 
 		shuffle_only_favorites: false,
 		shuffle_ignore_soudtracks: true,
-		shuffle_ignore_hidden: true,
 
 		loaded: false,
 	})
@@ -370,7 +369,6 @@ export const LibraryStore = types
 
 				self.shuffle_only_favorites = raw.shuffle_only_favorites;
 				self.shuffle_ignore_soudtracks = raw.shuffle_ignore_soudtracks;
-				self.shuffle_ignore_hidden = raw.shuffle_ignore_hidden;
 			}
 			self.loaded = true;
 		},

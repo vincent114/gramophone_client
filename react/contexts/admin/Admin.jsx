@@ -452,11 +452,6 @@ export const RenderSectionPlayback = observer((props) => {
 				savePath={['library', 'shuffle_ignore_soudtracks']}
 				callbackChange={handleParamsChange}
 			/>
-			<Switch
-				label="Ignorer les titres déselectionnés"
-				savePath={['library', 'shuffle_ignore_hidden']}
-				callbackChange={handleParamsChange}
-			/>
 		</div>
 	)
 

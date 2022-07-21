@@ -129,7 +129,6 @@ export const TrackStore = types
 
 			const shuffleOnlyFavorites = library.shuffle_only_favorites;
 			const shuffleIgnoreSoudtracks = library.shuffle_ignore_soudtracks;
-			const shuffleIgnoreHidden = library.shuffle_ignore_hidden;
 
 			// Que des favoris ?
 			if (shuffleOnlyFavorites && !self.favorite) {
@@ -137,12 +136,7 @@ export const TrackStore = types
 			}
 
 			// Pas de soundtrack ?
-			if (shuffleIgnoreSoudtracks && ['soundtrack', 'soundtracks'].indexOf(self.genre_id) == -1) {
-				return false;
-			}
-
-			// Pas de titre désectionné ?
-			if (shuffleIgnoreHidden && !self.checked) {
+			if (shuffleIgnoreSoudtracks && ['soundtrack', 'soundtracks'].indexOf(self.genre_id) > -1) {
 				return false;
 			}
 
@@ -268,7 +262,14 @@ export const TrackRow = observer((props) => {
 	const handlePlayClicked = (track) => {
 		player.audioStop();
 		player.clear();
-		linkedAlbum.play(track.id);
+		if (track.isPlayerCandidate) {
+			linkedAlbum.play(track.id);
+		} else {
+			player.audioStop();
+			player.clear();
+			player.populate([track.id]);
+			player.read(track.id);
+		}
 	}
 
 	const handleStopClicked = (track) => {
@@ -289,6 +290,7 @@ export const TrackRow = observer((props) => {
 	return (
 		<TableRow
 			hoverable={true}
+			faded={!track.checked}
 			callbackEnter={handleEnter}
 			callbackLeave={handleLeave}
 		>

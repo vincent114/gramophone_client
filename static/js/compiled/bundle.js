@@ -11868,6 +11868,10 @@ var ThemeStore = mobx_state_tree_module/* types.model */.V5.model({
 
       if (colorKey == 'description') {
         return self.mode == 'dark' ? '#D4D3D3' : '#808080';
+      }
+
+      if (colorKey == 'faded') {
+        return self.mode == 'dark' ? '#808080' : '#D4D3D3';
       } // La couleur est une sévrité ?
 
 
@@ -18965,6 +18969,7 @@ var PlayerItem_PlayerItem = (0,es/* observer */.Pi)(function (props) {
 
 
 
+
 function Player_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Player_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function Player_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Player_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Player_arrayLikeToArray(o, minLen); }
@@ -18992,14 +18997,15 @@ var TAG_PlayerStore = function TAG_PlayerStore() {};
 
 var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
   isPlaying: false,
+  repeatMode: false,
   sliderCurrent: 0,
   sliderMax: 0,
   volume: 25,
   // -
   playList: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), []),
-  playIdx: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.integer */.V5.integer, -1),
+  playIdx: -1,
+  // L'index de lecture courante
   historyList: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), []),
-  historyIdx: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.integer */.V5.integer, -1),
   drawerOpen: false,
   drawerView: 'current' // current, history
 
@@ -19009,8 +19015,25 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
       return self.playList.length;
     },
 
-    get nbTracksHistory() {
-      return self.historyList.length;
+    // -
+    get previousTrackId() {
+      var previousTrackIdx = self.playIdx - 1;
+
+      if (previousTrackIdx > -1) {
+        return self.playList[previousTrackIdx];
+      }
+
+      return "";
+    },
+
+    get nextTrackId() {
+      var nextTrackIdx = self.playIdx + 1;
+
+      if (nextTrackIdx < self.playList.length) {
+        return self.playList[nextTrackIdx];
+      }
+
+      return "";
     },
 
     // Getters
@@ -19036,6 +19059,28 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
         _iterator.e(err);
       } finally {
         _iterator.f();
+      }
+
+      return tracksList;
+    },
+
+    get remainingPlayTracks() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var tracks = store.tracks;
+      var playIdx = self.playIdx;
+      var tracksList = [];
+
+      for (var trackIdx in self.playList) {
+        if (trackIdx <= playIdx) {
+          continue;
+        }
+
+        var trackId = self.playList[trackIdx];
+        var track = tracks.by_id.get(trackId);
+
+        if (track) {
+          tracksList.push(track);
+        }
       }
 
       return tracksList;
@@ -19134,7 +19179,16 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
     },
     clearHistory: function clearHistory() {
       self.historyList = [];
-      self.historyIdx = -1;
+    },
+    addHistory: function addHistory(trackId) {
+      // Ajoute un élément à l'historique de lecture
+      // ---
+      // 100 maximum
+      if (self.historyList.length == 100) {
+        self.historyList.splice(self.historyList.length - 1, 1);
+      }
+
+      self.historyList.splice(0, 0, trackId);
     },
     // -
     read: function read(trackId) {
@@ -19158,9 +19212,39 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       self.playIdx = trackIdx;
+
+      if (self.isPlaying) {
+        self.audioStop();
+      }
+
+      self.addHistory(trackId);
       self.audioPlay();
     },
-    readNext: function readNext() {// TODO
+    readPrevious: function readPrevious() {
+      // Lecture du titre précédent
+      // ---
+      var previousTrackId = self.previousTrackId;
+
+      if (previousTrackId) {
+        if (window.audio.currentTime < 10) {
+          self.read(previousTrackId);
+        } else {
+          self.audioSeek(0, true);
+        }
+      } else {
+        self.audioStop();
+      }
+    },
+    readNext: function readNext() {
+      // Lecture du titre suivant
+      // ---
+      var nextTrackId = self.nextTrackId;
+
+      if (nextTrackId) {
+        self.read(nextTrackId);
+      } else {
+        self.audioStop();
+      }
     },
     // -
     _stopSlideInterval: function _stopSlideInterval() {
@@ -19251,6 +19335,19 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
         window.audio = null;
         self.setField("isPlaying", false);
       }
+    },
+    audioSeek: function audioSeek(value, affectAudio) {
+      // Saut sur le titre en cours
+      // ---
+      self._stopSlideInterval();
+
+      if (window.audio && affectAudio == true) {
+        window.audio.currentTime = value;
+
+        self._startSlideInterval();
+      }
+
+      self.setField("sliderCurrent", value);
     }
   };
 });
@@ -19284,14 +19381,12 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
   // ==================================================================================================
 
   var handleClearList = function handleClearList() {
-    if (drawerView == "current") {
-      player.audioStop();
-      player.clear();
-    }
+    player.audioStop();
+    player.clear();
+  };
 
-    if (drawerView == "history") {
-      player.clearHistory();
-    }
+  var handleClearHistory = function handleClearHistory() {
+    player.clearHistory();
   }; // Render
   // ==================================================================================================
 
@@ -19299,7 +19394,7 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
   var playerDrawerContent = null;
 
   if (drawerOpen || true) {
-    var playTracks = player.playTracks;
+    var remainingPlayTracks = player.remainingPlayTracks;
     var historyTracks = player.historyTracks;
     playerDrawerContent = /*#__PURE__*/react.createElement("div", {
       className: (0,clsx_m/* default */.Z)("g-player-drawer", {
@@ -19312,7 +19407,7 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
       component: "button_group",
       datas: DRAWER_VIEWS_ITEMS,
       savePath: ['player', 'drawerView']
-    })), drawerView == "current" && /*#__PURE__*/react.createElement(react.Fragment, null, playTracks.length > 0 && /*#__PURE__*/react.createElement(Button_Button, {
+    })), drawerView == "current" && /*#__PURE__*/react.createElement(react.Fragment, null, remainingPlayTracks.length > 0 && /*#__PURE__*/react.createElement(Button_Button, {
       id: "btn-clear-current-list",
       color: "secondary",
       style: {
@@ -19322,9 +19417,9 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
       onClick: function onClick() {
         return handleClearList();
       }
-    }, "Effacer la file"), /*#__PURE__*/react.createElement("div", {
+    }, "Effacer"), /*#__PURE__*/react.createElement("div", {
       className: "g-player-drawer-list"
-    }, playTracks.map(function (track, trackIdx) {
+    }, remainingPlayTracks.map(function (track, trackIdx) {
       return /*#__PURE__*/react.createElement(PlayerItem_PlayerItem, {
         key: "player-current-trac-".concat(trackIdx),
         track: track,
@@ -19334,7 +19429,17 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
           marginBottom: '5px'
         }
       });
-    }))), drawerView == "history" && /*#__PURE__*/react.createElement("div", {
+    }))), drawerView == "history" && /*#__PURE__*/react.createElement(react.Fragment, null, historyTracks.length > 0 && /*#__PURE__*/react.createElement(Button_Button, {
+      id: "btn-clear-history-list",
+      color: "secondary",
+      style: {
+        'marginLeft': '10px',
+        'marginRight': '10px'
+      },
+      onClick: function onClick() {
+        return handleClearHistory();
+      }
+    }, "Effacer"), /*#__PURE__*/react.createElement("div", {
       className: "g-player-drawer-list"
     }, historyTracks.map(function (track, trackIdx) {
       return /*#__PURE__*/react.createElement(PlayerItem_PlayerItem, {
@@ -19346,7 +19451,7 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
           marginBottom: '5px'
         }
       });
-    })));
+    }))));
   }
 
   return playerDrawerContent;
@@ -19655,6 +19760,7 @@ var TableRow = (0,es/* observer */.Pi)(function (props) {
 
   var hoverable = props.hoverable == true ? true : false;
   var disabled = props.disabled == true ? true : false;
+  var faded = props.faded == true ? true : false;
   var children = props.children;
   var callbackEnter = props.callbackEnter;
   var callbackLeave = props.callbackLeave;
@@ -19664,12 +19770,17 @@ var TableRow = (0,es/* observer */.Pi)(function (props) {
 
   var cellStyle = {};
 
-  if (hover && hoverable) {
+  if (hover && hoverable && !faded) {
     cellStyle['backgroundColor'] = hexToRgbA(theme.palette.primary.main, 0.1);
   }
 
-  if (active && callbackClick) {
+  if (active && callbackClick && !faded) {
     cellStyle['backgroundColor'] = hexToRgbA(theme.palette.primary.main, 0.3);
+  }
+
+  if (faded) {
+    cellStyle['color'] = theme.getColorFromKey("faded");
+    cellStyle['backgroundColor'] = hexToRgbA(theme.getColorFromKey("description"), 0.05);
   } // Events
   // ==================================================================================================
 
@@ -19934,20 +20045,14 @@ var TrackStore = mobx_state_tree_module/* types.model */.V5.model({
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var library = store.library;
       var shuffleOnlyFavorites = library.shuffle_only_favorites;
-      var shuffleIgnoreSoudtracks = library.shuffle_ignore_soudtracks;
-      var shuffleIgnoreHidden = library.shuffle_ignore_hidden; // Que des favoris ?
+      var shuffleIgnoreSoudtracks = library.shuffle_ignore_soudtracks; // Que des favoris ?
 
       if (shuffleOnlyFavorites && !self.favorite) {
         return false;
       } // Pas de soundtrack ?
 
 
-      if (shuffleIgnoreSoudtracks && ['soundtrack', 'soundtracks'].indexOf(self.genre_id) == -1) {
-        return false;
-      } // Pas de titre désectionné ?
-
-
-      if (shuffleIgnoreHidden && !self.checked) {
+      if (shuffleIgnoreSoudtracks && ['soundtrack', 'soundtracks'].indexOf(self.genre_id) > -1) {
         return false;
       }
 
@@ -20052,7 +20157,15 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
   var handlePlayClicked = function handlePlayClicked(track) {
     player.audioStop();
     player.clear();
-    linkedAlbum.play(track.id);
+
+    if (track.isPlayerCandidate) {
+      linkedAlbum.play(track.id);
+    } else {
+      player.audioStop();
+      player.clear();
+      player.populate([track.id]);
+      player.read(track.id);
+    }
   };
 
   var handleStopClicked = function handleStopClicked(track) {
@@ -20070,6 +20183,7 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
 
   return /*#__PURE__*/react.createElement(TableRow, {
     hoverable: true,
+    faded: !track.checked,
     callbackEnter: handleEnter,
     callbackLeave: handleLeave
   }, /*#__PURE__*/react.createElement(TableCell, {
@@ -20350,7 +20464,6 @@ function Album_arrayLikeToArray(arr, len) { if (len == null || len > arr.length)
 
 
 
-
  // Models
 // ======================================================================================================
 // ***** AlbumStore *****
@@ -20403,19 +20516,16 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
     },
 
     // -
-    get firstTrack() {
-      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
-      var tracks = store.tracks;
-      var firstTrackId = "";
-      var sortedTracks = self.getSortedByNumber();
-
-      if (sortedTracks.length > 0) {
-        firstTrackId = sortedTracks[0].id;
-      }
-
-      return tracks.getById(firstTrackId);
-    },
-
+    // get firstTrack() {
+    // 	const store = getRoot(self);
+    // 	const tracks = store.tracks;
+    // 	let firstTrackId = "";
+    // 	const sortedTracks = self.getSortedByNumber();
+    // 	if (sortedTracks.length > 0) {
+    // 		firstTrackId = sortedTracks[0].id;
+    // 	}
+    // 	return tracks.getById(firstTrackId);
+    // },
     // Getters
     // -
     getSortedByNumber: function getSortedByNumber() {
@@ -20434,8 +20544,7 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
           if (track) {
             tracksList.push(track);
           }
-        } // tracksList.sort((a, b) => a.sortNumber - b.sortNumber);
-
+        }
       } catch (err) {
         _iterator.e(err);
       } finally {
@@ -20462,7 +20571,7 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
           var track = tracks[trackIdx];
 
           if (track.id == trackIdOrigin) {
-            startIdx = trackIdx;
+            startIdx = parseInt(trackIdx);
             break;
           }
         }
@@ -20472,7 +20581,7 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       for (var _trackIdx in tracks) {
         var _track = tracks[_trackIdx];
 
-        if (_trackIdx < startIdx) {
+        if (parseInt(_trackIdx) < startIdx) {
           continue;
         }
 
@@ -20493,26 +20602,24 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       var app = store.app;
       var helpers = app.helpers;
       var tracks = store.tracks;
-      var tracksIds = self.tracks_ids.toJSON();
-      var howMany = tracksIds.length;
+      var playableIds = self.getPlayable(false); // const tracksIds = self.tracks_ids.toJSON();
+
+      var howMany = playableIds.length;
       var randomTracks = [];
       var randomTracksIdxs = [];
       var randomTracksIds = [];
 
-      while (randomTracksIds.length < howMany) {
+      while (randomTracksIdxs.length < howMany) {
         var randomIdx = helpers.getRandomNumber(howMany) - 1;
 
         if (randomTracksIdxs.indexOf(randomIdx) == -1) {
-          var trackId = tracksIds[randomIdx];
           randomTracksIdxs.push(randomIdx);
-          randomTracksIds.push(trackId);
+          var trackId = playableIds[randomIdx];
+          var track = tracks.by_id.get(trackId);
 
-          if (load) {
-            var track = tracks.by_id.get(trackId);
-
-            if (track) {
-              randomTracks.push(track);
-            }
+          if (track && track.isShuffleCandidate) {
+            randomTracksIds.push(trackId);
+            randomTracks.push(track);
           }
         }
       }
@@ -20590,11 +20697,11 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var player = store.player;
-      var playbackIds = self.getPlayable(false, trackId);
+      var playbackIds = self.getPlayable(false);
       player.audioStop();
       player.clear();
       player.populate(playbackIds);
-      player.read();
+      player.read(trackId);
     },
     queue: function queue() {
       // Ajout des morceau dans l'ordre dans la liste de lecture
@@ -20603,6 +20710,10 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       var player = store.player;
       var playbackIds = self.getPlayable(false);
       player.populate(playbackIds);
+
+      if (playbackIds.length > 0 && player.playIdx == -1) {
+        player.setField("playIdx", 0);
+      }
     },
     shuffle: function shuffle() {
       // Lecture aléatoire de tous les morceaux de l'album
@@ -20702,7 +20813,8 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
     size: "x-big",
     color: "hot",
     style: {
-      marginTop: '4px'
+      marginTop: '4px',
+      display: 'inline-block'
     },
     onClick: function onClick() {
       return handleArtistClick();
@@ -24471,19 +24583,32 @@ var TAG_PlaybackControls = function TAG_PlaybackControls() {};
 
 var PlaybackControls_PlaybackControls = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
-  var app = store.app; // From ... props
+  var app = store.app;
+  var player = store.player; // From ... props
 
-  var style = props.style ? props.style : {}; // ...
+  var style = props.style ? props.style : {}; // From ... store
+
+  var isPlaying = player.isPlaying;
+  var playIdx = player.playIdx;
+  var previousTrackId = player.previousTrackId;
+  var nextTrackId = player.nextTrackId; // ...
   // Events
   // ==================================================================================================
 
-  var handlePreviousClick = function handlePreviousClick() {// TODO
+  var handlePreviousClick = function handlePreviousClick() {
+    player.readPrevious();
   };
 
-  var handlePlayClick = function handlePlayClick() {// TODO
+  var handlePlayPauseClick = function handlePlayPauseClick() {
+    if (isPlaying) {
+      player.audioPause();
+    } else {
+      player.audioPlay();
+    }
   };
 
-  var handleNextClick = function handleNextClick() {// TODO
+  var handleNextClick = function handleNextClick() {
+    player.readNext();
   }; // Render
   // ==================================================================================================
 
@@ -24491,26 +24616,28 @@ var PlaybackControls_PlaybackControls = (0,es/* observer */.Pi)(function (props)
   return /*#__PURE__*/react.createElement("div", {
     className: (0,clsx_m/* default */.Z)("g-playback-controls", "h-col", "flex-0"),
     style: style
-  }, /*#__PURE__*/react.createElement(IconButton, null, /*#__PURE__*/react.createElement(Icon_Icon, {
-    name: "skip_previous",
-    color: "white",
+  }, /*#__PURE__*/react.createElement(IconButton, {
+    iconName: "skip_previous",
+    color: "#FFFFFF",
+    disabled: !previousTrackId,
     onClick: function onClick() {
       return handlePreviousClick();
     }
-  })), /*#__PURE__*/react.createElement(IconButton, null, /*#__PURE__*/react.createElement(Icon_Icon, {
-    name: "play_circle_filled" // pause_circle_filled
-    ,
-    color: "white",
+  }), /*#__PURE__*/react.createElement(IconButton, {
+    iconName: isPlaying ? "pause_circle_filled" : "play_circle_filled",
+    color: "#FFFFFF",
+    disabled: playIdx == -1,
     onClick: function onClick() {
-      return handlePlayClick();
+      return handlePlayPauseClick();
     }
-  })), /*#__PURE__*/react.createElement(IconButton, null, /*#__PURE__*/react.createElement(Icon_Icon, {
-    name: "skip_next",
-    color: "white",
+  }), /*#__PURE__*/react.createElement(IconButton, {
+    iconName: "skip_next",
+    color: "#FFFFFF",
+    disabled: !nextTrackId,
     onClick: function onClick() {
       return handleNextClick();
     }
-  })));
+  }));
 });
 ;// CONCATENATED MODULE: ./ui/ContextualHeader.jsx
 
@@ -24708,9 +24835,7 @@ var ContextualMenu = (0,es/* observer */.Pi)(function (props) {
     disabled: false
   }), /*#__PURE__*/react.createElement(AlbumsMenuItem, {
     disabled: false
-  }), /*#__PURE__*/react.createElement(TracksMenuItem, {
-    disabled: false
-  }), /*#__PURE__*/react.createElement(MenuDivider, null), /*#__PURE__*/react.createElement(YearsMenuItem, {
+  }),  false && /*#__PURE__*/0, /*#__PURE__*/react.createElement(MenuDivider, null), /*#__PURE__*/react.createElement(YearsMenuItem, {
     disabled: false
   }), /*#__PURE__*/react.createElement(GenresMenuItem, {
     disabled: false
@@ -24956,15 +25081,15 @@ var RenderHomeGrid = (0,es/* observer */.Pi)(function (props) {
     }
   }); // HomeGrid -> Titres
   // ---
-
-  var navCardTracks = /*#__PURE__*/react.createElement(NavCard_NavCard, {
-    key: "nav-card-tracks",
-    icon: "audiotrack",
-    label: "Titres",
-    onClick: function onClick() {
-      return store.navigateTo('tracks');
-    }
-  }); // HomeGrid -> Années
+  // const navCardTracks = (
+  // 	<NavCard
+  // 		key="nav-card-tracks"
+  // 		icon="audiotrack"
+  // 		label="Titres"
+  // 		onClick={() => store.navigateTo('tracks')}
+  // 	/>
+  // )
+  // HomeGrid -> Années
   // ---
 
   var navCardYears = /*#__PURE__*/react.createElement(NavCard_NavCard, {
@@ -25004,10 +25129,12 @@ var RenderHomeGrid = (0,es/* observer */.Pi)(function (props) {
     }
   }, /*#__PURE__*/react.createElement(Row_Row, {
     spacing: "medium",
-    responsive: false
-  }, navCardArtists, navCardAlbums, navCardTracks), /*#__PURE__*/react.createElement(Row_Row, {
+    responsive: false,
+    className: "flex-2"
+  }, navCardArtists, navCardAlbums), /*#__PURE__*/react.createElement(Row_Row, {
     spacing: "medium",
-    responsive: false
+    responsive: false,
+    className: "flex-3"
   }, navCardYears, navCardGenres, navCardPlaylists));
 }); // ***** RenderShowcased *****
 // ***************************
@@ -25865,10 +25992,6 @@ var RenderSectionPlayback = (0,es/* observer */.Pi)(function (props) {
     label: "Ignorer les bandes originales",
     savePath: ['library', 'shuffle_ignore_soudtracks'],
     callbackChange: handleParamsChange
-  }), /*#__PURE__*/react.createElement(Switch_Switch, {
-    label: "Ignorer les titres d\xE9selectionn\xE9s",
-    savePath: ['library', 'shuffle_ignore_hidden'],
-    callbackChange: handleParamsChange
   })); // -------------------------------------------------
 
   return /*#__PURE__*/react.createElement(Section_Section, {
@@ -26112,7 +26235,6 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
   last_quick_scan_error: false,
   shuffle_only_favorites: false,
   shuffle_ignore_soudtracks: true,
-  shuffle_ignore_hidden: true,
   loaded: false
 }).views(function (self) {
   return {
@@ -26389,7 +26511,6 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
         self.last_quick_scan_error = raw.last_quick_scan_error;
         self.shuffle_only_favorites = raw.shuffle_only_favorites;
         self.shuffle_ignore_soudtracks = raw.shuffle_ignore_soudtracks;
-        self.shuffle_ignore_hidden = raw.shuffle_ignore_hidden;
       }
 
       self.loaded = true;

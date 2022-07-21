@@ -89,17 +89,17 @@ export const AlbumStore = types
 
 		// -
 
-		get firstTrack() {
-			const store = getRoot(self);
-			const tracks = store.tracks;
+		// get firstTrack() {
+		// 	const store = getRoot(self);
+		// 	const tracks = store.tracks;
 
-			let firstTrackId = "";
-			const sortedTracks = self.getSortedByNumber();
-			if (sortedTracks.length > 0) {
-				firstTrackId = sortedTracks[0].id;
-			}
-			return tracks.getById(firstTrackId);
-		},
+		// 	let firstTrackId = "";
+		// 	const sortedTracks = self.getSortedByNumber();
+		// 	if (sortedTracks.length > 0) {
+		// 		firstTrackId = sortedTracks[0].id;
+		// 	}
+		// 	return tracks.getById(firstTrackId);
+		// },
 
 		// Getters
 		// -
@@ -116,7 +116,6 @@ export const AlbumStore = types
 					tracksList.push(track);
 				}
 			}
-			// tracksList.sort((a, b) => a.sortNumber - b.sortNumber);
 			tracksList.sort(function (a, b) {
 				if (a.sortNumber > b.sortNumber)
 					return 1;
@@ -137,7 +136,7 @@ export const AlbumStore = types
 				for (const trackIdx in tracks) {
 					const track = tracks[trackIdx];
 					if (track.id == trackIdOrigin) {
-						startIdx = trackIdx;
+						startIdx = parseInt(trackIdx);
 						break;
 					}
 				}
@@ -146,7 +145,7 @@ export const AlbumStore = types
 			// Récupération des titres
 			for (const trackIdx in tracks) {
 				const track = tracks[trackIdx];
-				if (trackIdx < startIdx) {
+				if (parseInt(trackIdx) < startIdx) {
 					continue;
 				}
 				if (track.isPlayerCandidate) {
@@ -157,6 +156,7 @@ export const AlbumStore = types
 					}
 				}
 			}
+
 			return tracksList;
 		},
 
@@ -167,24 +167,23 @@ export const AlbumStore = types
 			const helpers = app.helpers;
 			const tracks = store.tracks;
 
-			const tracksIds = self.tracks_ids.toJSON();
-			const howMany = tracksIds.length;
+			const playableIds = self.getPlayable(false);
+			// const tracksIds = self.tracks_ids.toJSON();
+			const howMany = playableIds.length;
 
 			let randomTracks = [];
 			let randomTracksIdxs = [];
 			let randomTracksIds = [];
 
-			while (randomTracksIds.length < howMany) {
+			while (randomTracksIdxs.length < howMany) {
 				const randomIdx = helpers.getRandomNumber(howMany) - 1;
 				if (randomTracksIdxs.indexOf(randomIdx) == -1) {
-					const trackId = tracksIds[randomIdx];
 					randomTracksIdxs.push(randomIdx);
-					randomTracksIds.push(trackId);
-					if (load) {
-						const track = tracks.by_id.get(trackId);
-						if (track) {
-							randomTracks.push(track);
-						}
+					const trackId = playableIds[randomIdx];
+					const track = tracks.by_id.get(trackId);
+					if (track && track.isShuffleCandidate) {
+						randomTracksIds.push(trackId);
+						randomTracks.push(track);
 					}
 				}
 			}
@@ -249,11 +248,12 @@ export const AlbumStore = types
 			const store = getRoot(self);
 			const player = store.player;
 
-			const playbackIds = self.getPlayable(false, trackId);
+			const playbackIds = self.getPlayable(false);
 			player.audioStop();
 			player.clear();
 			player.populate(playbackIds);
-			player.read();
+
+			player.read(trackId);
 		},
 
 		queue: () => {
@@ -266,6 +266,9 @@ export const AlbumStore = types
 
 			const playbackIds = self.getPlayable(false);
 			player.populate(playbackIds);
+			if (playbackIds.length > 0 && player.playIdx == -1) {
+				player.setField("playIdx", 0);
+			}
 		},
 
 		shuffle: () => {
@@ -403,6 +406,7 @@ export const RenderAlbum = observer((props) => {
 								color="hot"
 								style={{
 									marginTop: '4px',
+									display: 'inline-block',
 								}}
 								onClick={() => handleArtistClick()}
 							>

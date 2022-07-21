@@ -20,10 +20,19 @@ export const PlaybackControls = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const player = store.player;
 
 	// From ... props
 
 	let style = (props.style) ? props.style : {};
+
+	// From ... store
+
+	const isPlaying = player.isPlaying;
+	const playIdx = player.playIdx;
+
+	const previousTrackId = player.previousTrackId;
+	const nextTrackId = player.nextTrackId;
 
 	// ...
 
@@ -31,15 +40,19 @@ export const PlaybackControls = observer((props) => {
 	// ==================================================================================================
 
 	const handlePreviousClick = () => {
-		// TODO
+		player.readPrevious();
 	}
 
-	const handlePlayClick = () => {
-		// TODO
+	const handlePlayPauseClick = () => {
+		if (isPlaying) {
+			player.audioPause();
+		} else {
+			player.audioPlay();
+		}
 	}
 
 	const handleNextClick = () => {
-		// TODO
+		player.readNext();
 	}
 
 	// Render
@@ -54,27 +67,24 @@ export const PlaybackControls = observer((props) => {
 			)}
 			style={style}
 		>
-			<IconButton>
-				<Icon
-					name="skip_previous"
-					color="white"
-					onClick={() => handlePreviousClick()}
-				/>
-			</IconButton>
-			<IconButton>
-				<Icon
-					name="play_circle_filled" // pause_circle_filled
-					color="white"
-					onClick={() => handlePlayClick()}
-				/>
-			</IconButton>
-			<IconButton>
-				<Icon
-					name="skip_next"
-					color="white"
-					onClick={() => handleNextClick()}
-				/>
-			</IconButton>
+			<IconButton
+				iconName="skip_previous"
+				color="#FFFFFF"
+				disabled={!previousTrackId}
+				onClick={() => handlePreviousClick()}
+			/>
+			<IconButton
+				iconName={(isPlaying) ? "pause_circle_filled" : "play_circle_filled"}
+				color="#FFFFFF"
+				disabled={playIdx == -1}
+				onClick={() => handlePlayPauseClick()}
+			/>
+			<IconButton
+				iconName="skip_next"
+				color="#FFFFFF"
+				disabled={!nextTrackId}
+				onClick={() => handleNextClick()}
+			/>
 		</div>
 	)
 })
