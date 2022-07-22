@@ -124,6 +124,7 @@ export const RenderPlaylists = observer((props) => {
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
 	const playlists = store.playlists;
+	const popupManagePlaylist = store.popupManagePlaylist;
 
 	// From ... store
 
@@ -135,8 +136,9 @@ export const RenderPlaylists = observer((props) => {
 	// Events
 	// ==================================================================================================
 
-	const handleThrowDiceClick = () => {
-		// TODO
+	const handleAddClick = () => {
+		popupManagePlaylist.setField("mode", "add");
+		popupManagePlaylist.open();
 	}
 
 	// Renderers
@@ -152,10 +154,10 @@ export const RenderPlaylists = observer((props) => {
 				right={(
 					<div className="h-col">
 						<IconButton
-							iconName="casino"
+							iconName="add"
 							color="hot"
 							disabled={isLoading}
-							onClick={() => handleThrowDiceClick()}
+							onClick={() => handleAddClick()}
 						/>
 					</div>
 				)}
@@ -242,11 +244,10 @@ export const PlaylistsPage = observer((props) => {
 	// From ... store
 
 	const loaded = store.loaded;
-	const nbPlaylists = playlists.nbPlaylists;
 
 	// ...
 
-	const showHelper = (!loaded || nbPlaylists == 0) ? true : false;
+	const showHelper = (!loaded) ? true : false;
 
 	// Renderers
 	// ==================================================================================================

@@ -178,6 +178,7 @@ export const RenderGenres = observer((props) => {
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
 	const genres = store.genres;
+	const tracks = store.tracks;
 
 	// From ... store
 
@@ -195,7 +196,7 @@ export const RenderGenres = observer((props) => {
 	// ==================================================================================================
 
 	const handleThrowDiceClick = () => {
-		// TODO
+		tracks.shuffle();
 	}
 
 	// -
@@ -215,7 +216,10 @@ export const RenderGenres = observer((props) => {
 	}
 
 	const handleShuffleClick = (genreId) => {
-		// TODO
+		const genre = genres.by_id.get(genreId);
+		if (genre) {
+			genre.shuffle();
+		}
 	}
 
 	// Renderers

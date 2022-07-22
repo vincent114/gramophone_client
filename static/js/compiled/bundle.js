@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 61946:
+/***/ 65916:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -8331,6 +8331,7 @@ var Indicator = __webpack_require__(34439);
 
 
 
+
  // Functions Components ReactJS
 // -------------------------------------------------------------------------------------------------------------
 // ***** Indicator *****
@@ -8353,7 +8354,7 @@ var Indicator_Indicator = (0,es/* observer */.Pi)(function (props) {
   var className = props.className ? props.className : '';
   var color = props.color ? props.color : 'default'; // primary, secondary, #custom
 
-  var style = props.style ? props.style : {};
+  var style = props.style ? copyObj(props.style) : {};
   var callbackClick = props.callbackClick; // ...
   // Quelle couleur ?
 
@@ -19870,115 +19871,9 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
 
   return playerDrawerContent;
 });
-// EXTERNAL MODULE: ./popups/zoom_cover/PopupZoomCover.css
-var PopupZoomCover = __webpack_require__(93325);
-;// CONCATENATED MODULE: ./popups/zoom_cover/PopupZoomCover.jsx
-
-
-
-
-
-
- // Models
-// ======================================================================================================
-// ***** PopupZoomCoverStore *****
-// *******************************
-
-var TAG_PopupZoomCoverStore = function TAG_PopupZoomCoverStore() {};
-
-var PopupZoomCoverStore = mobx_state_tree_module/* types.model */.V5.model({
-  albumId: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string)
-}).views(function (self) {
-  return {
-    get album() {
-      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
-      var albums = store.albums;
-      var albumId = self.albumId;
-      return albums.by_id.get(albumId);
-    },
-
-    get cover() {
-      var album = self.album;
-
-      if (album) {
-        return album.coverUrl;
-      }
-
-      return "";
-    }
-
-  };
-}).actions(function (self) {
-  return {
-    setField: function setField(field, value) {
-      self[field] = value;
-    }
-  };
-}); // Functions Components ReactJS
-// ======================================================================================================
-// ***** PopupZoomCover *****
-// **************************
-
-var TAG_PopupZoomCover = function TAG_PopupZoomCover() {};
-
-var popupZoomCoverKey = 'popupZoomCover';
-var PopupZoomCover_PopupZoomCover = (0,es/* observer */.Pi)(function (props) {
-  var store = react.useContext(window.storeContext);
-  var app = store.app;
-  var popup = app.popup;
-  var popupZoomCover = store.popupZoomCover; // From ... store
-
-  var isLoading = app.isLoading;
-  var isOpen = popup.isOpen(popupZoomCoverKey); // Render
-  // ==================================================================================================
-  // Popup --> Title
-  // -----------------------------------------------
-
-  var popupTitle = ""; // Popup --> Content
-  // -----------------------------------------------
-
-  var popupContent = null;
-
-  if (isOpen) {
-    var cover = popupZoomCover.cover;
-
-    if (cover) {
-      popupContent = /*#__PURE__*/react.createElement("img", {
-        src: cover
-      });
-    } else {
-      popupContent = /*#__PURE__*/react.createElement(Helper_Helper, {
-        iconName: "album",
-        show: true,
-        inFlux: true,
-        style: {
-          minHeight: '600px'
-        }
-      });
-    }
-  } // -----------------------------------------------
-
-
-  return /*#__PURE__*/react.createElement(Popup_Popup, {
-    id: popupZoomCoverKey,
-    title: popupTitle,
-    closeVariant: "hover",
-    closeOnClick: true,
-    style: {
-      minWidth: '600px',
-      maxWidth: '600px'
-    },
-    contentStyle: {
-      padding: '0px',
-      minHeight: '600px',
-      maxHeight: '600px'
-    }
-  }, popupContent);
-});
 // EXTERNAL MODULE: ./components/player_display/PlayerDisplay.css
 var PlayerDisplay = __webpack_require__(84513);
 ;// CONCATENATED MODULE: ./components/player_display/PlayerDisplay.jsx
-
 
 
 
@@ -20019,7 +19914,7 @@ var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
 
   var handleCoverClick = function handleCoverClick() {
     popupZoomCover.setField("albumId", track.album_id);
-    popup.open(popupZoomCoverKey);
+    popupZoomCover.open();
   }; // Render
   // ==================================================================================================
 
@@ -21111,7 +21006,6 @@ function Album_arrayLikeToArray(arr, len) { if (len == null || len > arr.length)
 
 
 
-
  // Models
 // ======================================================================================================
 // ***** AlbumStore *****
@@ -21463,7 +21357,7 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
 
   var handleCoverClick = function handleCoverClick() {
     popupZoomCover.setField("albumId", albumId);
-    popup.open(popupZoomCoverKey);
+    popupZoomCover.open();
   };
 
   var handleArtistClick = function handleArtistClick() {
@@ -22862,6 +22756,7 @@ function Artists_arrayLikeToArray(arr, len) { if (len == null || len > arr.lengt
 
 
 
+ // import { popupJumpToKey } from 'gramophone_client/popups/jump_to/PopupJumpTo';
 
 
 
@@ -23027,7 +22922,8 @@ var RenderArtists = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
   var artists = store.artists;
-  var tracks = store.tracks; // From ... store
+  var tracks = store.tracks;
+  var popupJumpTo = store.popupJumpTo; // From ... store
 
   var isLoading = app.isLoading;
   var nbArtists = artists.nbArtists;
@@ -23042,7 +22938,11 @@ var RenderArtists = (0,es/* observer */.Pi)(function (props) {
   }; // -
 
 
-  var handleLetterClick = function handleLetterClick(letter) {// TODO
+  var handleLetterClick = function handleLetterClick(letter) {
+    popupJumpTo.setField("chars", []); // TODO
+
+    popupJumpTo.setField("current", letter);
+    popupJumpTo.open();
   };
 
   var handleFocusClick = function handleFocusClick(letter) {// TODO
@@ -24652,6 +24552,50 @@ var GenreStore = mobx_state_tree_module/* types.model */.V5.model({
         return 0;
       });
       return albumsList;
+    },
+    getTracks: function getTracks() {
+      var load = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+      var filter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "all";
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var helpers = app.helpers;
+      var albums = store.albums;
+      var tracks = store.tracks;
+      var tracksList = [];
+      var tracksIds = [];
+
+      var _iterator2 = Genre_createForOfIteratorHelper(self.albums_ids),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var albumId = _step2.value;
+          var album = albums.by_id.get(albumId);
+
+          if (album) {
+            if (load) {
+              helpers.extendArray(tracksList, album.getTracks(load, filter));
+            } else {
+              helpers.extendArray(tracksIds, album.getTracks(load, filter));
+            }
+          }
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+
+      return load ? tracksList : tracksIds;
+    },
+    getTracksRandomly: function getTracksRandomly() {
+      var load = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+      var howMany = arguments.length > 1 ? arguments[1] : undefined;
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var helpers = app.helpers;
+      var tracksList = self.getTracks(load, "shuffle");
+      return helpers.shuffleArray(tracksList, howMany);
     }
   };
 }).actions(function (self) {
@@ -24665,24 +24609,36 @@ var GenreStore = mobx_state_tree_module/* types.model */.V5.model({
       self.name = raw.name;
       self.albums_ids = [];
 
-      var _iterator2 = Genre_createForOfIteratorHelper(raw.albums_ids),
-          _step2;
+      var _iterator3 = Genre_createForOfIteratorHelper(raw.albums_ids),
+          _step3;
 
       try {
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          var albumId = _step2.value;
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var albumId = _step3.value;
           self.albums_ids.push(albumId);
         }
       } catch (err) {
-        _iterator2.e(err);
+        _iterator3.e(err);
       } finally {
-        _iterator2.f();
+        _iterator3.f();
       }
     },
     addAlbumId: function addAlbumId(albumId) {
       if (self.albums_ids.indexOf(albumId) == -1) {
         self.albums_ids.push(albumId);
       }
+    },
+    // -
+    shuffle: function shuffle() {
+      // Lecture aléatoire des morceaux du genre (100 au max)
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var player = store.player;
+      var playbackIds = self.getTracksRandomly(false, 100);
+      player.audioStop();
+      player.clear();
+      player.populate(playbackIds);
+      player.read();
     }
   };
 }); // Functions Components ReactJS
@@ -25009,7 +24965,8 @@ var TAG_RenderGenres = function TAG_RenderGenres() {};
 var RenderGenres = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var genres = store.genres; // From ... store
+  var genres = store.genres;
+  var tracks = store.tracks; // From ... store
 
   var isLoading = store.isLoading;
   var nbGenres = genres.nbGenres;
@@ -25019,7 +24976,8 @@ var RenderGenres = (0,es/* observer */.Pi)(function (props) {
   letters.sort(); // Events
   // ==================================================================================================
 
-  var handleThrowDiceClick = function handleThrowDiceClick() {// TODO
+  var handleThrowDiceClick = function handleThrowDiceClick() {
+    tracks.shuffle();
   }; // -
 
 
@@ -25034,7 +24992,12 @@ var RenderGenres = (0,es/* observer */.Pi)(function (props) {
     store.navigateTo('genre', genreId);
   };
 
-  var handleShuffleClick = function handleShuffleClick(genreId) {// TODO
+  var handleShuffleClick = function handleShuffleClick(genreId) {
+    var genre = genres.by_id.get(genreId);
+
+    if (genre) {
+      genre.shuffle();
+    }
   }; // Renderers
   // ==================================================================================================
 
@@ -25475,14 +25438,17 @@ var TAG_RenderPlaylists = function TAG_RenderPlaylists() {};
 var RenderPlaylists = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var playlists = store.playlists; // From ... store
+  var playlists = store.playlists;
+  var popupManagePlaylist = store.popupManagePlaylist; // From ... store
 
   var isLoading = store.isLoading;
   var nbPlaylists = playlists.nbPlaylists; // ...
   // Events
   // ==================================================================================================
 
-  var handleThrowDiceClick = function handleThrowDiceClick() {// TODO
+  var handleAddClick = function handleAddClick() {
+    popupManagePlaylist.setField("mode", "add");
+    popupManagePlaylist.open();
   }; // Renderers
   // ==================================================================================================
 
@@ -25494,11 +25460,11 @@ var RenderPlaylists = (0,es/* observer */.Pi)(function (props) {
     right: /*#__PURE__*/react.createElement("div", {
       className: "h-col"
     }, /*#__PURE__*/react.createElement(IconButton, {
-      iconName: "casino",
+      iconName: "add",
       color: "hot",
       disabled: isLoading,
       onClick: function onClick() {
-        return handleThrowDiceClick();
+        return handleAddClick();
       }
     }))
   }));
@@ -25558,10 +25524,9 @@ var PlaylistsPage = (0,es/* observer */.Pi)(function (props) {
   var app = store.app;
   var playlists = store.playlists; // From ... store
 
-  var loaded = store.loaded;
-  var nbPlaylists = playlists.nbPlaylists; // ...
+  var loaded = store.loaded; // ...
 
-  var showHelper = !loaded || nbPlaylists == 0 ? true : false; // Renderers
+  var showHelper = !loaded ? true : false; // Renderers
   // ==================================================================================================
 
   var renderPage = function renderPage() {
@@ -26875,67 +26840,7 @@ var RenderAdminFolders = (0,es/* observer */.Pi)(function (props) {
     onClick: function onClick() {
       return handleAddFolder("source");
     }
-  }), /*#__PURE__*/react.createElement(Heading_Heading, {
-    variant: "contained"
-  }, "Dossier de recopie (optionnel)"), /*#__PURE__*/react.createElement(Switch_Switch, {
-    label: "Activer la copie \xE0 la demande",
-    savePath: ['library', 'copy_enabled'],
-    style: {
-      marginTop: '5px',
-      marginLeft: '6px'
-    },
-    callbackChange: handleParamsChange
-  }), /*#__PURE__*/react.createElement(Divider_Divider, {
-    spacing: "small"
-  }), copyFolder.isSet && /*#__PURE__*/react.createElement(List_List, null, /*#__PURE__*/react.createElement(ListItem, {
-    key: "copy-folder",
-    hoverable: true,
-    onClick: function onClick() {
-      return handleFolderClick(copyFolder.folder_path);
-    },
-    callbackDelete: function callbackDelete() {
-      return handleFolderDelete(copyFolder.folder_path);
-    }
-  }, /*#__PURE__*/react.createElement(List_ListIcon, {
-    name: "folder"
-  }), /*#__PURE__*/react.createElement(ListText, {
-    primary: copyFolder.label,
-    secondary: copyFolder.folder_path
-  }), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    variant: "contrasted",
-    color: copyFolder.folder_available ? "success" : "error",
-    className: "flex-0",
-    style: {
-      marginRight: "10px"
-    }
-  }), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    variant: "contrasted",
-    iconName: "music_note",
-    color: copyFolder.nb_files > 0 ? "success" : "default",
-    className: "flex-0",
-    style: {
-      marginRight: "5px",
-      paddingLeft: "5px",
-      paddingRight: "10px"
-    }
-  }, copyFolder.nb_files), /*#__PURE__*/react.createElement(Indicator_Indicator, {
-    variant: "contrasted",
-    iconName: "dangerous",
-    color: copyFolder.nb_files_ignored > 0 ? "error" : "default",
-    className: "flex-0",
-    style: {
-      marginRight: "5px",
-      paddingLeft: "5px",
-      paddingRight: "10px"
-    }
-  }, copyFolder.nb_files_ignored))), !copyFolder.isSet && /*#__PURE__*/react.createElement(IconButton, {
-    iconName: "add",
-    color: "info",
-    disabled: isLoading || nbFolders == 0,
-    onClick: function onClick() {
-      return handleAddFolder("copy");
-    }
-  })); // -------------------------------------------------
+  }),  false && /*#__PURE__*/0); // -------------------------------------------------
 
   return /*#__PURE__*/react.createElement(Section_Section, {
     icon: sectionIcon,
@@ -27818,10 +27723,394 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
     }
   };
 });
+// EXTERNAL MODULE: ./popups/jump_to/PopupJumpTo.css
+var PopupJumpTo = __webpack_require__(82038);
+;// CONCATENATED MODULE: ./popups/jump_to/PopupJumpTo.jsx
+
+
+
+
+
+ // Models
+// ======================================================================================================
+// ***** PopupJumpToStore *****
+// ****************************
+
+var TAG_PopupJumpToStore = function TAG_PopupJumpToStore() {};
+
+var PopupJumpToStore = mobx_state_tree_module/* types.model */.V5.model({
+  chars: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), []),
+  current: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string)
+}).views(function (self) {
+  return {
+    // Bools
+    // -
+    get isOpen() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var popup = app.popup;
+      return popup.isOpen(popupJumpToKey);
+    }
+
+  };
+}).actions(function (self) {
+  return {
+    setField: function setField(field, value) {
+      self[field] = value;
+    },
+    // -
+    open: function open() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var popup = app.popup;
+      popup.open(popupJumpToKey);
+    }
+  };
+}); // Functions Components ReactJS
+// ======================================================================================================
+// ***** PopupJumpTo *****
+// ***********************
+
+var TAG_PopupJumpTo = function TAG_PopupJumpTo() {};
+
+var popupJumpToKey = 'popupJumpTo';
+var PopupJumpTo_PopupJumpTo = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var popup = app.popup;
+  var popupJumpTo = store.popupJumpTo; // From ... store
+
+  var isLoading = app.isLoading;
+  var isOpen = popupJumpTo.isOpen; // Render
+  // ==================================================================================================
+  // Popup --> Content
+  // -----------------------------------------------
+
+  var popupContent = null;
+
+  if (isOpen) {
+    popupContent = /*#__PURE__*/react.createElement("div", null, "...");
+  } // -----------------------------------------------
+
+
+  return /*#__PURE__*/react.createElement(Popup_Popup, {
+    id: popupJumpToKey,
+    closeVariant: "hover",
+    closeOnClick: true // style={{
+    // 	minWidth: '600px',
+    // 	maxWidth: '600px',
+    // }}
+    // contentStyle={{
+    // 	padding: '0px',
+    // 	minHeight: '600px',
+    // 	maxHeight: '600px',
+    // }}
+
+  }, popupContent);
+});
+// EXTERNAL MODULE: ./popups/zoom_cover/PopupZoomCover.css
+var PopupZoomCover = __webpack_require__(93325);
+;// CONCATENATED MODULE: ./popups/zoom_cover/PopupZoomCover.jsx
+
+
+
+
+
+
+ // Models
+// ======================================================================================================
+// ***** PopupZoomCoverStore *****
+// *******************************
+
+var TAG_PopupZoomCoverStore = function TAG_PopupZoomCoverStore() {};
+
+var PopupZoomCoverStore = mobx_state_tree_module/* types.model */.V5.model({
+  albumId: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string)
+}).views(function (self) {
+  return {
+    get album() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var albums = store.albums;
+      var albumId = self.albumId;
+      return albums.by_id.get(albumId);
+    },
+
+    get cover() {
+      var album = self.album;
+
+      if (album) {
+        return album.coverUrl;
+      }
+
+      return "";
+    },
+
+    // Bools
+    // -
+    get isOpen() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var popup = app.popup;
+      return popup.isOpen(popupZoomCoverKey);
+    }
+
+  };
+}).actions(function (self) {
+  return {
+    setField: function setField(field, value) {
+      self[field] = value;
+    },
+    // -
+    open: function open() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var popup = app.popup;
+      popup.open(popupZoomCoverKey);
+    }
+  };
+}); // Functions Components ReactJS
+// ======================================================================================================
+// ***** PopupZoomCover *****
+// **************************
+
+var TAG_PopupZoomCover = function TAG_PopupZoomCover() {};
+
+var popupZoomCoverKey = 'popupZoomCover';
+var PopupZoomCover_PopupZoomCover = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var popup = app.popup;
+  var popupZoomCover = store.popupZoomCover; // From ... store
+
+  var isLoading = app.isLoading;
+  var isOpen = popupZoomCover.isOpen; // Render
+  // ==================================================================================================
+  // Popup --> Title
+  // -----------------------------------------------
+
+  var popupTitle = ""; // Popup --> Content
+  // -----------------------------------------------
+
+  var popupContent = null;
+
+  if (isOpen) {
+    var cover = popupZoomCover.cover;
+
+    if (cover) {
+      popupContent = /*#__PURE__*/react.createElement("img", {
+        src: cover
+      });
+    } else {
+      popupContent = /*#__PURE__*/react.createElement(Helper_Helper, {
+        iconName: "album",
+        show: true,
+        inFlux: true,
+        style: {
+          minHeight: '600px'
+        }
+      });
+    }
+  } // -----------------------------------------------
+
+
+  return /*#__PURE__*/react.createElement(Popup_Popup, {
+    id: popupZoomCoverKey,
+    title: popupTitle,
+    closeVariant: "hover",
+    closeOnClick: true,
+    style: {
+      minWidth: '600px',
+      maxWidth: '600px'
+    },
+    contentStyle: {
+      padding: '0px',
+      minHeight: '600px',
+      maxHeight: '600px'
+    }
+  }, popupContent);
+});
+// EXTERNAL MODULE: ./popups/track_metadatas/PopupTrackMetadatas.css
+var PopupTrackMetadatas = __webpack_require__(56797);
+;// CONCATENATED MODULE: ./popups/track_metadatas/PopupTrackMetadatas.jsx
+
+
+
+
+
+ // Models
+// ======================================================================================================
+// ***** PopupTrackMetadatasStore *****
+// ************************************
+
+var TAG_PopupTrackMetadatasStore = function TAG_PopupTrackMetadatasStore() {};
+
+var PopupTrackMetadatasStore = mobx_state_tree_module/* types.model */.V5.model({
+  trackId: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string)
+}).views(function (self) {
+  return {
+    // Bools
+    // -
+    get isOpen() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var popup = app.popup;
+      return popup.isOpen(popupTrackMetadatasKey);
+    }
+
+  };
+}).actions(function (self) {
+  return {
+    setField: function setField(field, value) {
+      self[field] = value;
+    },
+    // -
+    open: function open() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var popup = app.popup;
+      popup.open(popupTrackMetadatasKey);
+    }
+  };
+}); // Functions Components ReactJS
+// ======================================================================================================
+// ***** PopupTrackMetadatas *****
+// *******************************
+
+var TAG_PopupTrackMetadatas = function TAG_PopupTrackMetadatas() {};
+
+var popupTrackMetadatasKey = 'popupTrackMetadatas';
+var PopupTrackMetadatas_PopupTrackMetadatas = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var popup = app.popup;
+  var popupTrackMetadatas = store.popupTrackMetadatas; // From ... store
+
+  var isLoading = app.isLoading;
+  var isOpen = popupTrackMetadatas.isOpen; // Render
+  // ==================================================================================================
+  // Popup --> Title
+  // -----------------------------------------------
+
+  var popupTitle = "Informations"; // Popup --> Content
+  // -----------------------------------------------
+
+  var popupContent = null;
+
+  if (isOpen) {
+    popupContent = /*#__PURE__*/react.createElement("div", null, "...");
+  } // -----------------------------------------------
+
+
+  return /*#__PURE__*/react.createElement(Popup_Popup, {
+    id: popupTrackMetadatasKey,
+    title: popupTitle // style={{
+    // 	minWidth: '600px',
+    // 	maxWidth: '600px',
+    // }}
+    // contentStyle={{
+    // 	padding: '0px',
+    // 	minHeight: '600px',
+    // 	maxHeight: '600px',
+    // }}
+
+  }, popupContent);
+});
+// EXTERNAL MODULE: ./popups/manage_playlist/PopupManagePlaylist.css
+var PopupManagePlaylist = __webpack_require__(28782);
+;// CONCATENATED MODULE: ./popups/manage_playlist/PopupManagePlaylist.jsx
+
+
+
+
+
+ // Models
+// ======================================================================================================
+// ***** PopupManagePlaylistStore *****
+// ************************************
+
+var TAG_PopupManagePlaylistStore = function TAG_PopupManagePlaylistStore() {};
+
+var PopupManagePlaylistStore = mobx_state_tree_module/* types.model */.V5.model({
+  mode: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string) // create, edit, add
+
+}).views(function (self) {
+  return {
+    // Bools
+    // -
+    get isOpen() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var popup = app.popup;
+      return popup.isOpen(popupManagePlaylistKey);
+    }
+
+  };
+}).actions(function (self) {
+  return {
+    setField: function setField(field, value) {
+      self[field] = value;
+    },
+    // -
+    open: function open() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var popup = app.popup;
+      popup.open(popupManagePlaylistKey);
+    }
+  };
+}); // Functions Components ReactJS
+// ======================================================================================================
+// ***** PopupManagePlaylist *****
+// *******************************
+
+var TAG_PopupManagePlaylist = function TAG_PopupManagePlaylist() {};
+
+var popupManagePlaylistKey = 'popupManagePlaylist';
+var PopupManagePlaylist_PopupManagePlaylist = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var popup = app.popup;
+  var popupManagePlaylist = store.popupManagePlaylist; // From ... store
+
+  var isLoading = app.isLoading;
+  var isOpen = popupManagePlaylist.isOpen; // Render
+  // ==================================================================================================
+  // Popup --> Title
+  // -----------------------------------------------
+
+  var popupTitle = "Playlist"; // Popup --> Content
+  // -----------------------------------------------
+
+  var popupContent = null;
+
+  if (isOpen) {
+    popupContent = /*#__PURE__*/react.createElement("div", null, "...");
+  } // -----------------------------------------------
+
+
+  return /*#__PURE__*/react.createElement(Popup_Popup, {
+    id: popupManagePlaylistKey,
+    title: popupTitle // style={{
+    // 	minWidth: '600px',
+    // 	maxWidth: '600px',
+    // }}
+    // contentStyle={{
+    // 	padding: '0px',
+    // 	minHeight: '600px',
+    // 	maxHeight: '600px',
+    // }}
+
+  }, popupContent);
+});
 // EXTERNAL MODULE: ./Main.css
 var Main = __webpack_require__(41729);
 ;// CONCATENATED MODULE: ./Main.jsx
+var _popups;
+
 function Main_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
 
 
 
@@ -27937,7 +28226,10 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
   library: mobx_state_tree_module/* types.optional */.V5.optional(LibraryStore, {}),
   player: mobx_state_tree_module/* types.optional */.V5.optional(PlayerStore, {}),
   // -
+  popupJumpTo: mobx_state_tree_module/* types.optional */.V5.optional(PopupJumpToStore, {}),
   popupZoomCover: mobx_state_tree_module/* types.optional */.V5.optional(PopupZoomCoverStore, {}),
+  popupTrackMetadatas: mobx_state_tree_module/* types.optional */.V5.optional(PopupTrackMetadatasStore, {}),
+  popupManagePlaylist: mobx_state_tree_module/* types.optional */.V5.optional(PopupManagePlaylistStore, {}),
   loaded: false
 }) // .views(self => ({
 // 	get ajaxGramophone() {
@@ -28136,9 +28428,8 @@ var contexts = {
 }; // Popups
 // -
 
-var popups = Main_defineProperty({}, popupZoomCoverKey, PopupZoomCover_PopupZoomCover); // Routes
+var popups = (_popups = {}, Main_defineProperty(_popups, popupJumpToKey, PopupJumpTo_PopupJumpTo), Main_defineProperty(_popups, popupZoomCoverKey, PopupZoomCover_PopupZoomCover), Main_defineProperty(_popups, popupTrackMetadatasKey, PopupTrackMetadatas_PopupTrackMetadatas), Main_defineProperty(_popups, popupManagePlaylistKey, PopupManagePlaylist_PopupManagePlaylist), _popups); // Routes
 // -
-
 
 var routes = {
   'home': '/main.html',
@@ -28380,6 +28671,27 @@ window.addEventListener('DOMContentLoaded', function () {
 /***/ }),
 
 /***/ 30114:
+/***/ (() => {
+
+// extracted by extract-css-chunks-webpack-plugin
+
+/***/ }),
+
+/***/ 82038:
+/***/ (() => {
+
+// extracted by extract-css-chunks-webpack-plugin
+
+/***/ }),
+
+/***/ 28782:
+/***/ (() => {
+
+// extracted by extract-css-chunks-webpack-plugin
+
+/***/ }),
+
+/***/ 56797:
 /***/ (() => {
 
 // extracted by extract-css-chunks-webpack-plugin
@@ -29364,7 +29676,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(61946)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(65916)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

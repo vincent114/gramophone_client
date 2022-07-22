@@ -3,39 +3,23 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
-import { Helper } from 'nexus/ui/helper/Helper';
 import { Popup } from 'nexus/ui/popup/Popup';
 
-import './PopupZoomCover.css';
+import './PopupManagePlaylist.css';
 
 
 // Models
 // ======================================================================================================
 
-// ***** PopupZoomCoverStore *****
-// *******************************
+// ***** PopupManagePlaylistStore *****
+// ************************************
 
-const TAG_PopupZoomCoverStore = () => {}
-export const PopupZoomCoverStore = types
+const TAG_PopupManagePlaylistStore = () => {}
+export const PopupManagePlaylistStore = types
 	.model({
-		albumId: types.maybeNull(types.string),
+		mode: types.maybeNull(types.string), // create, edit, add
 	})
 	.views(self => ({
-
-		get album() {
-			const store = getRoot(self);
-			const albums = store.albums;
-			const albumId = self.albumId;
-			return albums.by_id.get(albumId);
-		},
-
-		get cover() {
-			const album = self.album;
-			if (album) {
-				return album.coverUrl;
-			}
-			return "";
-		},
 
 		// Bools
 		// -
@@ -45,7 +29,7 @@ export const PopupZoomCoverStore = types
 			const app = store.app;
 			const popup = app.popup;
 
-			return popup.isOpen(popupZoomCoverKey);
+			return popup.isOpen(popupManagePlaylistKey);
 		},
 
 	}))
@@ -62,7 +46,7 @@ export const PopupZoomCoverStore = types
 			const app = store.app;
 			const popup = app.popup;
 
-			popup.open(popupZoomCoverKey);
+			popup.open(popupManagePlaylistKey);
 		},
 
 	}))
@@ -71,22 +55,22 @@ export const PopupZoomCoverStore = types
 // Functions Components ReactJS
 // ======================================================================================================
 
-// ***** PopupZoomCover *****
-// **************************
+// ***** PopupManagePlaylist *****
+// *******************************
 
-const TAG_PopupZoomCover = () => {}
-export const popupZoomCoverKey = 'popupZoomCover';
-export const PopupZoomCover = observer((props) => {
+const TAG_PopupManagePlaylist = () => {}
+export const popupManagePlaylistKey = 'popupManagePlaylist';
+export const PopupManagePlaylist = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
 	const popup = app.popup;
-	const popupZoomCover = store.popupZoomCover;
+	const popupManagePlaylist = store.popupManagePlaylist;
 
 	// From ... store
 
 	const isLoading = app.isLoading;
-	const isOpen = popupZoomCover.isOpen;
+	const isOpen = popupManagePlaylist.isOpen;
 
 	// Render
 	// ==================================================================================================
@@ -94,50 +78,33 @@ export const PopupZoomCover = observer((props) => {
 	// Popup --> Title
 	// -----------------------------------------------
 
-	const popupTitle = "";
+	let popupTitle = "Playlist";
 
 	// Popup --> Content
 	// -----------------------------------------------
 
 	let popupContent = null;
-
 	if (isOpen) {
-		const cover = popupZoomCover.cover;
-		if (cover) {
-			popupContent = (
-				<img src={cover} />
-			)
-		} else {
-			popupContent = (
-				<Helper
-					iconName="album"
-					show={true}
-					inFlux={true}
-					style={{
-						minHeight: '600px',
-					}}
-				/>
-			)
-		}
+		popupContent = (
+			<div>...</div>
+		)
 	}
 
 	// -----------------------------------------------
 
 	return (
 		<Popup
-			id={popupZoomCoverKey}
+			id={popupManagePlaylistKey}
 			title={popupTitle}
-			closeVariant="hover"
-			closeOnClick={true}
-			style={{
-				minWidth: '600px',
-				maxWidth: '600px',
-			}}
-			contentStyle={{
-				padding: '0px',
-				minHeight: '600px',
-				maxHeight: '600px',
-			}}
+			// style={{
+			// 	minWidth: '600px',
+			// 	maxWidth: '600px',
+			// }}
+			// contentStyle={{
+			// 	padding: '0px',
+			// 	minHeight: '600px',
+			// 	maxHeight: '600px',
+			// }}
 		>
 			{popupContent}
 		</Popup>

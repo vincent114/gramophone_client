@@ -3,7 +3,6 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
-import { popupZoomCoverKey } from 'gramophone_client/popups/zoom_cover/PopupZoomCover';
 import { TrackRow } from 'gramophone_client/contexts/track/Track';
 
 import { Indicator } from 'nexus/forms/indicator/Indicator';
@@ -382,7 +381,7 @@ export const RenderAlbum = observer((props) => {
 
 	const handleCoverClick = () => {
 		popupZoomCover.setField("albumId", albumId);
-		popup.open(popupZoomCoverKey);
+		popupZoomCover.open();
 	}
 
 	const handleArtistClick = () => {

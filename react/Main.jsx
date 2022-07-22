@@ -33,10 +33,25 @@ import { LibraryStore } from 'gramophone_client/models/Library';
 import { PlayerStore } from 'gramophone_client/models/Player';
 
 import {
+	PopupJumpToStore,
+	popupJumpToKey,
+	PopupJumpTo
+} from 'gramophone_client/popups/jump_to/PopupJumpTo';
+import {
 	PopupZoomCoverStore,
 	popupZoomCoverKey,
 	PopupZoomCover
 } from 'gramophone_client/popups/zoom_cover/PopupZoomCover';
+import {
+	PopupTrackMetadatasStore,
+	popupTrackMetadatasKey,
+	PopupTrackMetadatas
+} from 'gramophone_client/popups/track_metadatas/PopupTrackMetadatas';
+import {
+	PopupManagePlaylistStore,
+	popupManagePlaylistKey,
+	PopupManagePlaylist
+} from 'gramophone_client/popups/manage_playlist/PopupManagePlaylist';
 
 import './Main.css';
 
@@ -149,7 +164,10 @@ const RootStore = types
 
 		// -
 
+		popupJumpTo: types.optional(PopupJumpToStore, {}),
 		popupZoomCover: types.optional(PopupZoomCoverStore, {}),
+		popupTrackMetadatas: types.optional(PopupTrackMetadatasStore, {}),
+		popupManagePlaylist: types.optional(PopupManagePlaylistStore, {}),
 
 		loaded: false,
 
@@ -354,7 +372,10 @@ let contexts = {
 // -
 
 let popups = {
+	[popupJumpToKey]: PopupJumpTo,
 	[popupZoomCoverKey]: PopupZoomCover,
+	[popupTrackMetadatasKey]: PopupTrackMetadatas,
+	[popupManagePlaylistKey]: PopupManagePlaylist,
 }
 
 // Routes

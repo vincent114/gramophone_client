@@ -161,76 +161,80 @@ export const RenderAdminFolders = observer((props) => {
 				onClick={() => handleAddFolder("source")}
 			/>
 
-			<Heading variant="contained">
-				Dossier de recopie (optionnel)
-			</Heading>
-			<Switch
-				label="Activer la copie à la demande"
-				savePath={['library', 'copy_enabled']}
-				style={{
-					marginTop: '5px',
-					marginLeft: '6px',
-				}}
-				callbackChange={handleParamsChange}
-			/>
-			<Divider spacing="small" />
-			{copyFolder.isSet && (
-				<List>
-					<ListItem
-						key="copy-folder"
-						hoverable={true}
-						onClick={() => handleFolderClick(copyFolder.folder_path)}
-						callbackDelete={() => handleFolderDelete(copyFolder.folder_path)}
-					>
-						<ListIcon name="folder" />
-						<ListText
-							primary={copyFolder.label}
-							secondary={copyFolder.folder_path}
+			{false && (
+				<React.Fragment>
+					<Heading variant="contained">
+						Dossier de recopie (optionnel)
+					</Heading>
+					<Switch
+						label="Activer la copie à la demande"
+						savePath={['library', 'copy_enabled']}
+						style={{
+							marginTop: '5px',
+							marginLeft: '6px',
+						}}
+						callbackChange={handleParamsChange}
+					/>
+					<Divider spacing="small" />
+					{copyFolder.isSet && (
+						<List>
+							<ListItem
+								key="copy-folder"
+								hoverable={true}
+								onClick={() => handleFolderClick(copyFolder.folder_path)}
+								callbackDelete={() => handleFolderDelete(copyFolder.folder_path)}
+							>
+								<ListIcon name="folder" />
+								<ListText
+									primary={copyFolder.label}
+									secondary={copyFolder.folder_path}
+								/>
+								<Indicator
+									variant="contrasted"
+									color={(copyFolder.folder_available) ? "success" : "error"}
+									className="flex-0"
+									style={{
+										marginRight: "10px",
+									}}
+								/>
+								<Indicator
+									variant="contrasted"
+									iconName="music_note"
+									color={(copyFolder.nb_files > 0) ? "success" : "default"}
+									className="flex-0"
+									style={{
+										marginRight: "5px",
+										paddingLeft: "5px",
+										paddingRight: "10px",
+									}}
+								>
+									{copyFolder.nb_files}
+								</Indicator>
+								<Indicator
+									variant="contrasted"
+									iconName="dangerous"
+									color={(copyFolder.nb_files_ignored > 0) ? "error" : "default"}
+									className="flex-0"
+									style={{
+										marginRight: "5px",
+										paddingLeft: "5px",
+										paddingRight: "10px",
+									}}
+								>
+									{copyFolder.nb_files_ignored}
+								</Indicator>
+							</ListItem>
+						</List>
+					)}
+					{!copyFolder.isSet && (
+						<IconButton
+							iconName="add"
+							color="info"
+							disabled={isLoading || nbFolders == 0}
+							onClick={() => handleAddFolder("copy")}
 						/>
-						<Indicator
-							variant="contrasted"
-							color={(copyFolder.folder_available) ? "success" : "error"}
-							className="flex-0"
-							style={{
-								marginRight: "10px",
-							}}
-						/>
-						<Indicator
-							variant="contrasted"
-							iconName="music_note"
-							color={(copyFolder.nb_files > 0) ? "success" : "default"}
-							className="flex-0"
-							style={{
-								marginRight: "5px",
-								paddingLeft: "5px",
-								paddingRight: "10px",
-							}}
-						>
-							{copyFolder.nb_files}
-						</Indicator>
-						<Indicator
-							variant="contrasted"
-							iconName="dangerous"
-							color={(copyFolder.nb_files_ignored > 0) ? "error" : "default"}
-							className="flex-0"
-							style={{
-								marginRight: "5px",
-								paddingLeft: "5px",
-								paddingRight: "10px",
-							}}
-						>
-							{copyFolder.nb_files_ignored}
-						</Indicator>
-					</ListItem>
-				</List>
-			)}
-			{!copyFolder.isSet && (
-				<IconButton
-					iconName="add"
-					color="info"
-					disabled={isLoading || nbFolders == 0}
-					onClick={() => handleAddFolder("copy")}
-				/>
+					)}
+				</React.Fragment>
 			)}
 
 		</div>

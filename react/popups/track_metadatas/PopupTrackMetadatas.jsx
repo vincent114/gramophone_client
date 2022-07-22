@@ -3,39 +3,23 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
-import { Helper } from 'nexus/ui/helper/Helper';
 import { Popup } from 'nexus/ui/popup/Popup';
 
-import './PopupZoomCover.css';
+import './PopupTrackMetadatas.css';
 
 
 // Models
 // ======================================================================================================
 
-// ***** PopupZoomCoverStore *****
-// *******************************
+// ***** PopupTrackMetadatasStore *****
+// ************************************
 
-const TAG_PopupZoomCoverStore = () => {}
-export const PopupZoomCoverStore = types
+const TAG_PopupTrackMetadatasStore = () => {}
+export const PopupTrackMetadatasStore = types
 	.model({
-		albumId: types.maybeNull(types.string),
+		trackId: types.maybeNull(types.string),
 	})
 	.views(self => ({
-
-		get album() {
-			const store = getRoot(self);
-			const albums = store.albums;
-			const albumId = self.albumId;
-			return albums.by_id.get(albumId);
-		},
-
-		get cover() {
-			const album = self.album;
-			if (album) {
-				return album.coverUrl;
-			}
-			return "";
-		},
 
 		// Bools
 		// -
@@ -45,7 +29,7 @@ export const PopupZoomCoverStore = types
 			const app = store.app;
 			const popup = app.popup;
 
-			return popup.isOpen(popupZoomCoverKey);
+			return popup.isOpen(popupTrackMetadatasKey);
 		},
 
 	}))
@@ -62,7 +46,7 @@ export const PopupZoomCoverStore = types
 			const app = store.app;
 			const popup = app.popup;
 
-			popup.open(popupZoomCoverKey);
+			popup.open(popupTrackMetadatasKey);
 		},
 
 	}))
@@ -71,22 +55,22 @@ export const PopupZoomCoverStore = types
 // Functions Components ReactJS
 // ======================================================================================================
 
-// ***** PopupZoomCover *****
-// **************************
+// ***** PopupTrackMetadatas *****
+// *******************************
 
-const TAG_PopupZoomCover = () => {}
-export const popupZoomCoverKey = 'popupZoomCover';
-export const PopupZoomCover = observer((props) => {
+const TAG_PopupTrackMetadatas = () => {}
+export const popupTrackMetadatasKey = 'popupTrackMetadatas';
+export const PopupTrackMetadatas = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
 	const popup = app.popup;
-	const popupZoomCover = store.popupZoomCover;
+	const popupTrackMetadatas = store.popupTrackMetadatas;
 
 	// From ... store
 
 	const isLoading = app.isLoading;
-	const isOpen = popupZoomCover.isOpen;
+	const isOpen = popupTrackMetadatas.isOpen;
 
 	// Render
 	// ==================================================================================================
@@ -94,50 +78,33 @@ export const PopupZoomCover = observer((props) => {
 	// Popup --> Title
 	// -----------------------------------------------
 
-	const popupTitle = "";
+	let popupTitle = "Informations";
 
 	// Popup --> Content
 	// -----------------------------------------------
 
 	let popupContent = null;
-
 	if (isOpen) {
-		const cover = popupZoomCover.cover;
-		if (cover) {
-			popupContent = (
-				<img src={cover} />
-			)
-		} else {
-			popupContent = (
-				<Helper
-					iconName="album"
-					show={true}
-					inFlux={true}
-					style={{
-						minHeight: '600px',
-					}}
-				/>
-			)
-		}
+		popupContent = (
+			<div>...</div>
+		)
 	}
 
 	// -----------------------------------------------
 
 	return (
 		<Popup
-			id={popupZoomCoverKey}
+			id={popupTrackMetadatasKey}
 			title={popupTitle}
-			closeVariant="hover"
-			closeOnClick={true}
-			style={{
-				minWidth: '600px',
-				maxWidth: '600px',
-			}}
-			contentStyle={{
-				padding: '0px',
-				minHeight: '600px',
-				maxHeight: '600px',
-			}}
+			// style={{
+			// 	minWidth: '600px',
+			// 	maxWidth: '600px',
+			// }}
+			// contentStyle={{
+			// 	padding: '0px',
+			// 	minHeight: '600px',
+			// 	maxHeight: '600px',
+			// }}
 		>
 			{popupContent}
 		</Popup>
