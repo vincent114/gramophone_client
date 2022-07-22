@@ -85,7 +85,7 @@ export const TrackStore = types
 				subtitle = self.artist;
 			}
 			if (self.album) {
-				if (subtitle) {
+				if (subtitle && subtitle != self.album) {
 					subtitle = `${subtitle} - ${self.album}`;
 				} else {
 					subtitle = self.album;

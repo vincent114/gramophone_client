@@ -1,0 +1,8 @@
+
+/* Popup Zoom Cover */
+/* ================================================================================================== */
+
+#popupZoomCover .nx-popup-content img {
+	width: 100%;
+	display: block;
+}

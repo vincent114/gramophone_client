@@ -3,6 +3,8 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import { popupZoomCoverKey } from 'gramophone_client/popups/zoom_cover/PopupZoomCover';
+
 import { Row } from 'nexus/layout/row/Row';
 import { Column } from 'nexus/layout/column/Column';
 
@@ -25,6 +27,8 @@ export const PlayerDisplay = observer((props) => {
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
 	const player = store.player;
+	const popup = app.popup;
+	const popupZoomCover = store.popupZoomCover;
 
 	// From ... props
 
@@ -41,6 +45,14 @@ export const PlayerDisplay = observer((props) => {
 	if (track) {
 		const album = track.linkedAlbum;
 		cover = album.cover;
+	}
+
+	// Events
+	// ==================================================================================================
+
+	const handleCoverClick = () => {
+		popupZoomCover.setField("albumId", track.album_id);
+		popup.open(popupZoomCoverKey);
 	}
 
 	// Render
@@ -74,7 +86,12 @@ export const PlayerDisplay = observer((props) => {
 								iconColor="rgba(255, 255, 255, 0.5)"
 							/>
 						)}
-						{cover && <img src={cover} />}
+						{cover && (
+							<img
+								src={cover}
+								onClick={() => handleCoverClick()}
+							/>
+						)}
 					</div>
 					<Column
 						className="g-player-display-metas"

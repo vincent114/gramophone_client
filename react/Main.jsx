@@ -32,6 +32,12 @@ import { AdminPage } from 'gramophone_client/contexts/admin/Admin';
 import { LibraryStore } from 'gramophone_client/models/Library';
 import { PlayerStore } from 'gramophone_client/models/Player';
 
+import {
+	PopupZoomCoverStore,
+	popupZoomCoverKey,
+	PopupZoomCover
+} from 'gramophone_client/popups/zoom_cover/PopupZoomCover';
+
 import './Main.css';
 
 
@@ -140,6 +146,10 @@ const RootStore = types
 
 		library: types.optional(LibraryStore, {}),
 		player: types.optional(PlayerStore, {}),
+
+		// -
+
+		popupZoomCover: types.optional(PopupZoomCoverStore, {}),
 
 		loaded: false,
 
@@ -343,7 +353,9 @@ let contexts = {
 // Popups
 // -
 
-let popups = {}
+let popups = {
+	[popupZoomCoverKey]: PopupZoomCover,
+}
 
 // Routes
 // -

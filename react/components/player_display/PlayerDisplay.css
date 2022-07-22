@@ -57,6 +57,7 @@
 .g-player-display-cover img {
 	object-fit: cover;
 	max-width: 100%;
+	cursor: pointer;
 }
 
 /* Metas */

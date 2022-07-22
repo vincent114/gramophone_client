@@ -3,6 +3,7 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import { popupZoomCoverKey } from 'gramophone_client/popups/zoom_cover/PopupZoomCover';
 import { TrackRow } from 'gramophone_client/contexts/track/Track';
 
 import { Indicator } from 'nexus/forms/indicator/Indicator';
@@ -28,6 +29,9 @@ import { Typography } from 'nexus/ui/typography/Typography';
 import { IconButton } from 'nexus/ui/button/Button';
 import { Avatar } from 'nexus/ui/avatar/Avatar';
 import { Paper } from 'nexus/ui/paper/Paper';
+import { Icon } from 'nexus/ui/icon/Icon';
+
+import { uuid } from 'nexus/utils/Datas';
 
 import './Album.css';
 
@@ -66,6 +70,20 @@ export const AlbumStore = types
 		get nbTracks() {
 			return self.tracks_ids.length;
 		},
+
+		// -
+
+		get coverUrl() {
+			return self.cover;
+		},
+
+		// get coverUrlUncached() {
+		// 	const coverUrl = self.coverUrl;
+		// 	if (coverUrl) {
+		// 		return `${coverUrl}?cburst=${uuid()}`;
+		// 	}
+		// 	return "";
+		// },
 
 		// -
 
@@ -300,7 +318,9 @@ export const RenderAlbum = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const popup = app.popup;
 	const albums = store.albums;
+	const popupZoomCover = store.popupZoomCover;
 
 	// From ... store
 
@@ -332,6 +352,11 @@ export const RenderAlbum = observer((props) => {
 
 	// Events
 	// ==================================================================================================
+
+	const handleCoverClick = () => {
+		popupZoomCover.setField("albumId", albumId);
+		popup.open(popupZoomCoverKey);
+	}
 
 	const handleArtistClick = () => {
 		store.navigateTo('artist', albumArtist.id);
@@ -382,12 +407,23 @@ export const RenderAlbum = observer((props) => {
 					marginBottom: '40px',
 				}}
 			>
-				{albumCover && (
-					<img
-						className="g-album-cover"
-						src={albumCover}
-					/>
-				)}
+				<div className="g-album-cover">
+					{!albumCover && (
+						<Icon
+							name="album"
+							color="default"
+							style={{
+								width: '100px',
+							}}
+						/>
+					)}
+					{albumCover && (
+						<img
+							src={albumCover}
+							onClick={() => handleCoverClick()}
+						/>
+					)}
+				</div>
 				<Column align="stretch">
 					<div></div>
 					<div className="flex-1">

@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 89912:
+/***/ 67327:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10,6 +10,8 @@
 
 // EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/web.timers.js
 var web_timers = __webpack_require__(76213);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.object.define-property.js
+var es_object_define_property = __webpack_require__(13204);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/react/index.js
 var react = __webpack_require__(63354);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/react-dom/index.js
@@ -68,8 +70,6 @@ var es_object_get_prototype_of = __webpack_require__(79608);
 var es_reflect_construct = __webpack_require__(7229);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.object.create.js
 var es_object_create = __webpack_require__(82954);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.object.define-property.js
-var es_object_define_property = __webpack_require__(13204);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/route-node/dist/route-node.esm.js + 3 modules
 var route_node_esm = __webpack_require__(26285);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/clsx/dist/clsx.m.js
@@ -4402,6 +4402,7 @@ var Icon = __webpack_require__(73244);
 
 
 
+
  // Datas
 // -------------------------------------------------------------------------------------------------------------
 
@@ -4545,6 +4546,7 @@ var ICON_SIZES = {
   'normal': 24,
   'large': 36,
   'thumbnail': 64,
+  'thumbnail_big': 80,
   'helper': 220
 }; // Functions Components ReactJS
 // -------------------------------------------------------------------------------------------------------------
@@ -4570,7 +4572,7 @@ var Icon_Icon = (0,es/* observer */.Pi)(function (props) {
   var size = props.size ? props.size : 'normal'; // small, normal, large
 
   var className = props.className ? props.className : '';
-  var style = props.style ? props.style : {}; // ...
+  var style = props.style ? copyObj(props.style) : {}; // ...
 
   var IconSvg = null;
   var iconUrl = ''; // Icône via un composant ?
@@ -4592,9 +4594,9 @@ var Icon_Icon = (0,es/* observer */.Pi)(function (props) {
 
   if (!style.hasOwnProperty('width')) {
     style['width'] = "".concat(ICON_SIZES[size], "px");
-    style['height'] = "".concat(ICON_SIZES[size], "px");
-  } // Quelle couleur ?
+  }
 
+  style['height'] = style.width; // Quelle couleur ?
 
   if (color != theme.palette["default"].main) {
     color = theme.getColorFromKey(color);
@@ -4607,8 +4609,8 @@ var Icon_Icon = (0,es/* observer */.Pi)(function (props) {
     style: style
   }, IconSvg && /*#__PURE__*/react.createElement(IconSvg, {
     color: color,
-    width: ICON_SIZES[size],
-    height: ICON_SIZES[size],
+    width: style.width,
+    height: style.height,
     variant: variant
   }), iconUrl && /*#__PURE__*/react.createElement("img", {
     src: iconUrl
@@ -9770,7 +9772,15 @@ var Popup = __webpack_require__(72055);
 
 
 
-function Popup_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Popup_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function Popup_slicedToArray(arr, i) { return Popup_arrayWithHoles(arr) || Popup_iterableToArrayLimit(arr, i) || Popup_unsupportedIterableToArray(arr, i) || Popup_nonIterableRest(); }
+
+function Popup_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function Popup_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function Popup_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function Popup_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Popup_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function Popup_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Popup_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Popup_arrayLikeToArray(o, minLen); }
 
@@ -9991,7 +10001,13 @@ var Popup_Popup = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
   var popup = app.popup;
-  var theme = app.theme; // From ... props
+  var theme = app.theme; // From ... state
+
+  var _React$useState = react.useState(false),
+      _React$useState2 = Popup_slicedToArray(_React$useState, 2),
+      hover = _React$useState2[0],
+      setHover = _React$useState2[1]; // From ... props
+
 
   var id = props.id ? props.id : '';
   var open = props.open;
@@ -10001,6 +10017,9 @@ var Popup_Popup = (0,es/* observer */.Pi)(function (props) {
   var left = props.left ? props.left : null;
   var right = props.right ? props.right : null;
   var disableCloseButton = props.disableCloseButton == true ? true : false;
+  var closeVariant = props.closeVariant ? props.closeVariant : "fixed"; // fixed, hover
+
+  var closeOnClick = props.closeOnClick == true ? true : false;
   var buttons = props.buttons ? props.buttons : [];
   var fullscreen = props.fullscreen;
   var callbackOpen = props.callbackOpen;
@@ -10010,7 +10029,8 @@ var Popup_Popup = (0,es/* observer */.Pi)(function (props) {
   var maxWidthKey = props.maxWidth != undefined ? props.maxWidth : 'sm'; // xs, sm, md, lg, xl, false, string
 
   var className = props.className ? props.className : '';
-  var style = props.style ? props.style : {}; // From ... store
+  var style = props.style ? props.style : {};
+  var contentStyle = props.contentStyle ? props.contentStyle : {}; // From ... store
 
   var isMobile = app.isMobile;
   var isDesktop = app.isDesktop;
@@ -10020,11 +10040,28 @@ var Popup_Popup = (0,es/* observer */.Pi)(function (props) {
   var isFullscreen = fullscreen != undefined ? fullscreen : isMobile; // Events
   // ==================================================================================================
 
+  var handleMouseEnter = function handleMouseEnter(evt) {
+    setHover(true);
+  };
+
+  var handleMouseLeave = function handleMouseLeave(evt) {
+    setHover(false);
+  }; // -
+
+
   var handleCloseClick = function handleCloseClick() {
     popup.close(id);
 
     if (callbackClose) {
       callbackClose();
+    }
+  };
+
+  var handlePopupWrapperClick = function handlePopupWrapperClick(evt) {
+    var target = evt.target;
+
+    if (closeOnClick && target.classList.contains('nx-popup-wrapper')) {
+      handleCloseClick();
     }
   }; // Render
   // ==================================================================================================
@@ -10056,26 +10093,48 @@ var Popup_Popup = (0,es/* observer */.Pi)(function (props) {
 
     var popupTitle = null;
 
-    if (title && typeof title == "string") {
+    if (closeVariant == "fixed") {
       popupTitle = /*#__PURE__*/react.createElement("div", {
-        className: "nx-popup-title"
-      }, title);
-    } else {
-      popupTitle = title;
+        className: "flex-1"
+      });
+    }
+
+    if (title) {
+      if (typeof title == "string") {
+        popupTitle = /*#__PURE__*/react.createElement("div", {
+          className: "nx-popup-title"
+        }, title);
+      } else {
+        popupTitle = title;
+      }
     } // Bouton de fermeture
     // -
 
 
     var popupCloseButton = null;
+    var floatinfPopupCloseButton = null;
 
     if (!disableCloseButton && variant == "dialog") {
-      popupCloseButton = /*#__PURE__*/react.createElement(IconButton, {
-        color: "#FFFFFF",
-        iconName: isMobile ? "expand_more" : "close",
-        onClick: function onClick() {
-          return handleCloseClick();
-        }
-      });
+      if (closeVariant == 'fixed') {
+        popupCloseButton = /*#__PURE__*/react.createElement(IconButton, {
+          color: "#FFFFFF",
+          iconName: isMobile ? "expand_more" : "close",
+          onClick: function onClick() {
+            return handleCloseClick();
+          }
+        });
+      }
+
+      if (closeVariant == 'hover' && (hover || isMobile)) {
+        floatinfPopupCloseButton = /*#__PURE__*/react.createElement(IconButton, {
+          color: "default",
+          iconName: "close",
+          className: "floating-btn-close-popup",
+          onClick: function onClick() {
+            return handleCloseClick();
+          }
+        });
+      }
     } // Popup :: Content
     // ---------------------------------------------------
 
@@ -10085,19 +10144,31 @@ var Popup_Popup = (0,es/* observer */.Pi)(function (props) {
     var popupMsgSeverity = popupDef ? popupDef.msgSeverity : 'info'; // ---------------------------------------------------
 
     popupContent = /*#__PURE__*/react.createElement("div", {
-      className: "nx-popup-wrapper"
+      className: "nx-popup-wrapper",
+      onClick: function onClick(e) {
+        return handlePopupWrapperClick(e);
+      }
     }, /*#__PURE__*/react.createElement("div", {
       id: id,
       className: (0,clsx_m/* default */.Z)("nx-popup", variant, {
         "fullscreen": isFullscreen
       }, className),
-      style: style
+      style: style,
+      onMouseEnter: function onMouseEnter(e) {
+        return handleMouseEnter(e);
+      },
+      onMouseLeave: function onMouseLeave(e) {
+        return handleMouseLeave(e);
+      }
     }, (left || right || popupTitle || popupCloseButton) && /*#__PURE__*/react.createElement("div", {
       className: "nx-popup-header",
       style: headerStyle
-    }, left, popupTitle, right, popupCloseButton), children && /*#__PURE__*/react.createElement("div", {
-      className: "nx-popup-content"
-    }, children), popupMsg && /*#__PURE__*/react.createElement(Alert_Alert, null), buttons.length > 0 && /*#__PURE__*/react.createElement("div", {
+    }, left, popupTitle, right, popupCloseButton), floatinfPopupCloseButton, children && /*#__PURE__*/react.createElement("div", {
+      className: "nx-popup-content",
+      style: contentStyle
+    }, children), popupMsg && /*#__PURE__*/react.createElement(Alert_Alert, {
+      severity: popupMsgSeverity
+    }, popupMsg), buttons.length > 0 && /*#__PURE__*/react.createElement("div", {
       className: "nx-popup-footer"
     }, variant == 'dialog' && /*#__PURE__*/react.createElement("div", {
       className: "flex-1 responsive-hidden"
@@ -17299,8 +17370,15 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       // Mobile or desktop ?
       // ---
       var mobileInfos = detectMobile();
-      self.isMobile = mobileInfos.isMobile;
-      self.isDesktop = mobileInfos.isDesktop;
+
+      if (self.kind != 'electron') {
+        self.isMobile = mobileInfos.isMobile;
+        self.isDesktop = mobileInfos.isDesktop;
+      } else {
+        self.isMobile = false;
+        self.isDesktop = true;
+      }
+
       self.breakPoint650 = mobileInfos.breakPoint650;
       self.breakPoint414 = mobileInfos.breakPoint414;
       self.breakPoint375 = mobileInfos.breakPoint375;
@@ -18206,8 +18284,15 @@ var makeInitSnapshot = function makeInitSnapshot(routes, snapshot, callback) {
   }
 
   snapshot['app']['standaloneMode'] = standaloneMode;
-  snapshot['app']['isMobile'] = mobileInfos.isMobile;
-  snapshot['app']['isDesktop'] = mobileInfos.isDesktop;
+
+  if (snapshot['app'].kind == 'electron') {
+    snapshot['app']['isMobile'] = false;
+    snapshot['app']['isDesktop'] = true;
+  } else {
+    snapshot['app']['isMobile'] = mobileInfos.isMobile;
+    snapshot['app']['isDesktop'] = mobileInfos.isDesktop;
+  }
+
   snapshot['app']['breakPoint650'] = mobileInfos.breakPoint650;
   snapshot['app']['breakPoint414'] = mobileInfos.breakPoint414;
   snapshot['app']['breakPoint375'] = mobileInfos.breakPoint375;
@@ -19486,9 +19571,115 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
 
   return playerDrawerContent;
 });
+// EXTERNAL MODULE: ./popups/zoom_cover/PopupZoomCover.css
+var PopupZoomCover = __webpack_require__(93325);
+;// CONCATENATED MODULE: ./popups/zoom_cover/PopupZoomCover.jsx
+
+
+
+
+
+
+ // Models
+// ======================================================================================================
+// ***** PopupZoomCoverStore *****
+// *******************************
+
+var TAG_PopupZoomCoverStore = function TAG_PopupZoomCoverStore() {};
+
+var PopupZoomCoverStore = mobx_state_tree_module/* types.model */.V5.model({
+  albumId: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string)
+}).views(function (self) {
+  return {
+    get album() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var albums = store.albums;
+      var albumId = self.albumId;
+      return albums.by_id.get(albumId);
+    },
+
+    get cover() {
+      var album = self.album;
+
+      if (album) {
+        return album.coverUrl;
+      }
+
+      return "";
+    }
+
+  };
+}).actions(function (self) {
+  return {
+    setField: function setField(field, value) {
+      self[field] = value;
+    }
+  };
+}); // Functions Components ReactJS
+// ======================================================================================================
+// ***** PopupZoomCover *****
+// **************************
+
+var TAG_PopupZoomCover = function TAG_PopupZoomCover() {};
+
+var popupZoomCoverKey = 'popupZoomCover';
+var PopupZoomCover_PopupZoomCover = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var popup = app.popup;
+  var popupZoomCover = store.popupZoomCover; // From ... store
+
+  var isLoading = app.isLoading;
+  var isOpen = popup.isOpen(popupZoomCoverKey); // Render
+  // ==================================================================================================
+  // Popup --> Title
+  // -----------------------------------------------
+
+  var popupTitle = ""; // Popup --> Content
+  // -----------------------------------------------
+
+  var popupContent = null;
+
+  if (isOpen) {
+    var cover = popupZoomCover.cover;
+
+    if (cover) {
+      popupContent = /*#__PURE__*/react.createElement("img", {
+        src: cover
+      });
+    } else {
+      popupContent = /*#__PURE__*/react.createElement(Helper_Helper, {
+        iconName: "album",
+        show: true,
+        inFlux: true,
+        style: {
+          minHeight: '600px'
+        }
+      });
+    }
+  } // -----------------------------------------------
+
+
+  return /*#__PURE__*/react.createElement(Popup_Popup, {
+    id: popupZoomCoverKey,
+    title: popupTitle,
+    closeVariant: "hover",
+    closeOnClick: true,
+    style: {
+      minWidth: '600px',
+      maxWidth: '600px'
+    },
+    contentStyle: {
+      padding: '0px',
+      minHeight: '600px',
+      maxHeight: '600px'
+    }
+  }, popupContent);
+});
 // EXTERNAL MODULE: ./components/player_display/PlayerDisplay.css
 var PlayerDisplay = __webpack_require__(84513);
 ;// CONCATENATED MODULE: ./components/player_display/PlayerDisplay.jsx
+
 
 
 
@@ -19509,7 +19700,9 @@ var TAG_PlayerDisplay = function TAG_PlayerDisplay() {};
 var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var player = store.player; // From ... props
+  var player = store.player;
+  var popup = app.popup;
+  var popupZoomCover = store.popupZoomCover; // From ... props
 
   var className = props.className ? props.className : "";
   var style = props.style ? props.style : {}; // From ... store
@@ -19521,7 +19714,14 @@ var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
   if (track) {
     var album = track.linkedAlbum;
     cover = album.cover;
-  } // Render
+  } // Events
+  // ==================================================================================================
+
+
+  var handleCoverClick = function handleCoverClick() {
+    popupZoomCover.setField("albumId", track.album_id);
+    popup.open(popupZoomCoverKey);
+  }; // Render
   // ==================================================================================================
 
 
@@ -19542,7 +19742,10 @@ var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
     iconName: "music_note",
     iconColor: "rgba(255, 255, 255, 0.5)"
   }), cover && /*#__PURE__*/react.createElement("img", {
-    src: cover
+    src: cover,
+    onClick: function onClick() {
+      return handleCoverClick();
+    }
   })), /*#__PURE__*/react.createElement(Column_Column, {
     className: "g-player-display-metas",
     spacing: "none",
@@ -20114,7 +20317,7 @@ var TrackStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       if (self.album) {
-        if (subtitle) {
+        if (subtitle && subtitle != self.album) {
           subtitle = "".concat(subtitle, " - ").concat(self.album);
         } else {
           subtitle = self.album;
@@ -20607,6 +20810,9 @@ function Album_arrayLikeToArray(arr, len) { if (len == null || len > arr.length)
 
 
 
+
+
+
  // Models
 // ======================================================================================================
 // ***** AlbumStore *****
@@ -20639,6 +20845,18 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       return self.tracks_ids.length;
     },
 
+    // -
+    get coverUrl() {
+      return self.cover;
+    },
+
+    // get coverUrlUncached() {
+    // 	const coverUrl = self.coverUrl;
+    // 	if (coverUrl) {
+    // 		return `${coverUrl}?cburst=${uuid()}`;
+    // 	}
+    // 	return "";
+    // },
     // -
     get linkedArtist() {
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
@@ -20880,7 +21098,9 @@ var TAG_RenderAlbum = function TAG_RenderAlbum() {};
 var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var albums = store.albums; // From ... store
+  var popup = app.popup;
+  var albums = store.albums;
+  var popupZoomCover = store.popupZoomCover; // From ... store
 
   var isLoading = app.isLoading;
   var albumId = store.albumId;
@@ -20900,6 +21120,11 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
   var nbDiscs = discs.length;
   discs.sort(); // Events
   // ==================================================================================================
+
+  var handleCoverClick = function handleCoverClick() {
+    popupZoomCover.setField("albumId", albumId);
+    popup.open(popupZoomCoverKey);
+  };
 
   var handleArtistClick = function handleArtistClick() {
     store.navigateTo('artist', albumArtist.id);
@@ -20941,10 +21166,20 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
     style: {
       marginBottom: '40px'
     }
-  }, albumCover && /*#__PURE__*/react.createElement("img", {
-    className: "g-album-cover",
-    src: albumCover
-  }), /*#__PURE__*/react.createElement(Column_Column, {
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "g-album-cover"
+  }, !albumCover && /*#__PURE__*/react.createElement(Icon_Icon, {
+    name: "album",
+    color: "default",
+    style: {
+      width: '100px'
+    }
+  }), albumCover && /*#__PURE__*/react.createElement("img", {
+    src: albumCover,
+    onClick: function onClick() {
+      return handleCoverClick();
+    }
+  })), /*#__PURE__*/react.createElement(Column_Column, {
     align: "stretch"
   }, /*#__PURE__*/react.createElement("div", null), /*#__PURE__*/react.createElement("div", {
     className: "flex-1"
@@ -26940,6 +27175,10 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
 // EXTERNAL MODULE: ./Main.css
 var Main = __webpack_require__(41729);
 ;// CONCATENATED MODULE: ./Main.jsx
+function Main_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
 
 
 
@@ -27051,6 +27290,8 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
   // -
   library: mobx_state_tree_module/* types.optional */.V5.optional(LibraryStore, {}),
   player: mobx_state_tree_module/* types.optional */.V5.optional(PlayerStore, {}),
+  // -
+  popupZoomCover: mobx_state_tree_module/* types.optional */.V5.optional(PopupZoomCoverStore, {}),
   loaded: false
 }) // .views(self => ({
 // 	get ajaxGramophone() {
@@ -27249,8 +27490,9 @@ var contexts = {
 }; // Popups
 // -
 
-var popups = {}; // Routes
+var popups = Main_defineProperty({}, popupZoomCoverKey, PopupZoomCover_PopupZoomCover); // Routes
 // -
+
 
 var routes = {
   'home': '/main.html',
@@ -27492,6 +27734,13 @@ window.addEventListener('DOMContentLoaded', function () {
 /***/ }),
 
 /***/ 30114:
+/***/ (() => {
+
+// extracted by extract-css-chunks-webpack-plugin
+
+/***/ }),
+
+/***/ 93325:
 /***/ (() => {
 
 // extracted by extract-css-chunks-webpack-plugin
@@ -28469,7 +28718,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(89912)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(67327)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
