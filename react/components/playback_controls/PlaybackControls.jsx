@@ -31,6 +31,8 @@ export const PlaybackControls = observer((props) => {
 	const isPlaying = player.isPlaying;
 	const playIdx = player.playIdx;
 
+	const nbTracks = player.nbTracks;
+
 	const previousTrackId = player.previousTrackId;
 	const nextTrackId = player.nextTrackId;
 
@@ -47,7 +49,11 @@ export const PlaybackControls = observer((props) => {
 		if (isPlaying) {
 			player.audioPause();
 		} else {
-			player.audioPlay();
+			if (playIdx > -1) {
+				player.audioPlay();
+			} else {
+				player.read();
+			}
 		}
 	}
 
@@ -76,7 +82,7 @@ export const PlaybackControls = observer((props) => {
 			<IconButton
 				iconName={(isPlaying) ? "pause_circle_filled" : "play_circle_filled"}
 				color="#FFFFFF"
-				disabled={playIdx == -1}
+				disabled={nbTracks == 0}
 				onClick={() => handlePlayPauseClick()}
 			/>
 			<IconButton

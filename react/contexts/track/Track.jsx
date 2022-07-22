@@ -79,6 +79,21 @@ export const TrackStore = types
 			return `${self.discNumberLabel}-${self.trackNumberLabel}`;
 		},
 
+		get subtitle() {
+			let subtitle = "";
+			if (self.artist) {
+				subtitle = self.artist;
+			}
+			if (self.album) {
+				if (subtitle) {
+					subtitle = `${subtitle} - ${self.album}`;
+				} else {
+					subtitle = self.album;
+				}
+			}
+			return subtitle;
+		},
+
 		// -
 
 		get linkedAlbum() {
@@ -198,6 +213,41 @@ export const TrackStore = types
 
 // Functions Components ReactJS
 // ======================================================================================================
+
+// ***** TrackContextualMenu *****
+// *******************************
+
+const TAG_TrackContextualMenu = () => {}
+export const TrackContextualMenu = observer((props) => {
+
+	const store = React.useContext(window.storeContext);
+	const app = store.app;
+
+	// From ... props
+
+	const track = props.track;
+
+	let className = (props.className) ? props.className : "";
+	let style = (props.style) ? props.style : {};
+
+	// ...
+
+	// Events
+	// ==================================================================================================
+
+
+	// Render
+	// ==================================================================================================
+
+	return (
+		<div
+			className={className}
+			style={style}
+		>
+
+		</div>
+	)
+})
 
 // ***** TrackRow *****
 // ********************

@@ -3,6 +3,8 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import { PlayerDisplay } from 'gramophone_client/components/player_display/PlayerDisplay';
+
 import {
 	Header,
 	HeaderDivider
@@ -60,7 +62,7 @@ export const ContextualHeader = observer((props) => {
 	// ==================================================================================================
 
 	let headerLeft = null;
-	let headerMiddle = null;
+	let headerMiddle = <PlayerDisplay />
 	let headerRight = null;
 
 	// -------------------------------------------------
@@ -73,6 +75,7 @@ export const ContextualHeader = observer((props) => {
 			<SearchHeaderMiddle
 				style={{
 					marginRight: '10px',
+					minWidth: '200px',
 				}}
 			/>
 		)

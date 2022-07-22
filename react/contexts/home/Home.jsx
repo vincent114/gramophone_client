@@ -170,6 +170,47 @@ export const HomeStore = types
 			self.showcasedIds = albums.getRandomly(NB_SHOWCASED, false);
 		},
 
+		shuffleShowcased: (autoplay) => {
+
+			// Lecture aléatoire de morceaux des albums mis en avant
+			// ---
+
+			const store = getRoot(self);
+			const app = store.app;
+			const helpers = app.helpers;
+			const albums = store.albums;
+			const player = store.player;
+
+			const showcasedIds = self.showcasedIds;
+			const howManyAlbums = showcasedIds.length;
+
+			let randomAlbums = [];
+			let randomAlbumsIdxs = [];
+			let randomTracksIds = []
+
+			while (randomAlbumsIdxs.length < howManyAlbums) {
+				const randomIdx = helpers.getRandomNumber(howManyAlbums) - 1;
+				if (randomAlbumsIdxs.indexOf(randomIdx) == -1) {
+					randomAlbumsIdxs.push(randomIdx);
+					const albumId = showcasedIds[randomIdx];
+					const album = albums.by_id.get(albumId);
+					if (album) {
+						randomAlbums.push(album);
+						const randomAlbumTracksIds = album.getTracksRandomly(false);
+						helpers.extendArray(randomTracksIds, randomAlbumTracksIds);
+					}
+				}
+			}
+			randomTracksIds = helpers.shuffleArray(randomTracksIds);
+
+			player.audioStop();
+			player.clear();
+			player.populate(randomTracksIds);
+			if (autoplay) {
+				player.read();
+			}
+		},
+
 	}))
 
 
@@ -301,6 +342,11 @@ export const RenderShowcased = observer((props) => {
 	const app = store.app;
 	const home = store.home;
 	const albums = store.albums;
+	const player = store.player;
+
+	// From ... state
+
+	let [shuffled, setShuffled] = React.useState(false);
 
 	// From ... store
 
@@ -313,8 +359,16 @@ export const RenderShowcased = observer((props) => {
 	// Events
 	// ==================================================================================================
 
+	const handleThrowDiceShowcased = () => {
+		setShuffled(true);
+		home.shuffleShowcased(true);
+	}
+
 	const handleRefreshShowcased = () => {
 		home.refreshShowcased();
+		if (shuffled) {
+			home.shuffleShowcased(player.isPlaying);
+		}
 	}
 
 	const handleCloseClick = () => {
@@ -350,8 +404,13 @@ export const RenderShowcased = observer((props) => {
 				right={(
 					<div className="h-col">
 						<IconButton
+							iconName="casino"
+							color="hot"
+							onClick={() => handleThrowDiceShowcased()}
+						/>
+						<IconButton
 							iconName="model_training"
-							color="info"
+							color="default"
 							onClick={() => handleRefreshShowcased()}
 						/>
 						<IconButton
@@ -738,6 +797,10 @@ export const HomePage = observer((props) => {
 									<IconButton
 										iconName="add"
 										// color="info"
+										size="small"
+										// style={{
+										// 	marginLeft: "6px"
+										// }}
 										onClick={(e) => handleAddClick(e)}
 									/>
 									<Popover
@@ -763,13 +826,14 @@ export const HomePage = observer((props) => {
 												return (
 													<ListItem
 														key={`menu-item-${sectionKey}`}
+														size="small"
 														onClick={() => handleAddSectionClick(sectionKey)}
 													>
 														<ListIcon
 															name={homeSectionDef.icon}
-															color="typography"
+															color="description"
 														/>
-														<ListText>
+														<ListText withIcon={true}>
 															{homeSectionDef.label}
 														</ListText>
 													</ListItem>

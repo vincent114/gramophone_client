@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 9519:
+/***/ 89912:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -585,7 +585,7 @@ function decodeBase64(str) {
   var decodedData = buff.toString('ascii');
   return decodedData;
 }
-function extendArray(array_dest, array_src, get_a_new_one) {
+function Datas_extendArray(array_dest, array_src, get_a_new_one) {
   // Ajoute les éléments d'une liste dans une autre liste
   // ---
   if (get_a_new_one == true) {
@@ -599,6 +599,24 @@ function extendArray(array_dest, array_src, get_a_new_one) {
   }
 
   return new_array;
+}
+function Datas_shuffleArray() {
+  var arrayToShuffle = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var howMany = arrayToShuffle.length;
+  var shuffledArray = [];
+  var shuffledIdxs = [];
+
+  while (shuffledIdxs.length < howMany) {
+    var randomIdx = Datas_getRandomNumber(howMany) - 1;
+
+    if (shuffledIdxs.indexOf(randomIdx) == -1) {
+      shuffledIdxs.push(randomIdx);
+      var shuffledItem = arrayToShuffle[randomIdx];
+      shuffledArray.push(shuffledItem);
+    }
+  }
+
+  return shuffledArray;
 }
 function sortObjects(objects, sortField, sortDirection) {
   sortDirection = sortDirection ? sortDirection : 'asc'; // Tri croissant
@@ -707,6 +725,13 @@ var HelpersStore = mobx_state_tree_module/* types.model */.V5.model({}).views(fu
   return {
     generateUUID: function generateUUID() {
       return uuid();
+    },
+    extendArray: function extendArray(arrayDest, arraySrc) {
+      var getaNewOne = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      return Datas_extendArray(arrayDest, arraySrc, getaNewOne);
+    },
+    shuffleArray: function shuffleArray(arrayToShuffle) {
+      return Datas_shuffleArray(arrayToShuffle);
     }
   };
 });
@@ -7796,7 +7821,7 @@ var Column_Column = function Column(props) {
   var style = props.style ? props.style : {}; // ==================================================================================================
 
   return /*#__PURE__*/react.createElement("div", {
-    className: (0,clsx_m/* default */.Z)("nx-row", "v-col-".concat(spacing), "flex-align-".concat(align), className),
+    className: (0,clsx_m/* default */.Z)("nx-column", "v-col-".concat(spacing), "flex-align-".concat(align), className),
     style: style
   }, children);
 };
@@ -8881,8 +8906,8 @@ var List_ListIcon = function ListIcon(props) {
   return /*#__PURE__*/react.createElement("div", {
     className: "nx-list-icon"
   }, /*#__PURE__*/react.createElement(Avatar_Avatar, {
-    color: variant == 'contained' ? color : 'transparent' // size="small"
-    ,
+    color: variant == 'contained' ? color : 'transparent',
+    size: "small",
     iconName: name,
     iconColor: variant == 'contained' ? null : color
   }));
@@ -8893,6 +8918,7 @@ var TAG_ListText = function TAG_ListText() {};
 
 var ListText = function ListText(props) {
   // From ... props
+  var withIcon = props.withIcon == true ? true : false;
   var primary = props.primary ? props.primary : props.children;
   var secondary = props.secondary ? props.secondary : '';
 
@@ -8903,7 +8929,9 @@ var ListText = function ListText(props) {
 
 
   return /*#__PURE__*/react.createElement("div", {
-    className: "nx-list-text"
+    className: (0,clsx_m/* default */.Z)("nx-list-text", {
+      "with-icon": withIcon
+    })
   }, primary && /*#__PURE__*/react.createElement(Typography_Typography, {
     className: "nx-list-text-primary"
   }, primary), secondary && /*#__PURE__*/react.createElement(Typography_Typography, {
@@ -8923,6 +8951,8 @@ var ListItem = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
   var theme = app.theme; // From ... props
+
+  var size = props.size ? props.size : "small"; // normal, small
 
   var disabled = props.disabled == true ? true : false;
   var defaultExpanded = props.defaultExpanded == true ? true : false;
@@ -8975,7 +9005,7 @@ var ListItem = (0,es/* observer */.Pi)(function (props) {
 
 
   return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("div", {
-    className: (0,clsx_m/* default */.Z)("nx-list-item", className, {
+    className: (0,clsx_m/* default */.Z)("nx-list-item", size, className, {
       "clickable": onClick || nested
     }, {
       "disabled faded": disabled
@@ -19456,6 +19486,80 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
 
   return playerDrawerContent;
 });
+// EXTERNAL MODULE: ./components/player_display/PlayerDisplay.css
+var PlayerDisplay = __webpack_require__(84513);
+;// CONCATENATED MODULE: ./components/player_display/PlayerDisplay.jsx
+
+
+
+
+
+
+
+
+
+
+ // Functions Components ReactJS
+// ======================================================================================================
+// ***** PlayerDisplay *****
+// *************************
+
+var TAG_PlayerDisplay = function TAG_PlayerDisplay() {};
+
+var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var player = store.player; // From ... props
+
+  var className = props.className ? props.className : "";
+  var style = props.style ? props.style : {}; // From ... store
+
+  var track = player.playTrack; // ...
+
+  var cover = "";
+
+  if (track) {
+    var album = track.linkedAlbum;
+    cover = album.cover;
+  } // Render
+  // ==================================================================================================
+
+
+  return /*#__PURE__*/react.createElement("div", {
+    className: (0,clsx_m/* default */.Z)("g-player-display", className),
+    style: style
+  }, !track && /*#__PURE__*/react.createElement("div", {
+    className: "g-player-display-wrapper"
+  }, /*#__PURE__*/react.createElement(Icon_Icon, {
+    color: "rgba(255, 255, 255, 0.5)" // name="headphones"
+    ,
+    name: "music_note"
+  })), track && /*#__PURE__*/react.createElement(Row_Row, null, /*#__PURE__*/react.createElement("div", {
+    className: "g-player-display-cover"
+  }, !cover && /*#__PURE__*/react.createElement(Avatar_Avatar, {
+    size: "small",
+    color: "transparent",
+    iconName: "music_note",
+    iconColor: "rgba(255, 255, 255, 0.5)"
+  }), cover && /*#__PURE__*/react.createElement("img", {
+    src: cover
+  })), /*#__PURE__*/react.createElement(Column_Column, {
+    className: "g-player-display-metas",
+    spacing: "none",
+    style: {
+      "justifyContent": "space-evenly"
+    }
+  }, track.name && /*#__PURE__*/react.createElement("div", {
+    className: "g-player-display-title"
+  }, track.name), track.subtitle && /*#__PURE__*/react.createElement("div", {
+    className: "g-player-display-subtitle"
+  }, track.subtitle)), /*#__PURE__*/react.createElement(IconButton, {
+    size: "small",
+    iconName: "more_horiz",
+    color: "#FFFFFF",
+    className: "flex-0"
+  })));
+});
 // EXTERNAL MODULE: ../../nexus/react/contexts/search/Search.css
 var Search = __webpack_require__(4048);
 ;// CONCATENATED MODULE: ../../nexus/react/contexts/search/Search.jsx
@@ -20002,6 +20106,24 @@ var TrackStore = mobx_state_tree_module/* types.model */.V5.model({
       return "".concat(self.discNumberLabel, "-").concat(self.trackNumberLabel);
     },
 
+    get subtitle() {
+      var subtitle = "";
+
+      if (self.artist) {
+        subtitle = self.artist;
+      }
+
+      if (self.album) {
+        if (subtitle) {
+          subtitle = "".concat(subtitle, " - ").concat(self.album);
+        } else {
+          subtitle = self.album;
+        }
+      }
+
+      return subtitle;
+    },
+
     // -
     get linkedAlbum() {
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
@@ -20103,7 +20225,28 @@ var TrackStore = mobx_state_tree_module/* types.model */.V5.model({
   };
 }); // Functions Components ReactJS
 // ======================================================================================================
-// ***** TrackRow *****
+// ***** TrackContextualMenu *****
+// *******************************
+
+var TAG_TrackContextualMenu = function TAG_TrackContextualMenu() {};
+
+var TrackContextualMenu = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app; // From ... props
+
+  var track = props.track;
+  var className = props.className ? props.className : "";
+  var style = props.style ? props.style : {}; // ...
+  // Events
+  // ==================================================================================================
+  // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("div", {
+    className: className,
+    style: style
+  });
+}); // ***** TrackRow *****
 // ********************
 
 var TAG_TrackRow = function TAG_TrackRow() {};
@@ -24590,6 +24733,7 @@ var PlaybackControls_PlaybackControls = (0,es/* observer */.Pi)(function (props)
 
   var isPlaying = player.isPlaying;
   var playIdx = player.playIdx;
+  var nbTracks = player.nbTracks;
   var previousTrackId = player.previousTrackId;
   var nextTrackId = player.nextTrackId; // ...
   // Events
@@ -24603,7 +24747,11 @@ var PlaybackControls_PlaybackControls = (0,es/* observer */.Pi)(function (props)
     if (isPlaying) {
       player.audioPause();
     } else {
-      player.audioPlay();
+      if (playIdx > -1) {
+        player.audioPlay();
+      } else {
+        player.read();
+      }
     }
   };
 
@@ -24626,7 +24774,7 @@ var PlaybackControls_PlaybackControls = (0,es/* observer */.Pi)(function (props)
   }), /*#__PURE__*/react.createElement(IconButton, {
     iconName: isPlaying ? "pause_circle_filled" : "play_circle_filled",
     color: "#FFFFFF",
-    disabled: playIdx == -1,
+    disabled: nbTracks == 0,
     onClick: function onClick() {
       return handlePlayPauseClick();
     }
@@ -24640,6 +24788,7 @@ var PlaybackControls_PlaybackControls = (0,es/* observer */.Pi)(function (props)
   }));
 });
 ;// CONCATENATED MODULE: ./ui/ContextualHeader.jsx
+
 
 
 
@@ -24683,7 +24832,7 @@ var ContextualHeader = (0,es/* observer */.Pi)(function (props) {
 
 
   var headerLeft = null;
-  var headerMiddle = null;
+  var headerMiddle = /*#__PURE__*/react.createElement(PlayerDisplay_PlayerDisplay, null);
   var headerRight = null; // -------------------------------------------------
 
   var renderHeaderSearch = function renderHeaderSearch() {
@@ -24693,7 +24842,8 @@ var ContextualHeader = (0,es/* observer */.Pi)(function (props) {
 
     headerRight = /*#__PURE__*/react.createElement(SearchHeaderMiddle, {
       style: {
-        marginRight: '10px'
+        marginRight: '10px',
+        minWidth: '200px'
       }
     });
   }; // -------------------------------------------------
@@ -25046,6 +25196,45 @@ var HomeStore = mobx_state_tree_module/* types.model */.V5.model({
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var albums = store.albums;
       self.showcasedIds = albums.getRandomly(NB_SHOWCASED, false);
+    },
+    shuffleShowcased: function shuffleShowcased(autoplay) {
+      // Lecture aléatoire de morceaux des albums mis en avant
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var helpers = app.helpers;
+      var albums = store.albums;
+      var player = store.player;
+      var showcasedIds = self.showcasedIds;
+      var howManyAlbums = showcasedIds.length;
+      var randomAlbums = [];
+      var randomAlbumsIdxs = [];
+      var randomTracksIds = [];
+
+      while (randomAlbumsIdxs.length < howManyAlbums) {
+        var randomIdx = helpers.getRandomNumber(howManyAlbums) - 1;
+
+        if (randomAlbumsIdxs.indexOf(randomIdx) == -1) {
+          randomAlbumsIdxs.push(randomIdx);
+          var albumId = showcasedIds[randomIdx];
+          var album = albums.by_id.get(albumId);
+
+          if (album) {
+            randomAlbums.push(album);
+            var randomAlbumTracksIds = album.getTracksRandomly(false);
+            helpers.extendArray(randomTracksIds, randomAlbumTracksIds);
+          }
+        }
+      }
+
+      randomTracksIds = helpers.shuffleArray(randomTracksIds);
+      player.audioStop();
+      player.clear();
+      player.populate(randomTracksIds);
+
+      if (autoplay) {
+        player.read();
+      }
     }
   };
 }); // Functions Components ReactJS
@@ -25145,15 +25334,31 @@ var RenderShowcased = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
   var home = store.home;
-  var albums = store.albums; // From ... store
+  var albums = store.albums;
+  var player = store.player; // From ... state
+
+  var _React$useState = react.useState(false),
+      _React$useState2 = Home_slicedToArray(_React$useState, 2),
+      shuffled = _React$useState2[0],
+      setShuffled = _React$useState2[1]; // From ... store
+
 
   var showcased = home.getShowcased(); // ...
 
   var homeSectionDef = HOME_SECTIONS_BY_KEYS["showcased"]; // Events
   // ==================================================================================================
 
+  var handleThrowDiceShowcased = function handleThrowDiceShowcased() {
+    setShuffled(true);
+    home.shuffleShowcased(true);
+  };
+
   var handleRefreshShowcased = function handleRefreshShowcased() {
     home.refreshShowcased();
+
+    if (shuffled) {
+      home.shuffleShowcased(player.isPlaying);
+    }
   };
 
   var handleCloseClick = function handleCloseClick() {
@@ -25184,8 +25389,14 @@ var RenderShowcased = (0,es/* observer */.Pi)(function (props) {
     right: /*#__PURE__*/react.createElement("div", {
       className: "h-col"
     }, /*#__PURE__*/react.createElement(IconButton, {
+      iconName: "casino",
+      color: "hot",
+      onClick: function onClick() {
+        return handleThrowDiceShowcased();
+      }
+    }), /*#__PURE__*/react.createElement(IconButton, {
       iconName: "model_training",
-      color: "info",
+      color: "default",
       onClick: function onClick() {
         return handleRefreshShowcased();
       }
@@ -25369,10 +25580,10 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
   var library = store.library;
   var albums = store.albums; // From ... states
 
-  var _React$useState = react.useState(null),
-      _React$useState2 = Home_slicedToArray(_React$useState, 2),
-      anchorAddSection = _React$useState2[0],
-      setAnchorAddSection = _React$useState2[1]; // From ... store
+  var _React$useState3 = react.useState(null),
+      _React$useState4 = Home_slicedToArray(_React$useState3, 2),
+      anchorAddSection = _React$useState4[0],
+      setAnchorAddSection = _React$useState4[1]; // From ... store
 
 
   var loaded = store.loaded;
@@ -25496,6 +25707,10 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
           }, /*#__PURE__*/react.createElement(IconButton, {
             iconName: "add" // color="info"
             ,
+            size: "small" // style={{
+            // 	marginLeft: "6px"
+            // }}
+            ,
             onClick: function onClick(e) {
               return handleAddClick(e);
             }
@@ -25519,13 +25734,16 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
             var homeSectionDef = HOME_SECTIONS_BY_KEYS[sectionKey];
             return /*#__PURE__*/react.createElement(ListItem, {
               key: "menu-item-".concat(sectionKey),
+              size: "small",
               onClick: function onClick() {
                 return handleAddSectionClick(sectionKey);
               }
             }, /*#__PURE__*/react.createElement(List_ListIcon, {
               name: homeSectionDef.icon,
-              color: "typography"
-            }), /*#__PURE__*/react.createElement(ListText, null, homeSectionDef.label));
+              color: "description"
+            }), /*#__PURE__*/react.createElement(ListText, {
+              withIcon: true
+            }, homeSectionDef.label));
           })))));
 
           if (displayedShowcase || displayedNew || displayedHistory) {
@@ -27161,6 +27379,13 @@ window.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
+/***/ 84513:
+/***/ (() => {
+
+// extracted by extract-css-chunks-webpack-plugin
+
+/***/ }),
+
 /***/ 29095:
 /***/ (() => {
 
@@ -28244,7 +28469,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(9519)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(89912)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
