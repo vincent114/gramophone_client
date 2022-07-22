@@ -175,6 +175,7 @@ export const RenderYears = observer((props) => {
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
 	const years = store.years;
+	const tracks = store.tracks;
 
 	// From ... store
 
@@ -192,7 +193,7 @@ export const RenderYears = observer((props) => {
 	// ==================================================================================================
 
 	const handleThrowDiceClick = () => {
-		// TODO
+		tracks.shuffle();
 	}
 
 	// -
@@ -212,7 +213,10 @@ export const RenderYears = observer((props) => {
 	}
 
 	const handleShuffleClick = (yearId) => {
-		// TODO
+		const year = years.by_id.get(yearId);
+		if (year) {
+			year.shuffle();
+		}
 	}
 
 	// Render

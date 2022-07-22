@@ -277,7 +277,13 @@ export const AlbumThumbnail = observer((props) => {
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
 
+	// From ... state
+
+	let [hover, setHover] = React.useState(false);
+
 	// From ... props
+
+	const isPlaying = (props.isPlaying == true) ? true : false;
 
 	const album = props.album;
 
@@ -287,8 +293,73 @@ export const AlbumThumbnail = observer((props) => {
 
 	// ...
 
+	// Events
+	// ==================================================================================================
+
+	const handleEnter = (evt) => {
+		setHover(true);
+	}
+
+	const handleLeave = (evt) => {
+		setHover(false);
+	}
+
 	// Render
 	// ==================================================================================================
+
+	// Thumbnail :: Bottom Right
+	// ---------------------------------------------------
+
+	let bottomRight = null;
+	if (hover) {
+		bottomRight = (
+			<Avatar
+				iconName="shuffle"
+				iconVariant="filled"
+				iconColor="#FFFFFF"
+				color="hot"
+				size="tiny"
+				style={{
+					margin: '5px',
+					// opacity: '0.9',
+					stopPropagation: true,
+				}}
+				onClick={(e) => {
+					e.preventDefault();
+					e.stopPropagation();
+					album.shuffle();
+				}}
+			/>
+		)
+	}
+
+	// Thumbnail :: Bottom Left
+	// ---------------------------------------------------
+
+	let bottomLeft = null;
+	if (hover) {
+		bottomLeft = (
+			<Avatar
+				iconName={(isPlaying) ? "pause" : "play_arrow"}
+				iconVariant="filled"
+				iconColor="#FFFFFF"
+				color="hot"
+				size="tiny"
+				style={{
+					margin: '5px',
+					// opacity: '0.9',
+					stopPropagation: true,
+				}}
+				onClick={(e) => {
+					e.preventDefault();
+					e.stopPropagation();
+					album.play();
+				}}
+			/>
+		)
+	}
+
+	// ---------------------------------------------------
 
 	return (
 		<Thumbnail
@@ -297,7 +368,14 @@ export const AlbumThumbnail = observer((props) => {
 			title={album.name}
 			subtitle={album.linkedArtist.name}
 			size="small"
+
+			bottomRight={bottomRight}
+			bottomLeft={bottomLeft}
+
 			rootStyle={style}
+
+			callbackEnter={handleEnter}
+			callbackLeave={handleLeave}
 			callbackClick={callbackClick}
 		/>
 	)
@@ -312,6 +390,7 @@ export const RenderAlbums = observer((props) => {
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
 	const albums = store.albums;
+	const tracks = store.tracks;
 
 	// From ... store
 
@@ -329,7 +408,7 @@ export const RenderAlbums = observer((props) => {
 	// ==================================================================================================
 
 	const handleThrowDiceClick = () => {
-		// TODO
+		tracks.shuffle();
 	}
 
 	// -

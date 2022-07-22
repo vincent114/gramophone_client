@@ -73,6 +73,44 @@ export const TracksStore = types
 			return track;
 		},
 
+		getRandomly(howMany, load=true) {
+
+			// Récupération aléatoire d'un certain nombre de titres
+			// ---
+
+			const store = getRoot(self);
+			const app = store.app;
+			const helpers = app.helpers;
+
+			// Il y en a-t-il assez ?
+			const nbTracks = self.nbTracks;
+			if (howMany > nbTracks) {
+				howMany = nbTracks;
+			}
+
+			const tracksIds = Array.from(self.by_id.keys());
+
+			let randomTracks = [];
+			let randomTracksIdxs = [];
+			let randomTracksIds = [];
+
+			while (randomTracksIdxs.length < howMany) {
+				const randomIdx = helpers.getRandomNumber(tracksIds.length) - 1;
+				if (randomTracksIdxs.indexOf(randomIdx) == -1) {
+					const trackId = tracksIds[randomIdx];
+					randomTracksIdxs.push(randomIdx);
+					randomTracksIds.push(trackId);
+					if (load) {
+						const track = self.by_id.get(trackId);
+						if (track) {
+							randomTracks.push(track);
+						}
+					}
+				}
+			}
+			return (load) ? randomTracks : randomTracksIds;
+		},
+
 	}))
 	.actions(self => ({
 
@@ -169,6 +207,21 @@ export const TracksStore = types
 
 			self.by_id.set(trackId, track);
 			return added;
+		},
+
+		shuffle: () => {
+
+			// Lecture aléatoire de titres
+			// ---
+
+			const store = getRoot(self);
+			const player = store.player;
+
+			const playbackIds = self.getRandomly(100, false);
+			player.audioStop();
+			player.clear();
+			player.populate(playbackIds);
+			player.read();
 		},
 
 	}))

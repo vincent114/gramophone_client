@@ -3,7 +3,8 @@
 /* ================================================================================================== */
 
 .g-player-drawer {
-	width: 0px;
+	min-width: 0px;
+	max-width: 0px;
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
@@ -18,7 +19,8 @@
 }
 
 .g-player-drawer.open {
-	width:  240px;
+	min-width: 240px;
+	max-width: 240px;
 }
 
 /* Header */
@@ -33,6 +35,5 @@
 /* -------------------------------------------------------------------------------- */
 
 .g-player-drawer-list {
-	padding: 10px 0px;
 	overflow-y: auto;
 }

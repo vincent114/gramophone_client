@@ -144,6 +144,33 @@ export const AlbumStore = types
 			return tracksList;
 		},
 
+		getTracks(load=true, filter="all") {
+			const store = getRoot(self);
+			const tracks = store.tracks;
+
+			let tracksList = [];
+			let tracksIds = [];
+
+			for (const trackId of self.tracks_ids) {
+				const track = tracks.by_id.get(trackId);
+				if (track) {
+					if (filter == "playable" && track.isPlayerCandidate) {
+						tracksList.push(track);
+						tracksIds.push(track.id);
+					}
+					if (filter == "shuffle" && track.isShuffleCandidate) {
+						tracksList.push(track);
+						tracksIds.push(track.id);
+					}
+					if (filter == "all") {
+						tracksList.push(track);
+						tracksIds.push(track.id);
+					}
+				}
+			}
+			return (load) ? tracksList : tracksIds;
+		},
+
 		getPlayable(load=true, trackIdOrigin=null) {
 			let tracksList = [];
 			const tracks = self.getSortedByNumber();

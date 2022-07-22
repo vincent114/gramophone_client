@@ -67,6 +67,9 @@
 	flex: 1;
 	align-self: stretch;
 	padding: 2px 5px 4px 5px;
+	box-sizing: border-box;
+	min-width: 0;
+	flex-shrink: 1;
 }
 
 .g-player-display-title {
@@ -77,6 +80,7 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
+	width: 100%;
 }
 
 .g-player-display-subtitle {
@@ -88,4 +92,5 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
+	width: 100%;
 }

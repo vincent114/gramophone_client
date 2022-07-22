@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 67327:
+/***/ 61946:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -602,12 +602,17 @@ function Datas_extendArray(array_dest, array_src, get_a_new_one) {
 }
 function Datas_shuffleArray() {
   var arrayToShuffle = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  var howMany = arrayToShuffle.length;
+  var howMany = arguments.length > 1 ? arguments[1] : undefined;
+
+  if (howMany == undefined || howMany && howMany > arrayToShuffle.length) {
+    howMany = arrayToShuffle.length;
+  }
+
   var shuffledArray = [];
   var shuffledIdxs = [];
 
   while (shuffledIdxs.length < howMany) {
-    var randomIdx = Datas_getRandomNumber(howMany) - 1;
+    var randomIdx = Datas_getRandomNumber(arrayToShuffle.length) - 1;
 
     if (shuffledIdxs.indexOf(randomIdx) == -1) {
       shuffledIdxs.push(randomIdx);
@@ -730,8 +735,8 @@ var HelpersStore = mobx_state_tree_module/* types.model */.V5.model({}).views(fu
       var getaNewOne = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
       return Datas_extendArray(arrayDest, arraySrc, getaNewOne);
     },
-    shuffleArray: function shuffleArray(arrayToShuffle) {
-      return Datas_shuffleArray(arrayToShuffle);
+    shuffleArray: function shuffleArray(arrayToShuffle, howMany) {
+      return Datas_shuffleArray(arrayToShuffle, howMany);
     }
   };
 });
@@ -1475,7 +1480,9 @@ var CasinoIcon = function CasinoIcon(props) {
   // From ... props
   var color = props.color ? props.color : '#000000';
   var height = props.height ? props.height : 24;
-  var width = props.width ? props.width : 24; // Render
+  var width = props.width ? props.width : 24;
+  var variant = props.variant ? props.variant : 'outlined'; // outlined, filled
+  // Render
   // ==================================================================================================
 
   return /*#__PURE__*/react.createElement("svg", {
@@ -1484,7 +1491,7 @@ var CasinoIcon = function CasinoIcon(props) {
     viewBox: "0 0 24 24",
     width: width,
     fill: color
-  }, /*#__PURE__*/react.createElement("path", {
+  }, variant == "outlined" && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("path", {
     d: "M0 0h24v24H0z",
     fill: "none"
   }), /*#__PURE__*/react.createElement("path", {
@@ -1509,7 +1516,12 @@ var CasinoIcon = function CasinoIcon(props) {
     cx: "16.5",
     cy: "7.5",
     r: "1.5"
-  }));
+  })), variant == "filled" && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0zm21.02 19c0 1.1-.9 2-2 2h-14c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v14z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7.5 18c-.83 0-1.5-.67-1.5-1.5S6.67 15 7.5 15s1.5.67 1.5 1.5S8.33 18 7.5 18zm0-9C6.67 9 6 8.33 6 7.5S6.67 6 7.5 6 9 6.67 9 7.5 8.33 9 7.5 9zm4.5 4.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5 4.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm0-9c-.83 0-1.5-.67-1.5-1.5S15.67 6 16.5 6s1.5.67 1.5 1.5S17.33 9 16.5 9z"
+  })));
 };
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/CheckBox.jsx
  // Functions Components ReactJS
@@ -1582,6 +1594,31 @@ var CheckCircleIcon = function CheckCircleIcon(props) {
   }), /*#__PURE__*/react.createElement("path", {
     d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"
   }));
+};
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/CleaningServices.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var CleaningServicesIcon = function CleaningServicesIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("rect", {
+    fill: "none",
+    height: "24",
+    width: "24"
+  })), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("path", {
+    d: "M16,11h-1V3c0-1.1-0.9-2-2-2h-2C9.9,1,9,1.9,9,3v8H8c-2.76,0-5,2.24-5,5v7h18v-7C21,13.24,18.76,11,16,11z M11,3h2v8h-2V3 z M19,21h-2v-3c0-0.55-0.45-1-1-1s-1,0.45-1,1v3h-2v-3c0-0.55-0.45-1-1-1s-1,0.45-1,1v3H9v-3c0-0.55-0.45-1-1-1s-1,0.45-1,1v3H5 v-5c0-1.65,1.35-3,3-3h8c1.65,0,3,1.35,3,3V21z"
+  }))));
 };
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Clear.jsx
  // Functions Components ReactJS
@@ -2786,6 +2823,70 @@ var MoreVertIcon = function MoreVertIcon(props) {
     d: "M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
   }));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/MoveDown.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var MoveDownIcon = function MoveDownIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("rect", {
+    fill: "none",
+    height: "24",
+    width: "24"
+  })), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("path", {
+    d: "M3,11c0,2.45,1.76,4.47,4.08,4.91l-1.49-1.49L7,13l4,4.01L7,21l-1.41-1.41l1.58-1.58l0-0.06C3.7,17.54,1,14.58,1,11 c0-3.87,3.13-7,7-7h3v2H8C5.24,6,3,8.24,3,11z"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M22,11V4h-9v7H22z M20,9h-5V6h5V9z"
+  }), /*#__PURE__*/react.createElement("rect", {
+    height: "7",
+    width: "9",
+    x: "13",
+    y: "13"
+  }))));
+};
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/MoveUp.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var MoveUpIcon = function MoveUpIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("rect", {
+    fill: "none",
+    height: "24",
+    width: "24"
+  })), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("path", {
+    d: "M3,13c0-2.45,1.76-4.47,4.08-4.91L5.59,9.59L7,11l4-4.01L7,3L5.59,4.41l1.58,1.58l0,0.06C3.7,6.46,1,9.42,1,13 c0,3.87,3.13,7,7,7h3v-2H8C5.24,18,3,15.76,3,13z"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M13,13v7h9v-7H13z M20,18h-5v-3h5V18z"
+  }), /*#__PURE__*/react.createElement("rect", {
+    height: "7",
+    width: "9",
+    x: "13",
+    y: "4"
+  }))));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/MusicNote.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -2976,6 +3077,30 @@ var PaletteIcon = function PaletteIcon(props) {
     r: "1.5"
   }))))));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Pause.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var PauseIcon = function PauseIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M6 19h4V5H6v14zm8-14v14h4V5h-4z"
+  }));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/PauseCircleFilled.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -3118,7 +3243,9 @@ var PlayArrowIcon = function PlayArrowIcon(props) {
   // From ... props
   var color = props.color ? props.color : '#000000';
   var height = props.height ? props.height : 24;
-  var width = props.width ? props.width : 24; // Render
+  var width = props.width ? props.width : 24;
+  var variant = props.variant ? props.variant : 'outlined'; // outlined, filled
+  // Render
   // ==================================================================================================
 
   return /*#__PURE__*/react.createElement("svg", {
@@ -3127,12 +3254,17 @@ var PlayArrowIcon = function PlayArrowIcon(props) {
     viewBox: "0 0 24 24",
     width: width,
     fill: color
-  }, /*#__PURE__*/react.createElement("path", {
+  }, variant == "outlined" && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("path", {
     d: "M0 0h24v24H0V0z",
     fill: "none"
   }), /*#__PURE__*/react.createElement("path", {
     d: "M10 8.64L15.27 12 10 15.36V8.64M8 5v14l11-7L8 5z"
-  }));
+  })), variant == "filled" && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M8 5v14l11-7z"
+  })));
 };
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/PlayCircleFilled.jsx
  // Functions Components ReactJS
@@ -4403,6 +4535,10 @@ var Icon = __webpack_require__(73244);
 
 
 
+
+
+
+
  // Datas
 // -------------------------------------------------------------------------------------------------------------
 
@@ -4435,6 +4571,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'check_box': CheckBoxIcon,
   'check_box_outline_blank': CheckBoxOutlineBlankIcon,
   'check_circle': CheckCircleIcon,
+  'cleaning_services': CleaningServicesIcon,
   'clear': ClearIcon,
   'close': CloseIcon,
   'close_fullscreen': CloseFullscreenIcon,
@@ -4483,6 +4620,8 @@ var ICON_KEYS_TO_COMPONENT = {
   'model_training': ModelTrainingIcon,
   'more_horiz': MoreHorizIcon,
   'more_vert': MoreVertIcon,
+  'move_down': MoveDownIcon,
+  'move_up': MoveUpIcon,
   'music_note': MusicNoteIcon,
   'new_releases': NewReleasesIcon,
   'newspaper': NewspaperIcon,
@@ -4490,6 +4629,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'notifications': NotificationsIcon,
   'open_in_full': OpenInFullIcon,
   'palette': PaletteIcon,
+  'pause': PauseIcon,
   'pause_circle_filled': PauseCircleFilledIcon,
   'person': PersonIcon,
   'person_add': PersonAddIcon,
@@ -4648,6 +4788,7 @@ var Avatar_Avatar = (0,es/* observer */.Pi)(function (props) {
   var iconSize = props.iconSize ? props.iconSize : 'normal';
   var iconColor = props.iconColor ? props.iconColor : 'default';
   var textColor = props.textColor ? props.textColor : 'white';
+  var onClick = props.onClick;
   var className = props.className ? props.className : '';
   var style = props.style ? props.style : {}; // ...
 
@@ -4697,7 +4838,8 @@ var Avatar_Avatar = (0,es/* observer */.Pi)(function (props) {
 
   return /*#__PURE__*/react.createElement("div", {
     className: (0,clsx_m/* default */.Z)("nx-avatar", size),
-    style: style
+    style: style,
+    onClick: onClick
   }, children, img, icon);
 });
 // EXTERNAL MODULE: ../../nexus/react/ui/divider/Divider.css
@@ -6227,7 +6369,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
  // Functions Components ReactJS
-// ----------------------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 // ***** Row *****
 // ***************
 
@@ -6244,6 +6386,10 @@ var Row_Row = function Row(props) {
   var className = props.className ? props.className : '';
   var style = props.style ? props.style : {};
   var marginBottom = props.marginBottom ? props.marginBottom : ''; // small, normal, large, big
+
+  var callbackEnter = props.callbackEnter;
+  var callbackLeave = props.callbackLeave;
+  var callbackClick = props.callbackClick; // ...
   // Render
   // ==================================================================================================
 
@@ -6255,7 +6401,10 @@ var Row_Row = function Row(props) {
     }, {
       "responsive-align-stretch": responsive
     }, _defineProperty({}, "margin-bottom-".concat(marginBottom), marginBottom), className),
-    style: style
+    style: style,
+    onMouseEnter: callbackEnter,
+    onMouseLeave: callbackLeave,
+    onClick: callbackClick
   }, children);
 };
 // EXTERNAL MODULE: ../../nexus/react/contexts/playground/input/PlaygroundButton.css
@@ -7808,7 +7957,7 @@ var Column = __webpack_require__(5906);
 
 
  // Functions Components ReactJS
-// ----------------------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 // ***** Column *****
 // ***************
 
@@ -19016,6 +19165,32 @@ var PlayerItem = __webpack_require__(90620);
 
 
 
+
+
+
+
+function PlayerItem_slicedToArray(arr, i) { return PlayerItem_arrayWithHoles(arr) || PlayerItem_iterableToArrayLimit(arr, i) || PlayerItem_unsupportedIterableToArray(arr, i) || PlayerItem_nonIterableRest(); }
+
+function PlayerItem_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function PlayerItem_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return PlayerItem_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return PlayerItem_arrayLikeToArray(o, minLen); }
+
+function PlayerItem_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function PlayerItem_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function PlayerItem_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
+
  // Functions Components ReactJS
 // ======================================================================================================
 // ***** PlayerItem *****
@@ -19025,21 +19200,65 @@ var TAG_PlayerItem = function TAG_PlayerItem() {};
 
 var PlayerItem_PlayerItem = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
-  var app = store.app; // From ... props
+  var app = store.app;
+  var theme = app.theme;
+  var player = store.player; // From ... state
+
+  var _React$useState = react.useState(false),
+      _React$useState2 = PlayerItem_slicedToArray(_React$useState, 2),
+      hover = _React$useState2[0],
+      setHover = _React$useState2[1]; // From ... props
+
 
   var track = props.track;
-  var className = props.className ? props.className : "";
-  var style = props.style ? props.style : {}; // ...
+  var origin = props.origin ? props.origin : "playlist"; // playlist, history
 
+  var index = props.index ? props.index : 0;
+  var className = props.className ? props.className : "";
+  var style = props.style ? copyObj(props.style) : {}; // ...
+
+  var trackId = track.id;
   var trackName = track.name;
   var artistName = track.artist;
   var album = track.linkedAlbum;
-  var cover = album.cover; // Render
+  var cover = album.cover; // ...
+
+  if (hover) {
+    style['backgroundColor'] = hexToRgbA(theme.palette.primary.main, 0.1);
+  } // Events
   // ==================================================================================================
 
+
+  var handleEnter = function handleEnter(evt) {
+    setHover(true);
+  };
+
+  var handleLeave = function handleLeave(evt) {
+    setHover(false);
+  }; // -
+
+
+  var handleClick = function handleClick(evt) {
+    if (origin == "playlist") {
+      player.jumpTo(index);
+    }
+
+    if (origin == "history") {
+      var insertedIdx = player.insert(trackId);
+      console.log(insertedIdx);
+      player.jumpTo(insertedIdx);
+    }
+  }; // Render
+  // ==================================================================================================
+
+
   return /*#__PURE__*/react.createElement(Row_Row, {
+    align: "center",
     className: (0,clsx_m/* default */.Z)("g-player-item h-col-small", className),
-    style: style
+    style: style,
+    callbackEnter: handleEnter,
+    callbackLeave: handleLeave,
+    callbackClick: handleClick
   }, /*#__PURE__*/react.createElement("div", {
     className: "g-player-item-icon"
   }, !cover && /*#__PURE__*/react.createElement(Avatar_Avatar, {
@@ -19069,6 +19288,7 @@ var PlayerItem_PlayerItem = (0,es/* observer */.Pi)(function (props) {
   }));
 });
 ;// CONCATENATED MODULE: ./models/Player.jsx
+
 
 
 
@@ -19194,7 +19414,7 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
         var track = tracks.by_id.get(trackId);
 
         if (track) {
-          tracksList.push(track);
+          tracksList.push([parseInt(trackIdx), track]);
         }
       }
 
@@ -19258,6 +19478,14 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
       self.drawerOpen = !self.drawerOpen;
     },
     // -
+    insert: function insert(trackId) {
+      if (self.playList.length > 0 && self.playList[0] == trackId) {
+        return;
+      }
+
+      self.playList.splice(self.playIdx, 0, trackId);
+      return self.playIdx;
+    },
     populate: function populate(trackIds) {
       var _iterator3 = Player_createForOfIteratorHelper(trackIds),
           _step3;
@@ -19306,6 +19534,13 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
       self.historyList.splice(0, 0, trackId);
     },
     // -
+    jumpTo: function jumpTo(idx) {
+      // Saute la lecture à l'index passé en paramètres
+      // ---
+      self.audioStop();
+      self.playIdx = idx;
+      self.audioPlay();
+    },
     read: function read(trackId) {
       // Lecture du morceau passé en paramètres
       // ---
@@ -19469,6 +19704,30 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
 // EXTERNAL MODULE: ./components/player_drawer/PlayerDrawer.css
 var PlayerDrawer = __webpack_require__(29095);
 ;// CONCATENATED MODULE: ./components/player_drawer/PlayerDrawer.jsx
+function PlayerDrawer_slicedToArray(arr, i) { return PlayerDrawer_arrayWithHoles(arr) || PlayerDrawer_iterableToArrayLimit(arr, i) || PlayerDrawer_unsupportedIterableToArray(arr, i) || PlayerDrawer_nonIterableRest(); }
+
+function PlayerDrawer_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function PlayerDrawer_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return PlayerDrawer_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return PlayerDrawer_arrayLikeToArray(o, minLen); }
+
+function PlayerDrawer_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function PlayerDrawer_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function PlayerDrawer_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -19490,6 +19749,7 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
   var app = store.app;
   var player = store.player; // From ... store
 
+  var playIdx = player.playIdx;
   var drawerOpen = player.drawerOpen;
   var drawerView = player.drawerView; // ...
   // Events
@@ -19502,6 +19762,12 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
 
   var handleClearHistory = function handleClearHistory() {
     player.clearHistory();
+  };
+
+  var handleRestartList = function handleRestartList() {
+    player.audioStop();
+    player.setField('playIdx', 0);
+    player.audioPlay();
   }; // Render
   // ==================================================================================================
 
@@ -19525,41 +19791,74 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
     })), drawerView == "current" && /*#__PURE__*/react.createElement(react.Fragment, null, remainingPlayTracks.length > 0 && /*#__PURE__*/react.createElement(Button_Button, {
       id: "btn-clear-current-list",
       color: "secondary",
+      variant: "outlined",
+      startAdornment: "cleaning_services",
       style: {
         'marginLeft': '10px',
-        'marginRight': '10px'
+        'marginRight': '10px',
+        'marginBottom': '10px'
       },
       onClick: function onClick() {
         return handleClearList();
       }
-    }, "Effacer"), /*#__PURE__*/react.createElement("div", {
-      className: "g-player-drawer-list"
-    }, remainingPlayTracks.map(function (track, trackIdx) {
+    }, "Effacer"), remainingPlayTracks.length > 0 && /*#__PURE__*/react.createElement("div", {
+      className: "g-player-drawer-list",
+      style: {
+        'marginBottom': '10px'
+      }
+    }, remainingPlayTracks.map(function (_ref, remainingPlayTrackIdx) {
+      var _ref2 = PlayerDrawer_slicedToArray(_ref, 2),
+          trackIdx = _ref2[0],
+          track = _ref2[1];
+
       return /*#__PURE__*/react.createElement(PlayerItem_PlayerItem, {
-        key: "player-current-trac-".concat(trackIdx),
+        key: "player-current-trac-".concat(remainingPlayTrackIdx),
         track: track,
+        origin: "playlist",
+        index: trackIdx,
         style: {
           paddingLeft: '10px',
-          paddingRight: '10px',
-          marginBottom: '5px'
+          paddingRight: '10px' // marginBottom: '5px',
+
         }
       });
-    }))), drawerView == "history" && /*#__PURE__*/react.createElement(react.Fragment, null, historyTracks.length > 0 && /*#__PURE__*/react.createElement(Button_Button, {
-      id: "btn-clear-history-list",
+    })), playIdx > 0 && /*#__PURE__*/react.createElement(Button_Button, {
+      id: "btn-restart-current-list",
       color: "secondary",
+      variant: "outlined",
+      startAdornment: "move_up",
       style: {
         'marginLeft': '10px',
-        'marginRight': '10px'
+        'marginRight': '10px',
+        'marginBottom': '10px'
+      },
+      onClick: function onClick() {
+        return handleRestartList();
+      }
+    }, "Recommencer")), drawerView == "history" && /*#__PURE__*/react.createElement(react.Fragment, null, historyTracks.length > 0 && /*#__PURE__*/react.createElement(Button_Button, {
+      id: "btn-clear-history-list",
+      color: "secondary",
+      variant: "outlined",
+      startAdornment: "cleaning_services",
+      style: {
+        'marginLeft': '10px',
+        'marginRight': '10px',
+        'marginBottom': '10px'
       },
       onClick: function onClick() {
         return handleClearHistory();
       }
-    }, "Effacer"), /*#__PURE__*/react.createElement("div", {
-      className: "g-player-drawer-list"
+    }, "Effacer"), historyTracks.length > 0 && /*#__PURE__*/react.createElement("div", {
+      className: "g-player-drawer-list",
+      style: {
+        'marginBottom': '10px'
+      }
     }, historyTracks.map(function (track, trackIdx) {
       return /*#__PURE__*/react.createElement(PlayerItem_PlayerItem, {
         key: "player-history-trac-".concat(trackIdx),
         track: track,
+        origin: "history",
+        index: trackIdx,
         style: {
           paddingLeft: '10px',
           paddingRight: '10px',
@@ -20919,6 +21218,47 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       });
       return tracksList;
     },
+    getTracks: function getTracks() {
+      var load = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+      var filter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "all";
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var tracks = store.tracks;
+      var tracksList = [];
+      var tracksIds = [];
+
+      var _iterator2 = Album_createForOfIteratorHelper(self.tracks_ids),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var trackId = _step2.value;
+          var track = tracks.by_id.get(trackId);
+
+          if (track) {
+            if (filter == "playable" && track.isPlayerCandidate) {
+              tracksList.push(track);
+              tracksIds.push(track.id);
+            }
+
+            if (filter == "shuffle" && track.isShuffleCandidate) {
+              tracksList.push(track);
+              tracksIds.push(track.id);
+            }
+
+            if (filter == "all") {
+              tracksList.push(track);
+              tracksIds.push(track.id);
+            }
+          }
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+
+      return load ? tracksList : tracksIds;
+    },
     getPlayable: function getPlayable() {
       var load = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       var trackIdOrigin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
@@ -20992,12 +21332,12 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       var byDisc = {};
       var tracks = self.getSortedByNumber();
 
-      var _iterator2 = Album_createForOfIteratorHelper(tracks),
-          _step2;
+      var _iterator3 = Album_createForOfIteratorHelper(tracks),
+          _step3;
 
       try {
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          var track = _step2.value;
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var track = _step3.value;
           var discNumber = track.discNumber;
 
           if (!byDisc.hasOwnProperty(discNumber)) {
@@ -21007,9 +21347,9 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
           byDisc[discNumber].push(track);
         }
       } catch (err) {
-        _iterator2.e(err);
+        _iterator3.e(err);
       } finally {
-        _iterator2.f();
+        _iterator3.f();
       }
 
       return byDisc;
@@ -21033,18 +21373,18 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       self.genre_id = raw.genre_id;
       self.tracks_ids = [];
 
-      var _iterator3 = Album_createForOfIteratorHelper(raw.tracks_ids),
-          _step3;
+      var _iterator4 = Album_createForOfIteratorHelper(raw.tracks_ids),
+          _step4;
 
       try {
-        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-          var trackId = _step3.value;
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+          var trackId = _step4.value;
           self.tracks_ids.push(trackId);
         }
       } catch (err) {
-        _iterator3.e(err);
+        _iterator4.e(err);
       } finally {
-        _iterator3.f();
+        _iterator4.f();
       }
     },
     addTrackId: function addTrackId(trackId) {
@@ -21446,6 +21786,10 @@ var Thumbnail_Thumbnail = (0,es/* observer */.Pi)(function (props) {
   var size = props.size ? props.size : "normal"; // small, normal, large
 
   var disabled = props.disabled == true ? true : false;
+  var bottomRight = props.bottomRight;
+  var bottomLeft = props.bottomLeft;
+  var callbackEnter = props.callbackEnter;
+  var callbackLeave = props.callbackLeave;
   var callbackClick = props.callbackClick;
   var className = props.className ? props.className : "";
   var rootStyle = props.rootStyle ? copyObj(props.rootStyle) : {};
@@ -21481,11 +21825,19 @@ var Thumbnail_Thumbnail = (0,es/* observer */.Pi)(function (props) {
   var handleMouseEnter = function handleMouseEnter(evt) {
     if (!disabled) {
       setHover(true);
+
+      if (callbackEnter) {
+        callbackEnter(evt);
+      }
     }
   };
 
   var handleMouseLeave = function handleMouseLeave(evt) {
     setHover(false);
+
+    if (callbackLeave) {
+      callbackLeave(evt);
+    }
   }; // -
 
 
@@ -21520,7 +21872,11 @@ var Thumbnail_Thumbnail = (0,es/* observer */.Pi)(function (props) {
   }), src && /*#__PURE__*/react.createElement("img", {
     src: src,
     style: imgStyle
-  })), (title || subtitle) && /*#__PURE__*/react.createElement("div", {
+  }), bottomRight && /*#__PURE__*/react.createElement("div", {
+    className: "nx-thumbnail-bottom-right"
+  }, bottomRight), bottomLeft && /*#__PURE__*/react.createElement("div", {
+    className: "nx-thumbnail-bottom-left"
+  }, bottomLeft)), (title || subtitle) && /*#__PURE__*/react.createElement("div", {
     className: "nx-thumbnail-footer",
     style: footerStyle
   }, title && /*#__PURE__*/react.createElement("div", {
@@ -21847,13 +22203,79 @@ var TAG_AlbumThumbnail = function TAG_AlbumThumbnail() {};
 
 var AlbumThumbnail = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
-  var app = store.app; // From ... props
+  var app = store.app; // From ... state
 
+  var _React$useState = react.useState(false),
+      _React$useState2 = Albums_slicedToArray(_React$useState, 2),
+      hover = _React$useState2[0],
+      setHover = _React$useState2[1]; // From ... props
+
+
+  var isPlaying = props.isPlaying == true ? true : false;
   var album = props.album;
   var callbackClick = props.callbackClick;
   var style = props.style ? props.style : style; // ...
-  // Render
+  // Events
   // ==================================================================================================
+
+  var handleEnter = function handleEnter(evt) {
+    setHover(true);
+  };
+
+  var handleLeave = function handleLeave(evt) {
+    setHover(false);
+  }; // Render
+  // ==================================================================================================
+  // Thumbnail :: Bottom Right
+  // ---------------------------------------------------
+
+
+  var bottomRight = null;
+
+  if (hover) {
+    bottomRight = /*#__PURE__*/react.createElement(Avatar_Avatar, {
+      iconName: "shuffle",
+      iconVariant: "filled",
+      iconColor: "#FFFFFF",
+      color: "hot",
+      size: "tiny",
+      style: {
+        margin: '5px',
+        // opacity: '0.9',
+        stopPropagation: true
+      },
+      onClick: function onClick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        album.shuffle();
+      }
+    });
+  } // Thumbnail :: Bottom Left
+  // ---------------------------------------------------
+
+
+  var bottomLeft = null;
+
+  if (hover) {
+    bottomLeft = /*#__PURE__*/react.createElement(Avatar_Avatar, {
+      iconName: isPlaying ? "pause" : "play_arrow",
+      iconVariant: "filled",
+      iconColor: "#FFFFFF",
+      color: "hot",
+      size: "tiny",
+      style: {
+        margin: '5px',
+        // opacity: '0.9',
+        stopPropagation: true
+      },
+      onClick: function onClick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        album.play();
+      }
+    });
+  } // ---------------------------------------------------
+
 
   return /*#__PURE__*/react.createElement(Thumbnail_Thumbnail, {
     src: album.cover,
@@ -21861,7 +22283,11 @@ var AlbumThumbnail = (0,es/* observer */.Pi)(function (props) {
     title: album.name,
     subtitle: album.linkedArtist.name,
     size: "small",
+    bottomRight: bottomRight,
+    bottomLeft: bottomLeft,
     rootStyle: style,
+    callbackEnter: handleEnter,
+    callbackLeave: handleLeave,
     callbackClick: callbackClick
   });
 }); // ***** RenderAlbums *****
@@ -21872,7 +22298,8 @@ var TAG_RenderAlbums = function TAG_RenderAlbums() {};
 var RenderAlbums = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var albums = store.albums; // From ... store
+  var albums = store.albums;
+  var tracks = store.tracks; // From ... store
 
   var isLoading = store.isLoading;
   var nbAlbums = albums.nbAlbums;
@@ -21882,7 +22309,8 @@ var RenderAlbums = (0,es/* observer */.Pi)(function (props) {
   letters.sort(); // Events
   // ==================================================================================================
 
-  var handleThrowDiceClick = function handleThrowDiceClick() {// TODO
+  var handleThrowDiceClick = function handleThrowDiceClick() {
+    tracks.shuffle();
   }; // -
 
 
@@ -22189,6 +22617,68 @@ var ArtistStore = mobx_state_tree_module/* types.model */.V5.model({
       if (self.albums_ids.indexOf(albumId) == -1) {
         self.albums_ids.push(albumId);
       }
+    },
+    // -
+    play: function play() {
+      // Lecture de tous les morceaux de l'artiste
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var helpers = app.helpers;
+      var player = store.player;
+      var trackIds = [];
+      var albums = self.getAlbums();
+
+      var _iterator3 = Artist_createForOfIteratorHelper(albums),
+          _step3;
+
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var album = _step3.value;
+          var albumsTrackIds = album.getPlayable(false);
+          helpers.extendArray(trackIds, albumsTrackIds);
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
+
+      player.audioStop();
+      player.clear();
+      player.populate(trackIds);
+      player.read();
+    },
+    shuffle: function shuffle() {
+      // Lecture aléatoire de tous les morceaux de l'artiste
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var helpers = app.helpers;
+      var player = store.player;
+      var trackIds = [];
+      var albums = self.getAlbums();
+
+      var _iterator4 = Artist_createForOfIteratorHelper(albums),
+          _step4;
+
+      try {
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+          var album = _step4.value;
+          var albumsTrackIds = album.getPlayable(false);
+          helpers.extendArray(trackIds, albumsTrackIds);
+        }
+      } catch (err) {
+        _iterator4.e(err);
+      } finally {
+        _iterator4.f();
+      }
+
+      trackIds = helpers.shuffleArray(trackIds);
+      player.audioStop();
+      player.clear();
+      player.populate(trackIds);
+      player.read();
     }
   };
 }); // Functions Components ReactJS
@@ -22212,10 +22702,12 @@ var RenderArtist = (0,es/* observer */.Pi)(function (props) {
   // Events
   // ==================================================================================================
 
-  var handlePlayClick = function handlePlayClick() {// TODO
+  var handlePlayClick = function handlePlayClick() {
+    artist.play();
   };
 
-  var handleThrowDiceClick = function handleThrowDiceClick() {// TODO
+  var handleThrowDiceClick = function handleThrowDiceClick() {
+    artist.shuffle();
   }; // -
 
 
@@ -22418,18 +22910,27 @@ var ArtistsStore = mobx_state_tree_module/* types.model */.V5.model({
               artistId = _step$value[0],
               artist = _step$value[1];
 
-          var letter = artist.letter;
+          var _letter = artist.letter;
 
-          if (!byLetter.hasOwnProperty(letter)) {
-            byLetter[letter] = [];
+          if (!byLetter.hasOwnProperty(_letter)) {
+            byLetter[_letter] = [];
           }
 
-          byLetter[letter].push(artist);
+          byLetter[_letter].push(artist);
         }
       } catch (err) {
         _iterator.e(err);
       } finally {
         _iterator.f();
+      }
+
+      for (var _i = 0, _Object$keys = Object.keys(byLetter); _i < _Object$keys.length; _i++) {
+        var letter = _Object$keys[_i];
+        byLetter[letter].sort(function (a, b) {
+          if (a.name > b.name) return 1;
+          if (a.name < b.name) return -1;
+          return 0;
+        });
       }
 
       return byLetter;
@@ -22525,7 +23026,8 @@ var TAG_RenderArtists = function TAG_RenderArtists() {};
 var RenderArtists = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var artists = store.artists; // From ... store
+  var artists = store.artists;
+  var tracks = store.tracks; // From ... store
 
   var isLoading = app.isLoading;
   var nbArtists = artists.nbArtists;
@@ -22535,7 +23037,8 @@ var RenderArtists = (0,es/* observer */.Pi)(function (props) {
   letters.sort(); // Events
   // ==================================================================================================
 
-  var handleThrowDiceClick = function handleThrowDiceClick() {// TODO
+  var handleThrowDiceClick = function handleThrowDiceClick() {
+    tracks.shuffle();
   }; // -
 
 
@@ -22550,7 +23053,20 @@ var RenderArtists = (0,es/* observer */.Pi)(function (props) {
     store.navigateTo('artist', artistId);
   };
 
-  var handleShuffleClick = function handleShuffleClick(artistId) {// TODO
+  var handleShuffleClick = function handleShuffleClick(artistId) {
+    var artist = artists.by_id.get(artistId);
+
+    if (artist) {
+      artist.shuffle();
+    }
+  };
+
+  var handlePlayClick = function handlePlayClick(artistId) {
+    var artist = artists.by_id.get(artistId);
+
+    if (artist) {
+      artist.play();
+    }
   }; // Renderers
   // ==================================================================================================
 
@@ -22616,12 +23132,14 @@ var RenderArtists = (0,es/* observer */.Pi)(function (props) {
         size: "small"
       }, artist.name), /*#__PURE__*/react.createElement(TableCell, {
         size: "small",
-        width: "100px"
+        width: "100px",
+        align: "right"
       }, /*#__PURE__*/react.createElement(Typography_Typography, {
         size: "small",
-        variant: "description"
+        variant: "description",
+        align: "right"
       }, "".concat(artist.nbAlbums, " ").concat(artist.nbAlbums > 1 ? "albums" : "album"))), /*#__PURE__*/react.createElement(TableCell, {
-        width: "48px",
+        width: "36px",
         size: "small"
       }, /*#__PURE__*/react.createElement(IconButton, {
         size: "small",
@@ -22632,6 +23150,19 @@ var RenderArtists = (0,es/* observer */.Pi)(function (props) {
           e.preventDefault();
           e.stopPropagation();
           handleShuffleClick(artist.id);
+        }
+      })), /*#__PURE__*/react.createElement(TableCell, {
+        width: "36px",
+        size: "small"
+      }, /*#__PURE__*/react.createElement(IconButton, {
+        size: "small",
+        iconName: "play_arrow",
+        color: "hot",
+        className: "flex-0",
+        onClick: function onClick(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          handlePlayClick(artist.id);
         }
       })));
     })))));
@@ -22772,6 +23303,7 @@ function Tracks_arrayLikeToArray(arr, len) { if (len == null || len > arr.length
 
 
 
+
  // Models
 // ======================================================================================================
 // ***** TracksStore *****
@@ -22830,6 +23362,45 @@ var TracksStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       return track;
+    },
+    getRandomly: function getRandomly(howMany) {
+      var load = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      // Récupération aléatoire d'un certain nombre de titres
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var helpers = app.helpers; // Il y en a-t-il assez ?
+
+      var nbTracks = self.nbTracks;
+
+      if (howMany > nbTracks) {
+        howMany = nbTracks;
+      }
+
+      var tracksIds = Array.from(self.by_id.keys());
+      var randomTracks = [];
+      var randomTracksIdxs = [];
+      var randomTracksIds = [];
+
+      while (randomTracksIdxs.length < howMany) {
+        var randomIdx = helpers.getRandomNumber(tracksIds.length) - 1;
+
+        if (randomTracksIdxs.indexOf(randomIdx) == -1) {
+          var trackId = tracksIds[randomIdx];
+          randomTracksIdxs.push(randomIdx);
+          randomTracksIds.push(trackId);
+
+          if (load) {
+            var track = self.by_id.get(trackId);
+
+            if (track) {
+              randomTracks.push(track);
+            }
+          }
+        }
+      }
+
+      return load ? randomTracks : randomTracksIds;
     }
   };
 }).actions(function (self) {
@@ -22913,6 +23484,17 @@ var TracksStore = mobx_state_tree_module/* types.model */.V5.model({
       track.setField('genre_id', metas.genreID);
       self.by_id.set(trackId, track);
       return added;
+    },
+    shuffle: function shuffle() {
+      // Lecture aléatoire de titres
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var player = store.player;
+      var playbackIds = self.getRandomly(100, false);
+      player.audioStop();
+      player.clear();
+      player.populate(playbackIds);
+      player.read();
     }
   };
 }); // Functions Components ReactJS
@@ -23166,6 +23748,50 @@ var YearStore = mobx_state_tree_module/* types.model */.V5.model({
         return 0;
       });
       return albumsList;
+    },
+    getTracks: function getTracks() {
+      var load = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+      var filter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "all";
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var helpers = app.helpers;
+      var albums = store.albums;
+      var tracks = store.tracks;
+      var tracksList = [];
+      var tracksIds = [];
+
+      var _iterator2 = Year_createForOfIteratorHelper(self.albums_ids),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var albumId = _step2.value;
+          var album = albums.by_id.get(albumId);
+
+          if (album) {
+            if (load) {
+              helpers.extendArray(tracksList, album.getTracks(load, filter));
+            } else {
+              helpers.extendArray(tracksIds, album.getTracks(load, filter));
+            }
+          }
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+
+      return load ? tracksList : tracksIds;
+    },
+    getTracksRandomly: function getTracksRandomly() {
+      var load = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+      var howMany = arguments.length > 1 ? arguments[1] : undefined;
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var helpers = app.helpers;
+      var tracksList = self.getTracks(load, "shuffle");
+      return helpers.shuffleArray(tracksList, howMany);
     }
   };
 }).actions(function (self) {
@@ -23179,24 +23805,36 @@ var YearStore = mobx_state_tree_module/* types.model */.V5.model({
       self.name = raw.name;
       self.albums_ids = [];
 
-      var _iterator2 = Year_createForOfIteratorHelper(raw.albums_ids),
-          _step2;
+      var _iterator3 = Year_createForOfIteratorHelper(raw.albums_ids),
+          _step3;
 
       try {
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          var albumId = _step2.value;
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var albumId = _step3.value;
           self.albums_ids.push(albumId);
         }
       } catch (err) {
-        _iterator2.e(err);
+        _iterator3.e(err);
       } finally {
-        _iterator2.f();
+        _iterator3.f();
       }
     },
     addAlbumId: function addAlbumId(albumId) {
       if (self.albums_ids.indexOf(albumId) == -1) {
         self.albums_ids.push(albumId);
       }
+    },
+    // -
+    shuffle: function shuffle() {
+      // Lecture aléatoire des morceaux de l'année (100 au max)
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var player = store.player;
+      var playbackIds = self.getTracksRandomly(false, 100);
+      player.audioStop();
+      player.clear();
+      player.populate(playbackIds);
+      player.read();
     }
   };
 }); // Functions Components ReactJS
@@ -23220,7 +23858,8 @@ var RenderYear = (0,es/* observer */.Pi)(function (props) {
   // Events
   // ==================================================================================================
 
-  var handleThrowDiceClick = function handleThrowDiceClick() {// TODO
+  var handleThrowDiceClick = function handleThrowDiceClick() {
+    year.shuffle();
   }; // -
 
 
@@ -23698,7 +24337,8 @@ var TAG_RenderYears = function TAG_RenderYears() {};
 var RenderYears = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var years = store.years; // From ... store
+  var years = store.years;
+  var tracks = store.tracks; // From ... store
 
   var isLoading = store.isLoading;
   var nbYears = years.nbYears;
@@ -23710,7 +24350,8 @@ var RenderYears = (0,es/* observer */.Pi)(function (props) {
   }); // Events
   // ==================================================================================================
 
-  var handleThrowDiceClick = function handleThrowDiceClick() {// TODO
+  var handleThrowDiceClick = function handleThrowDiceClick() {
+    tracks.shuffle();
   }; // -
 
 
@@ -23725,7 +24366,12 @@ var RenderYears = (0,es/* observer */.Pi)(function (props) {
     store.navigateTo('year', yearId);
   };
 
-  var handleShuffleClick = function handleShuffleClick(yearId) {// TODO
+  var handleShuffleClick = function handleShuffleClick(yearId) {
+    var year = years.by_id.get(yearId);
+
+    if (year) {
+      year.shuffle();
+    }
   }; // Render
   // ==================================================================================================
 
@@ -28718,7 +29364,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(67327)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(61946)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

@@ -104,7 +104,7 @@ export const PlayerStore = types
 				const trackId = self.playList[trackIdx];
 				const track = tracks.by_id.get(trackId);
 				if (track) {
-					tracksList.push(track);
+					tracksList.push([parseInt(trackIdx), track]);
 				}
 			}
 			return tracksList;
@@ -162,6 +162,14 @@ export const PlayerStore = types
 
 		// -
 
+		insert: (trackId) => {
+			if (self.playList.length > 0 && self.playList[0] == trackId) {
+				return;
+			}
+			self.playList.splice(self.playIdx, 0, trackId);
+			return self.playIdx;
+		},
+
 		populate: (trackIds) => {
 			for (const trackId of trackIds) {
 				self.playList.push(trackId);
@@ -196,6 +204,16 @@ export const PlayerStore = types
 		},
 
 		// -
+
+		jumpTo: (idx) => {
+
+			// Saute la lecture à l'index passé en paramètres
+			// ---
+
+			self.audioStop();
+			self.playIdx = idx;
+			self.audioPlay();
+		},
 
 		read: (trackId) => {
 

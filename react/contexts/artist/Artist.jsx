@@ -93,6 +93,57 @@ export const ArtistStore = types
 			}
 		},
 
+		// -
+
+		play: () => {
+
+			// Lecture de tous les morceaux de l'artiste
+			// ---
+
+			const store = getRoot(self);
+			const app = store.app;
+			const helpers = app.helpers;
+			const player = store.player;
+
+			let trackIds = [];
+
+			const albums = self.getAlbums();
+			for (const album of albums) {
+				const albumsTrackIds = album.getPlayable(false);
+				helpers.extendArray(trackIds, albumsTrackIds);
+			}
+
+			player.audioStop();
+			player.clear();
+			player.populate(trackIds);
+			player.read();
+		},
+
+		shuffle: () => {
+
+			// Lecture aléatoire de tous les morceaux de l'artiste
+			// ---
+
+			const store = getRoot(self);
+			const app = store.app;
+			const helpers = app.helpers;
+			const player = store.player;
+
+			let trackIds = [];
+
+			const albums = self.getAlbums();
+			for (const album of albums) {
+				const albumsTrackIds = album.getPlayable(false);
+				helpers.extendArray(trackIds, albumsTrackIds);
+			}
+			trackIds = helpers.shuffleArray(trackIds);
+
+			player.audioStop();
+			player.clear();
+			player.populate(trackIds);
+			player.read();
+		},
+
 	}))
 
 
@@ -126,11 +177,11 @@ export const RenderArtist = observer((props) => {
 	// ==================================================================================================
 
 	const handlePlayClick = () => {
-		// TODO
+		artist.play();
 	}
 
 	const handleThrowDiceClick = () => {
-		// TODO
+		artist.shuffle();
 	}
 
 	// -

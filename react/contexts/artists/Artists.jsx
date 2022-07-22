@@ -69,6 +69,15 @@ export const ArtistsStore = types
 				}
 				byLetter[letter].push(artist);
 			}
+			for (const letter of Object.keys(byLetter)) {
+				byLetter[letter].sort(function (a, b) {
+					if (a.name > b.name)
+						return 1;
+					if (a.name < b.name)
+						return -1;
+					return 0;
+				});
+			}
 			return byLetter;
 		},
 
@@ -161,7 +170,7 @@ export const ArtistsStore = types
 
 			self.by_id.set(artistId, artist);
 			return added;
-		}
+		},
 
 	}))
 
@@ -178,6 +187,7 @@ export const RenderArtists = observer((props) => {
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
 	const artists = store.artists;
+	const tracks = store.tracks;
 
 	// From ... store
 
@@ -195,7 +205,7 @@ export const RenderArtists = observer((props) => {
 	// ==================================================================================================
 
 	const handleThrowDiceClick = () => {
-		// TODO
+		tracks.shuffle();
 	}
 
 	// -
@@ -215,7 +225,17 @@ export const RenderArtists = observer((props) => {
 	}
 
 	const handleShuffleClick = (artistId) => {
-		// TODO
+		const artist = artists.by_id.get(artistId);
+		if (artist) {
+			artist.shuffle();
+		}
+	}
+
+	const handlePlayClick = (artistId) => {
+		const artist = artists.by_id.get(artistId);
+		if (artist) {
+			artist.play();
+		}
 	}
 
 	// Renderers
@@ -306,16 +326,18 @@ export const RenderArtists = observer((props) => {
 											<TableCell
 												size="small"
 												width="100px"
+												align="right"
 											>
 												<Typography
 													size="small"
 													variant="description"
+													align="right"
 												>
 													{`${artist.nbAlbums} ${(artist.nbAlbums > 1) ? "albums" : "album"}`}
 												</Typography>
 											</TableCell>
 											<TableCell
-												width="48px"
+												width="36px"
 												size="small"
 											>
 												<IconButton
@@ -327,6 +349,22 @@ export const RenderArtists = observer((props) => {
 														e.preventDefault();
 														e.stopPropagation();
 														handleShuffleClick(artist.id);
+													}}
+												/>
+											</TableCell>
+											<TableCell
+												width="36px"
+												size="small"
+											>
+												<IconButton
+													size="small"
+													iconName="play_arrow"
+													color="hot"
+													className="flex-0"
+													onClick={(e) => {
+														e.preventDefault();
+														e.stopPropagation();
+														handlePlayClick(artist.id);
 													}}
 												/>
 											</TableCell>

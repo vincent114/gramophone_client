@@ -68,6 +68,38 @@ export const YearStore = types
 			return albumsList;
 		},
 
+		getTracks(load=true, filter="all") {
+			const store = getRoot(self);
+			const app = store.app;
+			const helpers = app.helpers;
+			const albums = store.albums;
+			const tracks = store.tracks;
+
+			let tracksList = [];
+			let tracksIds = [];
+
+			for (const albumId of self.albums_ids) {
+				const album = albums.by_id.get(albumId);
+				if (album) {
+					if (load) {
+						helpers.extendArray(tracksList, album.getTracks(load, filter));
+					} else {
+						helpers.extendArray(tracksIds, album.getTracks(load, filter));
+					}
+				}
+			}
+			return (load) ? tracksList : tracksIds;
+		},
+
+		getTracksRandomly(load=true, howMany) {
+			const store = getRoot(self);
+			const app = store.app;
+			const helpers = app.helpers;
+
+			const tracksList = self.getTracks(load, "shuffle");
+			return helpers.shuffleArray(tracksList, howMany);
+		},
+
 	}))
 	.actions(self => ({
 
@@ -91,6 +123,23 @@ export const YearStore = types
 			if (self.albums_ids.indexOf(albumId) == -1) {
 				self.albums_ids.push(albumId);
 			}
+		},
+
+		// -
+
+		shuffle: () => {
+
+			// Lecture aléatoire des morceaux de l'année (100 au max)
+			// ---
+
+			const store = getRoot(self);
+			const player = store.player;
+
+			const playbackIds = self.getTracksRandomly(false, 100);
+			player.audioStop();
+			player.clear();
+			player.populate(playbackIds);
+			player.read();
 		},
 
 	}))
@@ -126,7 +175,7 @@ export const RenderYear = observer((props) => {
 	// ==================================================================================================
 
 	const handleThrowDiceClick = () => {
-		// TODO
+		year.shuffle();
 	}
 
 	// -
