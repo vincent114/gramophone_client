@@ -181,6 +181,7 @@ export const RenderYears = observer((props) => {
 	// From ... store
 
 	const isLoading = store.isLoading;
+	const focusKey = app.focusKey;
 
 	const nbYears = years.nbYears;
 	const groupedByDecade = years.groupedByDecade;
@@ -206,8 +207,12 @@ export const RenderYears = observer((props) => {
 		popupJumpTo.open();
 	}
 
-	const handleFocusClick = (decade) => {
-		// TODO
+	const handleFocusClick = (focusKey) => {
+		app.focus(focusKey);
+	}
+
+	const handleUnfocusClick = () => {
+		app.unfocus();
 	}
 
 	// -
@@ -248,6 +253,11 @@ export const RenderYears = observer((props) => {
 			{decades.map((decade, decadeIdx) => {
 
 				const yearsDecade = groupedByDecade[decade];
+
+				// Focus sur une décennie en particulier ?
+				if (focusKey && focusKey != decade) {
+					return;
+				}
 
 				// Fantômes flex
 				let decadeGhosts = []
@@ -296,10 +306,22 @@ export const RenderYears = observer((props) => {
 								</Avatar>
 							)}
 							right={(
-								<IconButton
-									iconName="arrow_forward"
-									onClick={() => handleFocusClick(decade)}
-								/>
+								<React.Fragment>
+									{(focusKey != decade) && (
+										<IconButton
+											iconName="arrow_forward"
+											// color="hot"
+											onClick={() => handleFocusClick(decade)}
+										/>
+									)}
+									{(focusKey == decade) && (
+										<IconButton
+											iconName="close"
+											// color="hot"
+											onClick={() => handleUnfocusClick()}
+										/>
+									)}
+								</React.Fragment>
 							)}
 						/>
 

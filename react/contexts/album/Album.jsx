@@ -571,12 +571,12 @@ export const RenderAlbum = observer((props) => {
 						{nbDiscs > 1 && (
 							<GroupDivider
 								spacing="big"
-								left={(
-									<IconButton
-										iconName="album"
-										onClick={() => handleDiscClick(disc)}
-									/>
-								)}
+								// left={(
+								// 	<IconButton
+								// 		iconName="album"
+								// 		onClick={() => handleDiscClick(disc)}
+								// 	/>
+								// )}
 								center={(
 									<Avatar
 										size="small"
@@ -590,12 +590,12 @@ export const RenderAlbum = observer((props) => {
 										{disc}
 									</Avatar>
 								)}
-								right={(
-									<IconButton
-										iconName="arrow_forward"
-										onClick={() => handleFocusDisc(disc)}
-									/>
-								)}
+								// right={(
+								// 	<IconButton
+								// 		iconName="arrow_forward"
+								// 		onClick={() => handleFocusDisc(disc)}
+								// 	/>
+								// )}
 							/>
 						)}
 

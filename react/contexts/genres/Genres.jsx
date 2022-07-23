@@ -184,6 +184,7 @@ export const RenderGenres = observer((props) => {
 	// From ... store
 
 	const isLoading = store.isLoading;
+	const focusKey = app.focusKey;
 
 	const nbGenres = genres.nbGenres;
 	const genresByLetter = genres.getByLetter();
@@ -209,8 +210,12 @@ export const RenderGenres = observer((props) => {
 		popupJumpTo.open();
 	}
 
-	const handleFocusClick = (letter) => {
-		// TODO
+	const handleFocusClick = (focusKey) => {
+		app.focus(focusKey);
+	}
+
+	const handleUnfocusClick = () => {
+		app.unfocus();
 	}
 
 	// -
@@ -252,6 +257,11 @@ export const RenderGenres = observer((props) => {
 
 				const genresLetter = genresByLetter[letter];
 
+				// Focus sur une lettre en particulier ?
+				if (focusKey && focusKey != letter) {
+					return;
+				}
+
 				return (
 					<Group
 						id={`group-${letter}`}
@@ -282,10 +292,22 @@ export const RenderGenres = observer((props) => {
 								</Avatar>
 							)}
 							right={(
-								<IconButton
-									iconName="arrow_forward"
-									onClick={() => handleFocusClick(letter)}
-								/>
+								<React.Fragment>
+									{(focusKey != letter) && (
+										<IconButton
+											iconName="arrow_forward"
+											// color="hot"
+											onClick={() => handleFocusClick(letter)}
+										/>
+									)}
+									{(focusKey == letter) && (
+										<IconButton
+											iconName="close"
+											// color="hot"
+											onClick={() => handleUnfocusClick()}
+										/>
+									)}
+								</React.Fragment>
 							)}
 						/>
 

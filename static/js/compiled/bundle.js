@@ -22,6 +22,8 @@ var mobx_state_tree_module = __webpack_require__(27947);
 var es = __webpack_require__(10589);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/regenerator-runtime/runtime.js
 var runtime = __webpack_require__(39354);
+// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.array.map.js
+var es_array_map = __webpack_require__(59162);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.array.includes.js
 var es_array_includes = __webpack_require__(20368);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.array.index-of.js
@@ -76,8 +78,6 @@ var route_node_esm = __webpack_require__(26285);
 var clsx_m = __webpack_require__(24097);
 // EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.string.replace.js
 var es_string_replace = __webpack_require__(6813);
-// EXTERNAL MODULE: ../../nexus/react/node_modules/core-js/modules/es.array.map.js
-var es_array_map = __webpack_require__(59162);
 ;// CONCATENATED MODULE: ../../nexus/react/models/Services.jsx
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -894,7 +894,7 @@ function getFromCookies(field) {
 
   return '';
 }
-function getFromStorage(field, defaultValue, valueType, storage) {
+function Storage_getFromStorage(field, defaultValue, valueType, storage) {
   // Get a value from localstorage / sessionstorage
   // ---
   storage = storage ? storage : localStorage;
@@ -926,7 +926,7 @@ function getFromStorage(field, defaultValue, valueType, storage) {
 
   return value;
 }
-function setToStorage(field, value, valueType, storage) {
+function Storage_setToStorage(field, value, valueType, storage) {
   // Set a value in localstorage / sessionstorage
   // ---
   storage = storage ? storage : localStorage;
@@ -941,7 +941,7 @@ function setToStorage(field, value, valueType, storage) {
 
   storage.setItem(field, value);
 }
-function removeFromStorage(field, storage) {
+function Storage_removeFromStorage(field, storage) {
   // Remove an entry from localstorage / sessionstorage
   // ---
   storage = storage ? storage : localStorage;
@@ -11155,7 +11155,7 @@ var MenuStore = mobx_state_tree_module/* types.model */.V5.model({
 
       if (!breakPoint650 && self.pinned) {
         newState = !self.expanded;
-        setToStorage('menuExpanded', newState);
+        Storage_setToStorage('menuExpanded', newState);
       } // Ouverture / fermeture en mode mobile
 
 
@@ -11167,7 +11167,7 @@ var MenuStore = mobx_state_tree_module/* types.model */.V5.model({
     },
     tooglePinned: function tooglePinned() {
       self.pinned = !self.pinned;
-      setToStorage('menuPinned', self.pinned);
+      Storage_setToStorage('menuPinned', self.pinned);
     },
     update: function update(openOrExpanded) {
       // Masque ou affiche le menu latéral
@@ -11462,7 +11462,7 @@ var PortalStore = mobx_state_tree_module/* types.model */.V5.model({
 
       if (!breakPoint650 && self.pinned) {
         newState = !self.expanded;
-        setToStorage('portalExpanded', newState);
+        Storage_setToStorage('portalExpanded', newState);
       } // Ouverture / fermeture en mode mobile
 
 
@@ -11474,7 +11474,7 @@ var PortalStore = mobx_state_tree_module/* types.model */.V5.model({
     },
     tooglePinned: function tooglePinned() {
       self.pinned = !self.pinned;
-      setToStorage('portalPinned', self.pinned);
+      Storage_setToStorage('portalPinned', self.pinned);
     },
     update: function update(openOrExpanded) {
       // Masque ou affiche le portail d'apps
@@ -12209,7 +12209,7 @@ var ThemeStore = mobx_state_tree_module/* types.model */.V5.model({
 
       if (self.modeAuto) {
         self.mode = mode;
-        setToStorage('nxThemeMode', mode);
+        Storage_setToStorage('nxThemeMode', mode);
       }
     },
     // -
@@ -12218,8 +12218,8 @@ var ThemeStore = mobx_state_tree_module/* types.model */.V5.model({
       // ---
       var mode = self.mode;
       var newValue = mode == 'light' ? 'dark' : 'light';
-      setToStorage('nxThemeMode', newValue);
-      setToStorage('nxThemeModeAuto', false, 'bool');
+      Storage_setToStorage('nxThemeMode', newValue);
+      Storage_setToStorage('nxThemeModeAuto', false, 'bool');
       self.mode = newValue;
       self.modeAuto = false;
 
@@ -12318,17 +12318,17 @@ var RenderSectionTheme = (0,es/* observer */.Pi)(function (props) {
   // ==================================================================================================
 
   var handleModeAutoChange = function handleModeAutoChange(savePath, value) {
-    setToStorage('nxThemeModeAuto', value, 'bool');
+    Storage_setToStorage('nxThemeModeAuto', value, 'bool');
 
     if (value == false) {
-      theme.setField('mode', getFromStorage('nxThemeMode', 'light'));
+      theme.setField('mode', Storage_getFromStorage('nxThemeMode', 'light'));
     } else {
       theme.setField('mode', theme.modeOS);
     }
   };
 
   var handleModeChange = function handleModeChange(savePath, value) {
-    setToStorage('nxThemeMode', value);
+    Storage_setToStorage('nxThemeMode', value);
     theme.setField('mode', value);
   }; // Render
   // ==================================================================================================
@@ -17258,6 +17258,7 @@ function NxApp_arrayLikeToArray(arr, len) { if (len == null || len > arr.length)
 
 
 
+
  // Models
 // -------------------------------------------------------------------------------------------------------------
 // ***** NxAppStore *****
@@ -17337,8 +17338,7 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
   snackbar: mobx_state_tree_module/* types.optional */.V5.optional(SnackbarStore, {}),
   popup: mobx_state_tree_module/* types.optional */.V5.optional(PopupStore, {}),
   scrollIgnoredContexts: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), []),
-  focusedContexts: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), []),
-  // TODO
+  focusedContexts: mobx_state_tree_module/* types.map */.V5.map(mobx_state_tree_module/* types.string */.V5.string),
   // Common
   // -
   notifications: mobx_state_tree_module/* types.optional */.V5.optional(NotificationsStore, {}),
@@ -17393,6 +17393,17 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       return '/static';
+    },
+
+    // -
+    get focusKey() {
+      var focusKey = self.focusedContexts.get(self.context);
+
+      if (focusKey) {
+        return focusKey;
+      }
+
+      return "";
     },
 
     // Bools
@@ -17450,6 +17461,17 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       return false;
     },
 
+    get isFocused() {
+      var focusKey = self.focusedContexts.get(self.context);
+
+      if (focusKey) {
+        return true;
+      }
+
+      return false;
+    },
+
+    // -
     canGoBack: function canGoBack() {
       // Peut-on revenir en arrière dans l'historique ?
       // ---
@@ -17591,7 +17613,7 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       } // Edit mode ?
 
 
-      var editMode = getFromStorage('editMode', false, 'bool');
+      var editMode = Storage_getFromStorage('editMode', false, 'bool');
 
       if (self.urlParams.hasOwnProperty('edit')) {
         editMode = self.urlParams.edit == 'true' ? true : false;
@@ -17602,7 +17624,7 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       } // Debug mode ?
 
 
-      var debugMode = getFromStorage('debugMode', false, 'bool');
+      var debugMode = Storage_getFromStorage('debugMode', false, 'bool');
 
       if (appKind == "web" && !self.account.is_admin) {
         debugMode = false;
@@ -17811,12 +17833,13 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
 
 
       if (appKind == 'electron') {
-        setToStorage('lastContext', newContext);
+        Storage_setToStorage('lastContext', newContext);
       } // Changement de contexte (all the magic of one paged apps appens here!)
 
 
       if (ignoreContext == false && newContext != currentContext) {
-        setToStorage('previousContext', self.context);
+        Storage_setToStorage('previousContext', self.context);
+
         self.context = newContext; // Restoration du défilement
 
         clearTimeout(window.scrollTimeoutRestore);
@@ -18045,6 +18068,18 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       // ---
       self.navigate(self.homeUrl, 'home');
     },
+    // -
+    focus: function focus(focusKey) {
+      self.focusedContexts.set(self.context, focusKey);
+      self.scrollToTop();
+    },
+    unfocus: function unfocus() {
+      self.focusedContexts["delete"](self.context);
+      clearTimeout(window.scrollTimeoutRestore);
+      setTimeout(function () {
+        self.restoreScroll();
+      }, 500);
+    },
     // UI actions
     // --------------------------------------------------------------------------------------------------
     // Scroll Stuff
@@ -18082,6 +18117,11 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       // Scroll ignoré pour le contexte courant ?
       if (self.scrollIgnoredContexts.indexOf(self.context) > -1) {
         return;
+      } // Context en mode focus ? -> alors on ignore le scroll
+
+
+      if (self.isFocused) {
+        return;
       }
 
       var context = self.context;
@@ -18091,7 +18131,7 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
         console.log("Saving scroll ".concat(scrollKey, " : ").concat(scroll));
       }
 
-      setToStorage(scrollKey, scroll);
+      Storage_setToStorage(scrollKey, scroll);
     },
     restoreScroll: function restoreScroll() {
       // Restore scroll value
@@ -18099,9 +18139,9 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       var main = document.getElementById("nx-main");
       var scroll = 0;
 
-      if (self.scrollIgnoredContexts.indexOf(self.context) == -1) {
+      if (self.scrollIgnoredContexts.indexOf(self.context) == -1 && !self.isFocused) {
         var scrollKey = self.getScrollKey();
-        scroll = getFromStorage(scrollKey, 0, 'int');
+        scroll = Storage_getFromStorage(scrollKey, 0, 'int');
 
         if (window.infiniteScrollCallback) {
           scroll = 0;
@@ -18340,6 +18380,16 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       }
     },
     // -
+    getFromStorage: function getFromStorage(field, defaultValue, valueType, storage) {
+      return Storage_getFromStorage(field, defaultValue, valueType, storage);
+    },
+    setToStorage: function setToStorage(field, value, valueType, storage) {
+      return Storage_setToStorage(field, value, valueType, storage);
+    },
+    removeFromStorage: function removeFromStorage(field, storage) {
+      return Storage_removeFromStorage(field, storage);
+    },
+    // -
     addError: function addError(errorPath, errorMsg) {
       // Ajoute l'erreur passée en paramètres
       // ---
@@ -18497,7 +18547,8 @@ var makeInitSnapshot = function makeInitSnapshot(routes, snapshot, callback) {
   } // -
 
 
-  var themeModeAuto = getFromStorage('nxThemeModeAuto', true, 'bool');
+  var themeModeAuto = Storage_getFromStorage('nxThemeModeAuto', true, 'bool');
+
   var themeModeOS = 'light';
 
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -18510,7 +18561,7 @@ var makeInitSnapshot = function makeInitSnapshot(routes, snapshot, callback) {
     themeModeDefault = snapshot['app']['theme']['mode'];
   }
 
-  var themeMode = getFromStorage('nxThemeMode', themeModeDefault);
+  var themeMode = Storage_getFromStorage('nxThemeMode', themeModeDefault);
 
   if (themeModeAuto) {
     themeMode = themeModeOS;
@@ -18585,8 +18636,8 @@ var makeInitSnapshot = function makeInitSnapshot(routes, snapshot, callback) {
     };
   }
 
-  snapshot['app']['menu']['expanded'] = getFromStorage('menuExpanded', snapshot.app.menu.expanded, 'bool');
-  snapshot['app']['menu']['pinned'] = getFromStorage('menuPinned', snapshot.app.menu.pinned, 'bool'); // Portal
+  snapshot['app']['menu']['expanded'] = Storage_getFromStorage('menuExpanded', snapshot.app.menu.expanded, 'bool');
+  snapshot['app']['menu']['pinned'] = Storage_getFromStorage('menuPinned', snapshot.app.menu.pinned, 'bool'); // Portal
   // -
 
   if (!snapshot['app'].hasOwnProperty('portal')) {
@@ -18597,8 +18648,8 @@ var makeInitSnapshot = function makeInitSnapshot(routes, snapshot, callback) {
     };
   }
 
-  snapshot['app']['portal']['expanded'] = getFromStorage('portalExpanded', snapshot.app.portal.expanded, 'bool');
-  snapshot['app']['portal']['pinned'] = getFromStorage('portalPinned', snapshot.app.portal.pinned, 'bool'); // Playground
+  snapshot['app']['portal']['expanded'] = Storage_getFromStorage('portalExpanded', snapshot.app.portal.expanded, 'bool');
+  snapshot['app']['portal']['pinned'] = Storage_getFromStorage('portalPinned', snapshot.app.portal.pinned, 'bool'); // Playground
   // -
 
   if (!snapshot['app'].hasOwnProperty('playground')) {
@@ -21539,13 +21590,13 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
         marginTop: '40px'
       }
     }, nbDiscs > 1 && /*#__PURE__*/react.createElement(Group_GroupDivider, {
-      spacing: "big",
-      left: /*#__PURE__*/react.createElement(IconButton, {
-        iconName: "album",
-        onClick: function onClick() {
-          return handleDiscClick(disc);
-        }
-      }),
+      spacing: "big" // left={(
+      // 	<IconButton
+      // 		iconName="album"
+      // 		onClick={() => handleDiscClick(disc)}
+      // 	/>
+      // )}
+      ,
       center: /*#__PURE__*/react.createElement(Avatar_Avatar, {
         size: "small",
         color: "rgba(111, 126, 140, 0.1)",
@@ -21554,13 +21605,13 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
           fontSize: '14px',
           color: 'gray'
         }
-      }, disc),
-      right: /*#__PURE__*/react.createElement(IconButton, {
-        iconName: "arrow_forward",
-        onClick: function onClick() {
-          return handleFocusDisc(disc);
-        }
-      })
+      }, disc) // right={(
+      // 	<IconButton
+      // 		iconName="arrow_forward"
+      // 		onClick={() => handleFocusDisc(disc)}
+      // 	/>
+      // )}
+
     }), /*#__PURE__*/react.createElement(TableContainer, {
       component: Paper_Paper,
       style: {
@@ -22169,14 +22220,16 @@ var AlbumThumbnail = (0,es/* observer */.Pi)(function (props) {
   if (hover) {
     bottomRight = /*#__PURE__*/react.createElement(Avatar_Avatar, {
       iconName: "shuffle",
-      iconVariant: "filled",
-      iconColor: "#FFFFFF",
-      color: "hot",
+      iconVariant: "filled" // iconColor="#FFFFFF"
+      ,
+      iconColor: "info",
+      color: "transparent",
       size: "tiny",
       style: {
         margin: '5px',
         // opacity: '0.9',
-        stopPropagation: true
+        stopPropagation: true,
+        backdropFilter: 'blur(4px)'
       },
       onClick: function onClick(e) {
         e.preventDefault();
@@ -22193,14 +22246,16 @@ var AlbumThumbnail = (0,es/* observer */.Pi)(function (props) {
   if (hover) {
     bottomLeft = /*#__PURE__*/react.createElement(Avatar_Avatar, {
       iconName: isPlaying ? "pause" : "play_arrow",
-      iconVariant: "filled",
-      iconColor: "#FFFFFF",
-      color: "hot",
+      iconVariant: "filled" // iconColor="#FFFFFF"
+      ,
+      iconColor: "hot",
+      color: "transparent",
       size: "tiny",
       style: {
         margin: '5px',
         // opacity: '0.9',
-        stopPropagation: true
+        stopPropagation: true,
+        backdropFilter: 'blur(4px)'
       },
       onClick: function onClick(e) {
         e.preventDefault();
@@ -22237,6 +22292,7 @@ var RenderAlbums = (0,es/* observer */.Pi)(function (props) {
   var popupJumpTo = store.popupJumpTo; // From ... store
 
   var isLoading = store.isLoading;
+  var focusKey = app.focusKey;
   var nbAlbums = albums.nbAlbums;
   var albumsByLetter = albums.groupedByLetter(); // ...
 
@@ -22256,15 +22312,17 @@ var RenderAlbums = (0,es/* observer */.Pi)(function (props) {
     popupJumpTo.open();
   };
 
-  var handleFocusClick = function handleFocusClick(letter) {// TODO
+  var handleFocusClick = function handleFocusClick(focusKey) {
+    app.focus(focusKey);
+  };
+
+  var handleUnfocusClick = function handleUnfocusClick() {
+    app.unfocus();
   }; // -
 
 
   var handleAlbumClick = function handleAlbumClick(albumId) {
     store.navigateTo('album', albumId);
-  };
-
-  var handleShuffleClick = function handleShuffleClick(albumId) {// TODO
   }; // Render
   // ==================================================================================================
 
@@ -22284,7 +22342,12 @@ var RenderAlbums = (0,es/* observer */.Pi)(function (props) {
       }
     }))
   }), letters.map(function (letter, letterIdx) {
-    var albumsLetter = albumsByLetter[letter]; // Fantômes flex
+    var albumsLetter = albumsByLetter[letter]; // Focus sur une lettre en particulier ?
+
+    if (focusKey && focusKey != letter) {
+      return;
+    } // Fantômes flex
+
 
     var letterGhosts = [];
 
@@ -22321,12 +22384,19 @@ var RenderAlbums = (0,es/* observer */.Pi)(function (props) {
           color: 'gray'
         }
       }, albumsLetter.length),
-      right: /*#__PURE__*/react.createElement(IconButton, {
-        iconName: "arrow_forward",
+      right: /*#__PURE__*/react.createElement(react.Fragment, null, focusKey != letter && /*#__PURE__*/react.createElement(IconButton, {
+        iconName: "arrow_forward" // color="hot"
+        ,
         onClick: function onClick() {
           return handleFocusClick(letter);
         }
-      })
+      }), focusKey == letter && /*#__PURE__*/react.createElement(IconButton, {
+        iconName: "close" // color="hot"
+        ,
+        onClick: function onClick() {
+          return handleUnfocusClick();
+        }
+      }))
     }), /*#__PURE__*/react.createElement(Grid_Grid, {
       style: {
         paddingLeft: '20px',
@@ -22971,6 +23041,7 @@ var RenderArtists = (0,es/* observer */.Pi)(function (props) {
   var popupJumpTo = store.popupJumpTo; // From ... store
 
   var isLoading = app.isLoading;
+  var focusKey = app.focusKey;
   var nbArtists = artists.nbArtists;
   var artistsByLetter = artists.getByLetter(); // ...
 
@@ -22990,7 +23061,12 @@ var RenderArtists = (0,es/* observer */.Pi)(function (props) {
     popupJumpTo.open();
   };
 
-  var handleFocusClick = function handleFocusClick(letter) {// TODO
+  var handleFocusClick = function handleFocusClick(focusKey) {
+    app.focus(focusKey);
+  };
+
+  var handleUnfocusClick = function handleUnfocusClick() {
+    app.unfocus();
   }; // -
 
 
@@ -23031,7 +23107,12 @@ var RenderArtists = (0,es/* observer */.Pi)(function (props) {
       }
     }))
   }), letters.map(function (letter, letterIdx) {
-    var artistsLetter = artistsByLetter[letter];
+    var artistsLetter = artistsByLetter[letter]; // Focus sur une lettre en particulier ?
+
+    if (focusKey && focusKey != letter) {
+      return;
+    }
+
     return /*#__PURE__*/react.createElement(Group_Group, {
       id: "group-".concat(letter),
       key: "group-".concat(letter, "-").concat(letterIdx)
@@ -23052,13 +23133,19 @@ var RenderArtists = (0,es/* observer */.Pi)(function (props) {
           color: 'gray'
         }
       }, artistsLetter.length),
-      right: /*#__PURE__*/react.createElement(IconButton, {
+      right: /*#__PURE__*/react.createElement(react.Fragment, null, focusKey != letter && /*#__PURE__*/react.createElement(IconButton, {
         iconName: "arrow_forward" // color="hot"
         ,
         onClick: function onClick() {
           return handleFocusClick(letter);
         }
-      })
+      }), focusKey == letter && /*#__PURE__*/react.createElement(IconButton, {
+        iconName: "close" // color="hot"
+        ,
+        onClick: function onClick() {
+          return handleUnfocusClick();
+        }
+      }))
     }), /*#__PURE__*/react.createElement(TableContainer, {
       component: Paper_Paper,
       style: {
@@ -24287,6 +24374,7 @@ var RenderYears = (0,es/* observer */.Pi)(function (props) {
   var popupJumpTo = store.popupJumpTo; // From ... store
 
   var isLoading = store.isLoading;
+  var focusKey = app.focusKey;
   var nbYears = years.nbYears;
   var groupedByDecade = years.groupedByDecade; // ...
 
@@ -24308,7 +24396,12 @@ var RenderYears = (0,es/* observer */.Pi)(function (props) {
     popupJumpTo.open();
   };
 
-  var handleFocusClick = function handleFocusClick(decade) {// TODO
+  var handleFocusClick = function handleFocusClick(focusKey) {
+    app.focus(focusKey);
+  };
+
+  var handleUnfocusClick = function handleUnfocusClick() {
+    app.unfocus();
   }; // -
 
 
@@ -24341,7 +24434,12 @@ var RenderYears = (0,es/* observer */.Pi)(function (props) {
       }
     }))
   }), decades.map(function (decade, decadeIdx) {
-    var yearsDecade = groupedByDecade[decade]; // Fantômes flex
+    var yearsDecade = groupedByDecade[decade]; // Focus sur une décennie en particulier ?
+
+    if (focusKey && focusKey != decade) {
+      return;
+    } // Fantômes flex
+
 
     var decadeGhosts = [];
 
@@ -24378,12 +24476,19 @@ var RenderYears = (0,es/* observer */.Pi)(function (props) {
           color: 'gray'
         }
       }, yearsDecade.length),
-      right: /*#__PURE__*/react.createElement(IconButton, {
-        iconName: "arrow_forward",
+      right: /*#__PURE__*/react.createElement(react.Fragment, null, focusKey != decade && /*#__PURE__*/react.createElement(IconButton, {
+        iconName: "arrow_forward" // color="hot"
+        ,
         onClick: function onClick() {
           return handleFocusClick(decade);
         }
-      })
+      }), focusKey == decade && /*#__PURE__*/react.createElement(IconButton, {
+        iconName: "close" // color="hot"
+        ,
+        onClick: function onClick() {
+          return handleUnfocusClick();
+        }
+      }))
     }), /*#__PURE__*/react.createElement(Grid_Grid // style={{
     // 	paddingLeft: '20px',
     // 	paddingRight: '20px',
@@ -25021,6 +25126,7 @@ var RenderGenres = (0,es/* observer */.Pi)(function (props) {
   var popupJumpTo = store.popupJumpTo; // From ... store
 
   var isLoading = store.isLoading;
+  var focusKey = app.focusKey;
   var nbGenres = genres.nbGenres;
   var genresByLetter = genres.getByLetter(); // ...
 
@@ -25040,7 +25146,12 @@ var RenderGenres = (0,es/* observer */.Pi)(function (props) {
     popupJumpTo.open();
   };
 
-  var handleFocusClick = function handleFocusClick(letter) {// TODO
+  var handleFocusClick = function handleFocusClick(focusKey) {
+    app.focus(focusKey);
+  };
+
+  var handleUnfocusClick = function handleUnfocusClick() {
+    app.unfocus();
   }; // -
 
 
@@ -25073,7 +25184,12 @@ var RenderGenres = (0,es/* observer */.Pi)(function (props) {
       }
     }))
   }), letters.map(function (letter, letterIdx) {
-    var genresLetter = genresByLetter[letter];
+    var genresLetter = genresByLetter[letter]; // Focus sur une lettre en particulier ?
+
+    if (focusKey && focusKey != letter) {
+      return;
+    }
+
     return /*#__PURE__*/react.createElement(Group_Group, {
       id: "group-".concat(letter),
       key: "group-".concat(letter, "-").concat(letterIdx)
@@ -25094,12 +25210,19 @@ var RenderGenres = (0,es/* observer */.Pi)(function (props) {
           color: 'gray'
         }
       }, genresLetter.length),
-      right: /*#__PURE__*/react.createElement(IconButton, {
-        iconName: "arrow_forward",
+      right: /*#__PURE__*/react.createElement(react.Fragment, null, focusKey != letter && /*#__PURE__*/react.createElement(IconButton, {
+        iconName: "arrow_forward" // color="hot"
+        ,
         onClick: function onClick() {
           return handleFocusClick(letter);
         }
-      })
+      }), focusKey == letter && /*#__PURE__*/react.createElement(IconButton, {
+        iconName: "close" // color="hot"
+        ,
+        onClick: function onClick() {
+          return handleUnfocusClick();
+        }
+      }))
     }), /*#__PURE__*/react.createElement(TableContainer, {
       component: Paper_Paper,
       style: {
@@ -26076,7 +26199,7 @@ var HomeStore = mobx_state_tree_module/* types.model */.V5.model({
       self.initialized = true;
     },
     save: function save() {
-      setToStorage('homeSectionDisplayed', self.sectionDisplayed.toJSON(), 'json');
+      Storage_setToStorage('homeSectionDisplayed', self.sectionDisplayed.toJSON(), 'json');
     },
     // -
     displaySection: function displaySection(sectionKey) {
@@ -27580,7 +27703,7 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
-      var params = getFromStorage('params', null, 'json');
+      var params = Storage_getFromStorage('params', null, 'json');
 
       if (!params) {
         self.save();
@@ -27601,7 +27724,7 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
       // Sauvegarde des paramètres de la bibliothèque
       // ---
       var params = self.toJSON();
-      setToStorage('params', params, 'json');
+      Storage_setToStorage('params', params, 'json');
 
       if (callback) {
         callback();
@@ -28457,7 +28580,7 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       if (navContext == 'artist') {
-        setToStorage('lastArtistId', contextId);
+        Storage_setToStorage('lastArtistId', contextId);
         app.navigate('/main.html', 'artist', [{
           "op": "replace",
           "path": "/artistId",
@@ -28471,7 +28594,7 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       if (navContext == 'album') {
-        setToStorage('lastAlbumId', contextId);
+        Storage_setToStorage('lastAlbumId', contextId);
         app.navigate('/main.html', 'album', [{
           "op": "replace",
           "path": "/albumId",
@@ -28491,7 +28614,7 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       if (navContext == 'year') {
-        setToStorage('lastYearId', contextId);
+        Storage_setToStorage('lastYearId', contextId);
         app.navigate('/main.html', 'year', [{
           "op": "replace",
           "path": "/yearId",
@@ -28505,7 +28628,7 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       if (navContext == 'genre') {
-        setToStorage('lastGenreId', contextId);
+        Storage_setToStorage('lastGenreId', contextId);
         app.navigate('/main.html', 'genre', [{
           "op": "replace",
           "path": "/genreId",
@@ -28519,7 +28642,7 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       if (navContext == 'playlist') {
-        setToStorage('lastPlaylistId', contextId);
+        Storage_setToStorage('lastPlaylistId', contextId);
         app.navigate('/main.html', 'playlist', [{
           "op": "replace",
           "path": "/playlistId",
@@ -28580,7 +28703,7 @@ var routes = {
 
 var initSnapshot = makeInitSnapshot(routes, {
   'app': {
-    'context': getFromStorage("lastContext", "home"),
+    'context': Storage_getFromStorage("lastContext", "home"),
     'kind': 'electron',
     'tasks': ['load_library'],
     'header': {
@@ -28607,22 +28730,23 @@ var initSnapshot = makeInitSnapshot(routes, {
         }
       }
     },
-    'scrollIgnoredContexts': ['home', 'about', 'admin', 'artist', 'album', 'years', 'year', 'genre', 'playlist']
+    'scrollIgnoredContexts': ['home', 'about', 'admin', 'artist', 'album', // 'years',
+    'year', 'genre', 'playlist']
   },
   'home': {
-    'sectionDisplayed': getFromStorage('homeSectionDisplayed', ['showcased'], 'json')
+    'sectionDisplayed': Storage_getFromStorage('homeSectionDisplayed', ['showcased'], 'json')
   },
-  'artistId': getFromStorage('lastArtistId', ''),
-  'albumId': getFromStorage('lastAlbumId', ''),
-  'yearId': getFromStorage('lastYearId', ''),
-  'genreId': getFromStorage('lastGenreId', ''),
-  'playlistId': getFromStorage('lastPlaylistId', '')
+  'artistId': Storage_getFromStorage('lastArtistId', ''),
+  'albumId': Storage_getFromStorage('lastAlbumId', ''),
+  'yearId': Storage_getFromStorage('lastYearId', ''),
+  'genreId': Storage_getFromStorage('lastGenreId', ''),
+  'playlistId': Storage_getFromStorage('lastPlaylistId', '')
 });
 var rootStore = RootStore.create(initSnapshot);
 var RootStoreContext = /*#__PURE__*/react.createContext(rootStore);
 window.store = rootStore;
 window.storeContext = RootStoreContext;
-setToStorage('debugMode', true, 'bool');
+Storage_setToStorage('debugMode', true, 'bool');
 var staticRaw = {
   'smap': copyObj(services_STATIC_SMAP)
 };

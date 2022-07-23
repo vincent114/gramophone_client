@@ -316,13 +316,15 @@ export const AlbumThumbnail = observer((props) => {
 			<Avatar
 				iconName="shuffle"
 				iconVariant="filled"
-				iconColor="#FFFFFF"
-				color="hot"
+				// iconColor="#FFFFFF"
+				iconColor="info"
+				color="transparent"
 				size="tiny"
 				style={{
 					margin: '5px',
 					// opacity: '0.9',
 					stopPropagation: true,
+					backdropFilter: 'blur(4px)',
 				}}
 				onClick={(e) => {
 					e.preventDefault();
@@ -342,13 +344,15 @@ export const AlbumThumbnail = observer((props) => {
 			<Avatar
 				iconName={(isPlaying) ? "pause" : "play_arrow"}
 				iconVariant="filled"
-				iconColor="#FFFFFF"
-				color="hot"
+				// iconColor="#FFFFFF"
+				iconColor="hot"
+				color="transparent"
 				size="tiny"
 				style={{
 					margin: '5px',
 					// opacity: '0.9',
 					stopPropagation: true,
+					backdropFilter: 'blur(4px)',
 				}}
 				onClick={(e) => {
 					e.preventDefault();
@@ -396,6 +400,7 @@ export const RenderAlbums = observer((props) => {
 	// From ... store
 
 	const isLoading = store.isLoading;
+	const focusKey = app.focusKey;
 
 	const nbAlbums = albums.nbAlbums;
 	const albumsByLetter = albums.groupedByLetter();
@@ -421,18 +426,18 @@ export const RenderAlbums = observer((props) => {
 		popupJumpTo.open();
 	}
 
-	const handleFocusClick = (letter) => {
-		// TODO
+	const handleFocusClick = (focusKey) => {
+		app.focus(focusKey);
+	}
+
+	const handleUnfocusClick = () => {
+		app.unfocus();
 	}
 
 	// -
 
 	const handleAlbumClick = (albumId) => {
 		store.navigateTo('album', albumId);
-	}
-
-	const handleShuffleClick = (albumId) => {
-		// TODO
 	}
 
 	// Render
@@ -460,6 +465,11 @@ export const RenderAlbums = observer((props) => {
 			{letters.map((letter, letterIdx) => {
 
 				const albumsLetter = albumsByLetter[letter];
+
+				// Focus sur une lettre en particulier ?
+				if (focusKey && focusKey != letter) {
+					return;
+				}
 
 				// Fantômes flex
 				let letterGhosts = []
@@ -508,10 +518,22 @@ export const RenderAlbums = observer((props) => {
 								</Avatar>
 							)}
 							right={(
-								<IconButton
-									iconName="arrow_forward"
-									onClick={() => handleFocusClick(letter)}
-								/>
+								<React.Fragment>
+									{(focusKey != letter) && (
+										<IconButton
+											iconName="arrow_forward"
+											// color="hot"
+											onClick={() => handleFocusClick(letter)}
+										/>
+									)}
+									{(focusKey == letter) && (
+										<IconButton
+											iconName="close"
+											// color="hot"
+											onClick={() => handleUnfocusClick()}
+										/>
+									)}
+								</React.Fragment>
 							)}
 						/>
 

@@ -193,6 +193,7 @@ export const RenderArtists = observer((props) => {
 	// From ... store
 
 	const isLoading = app.isLoading;
+	const focusKey = app.focusKey;
 
 	const nbArtists = artists.nbArtists;
 	const artistsByLetter = artists.getByLetter();
@@ -218,8 +219,12 @@ export const RenderArtists = observer((props) => {
 		popupJumpTo.open();
 	}
 
-	const handleFocusClick = (letter) => {
-		// TODO
+	const handleFocusClick = (focusKey) => {
+		app.focus(focusKey);
+	}
+
+	const handleUnfocusClick = () => {
+		app.unfocus();
 	}
 
 	// -
@@ -268,6 +273,11 @@ export const RenderArtists = observer((props) => {
 
 				const artistsLetter = artistsByLetter[letter];
 
+				// Focus sur une lettre en particulier ?
+				if (focusKey && focusKey != letter) {
+					return;
+				}
+
 				return (
 					<Group
 						id={`group-${letter}`}
@@ -298,11 +308,22 @@ export const RenderArtists = observer((props) => {
 								</Avatar>
 							)}
 							right={(
-								<IconButton
-									iconName="arrow_forward"
-									// color="hot"
-									onClick={() => handleFocusClick(letter)}
-								/>
+								<React.Fragment>
+									{(focusKey != letter) && (
+										<IconButton
+											iconName="arrow_forward"
+											// color="hot"
+											onClick={() => handleFocusClick(letter)}
+										/>
+									)}
+									{(focusKey == letter) && (
+										<IconButton
+											iconName="close"
+											// color="hot"
+											onClick={() => handleUnfocusClick()}
+										/>
+									)}
+								</React.Fragment>
 							)}
 						/>
 
