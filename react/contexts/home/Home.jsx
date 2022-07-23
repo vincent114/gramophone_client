@@ -547,10 +547,11 @@ export const RenderLastListened = observer((props) => {
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
 	const home = store.home;
+	const player = store.player;
 
 	// From ... store
 
-	const recentHistory = []; // TODO
+	const recentHistory = player.getLastListened(6);
 
 	// ...
 

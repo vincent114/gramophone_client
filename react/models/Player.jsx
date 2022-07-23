@@ -3,6 +3,11 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import {
+	getFromStorage,
+	setToStorage
+} from 'nexus/utils/Storage';
+
 
 // Datas
 // ======================================================================================================
@@ -48,6 +53,9 @@ export const PlayerStore = types
 		drawerOpen: false,
 		drawerView: 'current', // current, history
 
+		// -
+
+		loaded: false,
 	})
 	.views(self => ({
 
@@ -149,6 +157,34 @@ export const PlayerStore = types
 			return self.playList.indexOf(trackId);
 		},
 
+		getLastListened(maxAlbums) {
+
+			// Récupération des derniers albums écoutés
+			// ---
+
+			const store = getRoot(self);
+			const tracks = store.tracks;
+
+			let lastListened = [];
+			let lastListenedIds = [];
+
+			for (const trackId of self.historyList) {
+				if (lastListened.length < maxAlbums) {
+					const track = tracks.by_id.get(trackId);
+					if (track) {
+						const linkedAlbum = track.linkedAlbum;
+						if (lastListenedIds.indexOf(linkedAlbum.id) == -1) {
+							lastListened.push(linkedAlbum);
+							lastListenedIds.push(linkedAlbum.id)
+						}
+					}
+				} else {
+					break;
+				}
+			}
+			return lastListened;
+		},
+
 	}))
 	.actions(self => ({
 
@@ -158,6 +194,35 @@ export const PlayerStore = types
 
 		toggleDrawer: () => {
 			self.drawerOpen = !self.drawerOpen;
+		},
+
+		// -
+
+		load: () => {
+
+			// Chargement des paramètres de la bibliothèque
+			// ---
+
+			const store = getRoot(self);
+			const app = store.app;
+
+			const historyList = getFromStorage('historyList', [], 'json');
+			self.historyList = historyList;
+
+			self.loaded = true;
+		},
+
+		save: (callback) => {
+
+			// Sauvegarde des de l'historique de lecture
+			// ---
+
+			const historyList = self.historyList.toJSON();
+			setToStorage('historyList', historyList, 'json');
+
+			if (callback) {
+				callback();
+			}
 		},
 
 		// -
@@ -176,20 +241,12 @@ export const PlayerStore = types
 			}
 		},
 
-		populateHistory: (trackIds) => {
-			for (const trackId of trackIds) {
-				self.historyList.push(trackId);
-			}
-		},
-
 		clear: () => {
 			self.playList = [];
 			self.playIdx = -1;
 		},
 
-		clearHistory: () => {
-			self.historyList = [];
-		},
+		// -
 
 		addHistory: (trackId) => {
 
@@ -201,6 +258,20 @@ export const PlayerStore = types
 				self.historyList.splice(self.historyList.length - 1, 1);
 			}
 			self.historyList.splice(0, 0, trackId);
+			self.save();
+		},
+
+		populateHistory: (trackIds) => {
+			for (const trackId of trackIds) {
+				self.historyList.push(trackId);
+			}
+			self.save();
+		},
+
+
+		clearHistory: () => {
+			self.historyList = [];
+			self.save();
 		},
 
 		// -
@@ -241,7 +312,10 @@ export const PlayerStore = types
 			if (self.isPlaying) {
 				self.audioStop();
 			}
-			self.addHistory(trackId);
+			clearTimeout(window.addHistoryTimeout);
+			window.addHistoryTimeout = setTimeout(() => {
+				self.addHistory(trackId);
+			}, 1000);
 			self.audioPlay();
 		},
 

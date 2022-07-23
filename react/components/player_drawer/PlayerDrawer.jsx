@@ -75,6 +75,7 @@ export const PlayerDrawer = observer((props) => {
 						id="btn-player-drawer-view"
 						component='button_group'
 						datas={DRAWER_VIEWS_ITEMS}
+						disabled={false}
 						savePath={['player', 'drawerView']}
 					/>
 				</div>

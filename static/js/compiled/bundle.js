@@ -7034,7 +7034,7 @@ var Field_Field = (0,es/* observer */.Pi)(function (props) {
 
   var color = props.color ? props.color : 'primary'; // primary, white, black
 
-  var disabled = props.disabled ? props.disabled : isLoading;
+  var disabled = props.disabled == true ? true : false;
   var className = props.className ? props.className : '';
   var style = props.style != undefined ? props.style : {};
   var inputStyle = props.inputStyle != undefined ? props.inputStyle : {};
@@ -19397,11 +19397,14 @@ var PlayerItem_PlayerItem = (0,es/* observer */.Pi)(function (props) {
 
 
 
+
+
 function Player_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Player_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function Player_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Player_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Player_arrayLikeToArray(o, minLen); }
 
 function Player_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 
 
 
@@ -19434,8 +19437,10 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
   // L'index de lecture courante
   historyList: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), []),
   drawerOpen: false,
-  drawerView: 'current' // current, history
-
+  drawerView: 'current',
+  // current, history
+  // -
+  loaded: false
 }).views(function (self) {
   return {
     get nbTracks() {
@@ -19559,6 +19564,44 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
     // -
     getTrackIdx: function getTrackIdx(trackId) {
       return self.playList.indexOf(trackId);
+    },
+    getLastListened: function getLastListened(maxAlbums) {
+      // Récupération des derniers albums écoutés
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var tracks = store.tracks;
+      var lastListened = [];
+      var lastListenedIds = [];
+
+      var _iterator3 = Player_createForOfIteratorHelper(self.historyList),
+          _step3;
+
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var trackId = _step3.value;
+
+          if (lastListened.length < maxAlbums) {
+            var track = tracks.by_id.get(trackId);
+
+            if (track) {
+              var linkedAlbum = track.linkedAlbum;
+
+              if (lastListenedIds.indexOf(linkedAlbum.id) == -1) {
+                lastListened.push(linkedAlbum);
+                lastListenedIds.push(linkedAlbum.id);
+              }
+            }
+          } else {
+            break;
+          }
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
+
+      return lastListened;
     }
   };
 }).actions(function (self) {
@@ -19570,6 +19613,26 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
       self.drawerOpen = !self.drawerOpen;
     },
     // -
+    load: function load() {
+      // Chargement des paramètres de la bibliothèque
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var historyList = Storage_getFromStorage('historyList', [], 'json');
+      self.historyList = historyList;
+      self.loaded = true;
+    },
+    save: function save(callback) {
+      // Sauvegarde des de l'historique de lecture
+      // ---
+      var historyList = self.historyList.toJSON();
+      Storage_setToStorage('historyList', historyList, 'json');
+
+      if (callback) {
+        callback();
+      }
+    },
+    // -
     insert: function insert(trackId) {
       if (self.playList.length > 0 && self.playList[0] == trackId) {
         return;
@@ -19579,28 +19642,13 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
       return self.playIdx;
     },
     populate: function populate(trackIds) {
-      var _iterator3 = Player_createForOfIteratorHelper(trackIds),
-          _step3;
-
-      try {
-        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-          var trackId = _step3.value;
-          self.playList.push(trackId);
-        }
-      } catch (err) {
-        _iterator3.e(err);
-      } finally {
-        _iterator3.f();
-      }
-    },
-    populateHistory: function populateHistory(trackIds) {
       var _iterator4 = Player_createForOfIteratorHelper(trackIds),
           _step4;
 
       try {
         for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
           var trackId = _step4.value;
-          self.historyList.push(trackId);
+          self.playList.push(trackId);
         }
       } catch (err) {
         _iterator4.e(err);
@@ -19612,9 +19660,7 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
       self.playList = [];
       self.playIdx = -1;
     },
-    clearHistory: function clearHistory() {
-      self.historyList = [];
-    },
+    // -
     addHistory: function addHistory(trackId) {
       // Ajoute un élément à l'historique de lecture
       // ---
@@ -19624,6 +19670,28 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       self.historyList.splice(0, 0, trackId);
+      self.save();
+    },
+    populateHistory: function populateHistory(trackIds) {
+      var _iterator5 = Player_createForOfIteratorHelper(trackIds),
+          _step5;
+
+      try {
+        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+          var trackId = _step5.value;
+          self.historyList.push(trackId);
+        }
+      } catch (err) {
+        _iterator5.e(err);
+      } finally {
+        _iterator5.f();
+      }
+
+      self.save();
+    },
+    clearHistory: function clearHistory() {
+      self.historyList = [];
+      self.save();
     },
     // -
     jumpTo: function jumpTo(idx) {
@@ -19659,7 +19727,10 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
         self.audioStop();
       }
 
-      self.addHistory(trackId);
+      clearTimeout(window.addHistoryTimeout);
+      window.addHistoryTimeout = setTimeout(function () {
+        self.addHistory(trackId);
+      }, 1000);
       self.audioPlay();
     },
     readPrevious: function readPrevious() {
@@ -19879,6 +19950,7 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
       id: "btn-player-drawer-view",
       component: "button_group",
       datas: DRAWER_VIEWS_ITEMS,
+      disabled: false,
       savePath: ['player', 'drawerView']
     })), drawerView == "current" && /*#__PURE__*/react.createElement(react.Fragment, null, remainingPlayTracks.length > 0 && /*#__PURE__*/react.createElement(Button_Button, {
       id: "btn-clear-current-list",
@@ -26530,10 +26602,10 @@ var TAG_RenderLastListened = function TAG_RenderLastListened() {};
 var RenderLastListened = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var home = store.home; // From ... store
+  var home = store.home;
+  var player = store.player; // From ... store
 
-  var recentHistory = []; // TODO
-  // ...
+  var recentHistory = player.getLastListened(6); // ...
 
   var homeSectionDef = HOME_SECTIONS_BY_KEYS["history"]; // Events
   // ==================================================================================================
@@ -28450,7 +28522,7 @@ function writeJsonFile(filePath, datas, callback) {
 
   return null;
 } // Models
-// -------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 // ***** RootStore *****
 // *********************
 
@@ -28499,8 +28571,13 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
       // ---
       var app = self.app;
       var library = self.library;
+      var player = self.player;
 
       if (!library.loaded) {
+        return;
+      }
+
+      if (!player.loaded) {
         return;
       }
 
@@ -28539,6 +28616,7 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
       // Gramophone-specific init datas
       // ---
       self.library.load();
+      self.player.load();
       setTimeout(function () {
         self.artists.load(self.afterLoad);
         self.albums.load(self.afterLoad);
@@ -28568,11 +28646,6 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
       // ---
       var app = self.app;
       var context = app.context; // -
-      // Search
-      // if (navContext == 'search') {
-      // 	app.navigate('/main.html', 'search');
-      // }
-      // -
       // Artistes
 
       if (navContext == 'artists') {
@@ -28660,7 +28733,7 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
     }
   };
 }); // Init
-// -------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 // Contexts
 // -
 
@@ -28730,8 +28803,7 @@ var initSnapshot = makeInitSnapshot(routes, {
         }
       }
     },
-    'scrollIgnoredContexts': ['home', 'about', 'admin', 'artist', 'album', // 'years',
-    'year', 'genre', 'playlist']
+    'scrollIgnoredContexts': ['home', 'about', 'admin', 'artist', 'album', 'years', 'year', 'genre', 'playlist']
   },
   'home': {
     'sectionDisplayed': Storage_getFromStorage('homeSectionDisplayed', ['showcased'], 'json')
@@ -28754,7 +28826,7 @@ staticRaw['smap']['me'] = copyObj(services_STATIC_SMAP.gramophone);
 rootStore.app.init(function (datas) {
   rootStore.update(datas);
 }, popups, {}, staticRaw); // Functions Components ReactJS
-// -------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 // ***** Root *****
 // ****************
 
@@ -28773,7 +28845,7 @@ var Root = (0,es/* observer */.Pi)(function () {
     popups: popups
   }));
 }); // DOM Ready
-// --------------------------------------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 
 window.addEventListener('DOMContentLoaded', function () {
   react_dom.render( /*#__PURE__*/react.createElement(Root, null), document.getElementById("nx-root"));

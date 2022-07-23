@@ -118,7 +118,7 @@ function writeJsonFile(filePath, datas, callback) {
 
 
 // Models
-// -------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 
 // ***** RootStore *****
 // *********************
@@ -190,8 +190,10 @@ const RootStore = types
 
 			const app = self.app;
 			const library = self.library;
+			const player = self.player;
 
 			if (!library.loaded) { return; }
+			if (!player.loaded) { return; }
 
 			if (!self.artists.loaded) { return; }
 			if (!self.albums.loaded) { return; }
@@ -215,6 +217,7 @@ const RootStore = types
 			// ---
 
 			self.library.load();
+			self.player.load();
 
 			setTimeout(() => {
 				self.artists.load(self.afterLoad);
@@ -254,13 +257,6 @@ const RootStore = types
 
 			const app = self.app;
 			const context = app.context;
-
-			// -
-
-			// Search
-			// if (navContext == 'search') {
-			// 	app.navigate('/main.html', 'search');
-			// }
 
 			// -
 
@@ -343,7 +339,7 @@ const RootStore = types
 
 
 // Init
-// -------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 
 // Contexts
 // -
@@ -437,7 +433,7 @@ let initSnapshot = makeInitSnapshot(routes, {
 
 			'artist',
 			'album',
-			// 'years',
+			'years',
 			'year',
 			'genre',
 			'playlist',
@@ -477,7 +473,7 @@ rootStore.app.init(
 
 
 // Functions Components ReactJS
-// -------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 
 // ***** Root *****
 // ****************
@@ -503,7 +499,7 @@ const Root = observer(() => {
 
 
 // DOM Ready
-// --------------------------------------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 
 window.addEventListener('DOMContentLoaded', () => {
 	ReactDOM.render(
