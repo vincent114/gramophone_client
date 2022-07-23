@@ -179,6 +179,7 @@ export const RenderGenres = observer((props) => {
 	const app = store.app;
 	const genres = store.genres;
 	const tracks = store.tracks;
+	const popupJumpTo = store.popupJumpTo;
 
 	// From ... store
 
@@ -202,7 +203,10 @@ export const RenderGenres = observer((props) => {
 	// -
 
 	const handleLetterClick = (letter) => {
-		// TODO
+		popupJumpTo.setField("scope", "standard");
+		popupJumpTo.setField("chars", letters);
+		popupJumpTo.setField("current", letter);
+		popupJumpTo.open();
 	}
 
 	const handleFocusClick = (letter) => {

@@ -4,7 +4,6 @@ import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
 import { ArtistStore } from 'gramophone_client/contexts/artist/Artist';
-// import { popupJumpToKey } from 'gramophone_client/popups/jump_to/PopupJumpTo';
 
 import {
 	TableContainer,
@@ -213,7 +212,8 @@ export const RenderArtists = observer((props) => {
 	// -
 
 	const handleLetterClick = (letter) => {
-		popupJumpTo.setField("chars", []); // TODO
+		popupJumpTo.setField("scope", "standard");
+		popupJumpTo.setField("chars", letters);
 		popupJumpTo.setField("current", letter);
 		popupJumpTo.open();
 	}

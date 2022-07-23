@@ -391,6 +391,7 @@ export const RenderAlbums = observer((props) => {
 	const app = store.app;
 	const albums = store.albums;
 	const tracks = store.tracks;
+	const popupJumpTo = store.popupJumpTo;
 
 	// From ... store
 
@@ -414,7 +415,10 @@ export const RenderAlbums = observer((props) => {
 	// -
 
 	const handleLetterClick = (letter) => {
-		// TODO
+		popupJumpTo.setField("scope", "standard");
+		popupJumpTo.setField("chars", letters);
+		popupJumpTo.setField("current", letter);
+		popupJumpTo.open();
 	}
 
 	const handleFocusClick = (letter) => {
@@ -473,8 +477,8 @@ export const RenderAlbums = observer((props) => {
 
 				return (
 					<Group
-						id={`group-${letter}-${letterIdx}`}
-						key={`group-${letter}-${letterIdx}`}
+						id={`group-${letter}`}
+						key={`group-${letter}`}
 						style={{
 							marginBottom: '40px',
 						}}

@@ -176,6 +176,7 @@ export const RenderYears = observer((props) => {
 	const app = store.app;
 	const years = store.years;
 	const tracks = store.tracks;
+	const popupJumpTo = store.popupJumpTo;
 
 	// From ... store
 
@@ -199,7 +200,10 @@ export const RenderYears = observer((props) => {
 	// -
 
 	const handleDecadeClick = (decade) => {
-		// TODO
+		popupJumpTo.setField("scope", "known");
+		popupJumpTo.setField("chars", decades);
+		popupJumpTo.setField("current", decade);
+		popupJumpTo.open();
 	}
 
 	const handleFocusClick = (decade) => {
@@ -262,7 +266,7 @@ export const RenderYears = observer((props) => {
 				return (
 					<Group
 						id={`group-${decade}`}
-						key={`group-${decade}-${decadeIdx}`}
+						key={`group-${decade}`}
 						style={{
 							marginBottom: '40px',
 						}}

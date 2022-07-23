@@ -30,7 +30,7 @@ import { Avatar } from 'nexus/ui/avatar/Avatar';
 import { Paper } from 'nexus/ui/paper/Paper';
 import { Icon } from 'nexus/ui/icon/Icon';
 
-import { uuid } from 'nexus/utils/Datas';
+import { uuid, getLetter } from 'nexus/utils/Datas';
 
 import './Album.css';
 
@@ -61,7 +61,7 @@ export const AlbumStore = types
 
 		get letter() {
 			if (self.name) {
-				return self.name[0].toLowerCase();
+				return getLetter(self.name);
 			}
 			return "";
 		},

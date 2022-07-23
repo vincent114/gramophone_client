@@ -14,6 +14,8 @@ import { IconButton } from 'nexus/ui/button/Button';
 import { Typography } from 'nexus/ui/typography/Typography';
 import { ThumbnailGhost } from 'nexus/ui/thumbnail/Thumbnail';
 
+import { getLetter } from 'nexus/utils/Datas';
+
 import './Genre.css';
 
 
@@ -35,7 +37,7 @@ export const GenreStore = types
 
 		get letter() {
 			if (self.name) {
-				return self.name[0].toLowerCase();
+				return getLetter(self.name);
 			}
 			return "";
 		},

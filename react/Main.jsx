@@ -406,6 +406,9 @@ let initSnapshot = makeInitSnapshot(routes, {
 		'context': getFromStorage("lastContext", "home"),
 		'kind': 'electron',
 		'tasks': ['load_library'],
+		'header': {
+			'dynamic': false,
+		},
 		'menu': {
 			'pinned': false,
 		},
