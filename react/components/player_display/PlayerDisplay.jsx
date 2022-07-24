@@ -9,6 +9,7 @@ import { Column } from 'nexus/layout/column/Column';
 import { Icon } from 'nexus/ui/icon/Icon';
 import { IconButton } from 'nexus/ui/button/Button';
 import { Avatar } from 'nexus/ui/avatar/Avatar';
+import { Slider } from 'nexus/ui/slider/Slider';
 
 import './PlayerDisplay.css';
 
@@ -36,6 +37,10 @@ export const PlayerDisplay = observer((props) => {
 	// From ... store
 
 	const track = player.playTrack;
+	const isPlaying = player.isPlaying;
+
+	const sliderCurrent = player.sliderCurrent;
+	const sliderMax = player.sliderMax;
 
 	// ...
 
@@ -51,6 +56,10 @@ export const PlayerDisplay = observer((props) => {
 	const handleCoverClick = () => {
 		popupZoomCover.setField("albumId", track.album_id);
 		popupZoomCover.open();
+	}
+
+	const handleSliderChange = (newValue) => {
+		player.audioSeek(newValue);
 	}
 
 	// Render
@@ -74,7 +83,10 @@ export const PlayerDisplay = observer((props) => {
 				</div>
 			)}
 			{track && (
-				<Row>
+				<Row
+					align="center"
+					className="relative"
+				>
 					<div className="g-player-display-cover">
 						{!cover && (
 							<Avatar
@@ -96,6 +108,7 @@ export const PlayerDisplay = observer((props) => {
 						spacing="none"
 						style={{
 							"justifyContent": "space-evenly",
+							"paddingBottom": "6px",
 						}}
 					>
 						{track.name && (
@@ -109,11 +122,38 @@ export const PlayerDisplay = observer((props) => {
 							</div>
 						)}
 					</Column>
+					<Slider
+						className="g-player-display-slider"
+						value={sliderCurrent}
+						min={0}
+						max={sliderMax}
+						style={{
+							position: 'absolute',
+							left: '36px',
+							right: '0px',
+							bottom: '-13px',
+							marginRight: '0px',
+							zIndex: '98',
+						}}
+						railStyle={{
+							backgroundColor: 'rgba(255, 255, 255, 0.3)',
+							borderRadius: '0px 0px 4px 0px',
+						}}
+						trackStyle={{
+							backgroundColor: 'rgba(255, 255, 255, 0.8)',
+						}}
+						onChange={handleSliderChange}
+					/>
 					<IconButton
-						size="small"
+						size="tiny"
 						iconName="more_horiz"
 						color="#FFFFFF"
 						className="flex-0"
+						style={{
+							zIndex: '100',
+							marginBottom: "5px",
+							marginRight: "5px",
+						}}
 					/>
 				</Row>
 			)}

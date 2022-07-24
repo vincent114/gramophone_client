@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 65916:
+/***/ 33125:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -576,7 +576,7 @@ function uuid() {
 
   return ret;
 }
-function copyObj(srcObj) {
+function Datas_copyObj(srcObj) {
   // Recopie d'objet passé en paramètres
   // ---
   var copy = JSON.parse(JSON.stringify(srcObj));
@@ -596,7 +596,7 @@ function Datas_extendArray(array_dest, array_src, get_a_new_one) {
   // Ajoute les éléments d'une liste dans une autre liste
   // ---
   if (get_a_new_one == true) {
-    var new_array = copyObj(array_dest);
+    var new_array = Datas_copyObj(array_dest);
   } else {
     var new_array = array_dest;
   }
@@ -755,6 +755,11 @@ var HelpersStore = mobx_state_tree_module/* types.model */.V5.model({}).views(fu
     generateUUID: function generateUUID() {
       return uuid();
     },
+    // -
+    copyObj: function copyObj(obj) {
+      return Datas_copyObj(obj);
+    },
+    // -
     extendArray: function extendArray(arrayDest, arraySrc) {
       var getaNewOne = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
       return Datas_extendArray(arrayDest, arraySrc, getaNewOne);
@@ -4734,7 +4739,7 @@ var Icon_Icon = (0,es/* observer */.Pi)(function (props) {
   var size = props.size ? props.size : 'normal'; // small, normal, large
 
   var className = props.className ? props.className : '';
-  var style = props.style ? copyObj(props.style) : {}; // ...
+  var style = props.style ? Datas_copyObj(props.style) : {}; // ...
 
   var IconSvg = null;
   var iconUrl = ''; // Icône via un composant ?
@@ -5356,7 +5361,7 @@ var IconButton = (0,es/* observer */.Pi)(function (props) {
   var color = props.color ? props.color : 'default'; // primary, secondary, severityKey, custom, typography
 
   var className = props.className ? props.className : '';
-  var style = props.style ? copyObj(props.style) : {};
+  var style = props.style ? Datas_copyObj(props.style) : {};
   var onClick = props.onClick; // ...
 
   var iconColor = theme.getColorFromKey(color);
@@ -5445,12 +5450,12 @@ var Button_Button = (0,es/* observer */.Pi)(function (props) {
   var target = props.target ? props.target : '';
   var disabled = props.disabled == true ? true : false;
   var startAdornment = props.startAdornment ? props.startAdornment : '';
-  var startAdornmentStyle = props.startAdornmentStyle ? copyObj(props.startAdornmentStyle) : {};
+  var startAdornmentStyle = props.startAdornmentStyle ? Datas_copyObj(props.startAdornmentStyle) : {};
   var endAdornment = props.endAdornment ? props.endAdornment : '';
-  var endAdornmentStyle = props.endAdornmentStyle ? copyObj(props.endAdornmentStyle) : {};
+  var endAdornmentStyle = props.endAdornmentStyle ? Datas_copyObj(props.endAdornmentStyle) : {};
   var onClick = props.onClick;
   var className = props.className ? props.className : '';
-  var style = props.style ? copyObj(props.style) : {}; // ...
+  var style = props.style ? Datas_copyObj(props.style) : {}; // ...
 
   var hexColor = theme.getContrastedColorFromKey(color);
   var textColor = theme.getTextColorFromKey(color);
@@ -6706,7 +6711,7 @@ var dateTools = {
   fromISOToTime: function fromISOToTime(time_iso) {
     // HH:MM -> Date()
     // ---
-    var hours_iso_parts = copyObj(time_iso).split(':');
+    var hours_iso_parts = Datas_copyObj(time_iso).split(':');
 
     if (hours_iso_parts.length > 1) {
       var date_holder = new Date();
@@ -8031,7 +8036,7 @@ var Typography_Typography = (0,es/* observer */.Pi)(function (props) {
   var ellipsis = props.ellipsis == false ? false : true;
   var onClick = props.onClick;
   var className = props.className ? props.className : '';
-  var style = props.style ? copyObj(props.style) : {};
+  var style = props.style ? Datas_copyObj(props.style) : {};
   var color = props.color ? props.color : 'default'; // ...
   // Quelle couleur ?
 
@@ -8343,6 +8348,259 @@ var RenderSectionHTML = (0,es/* observer */.Pi)(function (props) {
     title: sectionTitle
   }, sectionContent);
 });
+// EXTERNAL MODULE: ../../nexus/react/ui/slider/Slider.css
+var Slider = __webpack_require__(70810);
+;// CONCATENATED MODULE: ../../nexus/react/ui/slider/Slider.jsx
+
+
+
+
+
+
+
+
+
+
+
+
+
+function Slider_slicedToArray(arr, i) { return Slider_arrayWithHoles(arr) || Slider_iterableToArrayLimit(arr, i) || Slider_unsupportedIterableToArray(arr, i) || Slider_nonIterableRest(); }
+
+function Slider_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function Slider_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Slider_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Slider_arrayLikeToArray(o, minLen); }
+
+function Slider_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function Slider_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function Slider_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+ // Functions
+// ======================================================================================================
+
+var calcWidth = function calcWidth(value, max) {
+  return Math.round(value * 100 / max);
+}; // Functions Components ReactJS
+// ======================================================================================================
+// ***** Slider *****
+// ******************
+
+
+var TAG_Slider = function TAG_Slider() {};
+
+var Slider_Slider = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var theme = app.theme; // From ... props
+
+  var value = props.value ? props.value : 0;
+  var min = props.min ? props.min : 0;
+  var max = props.max ? props.max : 1;
+  var disabled = props.disabled == true ? true : false;
+  var onChange = props.onChange;
+  var onChangeCommitted = props.onChangeCommitted;
+  var color = props.color ? props.color : "default";
+  var className = props.className ? props.className : "";
+  var style = props.style ? app.helpers.copyObj(props.style) : {};
+  var railStyle = props.railStyle ? app.helpers.copyObj(props.railStyle) : {};
+  var trackStyle = props.trackStyle ? app.helpers.copyObj(props.trackStyle) : {};
+
+  if (value < min) {
+    value = min;
+  }
+
+  if (value > max) {
+    value = max;
+  }
+
+  react.useEffect(function () {
+    setWidth(calcWidth(value, max));
+  }, [value]); // From ... state
+  // let [internalValue, setInternalValue] = React.useState(value);
+
+  var _React$useState = react.useState(false),
+      _React$useState2 = Slider_slicedToArray(_React$useState, 2),
+      click = _React$useState2[0],
+      setClick = _React$useState2[1];
+
+  var _React$useState3 = react.useState(calcWidth(value, max)),
+      _React$useState4 = Slider_slicedToArray(_React$useState3, 2),
+      width = _React$useState4[0],
+      setWidth = _React$useState4[1]; // ...
+
+
+  if (!railStyle.hasOwnProperty('backgroundColor')) {
+    railStyle['backgroundColor'] = hexToRgbA(theme.getColorFromKey(color), 0.3);
+  }
+
+  if (!trackStyle.hasOwnProperty('backgroundColor')) {
+    trackStyle['backgroundColor'] = theme.getContrastedColorFromKey(color);
+  }
+
+  trackStyle['width'] = "".concat(width, "%"); // if (!click) {
+  // 	trackStyle['transition'] = "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms";
+  // }
+  // Events
+  // ==================================================================================================
+
+  var handleClick = function handleClick(evt) {
+    var sliderWidth = evt.target.clientWidth;
+    var exactPositionClicked = evt.nativeEvent.offsetX;
+    var newPercentage = Math.round(exactPositionClicked * 100 / sliderWidth);
+    var newValue = Math.round(exactPositionClicked * max / sliderWidth);
+
+    if (onChange) {
+      onChange(newValue);
+    }
+
+    setWidth(newPercentage);
+  };
+
+  var handleSlide = function handleSlide(evt, style) {
+    if (!click) {
+      return;
+    }
+
+    var sliderWidth = evt.target.clientWidth;
+    var exactPositionClicked = evt.nativeEvent.offsetX;
+    var newPercentage = Math.round(exactPositionClicked * 100 / sliderWidth);
+    setWidth(newPercentage);
+
+    if (onChangeCommitted) {
+      var newValue = Math.round(exactPositionClicked * max / sliderWidth);
+      onChangeCommitted(newValue);
+    }
+  }; // Render
+  // ==================================================================================================
+
+
+  return /*#__PURE__*/react.createElement("div", {
+    className: (0,clsx_m/* default */.Z)("nx-slider", className),
+    style: style,
+    onClick: function onClick(e) {
+      return handleClick(e);
+    },
+    onMouseDown: function onMouseDown(e) {
+      return setClick(true);
+    },
+    onMouseUp: function onMouseUp(e) {
+      return setClick(false);
+    },
+    onMouseMove: function onMouseMove(e) {
+      return handleSlide(e, trackStyle);
+    },
+    onMouseLeave: function onMouseLeave(e) {
+      return setClick(false);
+    }
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "nx-slider-rail",
+    style: railStyle
+  }, value > 0 && /*#__PURE__*/react.createElement("div", {
+    className: "nx-slider-track",
+    style: trackStyle
+  })));
+});
+// EXTERNAL MODULE: ../../nexus/react/contexts/playground/input/PlaygroundSlider.css
+var PlaygroundSlider = __webpack_require__(71250);
+;// CONCATENATED MODULE: ../../nexus/react/contexts/playground/input/PlaygroundSlider.jsx
+
+
+
+
+
+
+
+
+
+
+
+
+ // Functions Components ReactJS
+// ======================================================================================================
+// ***** RenderSectionSlider *****
+// *******************************
+
+var TAG_RenderSectionSlider = function TAG_RenderSectionSlider() {};
+
+var RenderSectionSlider = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var playground = app.playground; // From ... store
+
+  var isLoading = app.isLoading;
+  var pageDef = playground.pageDef;
+  var valueSlider = playground.value_slider; // ...
+  // Events
+  // ==================================================================================================
+
+  var handleSliderChange = function handleSliderChange(newValue) {
+    console.log("handleSliderChange : ".concat(newValue));
+    app.saveValue(['app', 'playground', 'value_slider'], newValue);
+  };
+
+  var handleSliderChangeCommited = function handleSliderChangeCommited(newValue) {
+    console.log("handleSliderChangeCommited : ".concat(newValue));
+    app.saveValue(['app', 'playground', 'value_slider'], newValue);
+  }; // Render
+  // ==================================================================================================
+  // Section -> Title
+  // -------------------------------------------------
+
+
+  var sectionTitle = pageDef.label; // Section -> Icon
+  // -------------------------------------------------
+
+  var sectionIcon = /*#__PURE__*/react.createElement(Icon_Icon, {
+    name: pageDef.icon
+  }); // Section -> Content
+  // -------------------------------------------------
+
+  var sectionContent = /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Field_Field, {
+    id: "txt-slider-value",
+    component: "input",
+    label: "Valeur",
+    type: "number",
+    min: 0,
+    max: 100,
+    savePath: ['app', 'playground', 'value_slider'],
+    disabled: isLoading
+  }), /*#__PURE__*/react.createElement(Row_Row, {
+    align: "center",
+    style: {
+      marginTop: '10px'
+    }
+  }, /*#__PURE__*/react.createElement(Avatar_Avatar, {
+    size: "small",
+    color: "primary",
+    style: {
+      fontSize: "14px"
+    }
+  }, "0"), /*#__PURE__*/react.createElement(Slider_Slider, {
+    value: valueSlider,
+    min: 0,
+    max: 100,
+    color: "primary",
+    onChange: handleSliderChange,
+    onChangeCommitted: handleSliderChangeCommited
+  }), /*#__PURE__*/react.createElement(Avatar_Avatar, {
+    size: "small",
+    color: "primary",
+    style: {
+      fontSize: "14px"
+    }
+  }, "100"))); // -------------------------------------------------
+
+  return /*#__PURE__*/react.createElement(Section_Section, {
+    icon: sectionIcon,
+    title: sectionTitle
+  }, sectionContent);
+});
 // EXTERNAL MODULE: ../../nexus/react/forms/indicator/Indicator.css
 var Indicator = __webpack_require__(34439);
 ;// CONCATENATED MODULE: ../../nexus/react/forms/indicator/Indicator.jsx
@@ -8376,7 +8634,7 @@ var Indicator_Indicator = (0,es/* observer */.Pi)(function (props) {
   var className = props.className ? props.className : '';
   var color = props.color ? props.color : 'default'; // primary, secondary, #custom
 
-  var style = props.style ? copyObj(props.style) : {};
+  var style = props.style ? Datas_copyObj(props.style) : {};
   var callbackClick = props.callbackClick; // ...
   // Quelle couleur ?
 
@@ -8617,7 +8875,7 @@ var Grid_Grid = function Grid(props) {
 
   var children = props.children;
   var className = props.className ? props.className : '';
-  var style = props.style ? copyObj(props.style) : {}; // ...
+  var style = props.style ? Datas_copyObj(props.style) : {}; // ...
 
   if (!style.hasOwnProperty("justifyContent")) {
     style["justifyContent"] = justify;
@@ -10541,6 +10799,7 @@ function Playground_arrayLikeToArray(arr, len) { if (len == null || len > arr.le
 
 
 
+
  // Datas
 // -------------------------------------------------------------------------------------------------------------
 
@@ -10566,6 +10825,10 @@ var PLAYGROUND_PAGES = [{
   value: 'html',
   label: "HTML Editor",
   icon: 'code'
+}, {
+  value: 'slider',
+  label: "Slider",
+  icon: 'tune'
 }, // -
 {
   title: "Data display",
@@ -10651,8 +10914,9 @@ var PlaygroundStore = mobx_state_tree_module/* types.model */.V5.model({
   value_switcher: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   value_radio: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   value_checkbox: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.boolean */.V5.boolean),
-  // -
   value_html: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  // -
+  value_slider: 5,
   // -
   search_icons: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   // -
@@ -10847,7 +11111,7 @@ var RenderPlayground = (0,es/* observer */.Pi)(function (props) {
   var contentPlayground = null;
 
   if (loaded) {
-    contentPlayground = /*#__PURE__*/react.createElement(react.Fragment, null, currentPageKey == 'button' && /*#__PURE__*/react.createElement(RenderSectionButton, null), currentPageKey == 'field' && /*#__PURE__*/react.createElement(RenderSectionField, null), currentPageKey == 'switch' && /*#__PURE__*/react.createElement(RenderSectionSwitch, null), currentPageKey == 'html' && /*#__PURE__*/react.createElement(RenderSectionHTML, null), currentPageKey == 'avatar' && /*#__PURE__*/react.createElement(RenderSectionAvatar, null), currentPageKey == 'chip' && /*#__PURE__*/react.createElement(RenderSectionChip, null), currentPageKey == 'icon' && /*#__PURE__*/react.createElement(RenderSectionIcon, null), currentPageKey == 'indicator' && /*#__PURE__*/react.createElement(RenderSectionIndicator, null), currentPageKey == 'popup' && /*#__PURE__*/react.createElement(RenderSectionPopup, null), currentPageKey == 'list' && /*#__PURE__*/react.createElement(RenderSectionList, null), currentPageKey == 'typography' && /*#__PURE__*/react.createElement(RenderSectionTypography, null), currentPageKey == 'typography' && /*#__PURE__*/react.createElement(RenderSectionHeading, null), currentPageKey == 'row' && /*#__PURE__*/react.createElement(RenderSectionRow, null), currentPageKey == 'column' && /*#__PURE__*/react.createElement(RenderSectionColumn, null), currentPageKey == 'snackbar' && /*#__PURE__*/react.createElement(RenderSectionSnackbar, null), currentPageKey == 'alert' && /*#__PURE__*/react.createElement(RenderSectionAlert, null), currentPageKey == 'session' && /*#__PURE__*/react.createElement(RenderSectionSession, null));
+    contentPlayground = /*#__PURE__*/react.createElement(react.Fragment, null, currentPageKey == 'button' && /*#__PURE__*/react.createElement(RenderSectionButton, null), currentPageKey == 'field' && /*#__PURE__*/react.createElement(RenderSectionField, null), currentPageKey == 'switch' && /*#__PURE__*/react.createElement(RenderSectionSwitch, null), currentPageKey == 'html' && /*#__PURE__*/react.createElement(RenderSectionHTML, null), currentPageKey == 'slider' && /*#__PURE__*/react.createElement(RenderSectionSlider, null), currentPageKey == 'avatar' && /*#__PURE__*/react.createElement(RenderSectionAvatar, null), currentPageKey == 'chip' && /*#__PURE__*/react.createElement(RenderSectionChip, null), currentPageKey == 'icon' && /*#__PURE__*/react.createElement(RenderSectionIcon, null), currentPageKey == 'indicator' && /*#__PURE__*/react.createElement(RenderSectionIndicator, null), currentPageKey == 'popup' && /*#__PURE__*/react.createElement(RenderSectionPopup, null), currentPageKey == 'list' && /*#__PURE__*/react.createElement(RenderSectionList, null), currentPageKey == 'typography' && /*#__PURE__*/react.createElement(RenderSectionTypography, null), currentPageKey == 'typography' && /*#__PURE__*/react.createElement(RenderSectionHeading, null), currentPageKey == 'row' && /*#__PURE__*/react.createElement(RenderSectionRow, null), currentPageKey == 'column' && /*#__PURE__*/react.createElement(RenderSectionColumn, null), currentPageKey == 'snackbar' && /*#__PURE__*/react.createElement(RenderSectionSnackbar, null), currentPageKey == 'alert' && /*#__PURE__*/react.createElement(RenderSectionAlert, null), currentPageKey == 'session' && /*#__PURE__*/react.createElement(RenderSectionSession, null));
   }
 
   return contentPlayground;
@@ -14937,7 +15201,7 @@ var Popover_Popover = function Popover(props) {
         return;
       }
 
-      var _popoverStyle = copyObj(style);
+      var _popoverStyle = Datas_copyObj(style);
 
       _popoverStyle['opacity'] = 1;
       var popoverTop = 0;
@@ -15882,7 +16146,7 @@ var RightItem_RightItem = (0,es/* observer */.Pi)(function (props) {
       }
     } else {
       toAdd = [];
-      toRemove = copyObj(roles);
+      toRemove = Datas_copyObj(roles);
     }
 
     user.addRoles(toAdd);
@@ -17712,7 +17976,7 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       // 	self.clearHistory();
       // 	console.error(err);
       // }
-      var navHistory = self.history ? copyObj(self.history) : [];
+      var navHistory = self.history ? Datas_copyObj(self.history) : [];
       return navHistory;
     },
     clearHistory: function clearHistory() {
@@ -18355,7 +18619,7 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
         return;
       }
 
-      var saveTarget = copyObj(frozen);
+      var saveTarget = Datas_copyObj(frozen);
 
       for (var idx_path in pathInFrozen) {
         var target = pathInFrozen[idx_path];
@@ -19307,7 +19571,7 @@ var PlayerItem_PlayerItem = (0,es/* observer */.Pi)(function (props) {
 
   var index = props.index ? props.index : 0;
   var className = props.className ? props.className : "";
-  var style = props.style ? copyObj(props.style) : {}; // ...
+  var style = props.style ? Datas_copyObj(props.style) : {}; // ...
 
   var trackId = track.id;
   var trackName = track.name;
@@ -19769,7 +20033,11 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
       self._stopSlideInterval();
 
       window.audioInterval = setInterval(function () {
-        self.setField('sliderCurrent', window.audio.currentTime);
+        var focused = document.hasFocus();
+
+        if (focused) {
+          self.setField('sliderCurrent', window.audio.currentTime);
+        }
       }, 1000);
     },
     audioPlay: function audioPlay() {
@@ -19846,10 +20114,13 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
         window.audio.pause();
         window.audio.currentTime = 0;
         window.audio = null;
+        self.sliderCurrent = 0;
         self.setField("isPlaying", false);
       }
     },
-    audioSeek: function audioSeek(value, affectAudio) {
+    audioSeek: function audioSeek(value) {
+      var affectAudio = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
       // Saut sur le titre en cours
       // ---
       self._stopSlideInterval();
@@ -20047,6 +20318,7 @@ var PlayerDisplay = __webpack_require__(84513);
 
 
 
+
  // Functions Components ReactJS
 // ======================================================================================================
 // ***** PlayerDisplay *****
@@ -20064,7 +20336,10 @@ var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
   var className = props.className ? props.className : "";
   var style = props.style ? props.style : {}; // From ... store
 
-  var track = player.playTrack; // ...
+  var track = player.playTrack;
+  var isPlaying = player.isPlaying;
+  var sliderCurrent = player.sliderCurrent;
+  var sliderMax = player.sliderMax; // ...
 
   var cover = "";
 
@@ -20078,6 +20353,10 @@ var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
   var handleCoverClick = function handleCoverClick() {
     popupZoomCover.setField("albumId", track.album_id);
     popupZoomCover.open();
+  };
+
+  var handleSliderChange = function handleSliderChange(newValue) {
+    player.audioSeek(newValue);
   }; // Render
   // ==================================================================================================
 
@@ -20091,7 +20370,10 @@ var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
     color: "rgba(255, 255, 255, 0.5)" // name="headphones"
     ,
     name: "music_note"
-  })), track && /*#__PURE__*/react.createElement(Row_Row, null, /*#__PURE__*/react.createElement("div", {
+  })), track && /*#__PURE__*/react.createElement(Row_Row, {
+    align: "center",
+    className: "relative"
+  }, /*#__PURE__*/react.createElement("div", {
     className: "g-player-display-cover"
   }, !cover && /*#__PURE__*/react.createElement(Avatar_Avatar, {
     size: "small",
@@ -20107,17 +20389,44 @@ var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
     className: "g-player-display-metas",
     spacing: "none",
     style: {
-      "justifyContent": "space-evenly"
+      "justifyContent": "space-evenly",
+      "paddingBottom": "6px"
     }
   }, track.name && /*#__PURE__*/react.createElement("div", {
     className: "g-player-display-title"
   }, track.name), track.subtitle && /*#__PURE__*/react.createElement("div", {
     className: "g-player-display-subtitle"
-  }, track.subtitle)), /*#__PURE__*/react.createElement(IconButton, {
-    size: "small",
+  }, track.subtitle)), /*#__PURE__*/react.createElement(Slider_Slider, {
+    className: "g-player-display-slider",
+    value: sliderCurrent,
+    min: 0,
+    max: sliderMax,
+    style: {
+      position: 'absolute',
+      left: '36px',
+      right: '0px',
+      bottom: '-13px',
+      marginRight: '0px',
+      zIndex: '98'
+    },
+    railStyle: {
+      backgroundColor: 'rgba(255, 255, 255, 0.3)',
+      borderRadius: '0px 0px 4px 0px'
+    },
+    trackStyle: {
+      backgroundColor: 'rgba(255, 255, 255, 0.8)'
+    },
+    onChange: handleSliderChange
+  }), /*#__PURE__*/react.createElement(IconButton, {
+    size: "tiny",
     iconName: "more_horiz",
     color: "#FFFFFF",
-    className: "flex-0"
+    className: "flex-0",
+    style: {
+      zIndex: '100',
+      marginBottom: "5px",
+      marginRight: "5px"
+    }
   })));
 });
 // EXTERNAL MODULE: ../../nexus/react/contexts/search/Search.css
@@ -20529,8 +20838,8 @@ var TableCell = function TableCell(props) {
   var fontSize = props.fontSize ? props.fontSize : "14px";
   var children = props.children;
   var className = props.className ? props.className : '';
-  var style = props.style ? copyObj(props.style) : {};
-  var inheritStyle = props.inheritStyle ? copyObj(props.inheritStyle) : {}; // ...
+  var style = props.style ? Datas_copyObj(props.style) : {};
+  var inheritStyle = props.inheritStyle ? Datas_copyObj(props.inheritStyle) : {}; // ...
   // if (header && !style.hasOwnProperty('backgroundColor')) {
   // 	style['backgroundColor'] = "rgba(0, 0, 0, 0.03)";
   // }
@@ -21849,8 +22158,8 @@ var Thumbnail_Thumbnail = (0,es/* observer */.Pi)(function (props) {
   var callbackLeave = props.callbackLeave;
   var callbackClick = props.callbackClick;
   var className = props.className ? props.className : "";
-  var rootStyle = props.rootStyle ? copyObj(props.rootStyle) : {};
-  var style = props.style ? copyObj(props.style) : {}; // ...
+  var rootStyle = props.rootStyle ? Datas_copyObj(props.rootStyle) : {};
+  var style = props.style ? Datas_copyObj(props.style) : {}; // ...
 
   style['padding'] = "0px";
 
@@ -24137,7 +24446,7 @@ var Card_Card = (0,es/* observer */.Pi)(function (props) {
   var children = props.children;
   var callbackClick = props.callbackClick;
   var className = props.className ? props.className : '';
-  var style = props.style ? copyObj(props.style) : {}; // ...
+  var style = props.style ? Datas_copyObj(props.style) : {}; // ...
 
   if (hover) {
     style['boxShadow'] = "0 0 10px ".concat(theme.palette.primary.main);
@@ -28820,9 +29129,9 @@ window.store = rootStore;
 window.storeContext = RootStoreContext;
 Storage_setToStorage('debugMode', true, 'bool');
 var staticRaw = {
-  'smap': copyObj(services_STATIC_SMAP)
+  'smap': Datas_copyObj(services_STATIC_SMAP)
 };
-staticRaw['smap']['me'] = copyObj(services_STATIC_SMAP.gramophone);
+staticRaw['smap']['me'] = Datas_copyObj(services_STATIC_SMAP.gramophone);
 rootStore.app.init(function (datas) {
   rootStore.update(datas);
 }, popups, {}, staticRaw); // Functions Components ReactJS
@@ -29252,6 +29561,13 @@ window.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
+/***/ 71250:
+/***/ (() => {
+
+// extracted by extract-css-chunks-webpack-plugin
+
+/***/ }),
+
 /***/ 62761:
 /***/ (() => {
 
@@ -29498,6 +29814,13 @@ window.addEventListener('DOMContentLoaded', function () {
 /***/ }),
 
 /***/ 72055:
+/***/ (() => {
+
+// extracted by extract-css-chunks-webpack-plugin
+
+/***/ }),
+
+/***/ 70810:
 /***/ (() => {
 
 // extracted by extract-css-chunks-webpack-plugin
@@ -30006,7 +30329,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(65916)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(33125)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

@@ -362,7 +362,10 @@ export const PlayerStore = types
 
 			self._stopSlideInterval();
 			window.audioInterval = setInterval(function() {
-				self.setField('sliderCurrent', window.audio.currentTime);
+				const focused = document.hasFocus();
+				if (focused) {
+					self.setField('sliderCurrent', window.audio.currentTime);
+				}
 			}, 1000);
 		},
 
@@ -446,11 +449,12 @@ export const PlayerStore = types
 				window.audio.pause();
 				window.audio.currentTime = 0;
 				window.audio = null;
+				self.sliderCurrent = 0;
 				self.setField("isPlaying", false);
 			}
 		},
 
-		audioSeek: (value, affectAudio) => {
+		audioSeek: (value, affectAudio=true) => {
 
 			// Saut sur le titre en cours
 			// ---
