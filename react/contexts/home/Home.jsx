@@ -678,6 +678,8 @@ export const HomePage = observer((props) => {
 		}
 	}, [loaded, initialized]);
 
+	console.log("Render Home")
+
 	// ...
 
 	// Events

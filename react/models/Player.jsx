@@ -1,6 +1,7 @@
 import React from 'react';
 import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
+import { observable } from "mobx";
 import clsx from 'clsx';
 
 import {
@@ -23,6 +24,11 @@ export const DRAWER_VIEWS_ITEMS = [
 	},
 ]
 
+export let slider = observable({
+	current: 0,
+	max: 0,
+});
+
 
 // Models
 // ======================================================================================================
@@ -38,8 +44,8 @@ export const PlayerStore = types
 
 		repeatMode: false,
 
-		sliderCurrent: 0,
-		sliderMax: 0,
+		// sliderCurrent: 0,
+		// sliderMax: 0,
 
 		volume: 25,
 
@@ -364,7 +370,8 @@ export const PlayerStore = types
 			window.audioInterval = setInterval(function() {
 				const focused = document.hasFocus();
 				if (focused) {
-					self.setField('sliderCurrent', window.audio.currentTime);
+					// self.setField('sliderCurrent', window.audio.currentTime);
+					slider.current = window.audio.currentTime;
 				}
 			}, 1000);
 		},
@@ -388,7 +395,8 @@ export const PlayerStore = types
 			}
 			window.audio.oncanplay = function() {
 				if (window.audio && window.audio.duration) {
-					self.setField("sliderMax", window.audio.duration);
+					// self.setField("sliderMax", window.audio.duration);
+					slider.max = window.audio.duration;
 				}
 			}
 
@@ -449,7 +457,8 @@ export const PlayerStore = types
 				window.audio.pause();
 				window.audio.currentTime = 0;
 				window.audio = null;
-				self.sliderCurrent = 0;
+				// self.sliderCurrent = 0;
+				slider.current = 0;
 				self.setField("isPlaying", false);
 			}
 		},
@@ -464,7 +473,8 @@ export const PlayerStore = types
 				window.audio.currentTime = value;
 				self._startSlideInterval();
 			}
-			self.setField("sliderCurrent", value);
+			// self.setField("sliderCurrent", value);
+			slider.current = value;
 		},
 
 	}))

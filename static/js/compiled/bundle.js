@@ -8388,9 +8388,63 @@ var calcWidth = function calcWidth(value, max) {
   return Math.round(value * 100 / max);
 }; // Functions Components ReactJS
 // ======================================================================================================
-// ***** Slider *****
-// ******************
+// ***** BasicSlider *****
+// ***********************
 
+
+var TAG_BasicSlider = function TAG_BasicSlider() {};
+
+var BasicSlider = function BasicSlider(props) {
+  // From ... props
+  var value = props.value ? props.value : 0;
+  var min = props.min ? props.min : 0;
+  var max = props.max ? props.max : 1;
+  var disabled = props.disabled == true ? true : false;
+  var onChange = props.onChange;
+  var className = props.className ? props.className : "";
+  var style = props.style ? props.style : {};
+  var railStyle = props.railStyle ? props.railStyle : {};
+  var trackStyle = props.trackStyle ? props.trackStyle : {};
+
+  if (value < min) {
+    value = min;
+  }
+
+  if (value > max) {
+    value = max;
+  } // From ... state
+
+
+  trackStyle['width'] = "".concat(calcWidth(value, max), "%"); // Events
+  // ==================================================================================================
+
+  var handleClick = function handleClick(evt) {
+    var sliderWidth = evt.target.clientWidth;
+    var exactPositionClicked = evt.nativeEvent.offsetX;
+    var newValue = Math.round(exactPositionClicked * max / sliderWidth);
+
+    if (onChange) {
+      onChange(newValue);
+    }
+  }; // Render
+  // ==================================================================================================
+
+
+  return /*#__PURE__*/react.createElement("div", {
+    className: (0,clsx_m/* default */.Z)("nx-slider", className),
+    style: style,
+    onClick: function onClick(e) {
+      return handleClick(e);
+    }
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "nx-slider-rail",
+    style: railStyle
+  }, value > 0 && /*#__PURE__*/react.createElement("div", {
+    className: "nx-slider-track",
+    style: trackStyle
+  })));
+}; // ***** Slider *****
+// ******************
 
 var TAG_Slider = function TAG_Slider() {};
 
@@ -19643,6 +19697,8 @@ var PlayerItem_PlayerItem = (0,es/* observer */.Pi)(function (props) {
     className: "flex-0"
   }));
 });
+// EXTERNAL MODULE: ../../nexus/react/node_modules/mobx/dist/mobx.esm.js
+var mobx_esm = __webpack_require__(82452);
 ;// CONCATENATED MODULE: ./models/Player.jsx
 
 
@@ -19673,6 +19729,7 @@ function Player_arrayLikeToArray(arr, len) { if (len == null || len > arr.length
 
 
 
+
  // Datas
 // ======================================================================================================
 
@@ -19682,7 +19739,11 @@ var DRAWER_VIEWS_ITEMS = [{
 }, {
   "value": "history",
   "label": "Historique"
-}]; // Models
+}];
+var slider = (0,mobx_esm/* observable */.LO)({
+  current: 0,
+  max: 0
+}); // Models
 // ======================================================================================================
 // ***** PlayerStore *****
 // ***********************
@@ -19692,8 +19753,8 @@ var TAG_PlayerStore = function TAG_PlayerStore() {};
 var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
   isPlaying: false,
   repeatMode: false,
-  sliderCurrent: 0,
-  sliderMax: 0,
+  // sliderCurrent: 0,
+  // sliderMax: 0,
   volume: 25,
   // -
   playList: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), []),
@@ -20036,7 +20097,8 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
         var focused = document.hasFocus();
 
         if (focused) {
-          self.setField('sliderCurrent', window.audio.currentTime);
+          // self.setField('sliderCurrent', window.audio.currentTime);
+          slider.current = window.audio.currentTime;
         }
       }, 1000);
     },
@@ -20059,7 +20121,8 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
 
       window.audio.oncanplay = function () {
         if (window.audio && window.audio.duration) {
-          self.setField("sliderMax", window.audio.duration);
+          // self.setField("sliderMax", window.audio.duration);
+          slider.max = window.audio.duration;
         }
       }; // Slide
 
@@ -20113,8 +20176,9 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
         clearInterval(window.audioInterval);
         window.audio.pause();
         window.audio.currentTime = 0;
-        window.audio = null;
-        self.sliderCurrent = 0;
+        window.audio = null; // self.sliderCurrent = 0;
+
+        slider.current = 0;
         self.setField("isPlaying", false);
       }
     },
@@ -20129,9 +20193,10 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
         window.audio.currentTime = value;
 
         self._startSlideInterval();
-      }
+      } // self.setField("sliderCurrent", value);
 
-      self.setField("sliderCurrent", value);
+
+      slider.current = value;
     }
   };
 });
@@ -20319,9 +20384,43 @@ var PlayerDisplay = __webpack_require__(84513);
 
 
 
+
  // Functions Components ReactJS
 // ======================================================================================================
-// ***** PlayerDisplay *****
+// ***** PlayerDisplaySlider *****
+// *******************************
+
+var TAG_PlayerDisplaySlider = function TAG_PlayerDisplaySlider() {};
+
+var PlayerDisplaySlider = (0,es/* observer */.Pi)(function (props) {
+  // From ... props
+  var onChange = props.onChange; // ...
+  // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement(BasicSlider, {
+    className: "g-player-display-slider",
+    value: slider.current,
+    min: 0,
+    max: slider.max,
+    style: {
+      position: 'absolute',
+      left: '36px',
+      right: '0px',
+      bottom: '-13px',
+      marginRight: '0px',
+      zIndex: '98'
+    },
+    railStyle: {
+      backgroundColor: 'rgba(255, 255, 255, 0.3)',
+      borderRadius: '0px 0px 4px 0px'
+    },
+    trackStyle: {
+      backgroundColor: 'rgba(255, 255, 255, 0.8)'
+    },
+    onChange: onChange
+  });
+}); // ***** PlayerDisplay *****
 // *************************
 
 var TAG_PlayerDisplay = function TAG_PlayerDisplay() {};
@@ -20337,18 +20436,19 @@ var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
   var style = props.style ? props.style : {}; // From ... store
 
   var track = player.playTrack;
-  var isPlaying = player.isPlaying;
-  var sliderCurrent = player.sliderCurrent;
-  var sliderMax = player.sliderMax; // ...
+  var isPlaying = player.isPlaying; // const sliderCurrent = player.sliderCurrent;
+  // const sliderMax = player.sliderMax;
+  // ...
 
   var cover = "";
 
   if (track) {
     var album = track.linkedAlbum;
     cover = album.cover;
-  } // Events
-  // ==================================================================================================
+  }
 
+  console.log("Render Player"); // Events
+  // ==================================================================================================
 
   var handleCoverClick = function handleCoverClick() {
     popupZoomCover.setField("albumId", track.album_id);
@@ -20396,26 +20496,7 @@ var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
     className: "g-player-display-title"
   }, track.name), track.subtitle && /*#__PURE__*/react.createElement("div", {
     className: "g-player-display-subtitle"
-  }, track.subtitle)), /*#__PURE__*/react.createElement(Slider_Slider, {
-    className: "g-player-display-slider",
-    value: sliderCurrent,
-    min: 0,
-    max: sliderMax,
-    style: {
-      position: 'absolute',
-      left: '36px',
-      right: '0px',
-      bottom: '-13px',
-      marginRight: '0px',
-      zIndex: '98'
-    },
-    railStyle: {
-      backgroundColor: 'rgba(255, 255, 255, 0.3)',
-      borderRadius: '0px 0px 4px 0px'
-    },
-    trackStyle: {
-      backgroundColor: 'rgba(255, 255, 255, 0.8)'
-    },
+  }, track.subtitle)), /*#__PURE__*/react.createElement(PlayerDisplaySlider, {
     onChange: handleSliderChange
   }), /*#__PURE__*/react.createElement(IconButton, {
     size: "tiny",
@@ -27007,7 +27088,8 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
     if (loaded && !initialized) {
       home.init();
     }
-  }, [loaded, initialized]); // ...
+  }, [loaded, initialized]);
+  console.log("Render Home"); // ...
   // Events
   // ==================================================================================================
 

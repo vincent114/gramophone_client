@@ -3,19 +3,62 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import { slider } from 'gramophone_client/models/Player';
+
 import { Row } from 'nexus/layout/row/Row';
 import { Column } from 'nexus/layout/column/Column';
 
 import { Icon } from 'nexus/ui/icon/Icon';
 import { IconButton } from 'nexus/ui/button/Button';
 import { Avatar } from 'nexus/ui/avatar/Avatar';
-import { Slider } from 'nexus/ui/slider/Slider';
+import { BasicSlider } from 'nexus/ui/slider/Slider';
 
 import './PlayerDisplay.css';
 
 
 // Functions Components ReactJS
 // ======================================================================================================
+
+// ***** PlayerDisplaySlider *****
+// *******************************
+
+const TAG_PlayerDisplaySlider = () => {}
+export const PlayerDisplaySlider = observer((props) => {
+
+	// From ... props
+
+	const onChange = props.onChange;
+
+	// ...
+
+	// Render
+	// ==================================================================================================
+
+	return (
+		<BasicSlider
+			className="g-player-display-slider"
+			value={slider.current}
+			min={0}
+			max={slider.max}
+			style={{
+				position: 'absolute',
+				left: '36px',
+				right: '0px',
+				bottom: '-13px',
+				marginRight: '0px',
+				zIndex: '98',
+			}}
+			railStyle={{
+				backgroundColor: 'rgba(255, 255, 255, 0.3)',
+				borderRadius: '0px 0px 4px 0px',
+			}}
+			trackStyle={{
+				backgroundColor: 'rgba(255, 255, 255, 0.8)',
+			}}
+			onChange={onChange}
+		/>
+	)
+})
 
 // ***** PlayerDisplay *****
 // *************************
@@ -39,8 +82,8 @@ export const PlayerDisplay = observer((props) => {
 	const track = player.playTrack;
 	const isPlaying = player.isPlaying;
 
-	const sliderCurrent = player.sliderCurrent;
-	const sliderMax = player.sliderMax;
+	// const sliderCurrent = player.sliderCurrent;
+	// const sliderMax = player.sliderMax;
 
 	// ...
 
@@ -49,6 +92,8 @@ export const PlayerDisplay = observer((props) => {
 		const album = track.linkedAlbum;
 		cover = album.cover;
 	}
+
+	console.log("Render Player");
 
 	// Events
 	// ==================================================================================================
@@ -122,26 +167,7 @@ export const PlayerDisplay = observer((props) => {
 							</div>
 						)}
 					</Column>
-					<Slider
-						className="g-player-display-slider"
-						value={sliderCurrent}
-						min={0}
-						max={sliderMax}
-						style={{
-							position: 'absolute',
-							left: '36px',
-							right: '0px',
-							bottom: '-13px',
-							marginRight: '0px',
-							zIndex: '98',
-						}}
-						railStyle={{
-							backgroundColor: 'rgba(255, 255, 255, 0.3)',
-							borderRadius: '0px 0px 4px 0px',
-						}}
-						trackStyle={{
-							backgroundColor: 'rgba(255, 255, 255, 0.8)',
-						}}
+					<PlayerDisplaySlider
 						onChange={handleSliderChange}
 					/>
 					<IconButton
