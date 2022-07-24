@@ -410,16 +410,6 @@ export const RenderAlbum = observer((props) => {
 		album.shuffle();
 	}
 
-	// -
-
-	const handleDiscClick = (disc) => {
-		// TODO
-	}
-
-	const handleFocusDisc = (disc) => {
-		// TODO
-	}
-
 	// Render
 	// ==================================================================================================
 
@@ -526,7 +516,7 @@ export const RenderAlbum = observer((props) => {
 										onClick={() => handlePlayAlbumClick()}
 									/>
 									<IconButton
-										iconName="playlist_add"
+										iconName="queue_music"
 										color="hot"
 										onClick={() => handleQueueAlbumClick()}
 									/>
@@ -571,12 +561,6 @@ export const RenderAlbum = observer((props) => {
 						{nbDiscs > 1 && (
 							<GroupDivider
 								spacing="big"
-								// left={(
-								// 	<IconButton
-								// 		iconName="album"
-								// 		onClick={() => handleDiscClick(disc)}
-								// 	/>
-								// )}
 								center={(
 									<Avatar
 										size="small"
@@ -590,12 +574,6 @@ export const RenderAlbum = observer((props) => {
 										{disc}
 									</Avatar>
 								)}
-								// right={(
-								// 	<IconButton
-								// 		iconName="arrow_forward"
-								// 		onClick={() => handleFocusDisc(disc)}
-								// 	/>
-								// )}
 							/>
 						)}
 

@@ -206,7 +206,7 @@ export const ContextualHeader = observer((props) => {
 					/>
 				</IconButton>
 				<Popover
-					id="pop-colume"
+					id="pop-volume"
 					open={Boolean(anchorVolume)}
 					anchorEl={anchorVolume}
 					onClose={handleCloseMenuVolume}

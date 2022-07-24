@@ -3,6 +3,8 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import { TrackContextualMenu } from 'gramophone_client/contexts/track/Track';
+
 import { Row } from 'nexus/layout/row/Row';
 
 import { IconButton } from 'nexus/ui/button/Button';
@@ -73,11 +75,17 @@ export const PlayerItem = observer((props) => {
 	const handleClick = (evt) => {
 		if (origin == "playlist") {
 			player.jumpTo(index);
+			player.addHistory(trackId);
 		}
 		if (origin == "history") {
+			if (player.nbTracks) {
+				if (player.playList[0] == trackId) {
+					player.jumpTo(0);
+					return;
+				}
+			}
 			const insertedIdx = player.insert(trackId);
-			console.log(insertedIdx);
-			player.jumpTo(insertedIdx);
+			player.jumpTo((insertedIdx && insertedIdx > -1) ? insertedIdx : 0);
 		}
 	}
 
@@ -126,10 +134,14 @@ export const PlayerItem = observer((props) => {
 					{artistName}
 				</Typography>
 			</div>
-			<IconButton
-				size="small"
-				iconName="more_horiz"
+			<TrackContextualMenu
+				track={track}
+				origin="player"
 				className="flex-0"
+				callbackClick={(e) => {
+					e.stopPropagation();
+					e.preventDefault();
+				}}
 			/>
 		</Row>
 	)

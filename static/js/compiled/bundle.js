@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 86143:
+/***/ 70374:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3406,6 +3406,31 @@ var PlaylistPlayIcon = function PlaylistPlayIcon(props) {
     points: "16,13 16,21 22,17"
   }))));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/PlaylistRemove.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var PlaylistRemoveIcon = function PlaylistRemoveIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("rect", {
+    fill: "none",
+    height: "24",
+    width: "24"
+  })), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("path", {
+    d: "M14,10H3v2h11V10z M14,6H3v2h11V6z M3,16h7v-2H3V16z M14.41,22L17,19.41L19.59,22L21,20.59L18.41,18L21,15.41L19.59,14 L17,16.59L14.41,14L13,15.41L15.59,18L13,20.59L14.41,22z"
+  })));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/PowerSetting.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -4022,6 +4047,31 @@ var StorageIcon = function StorageIcon(props) {
     d: "M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zm-4 7h20v-4H2v4zm2-3h2v2H4v-2z"
   }));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/TaskAlt.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var TaskAltIcon = function TaskAltIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("rect", {
+    fill: "none",
+    height: "24",
+    width: "24"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M22,5.18L10.59,16.6l-4.24-4.24l1.41-1.41l2.83,2.83l10-10L22,5.18z M19.79,10.22C19.92,10.79,20,11.39,20,12 c0,4.42-3.58,8-8,8s-8-3.58-8-8c0-4.42,3.58-8,8-8c1.58,0,3.04,0.46,4.28,1.25l1.44-1.44C16.1,2.67,14.13,2,12,2C6.48,2,2,6.48,2,12 c0,5.52,4.48,10,10,10s10-4.48,10-10c0-1.19-0.22-2.33-0.6-3.39L19.79,10.22z"
+  }));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Terrain.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -4591,6 +4641,8 @@ var Icon = __webpack_require__(73244);
 
 
 
+
+
  // Datas
 // -------------------------------------------------------------------------------------------------------------
 
@@ -4692,6 +4744,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'play_circle_filled': PlayCircleFilledIcon,
   'playlist_add': PlaylistAddIcon,
   'playlist_play': PlaylistPlayIcon,
+  'playlist_remove': PlaylistRemoveIcon,
   'power_setting': PowerSettingIcon,
   'push_pin': PushPinIcon,
   'queue_music': QueueMusicIcon,
@@ -4716,6 +4769,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'star_outline': StarOutlineIcon,
   'stop_circle': StopCircleIcon,
   'storage': StorageIcon,
+  'task_alt': TaskAltIcon,
   'terrain': TerrainIcon,
   'text_fields': TextFieldsIcon,
   'text_snippet': TextSnippetIcon,
@@ -4913,7 +4967,8 @@ var Divider_Divider = function Divider(props) {
   var spacing = props.spacing ? props.spacing : 'none'; // none, small, medium, big
 
   var className = props.className ? props.className : '';
-  var style = props.style ? props.style : {}; // Render
+  var style = props.style ? props.style : {}; // ...
+  // Render
   // ==================================================================================================
 
   return /*#__PURE__*/react.createElement("div", {
@@ -5423,13 +5478,6 @@ var IconButton = (0,es/* observer */.Pi)(function (props) {
 
   var handleMouseLeave = function handleMouseLeave(evt) {
     setHover(false);
-  }; // -
-
-
-  var handleClick = function handleClick(e) {
-    if (onClick) {
-      onClick(e);
-    }
   }; // Render
   // ==================================================================================================
 
@@ -5440,9 +5488,7 @@ var IconButton = (0,es/* observer */.Pi)(function (props) {
     }, className),
     title: title,
     style: style,
-    onClick: function onClick(e) {
-      return handleClick(e);
-    },
+    onClick: onClick,
     onMouseEnter: function onMouseEnter(e) {
       return handleMouseEnter(e);
     },
@@ -9405,7 +9451,7 @@ function List_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
  // Functions Components ReactJS
-// -------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 // ***** ListIcon *****
 // ********************
 
@@ -9417,11 +9463,15 @@ var List_ListIcon = function ListIcon(props) {
   var color = props.color ? props.color : 'default'; // transparent, default, primary, secondary, severityKey, ...
 
   var variant = props.variant ? props.variant : 'default'; // default, contained
+
+  var className = props.className ? props.className : "";
+  var style = props.style ? props.style : {}; // ...
   // Render
   // ==================================================================================================
 
   return /*#__PURE__*/react.createElement("div", {
-    className: "nx-list-icon"
+    className: (0,clsx_m/* default */.Z)("nx-list-icon", className),
+    style: style
   }, /*#__PURE__*/react.createElement(Avatar_Avatar, {
     color: variant == 'contained' ? color : 'transparent',
     size: "small",
@@ -9563,10 +9613,15 @@ var ListItem = (0,es/* observer */.Pi)(function (props) {
 var TAG_List = function TAG_List() {};
 
 var List_List = function List(props) {
+  // From ... props
+  var className = props.className ? props.className : "";
+  var style = props.style ? props.style : {}; // ...
   // Render
   // ==================================================================================================
+
   return /*#__PURE__*/react.createElement("div", {
-    className: "nx-list"
+    className: (0,clsx_m/* default */.Z)("nx-list", className),
+    style: style
   }, props.children);
 };
 // EXTERNAL MODULE: ../../nexus/react/contexts/playground/display/PlaygroundList.css
@@ -10427,13 +10482,13 @@ var Popover_Popover = function Popover(props) {
       _popoverStyle['top'] = Math.max(_popoverStyle['top'], 0);
 
       if (_popoverStyle.top + popoverHeight > window.innerHeight) {
-        _popoverStyle['top'] = window.innerHeight - popoverHeight;
+        _popoverStyle['top'] = window.innerHeight - popoverHeight - 10;
       }
 
       _popoverStyle['left'] = Math.max(_popoverStyle['left'], 0);
 
       if (_popoverStyle.left + popoverWidth > window.innerWidth) {
-        _popoverStyle['left'] = window.innerWidth - popoverWidth;
+        _popoverStyle['left'] = window.innerWidth - popoverWidth - 10;
       } // -
 
 
@@ -13024,6 +13079,15 @@ var ThemeStore = mobx_state_tree_module/* types.model */.V5.model({
         self.mode = mode;
         Storage_setToStorage('nxThemeMode', mode);
       }
+    },
+    refreshOsMode: function refreshOsMode() {
+      var themeModeOS = 'light';
+
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        themeModeOS = 'dark';
+      }
+
+      self.updateOsMode(themeModeOS);
     },
     // -
     toggleMode: function toggleMode(callback) {
@@ -19407,7 +19471,13 @@ var NxApp_NxApp = (0,es/* observer */.Pi)(function (props) {
     }, 500); // JS Ready
 
     var body = document.body;
-    body.classList.add("jsready");
+    body.classList.add("jsready"); // Focus Window
+
+    window.addEventListener('focus', function (event) {
+      if (props.callbackFocus) {
+        props.callbackFocus();
+      }
+    });
   }, []); // From ... props
 
   var Header = props.header ? props.header : null;
@@ -19870,6 +19940,940 @@ var services_ServicesStore = mobx_state_tree_module/* types.model */.V5.model({
     }
   };
 });
+// EXTERNAL MODULE: ../../nexus/react/forms/table/Table.css
+var Table = __webpack_require__(73810);
+;// CONCATENATED MODULE: ../../nexus/react/forms/table/Table.jsx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function Table_slicedToArray(arr, i) { return Table_arrayWithHoles(arr) || Table_iterableToArrayLimit(arr, i) || Table_unsupportedIterableToArray(arr, i) || Table_nonIterableRest(); }
+
+function Table_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function Table_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Table_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Table_arrayLikeToArray(o, minLen); }
+
+function Table_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function Table_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function Table_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+ // Functions Components ReactJS
+// -------------------------------------------------------------------------------------------------------------
+// ***** TableContainer *****
+// **************************
+
+var TAG_TableContainer = function TAG_TableContainer() {};
+
+var TableContainer = function TableContainer(props) {
+  // From ... props
+  var Component = props.component;
+  var children = props.children;
+  var className = props.className ? props.className : '';
+  var style = props.style ? props.style : {}; // ...
+  // Render
+  // ==================================================================================================
+
+  var tableContainerContent = null;
+
+  if (Component) {
+    tableContainerContent = /*#__PURE__*/react.createElement(Component, {
+      className: (0,clsx_m/* default */.Z)("nx-table-container", className),
+      style: style
+    }, children);
+  }
+
+  if (!Component) {
+    tableContainerContent = /*#__PURE__*/react.createElement("div", {
+      className: (0,clsx_m/* default */.Z)("nx-table-container", className),
+      style: style
+    }, children);
+  }
+
+  return tableContainerContent;
+}; // ***** Table *****
+// *****************
+
+var TAG_Table = function TAG_Table() {};
+
+var Table_Table = function Table(props) {
+  // From ... props
+  var children = props.children;
+  var className = props.className ? props.className : '';
+  var style = props.style ? props.style : {}; // ...
+  // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("table", {
+    className: (0,clsx_m/* default */.Z)("nx-table", className),
+    style: style
+  }, children);
+}; // ***** TableHead *****
+// *********************
+
+var TAG_TableHead = function TAG_TableHead() {};
+
+var TableHead = function TableHead(props) {
+  // From ... props
+  var children = props.children;
+  var className = props.className ? props.className : '';
+  var style = props.style ? props.style : {}; // ...
+  // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("thead", {
+    className: (0,clsx_m/* default */.Z)("nx-table-head", className),
+    style: style
+  }, children);
+}; // ***** TableBody *****
+// *********************
+
+var TAG_TableBody = function TAG_TableBody() {};
+
+var TableBody = function TableBody(props) {
+  // From ... props
+  var children = props.children;
+  var className = props.className ? props.className : '';
+  var style = props.style ? props.style : {}; // ...
+  // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("tbody", {
+    className: (0,clsx_m/* default */.Z)("nx-table-body", className),
+    style: style
+  }, children);
+}; // ***** TableRow *****
+// ********************
+
+var TAG_TableRow = function TAG_TableRow() {};
+
+var TableRow = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var theme = app.theme; // From ... state
+
+  var _React$useState = react.useState(false),
+      _React$useState2 = Table_slicedToArray(_React$useState, 2),
+      hover = _React$useState2[0],
+      setHover = _React$useState2[1];
+
+  var _React$useState3 = react.useState(false),
+      _React$useState4 = Table_slicedToArray(_React$useState3, 2),
+      active = _React$useState4[0],
+      setActive = _React$useState4[1]; // From ... props
+
+
+  var hoverable = props.hoverable == true ? true : false;
+  var disabled = props.disabled == true ? true : false;
+  var faded = props.faded == true ? true : false;
+  var forceHover = props.forceHover;
+  var children = props.children;
+  var callbackEnter = props.callbackEnter;
+  var callbackLeave = props.callbackLeave;
+  var callbackClick = props.callbackClick;
+  var className = props.className ? props.className : '';
+  var style = props.style ? props.style : {}; // ...
+
+  var cellStyle = {};
+
+  if (hover && hoverable && !faded) {
+    cellStyle['backgroundColor'] = hexToRgbA(theme.palette.primary.main, 0.1);
+  }
+
+  if (active && callbackClick && !faded) {
+    cellStyle['backgroundColor'] = hexToRgbA(theme.palette.primary.main, 0.3);
+  }
+
+  if (faded) {
+    cellStyle['color'] = theme.getColorFromKey("faded");
+    cellStyle['backgroundColor'] = hexToRgbA(theme.getColorFromKey("description"), 0.05);
+  } // Events
+  // ==================================================================================================
+
+
+  var handleMouseEnter = function handleMouseEnter(evt) {
+    if (!disabled) {
+      setHover(true);
+
+      if (callbackEnter) {
+        callbackEnter(evt);
+      }
+    }
+  };
+
+  var handleMouseLeave = function handleMouseLeave(evt) {
+    setHover(false);
+
+    if (callbackLeave) {
+      callbackLeave(evt);
+    }
+  };
+
+  var handlePointerDown = function handlePointerDown(evt) {
+    if (!disabled) {
+      setActive(true);
+    }
+  };
+
+  var handlePointerUp = function handlePointerUp(evt) {
+    setActive(false);
+  }; // -
+
+
+  var handleClick = function handleClick() {
+    if (callbackClick) {
+      callbackClick();
+    }
+  }; // Render
+  // ==================================================================================================
+
+
+  return /*#__PURE__*/react.createElement("tr", {
+    className: (0,clsx_m/* default */.Z)("nx-table-row", {
+      "hoverable": hoverable
+    }, {
+      "clickable": callbackClick
+    }, {
+      "disabled": disabled
+    }, className),
+    style: style,
+    onMouseEnter: function onMouseEnter(e) {
+      return handleMouseEnter(e);
+    },
+    onMouseLeave: function onMouseLeave(e) {
+      return handleMouseLeave(e);
+    },
+    onPointerDown: function onPointerDown(e) {
+      return handlePointerDown(e);
+    },
+    onPointerUp: function onPointerUp(e) {
+      return handlePointerUp(e);
+    },
+    onClick: function onClick() {
+      return handleClick();
+    }
+  }, react.Children.map(children, function (child) {
+    return /*#__PURE__*/react.cloneElement(child, {
+      inheritStyle: cellStyle
+    });
+  }));
+}); // ***** TableCell *****
+// *********************
+
+var TAG_TableCell = function TAG_TableCell() {};
+
+var TableCell = function TableCell(props) {
+  // From ... props
+  var header = props.header == true ? true : false;
+  var align = props.align ? props.align : "left";
+  var width = props.width ? props.width : "";
+  var size = props.size ? props.size : "";
+  var fontSize = props.fontSize ? props.fontSize : "14px";
+  var children = props.children;
+  var className = props.className ? props.className : '';
+  var style = props.style ? Datas_copyObj(props.style) : {};
+  var inheritStyle = props.inheritStyle ? Datas_copyObj(props.inheritStyle) : {}; // ...
+  // if (header && !style.hasOwnProperty('backgroundColor')) {
+  // 	style['backgroundColor'] = "rgba(0, 0, 0, 0.03)";
+  // }
+
+  style['fontSize'] = fontSize;
+
+  for (var _i2 = 0, _Object$entries = Object.entries(inheritStyle); _i2 < _Object$entries.length; _i2++) {
+    var _Object$entries$_i = Table_slicedToArray(_Object$entries[_i2], 2),
+        property = _Object$entries$_i[0],
+        value = _Object$entries$_i[1];
+
+    style[property] = value;
+  } // Render
+  // ==================================================================================================
+
+
+  var tableCellContent = null;
+
+  if (header) {
+    tableCellContent = /*#__PURE__*/react.createElement("th", {
+      className: (0,clsx_m/* default */.Z)("nx-table-cell", size, className),
+      width: width,
+      style: style,
+      align: align
+    }, children);
+  }
+
+  if (!header) {
+    tableCellContent = /*#__PURE__*/react.createElement("td", {
+      className: (0,clsx_m/* default */.Z)("nx-table-cell", size, className),
+      width: width,
+      style: style,
+      align: align
+    }, children);
+  }
+
+  return tableCellContent;
+};
+// EXTERNAL MODULE: ./contexts/track/Track.css
+var Track = __webpack_require__(77834);
+;// CONCATENATED MODULE: ./contexts/track/Track.jsx
+function Track_slicedToArray(arr, i) { return Track_arrayWithHoles(arr) || Track_iterableToArrayLimit(arr, i) || Track_unsupportedIterableToArray(arr, i) || Track_nonIterableRest(); }
+
+function Track_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function Track_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Track_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Track_arrayLikeToArray(o, minLen); }
+
+function Track_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function Track_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function Track_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // Models
+// ======================================================================================================
+// ***** TrackStore *****
+// **********************
+
+var TAG_TrackStore = function TAG_TrackStore() {};
+
+var TrackStore = mobx_state_tree_module/* types.model */.V5.model({
+  id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  name: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  disk: mobx_state_tree_module/* types.frozen */.V5.frozen(null),
+  track: mobx_state_tree_module/* types.frozen */.V5.frozen(null),
+  track_path: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  track_type: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  track_available: true,
+  ts_file: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  ts_added: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  artist: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  album: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  checked: true,
+  favorite: false,
+  starred: false,
+  album_id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  artist_id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  year_id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  genre_id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string)
+}).views(function (self) {
+  return {
+    get discNumber() {
+      return self.disk ? self.disk : 0;
+    },
+
+    get discNumberLabel() {
+      var discNumber = "".concat(self.discNumber);
+
+      if (discNumber.length < 2) {
+        return "0".concat(discNumber);
+      }
+
+      return discNumber;
+    },
+
+    get trackNumber() {
+      return self.track ? self.track : 0;
+    },
+
+    get trackNumberLabel() {
+      var trackNumber = "".concat(self.trackNumber);
+
+      if (trackNumber.length < 2) {
+        return "0".concat(trackNumber);
+      }
+
+      return trackNumber;
+    },
+
+    get sortNumber() {
+      return "".concat(self.discNumberLabel, "-").concat(self.trackNumberLabel);
+    },
+
+    get subtitle() {
+      var subtitle = "";
+
+      if (self.artist) {
+        subtitle = self.artist;
+      }
+
+      if (self.album) {
+        if (subtitle && subtitle != self.album) {
+          subtitle = "".concat(subtitle, " - ").concat(self.album);
+        } else {
+          subtitle = self.album;
+        }
+      }
+
+      return subtitle;
+    },
+
+    // -
+    get linkedAlbum() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var albums = store.albums;
+      return albums.getById(self.album_id);
+    },
+
+    get linkedArtist() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var artists = store.artists;
+      return artists.getById(self.artist_id);
+    },
+
+    get linkedYear() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var years = store.years;
+      return years.getById(self.year_id);
+    },
+
+    get linkedGenre() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var genres = store.genres;
+      return genres.getById(self.genre_id);
+    },
+
+    // Bools
+    // -
+    get isPlayerCandidate() {
+      // Titre candidat à la lecture ordonnée ?
+      // ---
+      if (!self.checked) {
+        return false;
+      }
+
+      return true;
+    },
+
+    get isShuffleCandidate() {
+      // Titre candidat à la lecture aléatoire ?
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var library = store.library;
+      var shuffleOnlyFavorites = library.shuffle_only_favorites;
+      var shuffleIgnoreSoudtracks = library.shuffle_ignore_soudtracks; // Que des favoris ?
+
+      if (shuffleOnlyFavorites && !self.favorite) {
+        return false;
+      } // Pas de soundtrack ?
+
+
+      if (shuffleIgnoreSoudtracks && ['soundtrack', 'soundtracks'].indexOf(self.genre_id) > -1) {
+        return false;
+      }
+
+      return true;
+    },
+
+    get isPlaying() {
+      // Le titre est-il en train d'être lu ?
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var player = store.player;
+      var playTrackId = player.playTrackId;
+
+      if (self.id == playTrackId) {
+        return true;
+      }
+
+      return false;
+    }
+
+  };
+}).actions(function (self) {
+  return {
+    setField: function setField(field, value) {
+      self[field] = value;
+    },
+    // -
+    toggleChecked: function toggleChecked() {
+      self.checked = !self.checked;
+    },
+    toggleFavorite: function toggleFavorite() {
+      self.favorite = !self.favorite;
+    },
+    toggleStarred: function toggleStarred() {
+      self.starred = !self.starred;
+    },
+    // -
+    update: function update(raw) {
+      self.id = raw.id;
+      self.name = raw.name;
+      self.disk = raw.disk;
+      self.track = raw.track;
+      self.track_path = raw.track_path;
+      self.track_type = raw.track_type;
+      self.track_available = raw.track_available;
+      self.ts_file = raw.ts_file;
+      self.ts_added = raw.ts_added;
+      self.artist = raw.artist;
+      self.album = raw.album;
+      self.checked = raw.checked;
+      self.favorite = raw.favorite;
+      self.starred = raw.starred;
+      self.album_id = raw.album_id;
+      self.artist_id = raw.artist_id;
+      self.year_id = raw.year_id;
+      self.genre_id = raw.genre_id;
+    }
+  };
+}); // Functions Components ReactJS
+// ======================================================================================================
+// ***** TrackContextualMenu *****
+// *******************************
+
+var TAG_TrackContextualMenu = function TAG_TrackContextualMenu() {};
+
+var TrackContextualMenu = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var tracks = store.tracks;
+  var player = store.player;
+  var popupTrackMetadatas = store.popupTrackMetadatas;
+  var popupManagePlaylist = store.popupManagePlaylist; // From ... states
+
+  var _React$useState = react.useState(null),
+      _React$useState2 = Track_slicedToArray(_React$useState, 2),
+      anchorMenu = _React$useState2[0],
+      setAnchorMenu = _React$useState2[1]; // From ... props
+
+
+  var track = props.track;
+  var origin = props.origin ? props.origin : "album"; // album, player, playlist, header
+
+  var size = props.size ? props.size : "small";
+  var color = props.color ? props.color : null;
+  var children = props.children;
+  var callbackClick = props.callbackClick;
+  var className = props.className ? props.className : "";
+  var style = props.style ? props.style : {}; // From ... store
+
+  var drawerView = player.drawerView; // ...
+  // Events
+  // ==================================================================================================
+
+  var handleOpenMenu = function handleOpenMenu(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    setAnchorMenu(event.currentTarget);
+  };
+
+  var handleCloseMenu = function handleCloseMenu() {
+    setAnchorMenu(null);
+  }; // -
+
+
+  var handleInfosClick = function handleInfosClick() {
+    popupTrackMetadatas.setField("trackId", track.id);
+    popupTrackMetadatas.open();
+    handleCloseMenu();
+  }; // -
+
+
+  var handleToggleCheck = function handleToggleCheck() {
+    track.toggleChecked();
+    tracks.save();
+    handleCloseMenu();
+  };
+
+  var handleToggleFavorite = function handleToggleFavorite() {
+    track.toggleFavorite();
+    tracks.save();
+    handleCloseMenu();
+  };
+
+  var handleToggleStarred = function handleToggleStarred() {
+    track.toggleStarred();
+    tracks.save();
+    handleCloseMenu();
+  }; // -
+
+
+  var handleGoto = function handleGoto(gotoContext, gotoContextId) {
+    store.navigateTo(gotoContext, gotoContextId);
+    handleCloseMenu();
+  }; // -
+
+
+  var handleAddPlaylist = function handleAddPlaylist() {
+    popupManagePlaylist.setField("mode", "add");
+    popupManagePlaylist.setField("sourceId", track.id);
+    popupManagePlaylist.setField("sourceType", "track");
+    popupManagePlaylist.open();
+    handleCloseMenu();
+  };
+
+  var handleAddToQueue = function handleAddToQueue() {
+    player.populate([track.id]);
+    handleCloseMenu();
+  };
+
+  var handleRemoveFromPlayer = function handleRemoveFromPlayer() {
+    if (drawerView == "current") {
+      player.remove(track.id);
+    }
+
+    if (drawerView == "history") {
+      player.removeFromHistory(track.id);
+      player.save();
+    }
+
+    handleCloseMenu();
+  }; // -
+
+
+  var handleDelete = function handleDelete() {// TODO
+  }; // Render
+  // ==================================================================================================
+
+
+  return /*#__PURE__*/react.createElement("div", {
+    className: (0,clsx_m/* default */.Z)(className),
+    style: style,
+    onClick: function onClick(e) {
+      if (callbackClick) {
+        callbackClick(e);
+      }
+    }
+  }, /*#__PURE__*/react.createElement(IconButton, {
+    size: size,
+    iconName: "more_horiz",
+    color: color,
+    onClick: function onClick(e) {
+      return handleOpenMenu(e);
+    }
+  }), /*#__PURE__*/react.createElement(Popover_Popover, {
+    id: "pop-track-".concat(track.id),
+    open: Boolean(anchorMenu),
+    anchorEl: anchorMenu,
+    onClose: handleCloseMenu,
+    anchorOrigin: {
+      vertical: 'bottom',
+      horizontal: 'center'
+    },
+    transformOrigin: {
+      vertical: 'top',
+      horizontal: 'center'
+    } // style={{
+    // 	width: '240px',
+    // }}
+
+  }, track && /*#__PURE__*/react.createElement(List_List, {
+    style: {
+      paddingTop: '10px',
+      paddingBottom: '10px'
+    }
+  }, /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleInfosClick();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "info"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Afficher les informations")), origin != 'album' && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Divider_Divider, {
+    spacing: "medium"
+  }), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleToggleCheck();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: track.checked ? "check_box" : "check_box_outline_blank",
+    color: track.checked ? "primary" : null
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, track.checked ? "Décocher le titre" : "Cocher le titre")), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleToggleFavorite();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: track.favorite ? "favorite" : "favorite_border",
+    color: track.favorite ? "error" : null
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, track.favorite ? "Ne plus aimer le titre" : "Aimer le titre")), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleToggleStarred();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: track.starred ? "star" : "star_outline",
+    color: track.starred ? "warning" : null
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, track.starred ? "Enlever du mix courant" : "Ajouter au mix courant")), /*#__PURE__*/react.createElement(Divider_Divider, {
+    spacing: "medium"
+  }), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleGoto("album", track.linkedAlbum.id);
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "album"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Aller \xE0 l'album")), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleGoto("artist", track.linkedArtist.id);
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "face"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Aller \xE0 l'artiste")), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleGoto("genre", track.linkedGenre.id);
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "local_bar"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Aller au genre")), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleGoto("year", track.linkedYear.id);
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "date_range"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Aller \xE0 l'ann\xE9e"))), /*#__PURE__*/react.createElement(Divider_Divider, {
+    spacing: "medium"
+  }), origin != 'playlist' && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleAddPlaylist();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "playlist_add"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Ajouter \xE0 une playlist"))), ['player', 'header'].indexOf(origin) == -1 && /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleAddToQueue();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "queue_music"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Ajouter \xE0 la liste de lecture")), origin == 'player' && /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleRemoveFromPlayer();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "playlist_remove"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, drawerView == "current" && /*#__PURE__*/react.createElement("span", null, "Supprimer de la liste de lecture"), drawerView == "history" && /*#__PURE__*/react.createElement("span", null, "Supprimer de l'historique"))), origin == 'album' && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Divider_Divider, {
+    spacing: "medium"
+  }), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleDelete();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "delete"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Supprimer l'indexation"))), children)));
+}); // ***** TrackRow *****
+// ********************
+
+var TAG_TrackRow = function TAG_TrackRow() {};
+
+var TrackRow = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var tracks = store.tracks;
+  var player = store.player; // From ... state
+
+  var _React$useState3 = react.useState(false),
+      _React$useState4 = Track_slicedToArray(_React$useState3, 2),
+      hover = _React$useState4[0],
+      setHover = _React$useState4[1]; // From ... props
+
+
+  var track = props.track; // From ... store
+
+  var isLoading = app.isLoading; // ...
+
+  var favorite = track.favorite;
+  var starred = track.starred;
+  var isPlaying = track.isPlaying;
+  var linkedAlbum = track.linkedAlbum; // ...
+  // Events
+  // ==================================================================================================
+
+  var handleEnter = function handleEnter(evt) {
+    setHover(true);
+  };
+
+  var handleLeave = function handleLeave(evt) {
+    setHover(false);
+  }; // -
+
+
+  var handleCheckedChanged = function handleCheckedChanged() {
+    tracks.save();
+  };
+
+  var handleFavoriteClicked = function handleFavoriteClicked(track) {
+    track.setField('favorite', !track.favorite);
+    tracks.save();
+  };
+
+  var handleStarredClicked = function handleStarredClicked(track) {
+    track.setField('starred', !track.starred);
+    tracks.save();
+  };
+
+  var handlePlayClicked = function handlePlayClicked(track) {
+    player.audioStop();
+    player.clear();
+
+    if (track.isPlayerCandidate) {
+      linkedAlbum.play(track.id);
+    } else {
+      player.audioStop();
+      player.clear();
+      player.populate([track.id]);
+      player.read(track.id);
+    }
+  };
+
+  var handleStopClicked = function handleStopClicked(track) {
+    player.audioStop();
+    player.clear();
+  }; // Render
+  // ==================================================================================================
+
+
+  return /*#__PURE__*/react.createElement(TableRow, {
+    hoverable: true,
+    faded: !track.checked,
+    callbackEnter: handleEnter,
+    callbackLeave: handleLeave
+  }, /*#__PURE__*/react.createElement(TableCell, {
+    width: 56,
+    align: "center",
+    size: "tiny"
+  }, /*#__PURE__*/react.createElement(Field_Field, {
+    component: "checkbox",
+    ghostLabel: false,
+    savePath: ['tracks', 'by_id', track.id, 'checked'],
+    disabled: isLoading,
+    callbackChange: function callbackChange() {
+      return handleCheckedChanged();
+    }
+  })), /*#__PURE__*/react.createElement(TableCell, {
+    width: 56,
+    align: "center",
+    size: "tiny"
+  }, (hover || favorite) && /*#__PURE__*/react.createElement(IconButton, {
+    size: "small",
+    iconName: track.favorite ? "favorite" : "favorite_border",
+    color: track.favorite ? "error" : null,
+    disabled: isLoading,
+    onClick: function onClick() {
+      return handleFavoriteClicked(track);
+    }
+  })), /*#__PURE__*/react.createElement(TableCell, {
+    width: 56,
+    align: "center",
+    size: "tiny"
+  }, (hover || starred) && /*#__PURE__*/react.createElement(IconButton, {
+    size: "small",
+    iconName: track.starred ? "star" : "star_outline",
+    color: track.starred ? "warning" : null,
+    disabled: isLoading,
+    onClick: function onClick() {
+      return handleStarredClicked(track);
+    }
+  })), /*#__PURE__*/react.createElement(TableCell, {
+    width: 56,
+    size: "tiny",
+    fontSize: "13px",
+    align: "center"
+  }, !isPlaying && !hover && /*#__PURE__*/react.createElement("span", null, track.track), !isPlaying && hover && /*#__PURE__*/react.createElement(IconButton, {
+    size: "small",
+    iconName: "play_circle_filled",
+    color: "hot",
+    onClick: function onClick() {
+      return handlePlayClicked(track);
+    }
+  }), isPlaying && !hover && /*#__PURE__*/react.createElement(Avatar_Avatar, {
+    size: "small",
+    color: "transparent",
+    iconName: "equalizer",
+    iconColor: "hot"
+  }), isPlaying && hover && /*#__PURE__*/react.createElement(IconButton, {
+    size: "small",
+    iconName: "stop_circle",
+    color: "hot",
+    onClick: function onClick() {
+      return handleStopClicked(track);
+    }
+  })), /*#__PURE__*/react.createElement(TableCell, {
+    size: "tiny",
+    fontSize: "13px"
+  }, track.name), /*#__PURE__*/react.createElement(TableCell, {
+    width: 56,
+    align: "right",
+    size: "tiny"
+  }, /*#__PURE__*/react.createElement(TrackContextualMenu, {
+    track: track,
+    origin: "album",
+    style: {
+      marginRight: '-4px'
+    }
+  })));
+});
 // EXTERNAL MODULE: ./components/items/PlayerItem.css
 var PlayerItem = __webpack_require__(90620);
 ;// CONCATENATED MODULE: ./components/items/PlayerItem.jsx
@@ -19897,6 +20901,7 @@ function PlayerItem_arrayLikeToArray(arr, len) { if (len == null || len > arr.le
 function PlayerItem_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function PlayerItem_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -19958,12 +20963,19 @@ var PlayerItem_PlayerItem = (0,es/* observer */.Pi)(function (props) {
   var handleClick = function handleClick(evt) {
     if (origin == "playlist") {
       player.jumpTo(index);
+      player.addHistory(trackId);
     }
 
     if (origin == "history") {
+      if (player.nbTracks) {
+        if (player.playList[0] == trackId) {
+          player.jumpTo(0);
+          return;
+        }
+      }
+
       var insertedIdx = player.insert(trackId);
-      console.log(insertedIdx);
-      player.jumpTo(insertedIdx);
+      player.jumpTo(insertedIdx && insertedIdx > -1 ? insertedIdx : 0);
     }
   }; // Render
   // ==================================================================================================
@@ -19998,10 +21010,14 @@ var PlayerItem_PlayerItem = (0,es/* observer */.Pi)(function (props) {
     style: {
       marginTop: '2px'
     }
-  }, artistName)), /*#__PURE__*/react.createElement(IconButton, {
-    size: "small",
-    iconName: "more_horiz",
-    className: "flex-0"
+  }, artistName)), /*#__PURE__*/react.createElement(TrackContextualMenu, {
+    track: track,
+    origin: "player",
+    className: "flex-0",
+    callbackClick: function callbackClick(e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
   }));
 });
 // EXTERNAL MODULE: ../../nexus/react/node_modules/mobx/dist/mobx.esm.js
@@ -20031,6 +21047,7 @@ function Player_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof S
 function Player_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Player_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Player_arrayLikeToArray(o, minLen); }
 
 function Player_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 
 
 
@@ -20072,6 +21089,7 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
   drawerView: 'current',
   // current, history
   // -
+  renderBurst: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   loaded: false
 }).views(function (self) {
   return {
@@ -20128,14 +21146,17 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
       return tracksList;
     },
 
-    get remainingPlayTracks() {
+    getRemainingPlayTracks: function getRemainingPlayTracks() {
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var tracks = store.tracks;
       var playIdx = self.playIdx;
       var tracksList = [];
 
       for (var trackIdx in self.playList) {
-        if (trackIdx <= playIdx) {
+        trackIdx = parseInt(trackIdx);
+        console.log(trackIdx);
+
+        if (playIdx > -1 && trackIdx <= playIdx) {
           continue;
         }
 
@@ -20143,7 +21164,7 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
         var track = tracks.by_id.get(trackId);
 
         if (track) {
-          tracksList.push([parseInt(trackIdx), track]);
+          tracksList.push([trackIdx, track]);
         }
       }
 
@@ -20167,7 +21188,7 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
     },
 
     // -
-    get historyTracks() {
+    getHistoryTracks: function getHistoryTracks() {
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var tracks = store.tracks;
       var tracksList = [];
@@ -20192,7 +21213,6 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
 
       return tracksList;
     },
-
     // -
     getTrackIdx: function getTrackIdx(trackId) {
       return self.playList.indexOf(trackId);
@@ -20295,6 +21315,18 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
       } finally {
         _iterator4.f();
       }
+
+      self.renderBurst = uuid();
+    },
+    remove: function remove(trackId) {
+      var trackIdx = self.playList.indexOf(trackId);
+
+      if (trackIdx == self.playIdx) {
+        self.audioStop();
+        self.playIdx = -1;
+      }
+
+      self.playList.splice(trackIdx, 1);
     },
     clear: function clear() {
       self.playList = [];
@@ -20311,6 +21343,13 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
 
       self.historyList.splice(0, 0, trackId);
       self.save();
+    },
+    removeFromHistory: function removeFromHistory(trackId) {
+      var trackIdx = self.historyList.indexOf(trackId);
+
+      if (trackIdx > -1) {
+        self.historyList.splice(trackIdx, 1);
+      }
     },
     populateHistory: function populateHistory(trackIds) {
       var _iterator5 = Player_createForOfIteratorHelper(trackIds),
@@ -20572,7 +21611,8 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
 
   var playIdx = player.playIdx;
   var drawerOpen = player.drawerOpen;
-  var drawerView = player.drawerView; // ...
+  var drawerView = player.drawerView;
+  var renderBurst = player.renderBurst; // ...
   // Events
   // ==================================================================================================
 
@@ -20595,13 +21635,13 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
 
   var playerDrawerContent = null;
 
-  if (drawerOpen || true) {
-    var remainingPlayTracks = player.remainingPlayTracks;
-    var historyTracks = player.historyTracks;
+  if (drawerOpen) {
+    var remainingPlayTracks = player.getRemainingPlayTracks();
+    var historyTracks = player.getHistoryTracks();
     playerDrawerContent = /*#__PURE__*/react.createElement("div", {
       className: (0,clsx_m/* default */.Z)("g-player-drawer", {
         "open": drawerOpen
-      })
+      }, renderBurst)
     }, /*#__PURE__*/react.createElement("div", {
       className: "g-player-drawer-header"
     }, /*#__PURE__*/react.createElement(Field_Field, {
@@ -20695,6 +21735,7 @@ var PlayerDrawer_PlayerDrawer = (0,es/* observer */.Pi)(function (props) {
 // EXTERNAL MODULE: ./components/player_display/PlayerDisplay.css
 var PlayerDisplay = __webpack_require__(84513);
 ;// CONCATENATED MODULE: ./components/player_display/PlayerDisplay.jsx
+
 
 
 
@@ -20819,10 +21860,11 @@ var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
     className: "g-player-display-subtitle"
   }, track.subtitle)), /*#__PURE__*/react.createElement(PlayerDisplaySlider, {
     onChange: handleSliderChange
-  }), /*#__PURE__*/react.createElement(IconButton, {
+  }), /*#__PURE__*/react.createElement(TrackContextualMenu, {
+    track: track,
     size: "tiny",
-    iconName: "more_horiz",
     color: "#FFFFFF",
+    origin: "header",
     className: "flex-0",
     style: {
       zIndex: '100',
@@ -20991,690 +22033,6 @@ var SearchMenuItem = (0,es/* observer */.Pi)(function (props) {
     activeContexts: [searchContext],
     callbackClick: handleMenuItemClick
   });
-});
-// EXTERNAL MODULE: ../../nexus/react/forms/table/Table.css
-var Table = __webpack_require__(73810);
-;// CONCATENATED MODULE: ../../nexus/react/forms/table/Table.jsx
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function Table_slicedToArray(arr, i) { return Table_arrayWithHoles(arr) || Table_iterableToArrayLimit(arr, i) || Table_unsupportedIterableToArray(arr, i) || Table_nonIterableRest(); }
-
-function Table_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function Table_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Table_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Table_arrayLikeToArray(o, minLen); }
-
-function Table_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function Table_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function Table_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
-
-
-
-
-
- // Functions Components ReactJS
-// -------------------------------------------------------------------------------------------------------------
-// ***** TableContainer *****
-// **************************
-
-var TAG_TableContainer = function TAG_TableContainer() {};
-
-var TableContainer = function TableContainer(props) {
-  // From ... props
-  var Component = props.component;
-  var children = props.children;
-  var className = props.className ? props.className : '';
-  var style = props.style ? props.style : {}; // ...
-  // Render
-  // ==================================================================================================
-
-  var tableContainerContent = null;
-
-  if (Component) {
-    tableContainerContent = /*#__PURE__*/react.createElement(Component, {
-      className: (0,clsx_m/* default */.Z)("nx-table-container", className),
-      style: style
-    }, children);
-  }
-
-  if (!Component) {
-    tableContainerContent = /*#__PURE__*/react.createElement("div", {
-      className: (0,clsx_m/* default */.Z)("nx-table-container", className),
-      style: style
-    }, children);
-  }
-
-  return tableContainerContent;
-}; // ***** Table *****
-// *****************
-
-var TAG_Table = function TAG_Table() {};
-
-var Table_Table = function Table(props) {
-  // From ... props
-  var children = props.children;
-  var className = props.className ? props.className : '';
-  var style = props.style ? props.style : {}; // ...
-  // Render
-  // ==================================================================================================
-
-  return /*#__PURE__*/react.createElement("table", {
-    className: (0,clsx_m/* default */.Z)("nx-table", className),
-    style: style
-  }, children);
-}; // ***** TableHead *****
-// *********************
-
-var TAG_TableHead = function TAG_TableHead() {};
-
-var TableHead = function TableHead(props) {
-  // From ... props
-  var children = props.children;
-  var className = props.className ? props.className : '';
-  var style = props.style ? props.style : {}; // ...
-  // Render
-  // ==================================================================================================
-
-  return /*#__PURE__*/react.createElement("thead", {
-    className: (0,clsx_m/* default */.Z)("nx-table-head", className),
-    style: style
-  }, children);
-}; // ***** TableBody *****
-// *********************
-
-var TAG_TableBody = function TAG_TableBody() {};
-
-var TableBody = function TableBody(props) {
-  // From ... props
-  var children = props.children;
-  var className = props.className ? props.className : '';
-  var style = props.style ? props.style : {}; // ...
-  // Render
-  // ==================================================================================================
-
-  return /*#__PURE__*/react.createElement("tbody", {
-    className: (0,clsx_m/* default */.Z)("nx-table-body", className),
-    style: style
-  }, children);
-}; // ***** TableRow *****
-// ********************
-
-var TAG_TableRow = function TAG_TableRow() {};
-
-var TableRow = (0,es/* observer */.Pi)(function (props) {
-  var store = react.useContext(window.storeContext);
-  var app = store.app;
-  var theme = app.theme; // From ... state
-
-  var _React$useState = react.useState(false),
-      _React$useState2 = Table_slicedToArray(_React$useState, 2),
-      hover = _React$useState2[0],
-      setHover = _React$useState2[1];
-
-  var _React$useState3 = react.useState(false),
-      _React$useState4 = Table_slicedToArray(_React$useState3, 2),
-      active = _React$useState4[0],
-      setActive = _React$useState4[1]; // From ... props
-
-
-  var hoverable = props.hoverable == true ? true : false;
-  var disabled = props.disabled == true ? true : false;
-  var faded = props.faded == true ? true : false;
-  var children = props.children;
-  var callbackEnter = props.callbackEnter;
-  var callbackLeave = props.callbackLeave;
-  var callbackClick = props.callbackClick;
-  var className = props.className ? props.className : '';
-  var style = props.style ? props.style : {}; // ...
-
-  var cellStyle = {};
-
-  if (hover && hoverable && !faded) {
-    cellStyle['backgroundColor'] = hexToRgbA(theme.palette.primary.main, 0.1);
-  }
-
-  if (active && callbackClick && !faded) {
-    cellStyle['backgroundColor'] = hexToRgbA(theme.palette.primary.main, 0.3);
-  }
-
-  if (faded) {
-    cellStyle['color'] = theme.getColorFromKey("faded");
-    cellStyle['backgroundColor'] = hexToRgbA(theme.getColorFromKey("description"), 0.05);
-  } // Events
-  // ==================================================================================================
-
-
-  var handleMouseEnter = function handleMouseEnter(evt) {
-    if (!disabled) {
-      setHover(true);
-
-      if (callbackEnter) {
-        callbackEnter(evt);
-      }
-    }
-  };
-
-  var handleMouseLeave = function handleMouseLeave(evt) {
-    setHover(false);
-
-    if (callbackLeave) {
-      callbackLeave(evt);
-    }
-  };
-
-  var handlePointerDown = function handlePointerDown(evt) {
-    if (!disabled) {
-      setActive(true);
-    }
-  };
-
-  var handlePointerUp = function handlePointerUp(evt) {
-    setActive(false);
-  }; // -
-
-
-  var handleClick = function handleClick() {
-    if (callbackClick) {
-      callbackClick();
-    }
-  }; // Render
-  // ==================================================================================================
-
-
-  return /*#__PURE__*/react.createElement("tr", {
-    className: (0,clsx_m/* default */.Z)("nx-table-row", {
-      "hoverable": hoverable
-    }, {
-      "clickable": callbackClick
-    }, {
-      "disabled": disabled
-    }, className),
-    style: style,
-    onMouseEnter: function onMouseEnter(e) {
-      return handleMouseEnter(e);
-    },
-    onMouseLeave: function onMouseLeave(e) {
-      return handleMouseLeave(e);
-    },
-    onPointerDown: function onPointerDown(e) {
-      return handlePointerDown(e);
-    },
-    onPointerUp: function onPointerUp(e) {
-      return handlePointerUp(e);
-    },
-    onClick: function onClick() {
-      return handleClick();
-    }
-  }, react.Children.map(children, function (child) {
-    return /*#__PURE__*/react.cloneElement(child, {
-      inheritStyle: cellStyle
-    });
-  }));
-}); // ***** TableCell *****
-// *********************
-
-var TAG_TableCell = function TAG_TableCell() {};
-
-var TableCell = function TableCell(props) {
-  // From ... props
-  var header = props.header == true ? true : false;
-  var align = props.align ? props.align : "left";
-  var width = props.width ? props.width : "";
-  var size = props.size ? props.size : "";
-  var fontSize = props.fontSize ? props.fontSize : "14px";
-  var children = props.children;
-  var className = props.className ? props.className : '';
-  var style = props.style ? Datas_copyObj(props.style) : {};
-  var inheritStyle = props.inheritStyle ? Datas_copyObj(props.inheritStyle) : {}; // ...
-  // if (header && !style.hasOwnProperty('backgroundColor')) {
-  // 	style['backgroundColor'] = "rgba(0, 0, 0, 0.03)";
-  // }
-
-  style['fontSize'] = fontSize;
-
-  for (var _i2 = 0, _Object$entries = Object.entries(inheritStyle); _i2 < _Object$entries.length; _i2++) {
-    var _Object$entries$_i = Table_slicedToArray(_Object$entries[_i2], 2),
-        property = _Object$entries$_i[0],
-        value = _Object$entries$_i[1];
-
-    style[property] = value;
-  } // Render
-  // ==================================================================================================
-
-
-  var tableCellContent = null;
-
-  if (header) {
-    tableCellContent = /*#__PURE__*/react.createElement("th", {
-      className: (0,clsx_m/* default */.Z)("nx-table-cell", size, className),
-      width: width,
-      style: style,
-      align: align
-    }, children);
-  }
-
-  if (!header) {
-    tableCellContent = /*#__PURE__*/react.createElement("td", {
-      className: (0,clsx_m/* default */.Z)("nx-table-cell", size, className),
-      width: width,
-      style: style,
-      align: align
-    }, children);
-  }
-
-  return tableCellContent;
-};
-// EXTERNAL MODULE: ./contexts/track/Track.css
-var Track = __webpack_require__(77834);
-;// CONCATENATED MODULE: ./contexts/track/Track.jsx
-function Track_slicedToArray(arr, i) { return Track_arrayWithHoles(arr) || Track_iterableToArrayLimit(arr, i) || Track_unsupportedIterableToArray(arr, i) || Track_nonIterableRest(); }
-
-function Track_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function Track_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Track_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Track_arrayLikeToArray(o, minLen); }
-
-function Track_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function Track_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function Track_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- // Models
-// ======================================================================================================
-// ***** TrackStore *****
-// **********************
-
-var TAG_TrackStore = function TAG_TrackStore() {};
-
-var TrackStore = mobx_state_tree_module/* types.model */.V5.model({
-  id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
-  name: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
-  disk: mobx_state_tree_module/* types.frozen */.V5.frozen(null),
-  track: mobx_state_tree_module/* types.frozen */.V5.frozen(null),
-  track_path: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
-  track_type: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
-  track_available: true,
-  ts_file: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
-  ts_added: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
-  artist: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
-  album: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
-  checked: true,
-  favorite: false,
-  starred: false,
-  album_id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
-  artist_id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
-  year_id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
-  genre_id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string)
-}).views(function (self) {
-  return {
-    get discNumber() {
-      return self.disk ? self.disk : 0;
-    },
-
-    get discNumberLabel() {
-      var discNumber = "".concat(self.discNumber);
-
-      if (discNumber.length < 2) {
-        return "0".concat(discNumber);
-      }
-
-      return discNumber;
-    },
-
-    get trackNumber() {
-      return self.track ? self.track : 0;
-    },
-
-    get trackNumberLabel() {
-      var trackNumber = "".concat(self.trackNumber);
-
-      if (trackNumber.length < 2) {
-        return "0".concat(trackNumber);
-      }
-
-      return trackNumber;
-    },
-
-    get sortNumber() {
-      return "".concat(self.discNumberLabel, "-").concat(self.trackNumberLabel);
-    },
-
-    get subtitle() {
-      var subtitle = "";
-
-      if (self.artist) {
-        subtitle = self.artist;
-      }
-
-      if (self.album) {
-        if (subtitle && subtitle != self.album) {
-          subtitle = "".concat(subtitle, " - ").concat(self.album);
-        } else {
-          subtitle = self.album;
-        }
-      }
-
-      return subtitle;
-    },
-
-    // -
-    get linkedAlbum() {
-      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
-      var albums = store.albums;
-      return albums.getById(self.album_id);
-    },
-
-    get linkedArtist() {
-      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
-      var artists = store.artists;
-      return artists.getById(self.artist_id);
-    },
-
-    get linkedYear() {
-      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
-      var years = store.years;
-      return years.getById(self.year_id);
-    },
-
-    get linkedGenre() {
-      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
-      var genres = store.genres;
-      return genres.getById(self.genre_id);
-    },
-
-    // Bools
-    // -
-    get isPlayerCandidate() {
-      // Titre candidat à la lecture ordonnée ?
-      // ---
-      if (!self.checked) {
-        return false;
-      }
-
-      return true;
-    },
-
-    get isShuffleCandidate() {
-      // Titre candidat à la lecture aléatoire ?
-      // ---
-      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
-      var library = store.library;
-      var shuffleOnlyFavorites = library.shuffle_only_favorites;
-      var shuffleIgnoreSoudtracks = library.shuffle_ignore_soudtracks; // Que des favoris ?
-
-      if (shuffleOnlyFavorites && !self.favorite) {
-        return false;
-      } // Pas de soundtrack ?
-
-
-      if (shuffleIgnoreSoudtracks && ['soundtrack', 'soundtracks'].indexOf(self.genre_id) > -1) {
-        return false;
-      }
-
-      return true;
-    },
-
-    get isPlaying() {
-      // Le titre est-il en train d'être lu ?
-      // ---
-      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
-      var player = store.player;
-      var playTrackId = player.playTrackId;
-
-      if (self.id == playTrackId) {
-        return true;
-      }
-
-      return false;
-    }
-
-  };
-}).actions(function (self) {
-  return {
-    setField: function setField(field, value) {
-      self[field] = value;
-    },
-    // -
-    update: function update(raw) {
-      self.id = raw.id;
-      self.name = raw.name;
-      self.disk = raw.disk;
-      self.track = raw.track;
-      self.track_path = raw.track_path;
-      self.track_type = raw.track_type;
-      self.track_available = raw.track_available;
-      self.ts_file = raw.ts_file;
-      self.ts_added = raw.ts_added;
-      self.artist = raw.artist;
-      self.album = raw.album;
-      self.checked = raw.checked;
-      self.favorite = raw.favorite;
-      self.starred = raw.starred;
-      self.album_id = raw.album_id;
-      self.artist_id = raw.artist_id;
-      self.year_id = raw.year_id;
-      self.genre_id = raw.genre_id;
-    }
-  };
-}); // Functions Components ReactJS
-// ======================================================================================================
-// ***** TrackContextualMenu *****
-// *******************************
-
-var TAG_TrackContextualMenu = function TAG_TrackContextualMenu() {};
-
-var TrackContextualMenu = (0,es/* observer */.Pi)(function (props) {
-  var store = react.useContext(window.storeContext);
-  var app = store.app; // From ... props
-
-  var track = props.track;
-  var className = props.className ? props.className : "";
-  var style = props.style ? props.style : {}; // ...
-  // Events
-  // ==================================================================================================
-  // Render
-  // ==================================================================================================
-
-  return /*#__PURE__*/react.createElement("div", {
-    className: className,
-    style: style
-  });
-}); // ***** TrackRow *****
-// ********************
-
-var TAG_TrackRow = function TAG_TrackRow() {};
-
-var TrackRow = (0,es/* observer */.Pi)(function (props) {
-  var store = react.useContext(window.storeContext);
-  var app = store.app;
-  var tracks = store.tracks;
-  var player = store.player; // From ... state
-
-  var _React$useState = react.useState(false),
-      _React$useState2 = Track_slicedToArray(_React$useState, 2),
-      hover = _React$useState2[0],
-      setHover = _React$useState2[1]; // From ... props
-
-
-  var track = props.track; // From ... store
-
-  var isLoading = app.isLoading; // ...
-
-  var favorite = track.favorite;
-  var starred = track.starred;
-  var isPlaying = track.isPlaying;
-  var linkedAlbum = track.linkedAlbum; // ...
-  // Events
-  // ==================================================================================================
-
-  var handleEnter = function handleEnter(evt) {
-    setHover(true);
-  };
-
-  var handleLeave = function handleLeave(evt) {
-    setHover(false);
-  }; // -
-
-
-  var handleCheckedChanged = function handleCheckedChanged() {
-    tracks.save();
-  };
-
-  var handleFavoriteClicked = function handleFavoriteClicked(track) {
-    track.setField('favorite', !track.favorite);
-    tracks.save();
-  };
-
-  var handleStarredClicked = function handleStarredClicked(track) {
-    track.setField('starred', !track.starred);
-    tracks.save();
-  };
-
-  var handlePlayClicked = function handlePlayClicked(track) {
-    player.audioStop();
-    player.clear();
-
-    if (track.isPlayerCandidate) {
-      linkedAlbum.play(track.id);
-    } else {
-      player.audioStop();
-      player.clear();
-      player.populate([track.id]);
-      player.read(track.id);
-    }
-  };
-
-  var handleStopClicked = function handleStopClicked(track) {
-    player.audioStop();
-    player.clear();
-  }; // -
-
-
-  var handleTrackMore = function handleTrackMore(trackId) {
-    // TODO
-    console.log(trackId);
-  }; // Render
-  // ==================================================================================================
-
-
-  return /*#__PURE__*/react.createElement(TableRow, {
-    hoverable: true,
-    faded: !track.checked,
-    callbackEnter: handleEnter,
-    callbackLeave: handleLeave
-  }, /*#__PURE__*/react.createElement(TableCell, {
-    width: 56,
-    align: "center",
-    size: "tiny"
-  }, /*#__PURE__*/react.createElement(Field_Field, {
-    component: "checkbox",
-    ghostLabel: false,
-    savePath: ['tracks', 'by_id', track.id, 'checked'],
-    disabled: isLoading,
-    callbackChange: function callbackChange() {
-      return handleCheckedChanged();
-    }
-  })), /*#__PURE__*/react.createElement(TableCell, {
-    width: 56,
-    align: "center",
-    size: "tiny"
-  }, (hover || favorite) && /*#__PURE__*/react.createElement(IconButton, {
-    size: "small",
-    iconName: track.favorite ? "favorite" : "favorite_border",
-    color: track.favorite ? "error" : null,
-    disabled: isLoading,
-    onClick: function onClick() {
-      return handleFavoriteClicked(track);
-    }
-  })), /*#__PURE__*/react.createElement(TableCell, {
-    width: 56,
-    align: "center",
-    size: "tiny"
-  }, (hover || starred) && /*#__PURE__*/react.createElement(IconButton, {
-    size: "small",
-    iconName: track.starred ? "star" : "star_outline",
-    color: track.starred ? "warning" : null,
-    disabled: isLoading,
-    onClick: function onClick() {
-      return handleStarredClicked(track);
-    }
-  })), /*#__PURE__*/react.createElement(TableCell, {
-    width: 56,
-    size: "tiny",
-    fontSize: "13px",
-    align: "center"
-  }, !isPlaying && !hover && /*#__PURE__*/react.createElement("span", null, track.track), !isPlaying && hover && /*#__PURE__*/react.createElement(IconButton, {
-    size: "small",
-    iconName: "play_circle_filled",
-    color: "hot",
-    onClick: function onClick() {
-      return handlePlayClicked(track);
-    }
-  }), isPlaying && !hover && /*#__PURE__*/react.createElement(Avatar_Avatar, {
-    size: "small",
-    color: "transparent",
-    iconName: "equalizer",
-    iconColor: "hot"
-  }), isPlaying && hover && /*#__PURE__*/react.createElement(IconButton, {
-    size: "small",
-    iconName: "stop_circle",
-    color: "hot",
-    onClick: function onClick() {
-      return handleStopClicked(track);
-    }
-  })), /*#__PURE__*/react.createElement(TableCell, {
-    size: "tiny",
-    fontSize: "13px"
-  }, track.name), /*#__PURE__*/react.createElement(TableCell, {
-    width: 56,
-    align: "right",
-    size: "tiny"
-  }, /*#__PURE__*/react.createElement(IconButton, {
-    size: "small",
-    iconName: "more_horiz" // color="typography"
-    ,
-    onClick: function onClick() {
-      return handleTrackMore(track.id);
-    }
-  })));
 });
 // EXTERNAL MODULE: ../../nexus/react/layout/ribbon/Ribbon.css
 var Ribbon = __webpack_require__(99218);
@@ -22257,13 +22615,6 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
 
   var handleThrowDiceClick = function handleThrowDiceClick() {
     album.shuffle();
-  }; // -
-
-
-  var handleDiscClick = function handleDiscClick(disc) {// TODO
-  };
-
-  var handleFocusDisc = function handleFocusDisc(disc) {// TODO
   }; // Render
   // ==================================================================================================
 
@@ -22341,7 +22692,7 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
         return handlePlayAlbumClick();
       }
     }), /*#__PURE__*/react.createElement(IconButton, {
-      iconName: "playlist_add",
+      iconName: "queue_music",
       color: "hot",
       onClick: function onClick() {
         return handleQueueAlbumClick();
@@ -22373,13 +22724,7 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
         marginTop: '40px'
       }
     }, nbDiscs > 1 && /*#__PURE__*/react.createElement(Group_GroupDivider, {
-      spacing: "big" // left={(
-      // 	<IconButton
-      // 		iconName="album"
-      // 		onClick={() => handleDiscClick(disc)}
-      // 	/>
-      // )}
-      ,
+      spacing: "big",
       center: /*#__PURE__*/react.createElement(Avatar_Avatar, {
         size: "small",
         color: "rgba(111, 126, 140, 0.1)",
@@ -22388,13 +22733,7 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
           fontSize: '14px',
           color: 'gray'
         }
-      }, disc) // right={(
-      // 	<IconButton
-      // 		iconName="arrow_forward"
-      // 		onClick={() => handleFocusDisc(disc)}
-      // 	/>
-      // )}
-
+      }, disc)
     }), /*#__PURE__*/react.createElement(TableContainer, {
       component: Paper_Paper,
       style: {
@@ -26797,7 +27136,7 @@ var ContextualHeader = (0,es/* observer */.Pi)(function (props) {
     name: "volume_up",
     color: "white"
   })), /*#__PURE__*/react.createElement(Popover_Popover, {
-    id: "pop-colume",
+    id: "pop-volume",
     open: Boolean(anchorVolume),
     anchorEl: anchorVolume,
     onClose: handleCloseMenuVolume,
@@ -29161,7 +29500,10 @@ var PopupManagePlaylist = __webpack_require__(28782);
 var TAG_PopupManagePlaylistStore = function TAG_PopupManagePlaylistStore() {};
 
 var PopupManagePlaylistStore = mobx_state_tree_module/* types.model */.V5.model({
-  mode: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string) // create, edit, add
+  mode: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  // create, edit, add
+  sourceId: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  sourceType: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string) // track, album
 
 }).views(function (self) {
   return {
@@ -29640,14 +29982,8 @@ rootStore.app.init(function (datas) {
 var TAG_Root = function TAG_Root() {};
 
 var Root = (0,es/* observer */.Pi)(function () {
-  react.useEffect(function () {
-    console.log('add event focus');
-    window.addEventListener('focus', function (event) {
-      rootStore.player.refreshSlider();
-    });
-  }, []); // Render
+  // Render
   // ==================================================================================================
-
   return /*#__PURE__*/react.createElement(RootStoreContext.Provider, {
     value: rootStore
   }, /*#__PURE__*/react.createElement(NxApp_NxApp, {
@@ -29655,7 +29991,10 @@ var Root = (0,es/* observer */.Pi)(function () {
     menu: ContextualMenu,
     contexts: contexts,
     right: /*#__PURE__*/react.createElement(PlayerDrawer_PlayerDrawer, null),
-    popups: popups
+    popups: popups,
+    callbackFocus: function callbackFocus() {
+      rootStore.player.refreshSlider();
+    }
   }));
 }); // DOM Ready
 // ======================================================================================================
@@ -30840,7 +31179,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(86143)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(70374)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

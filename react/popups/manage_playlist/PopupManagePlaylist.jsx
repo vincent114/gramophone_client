@@ -18,6 +18,9 @@ const TAG_PopupManagePlaylistStore = () => {}
 export const PopupManagePlaylistStore = types
 	.model({
 		mode: types.maybeNull(types.string), // create, edit, add
+
+		sourceId: types.maybeNull(types.string),
+		sourceType: types.maybeNull(types.string), // track, album
 	})
 	.views(self => ({
 

@@ -12,6 +12,14 @@ import { Field } from 'nexus/forms/field/Field';
 
 import { IconButton } from 'nexus/ui/button/Button';
 import { Avatar } from 'nexus/ui/avatar/Avatar';
+import { Popover } from 'nexus/ui/popover/Popover';
+import {
+	List,
+	ListItem,
+	ListIcon,
+	ListText
+} from 'nexus/ui/list/List';
+import { Divider } from 'nexus/ui/divider/Divider';
 
 import './Track.css';
 
@@ -182,6 +190,20 @@ export const TrackStore = types
 
 		// -
 
+		toggleChecked: () => {
+			self.checked = !self.checked;
+		},
+
+		toggleFavorite: () => {
+			self.favorite = !self.favorite;
+		},
+
+		toggleStarred: () => {
+			self.starred = !self.starred;
+		},
+
+		// -
+
 		update: (raw) => {
 			self.id = raw.id;
 			self.name = raw.name;
@@ -222,29 +244,341 @@ export const TrackContextualMenu = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const tracks = store.tracks;
+	const player = store.player;
+	const popupTrackMetadatas = store.popupTrackMetadatas;
+	const popupManagePlaylist = store.popupManagePlaylist;
+
+	// From ... states
+
+	const [anchorMenu, setAnchorMenu] = React.useState(null);
 
 	// From ... props
 
 	const track = props.track;
+	const origin = (props.origin) ? props.origin : "album"; // album, player, playlist, header
+	const size = (props.size) ? props.size : "small";
+	const color = (props.color) ? props.color : null;
+
+	const children = props.children;
+
+	const callbackClick = props.callbackClick;
 
 	let className = (props.className) ? props.className : "";
 	let style = (props.style) ? props.style : {};
+
+	// From ... store
+
+	const drawerView = player.drawerView;
 
 	// ...
 
 	// Events
 	// ==================================================================================================
 
+	const handleOpenMenu = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
+		setAnchorMenu(event.currentTarget);
+	}
+
+	const handleCloseMenu = () => {
+		setAnchorMenu(null);
+	}
+
+	// -
+
+	const handleInfosClick = () => {
+		popupTrackMetadatas.setField("trackId", track.id);
+		popupTrackMetadatas.open();
+		handleCloseMenu();
+	}
+
+	// -
+
+	const handleToggleCheck = () => {
+		track.toggleChecked();
+		tracks.save();
+		handleCloseMenu();
+	}
+
+	const handleToggleFavorite = () => {
+		track.toggleFavorite();
+		tracks.save();
+		handleCloseMenu();
+	}
+
+	const handleToggleStarred = () => {
+		track.toggleStarred();
+		tracks.save();
+		handleCloseMenu();
+	}
+
+	// -
+
+	const handleGoto = (gotoContext, gotoContextId) => {
+		store.navigateTo(gotoContext, gotoContextId);
+		handleCloseMenu();
+	}
+
+	// -
+
+	const handleAddPlaylist = () => {
+		popupManagePlaylist.setField("mode", "add");
+		popupManagePlaylist.setField("sourceId", track.id);
+		popupManagePlaylist.setField("sourceType", "track");
+		popupManagePlaylist.open();
+		handleCloseMenu();
+	}
+
+	const handleAddToQueue = () => {
+		player.populate([track.id]);
+		handleCloseMenu();
+	}
+
+	const handleRemoveFromPlayer = () => {
+		if (drawerView == "current") {
+			player.remove(track.id);
+		}
+		if (drawerView == "history") {
+			player.removeFromHistory(track.id);
+			player.save();
+		}
+		handleCloseMenu();
+	}
+
+	// -
+
+	const handleDelete = () => {
+		// TODO
+	}
 
 	// Render
 	// ==================================================================================================
 
 	return (
 		<div
-			className={className}
+			className={clsx(
+				className,
+			)}
 			style={style}
+			onClick={(e) => {
+				if (callbackClick) {
+					callbackClick(e);
+				}
+			}}
 		>
+			<IconButton
+				size={size}
+				iconName="more_horiz"
+				color={color}
+				onClick={(e) => handleOpenMenu(e)}
+			/>
+			<Popover
+				id={`pop-track-${track.id}`}
+				open={Boolean(anchorMenu)}
+				anchorEl={anchorMenu}
+				onClose={handleCloseMenu}
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'center',
+				}}
+				transformOrigin={{
+					vertical: 'top',
+					horizontal: 'center',
+				}}
+				// style={{
+				// 	width: '240px',
+				// }}
+			>
+				{track && (
+					<List
+						style={{
+							paddingTop: '10px',
+							paddingBottom: '10px',
+						}}
+					>
+						<ListItem
+							size="small"
+							onClick={() => handleInfosClick()}
+						>
+							<ListIcon
+								name="info"
+							/>
+							<ListText withIcon={true}>
+								Afficher les informations
+							</ListText>
+						</ListItem>
 
+						{origin != 'album' && (
+							<React.Fragment>
+								<Divider spacing="medium" />
+
+								<ListItem
+									size="small"
+									onClick={() => handleToggleCheck()}
+								>
+									<ListIcon
+										name={(track.checked) ? "check_box" : "check_box_outline_blank"}
+										color={(track.checked) ? "primary" : null}
+									/>
+									<ListText withIcon={true}>
+										{(track.checked) ? "Décocher le titre" : "Cocher le titre"}
+									</ListText>
+								</ListItem>
+
+								<ListItem
+									size="small"
+									onClick={() => handleToggleFavorite()}
+								>
+									<ListIcon
+										name={(track.favorite) ? "favorite" : "favorite_border"}
+										color={(track.favorite) ? "error" : null}
+									/>
+									<ListText withIcon={true}>
+										{(track.favorite) ? "Ne plus aimer le titre" : "Aimer le titre"}
+									</ListText>
+								</ListItem>
+
+								<ListItem
+									size="small"
+									onClick={() => handleToggleStarred()}
+								>
+									<ListIcon
+										name={(track.starred) ? "star" : "star_outline"}
+										color={(track.starred) ? "warning" : null}
+									/>
+									<ListText withIcon={true}>
+										{(track.starred) ? "Enlever du mix courant" : "Ajouter au mix courant"}
+									</ListText>
+								</ListItem>
+
+								<Divider spacing="medium" />
+
+								<ListItem
+									size="small"
+									onClick={() => handleGoto("album", track.linkedAlbum.id)}
+								>
+									<ListIcon
+										name="album"
+									/>
+									<ListText withIcon={true}>
+										Aller à l'album
+									</ListText>
+								</ListItem>
+
+								<ListItem
+									size="small"
+									onClick={() => handleGoto("artist", track.linkedArtist.id)}
+								>
+									<ListIcon
+										name="face"
+									/>
+									<ListText withIcon={true}>
+										Aller à l'artiste
+									</ListText>
+								</ListItem>
+
+								<ListItem
+									size="small"
+									onClick={() => handleGoto("genre", track.linkedGenre.id)}
+								>
+									<ListIcon
+										name="local_bar"
+									/>
+									<ListText withIcon={true}>
+										Aller au genre
+									</ListText>
+								</ListItem>
+
+								<ListItem
+									size="small"
+									onClick={() => handleGoto("year", track.linkedYear.id)}
+								>
+									<ListIcon
+										name="date_range"
+									/>
+									<ListText withIcon={true}>
+										Aller à l'année
+									</ListText>
+								</ListItem>
+
+							</React.Fragment>
+						)}
+
+						<Divider spacing="medium" />
+
+						{origin != 'playlist' && (
+							<React.Fragment>
+								<ListItem
+									size="small"
+									onClick={() => handleAddPlaylist()}
+								>
+									<ListIcon
+										name="playlist_add"
+									/>
+									<ListText withIcon={true}>
+										Ajouter à une playlist
+									</ListText>
+								</ListItem>
+							</React.Fragment>
+						)}
+
+						{(['player', 'header'].indexOf(origin) == -1) && (
+							<ListItem
+								size="small"
+								onClick={() => handleAddToQueue()}
+							>
+								<ListIcon
+									name="queue_music"
+								/>
+								<ListText withIcon={true}>
+									Ajouter à la liste de lecture
+								</ListText>
+							</ListItem>
+						)}
+
+						{origin == 'player' && (
+							<ListItem
+								size="small"
+								onClick={() => handleRemoveFromPlayer()}
+							>
+								<ListIcon
+									name="playlist_remove"
+								/>
+								<ListText withIcon={true}>
+									{drawerView == "current" && (
+										<span>Supprimer de la liste de lecture</span>
+									)}
+									{drawerView == "history" && (
+										<span>Supprimer de l'historique</span>
+									)}
+								</ListText>
+							</ListItem>
+						)}
+
+						{origin == 'album' && (
+							<React.Fragment>
+								<Divider spacing="medium" />
+								<ListItem
+									size="small"
+									onClick={() => handleDelete()}
+								>
+									<ListIcon
+										name="delete"
+									/>
+									<ListText withIcon={true}>
+										Supprimer l'indexation
+									</ListText>
+								</ListItem>
+							</React.Fragment>
+						)}
+
+						{children}
+
+					</List>
+				)}
+			</Popover>
 		</div>
 	)
 })
@@ -325,13 +659,6 @@ export const TrackRow = observer((props) => {
 	const handleStopClicked = (track) => {
 		player.audioStop();
 		player.clear();
-	}
-
-	// -
-
-	const handleTrackMore = (trackId) => {
-		// TODO
-		console.log(trackId);
 	}
 
 	// Render
@@ -432,11 +759,12 @@ export const TrackRow = observer((props) => {
 				align="right"
 				size="tiny"
 			>
-				<IconButton
-					size="small"
-					iconName="more_horiz"
-					// color="typography"
-					onClick={() => handleTrackMore(track.id)}
+				<TrackContextualMenu
+					track={track}
+					origin="album"
+					style={{
+						marginRight: '-4px',
+					}}
 				/>
 			</TableCell>
 		</TableRow>

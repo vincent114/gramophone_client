@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { PlayerItem } from 'gramophone_client/components/items/PlayerItem';
 import { DRAWER_VIEWS_ITEMS } from 'gramophone_client/models/Player';
 
+
 import { Field } from 'nexus/forms/field/Field';
 
 import { Button } from 'nexus/ui/button/Button';
@@ -33,6 +34,8 @@ export const PlayerDrawer = observer((props) => {
 	const drawerOpen = player.drawerOpen;
 	const drawerView = player.drawerView;
 
+	const renderBurst = player.renderBurst;
+
 	// ...
 
 	// Events
@@ -57,16 +60,17 @@ export const PlayerDrawer = observer((props) => {
 	// ==================================================================================================
 
 	let playerDrawerContent = null;
-	if (drawerOpen || true) {
+	if (drawerOpen) {
 
-		const remainingPlayTracks = player.remainingPlayTracks;
-		const historyTracks = player.historyTracks;
+		const remainingPlayTracks = player.getRemainingPlayTracks();
+		const historyTracks = player.getHistoryTracks();
 
 		playerDrawerContent = (
 			<div
 				className={clsx(
 					"g-player-drawer",
-					{"open": drawerOpen}
+					{"open": drawerOpen},
+					renderBurst,
 				)}
 			>
 

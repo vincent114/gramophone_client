@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
 import { slider } from 'gramophone_client/models/Player';
+import { TrackContextualMenu } from 'gramophone_client/contexts/track/Track';
 
 import { Row } from 'nexus/layout/row/Row';
 import { Column } from 'nexus/layout/column/Column';
@@ -168,10 +169,11 @@ export const PlayerDisplay = observer((props) => {
 					<PlayerDisplaySlider
 						onChange={handleSliderChange}
 					/>
-					<IconButton
+					<TrackContextualMenu
+						track={track}
 						size="tiny"
-						iconName="more_horiz"
 						color="#FFFFFF"
+						origin="header"
 						className="flex-0"
 						style={{
 							zIndex: '100',

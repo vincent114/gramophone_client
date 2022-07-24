@@ -8,6 +8,7 @@ import {
 	getFromStorage,
 	setToStorage
 } from 'nexus/utils/Storage';
+import { uuid } from 'nexus/utils/Datas';
 
 
 // Datas
@@ -61,6 +62,8 @@ export const PlayerStore = types
 
 		// -
 
+		renderBurst: types.maybeNull(types.string),
+
 		loaded: false,
 	})
 	.views(self => ({
@@ -104,21 +107,23 @@ export const PlayerStore = types
 			return tracksList;
 		},
 
-		get remainingPlayTracks() {
+		getRemainingPlayTracks() {
 			const store = getRoot(self);
 			const tracks = store.tracks;
 
 			const playIdx = self.playIdx;
 
 			let tracksList = [];
-			for (const trackIdx in self.playList) {
-				if (trackIdx <= playIdx) {
+			for (let trackIdx in self.playList) {
+				trackIdx = parseInt(trackIdx);
+				console.log(trackIdx);
+				if (playIdx > -1 && (trackIdx <= playIdx)) {
 					continue;
 				}
 				const trackId = self.playList[trackIdx];
 				const track = tracks.by_id.get(trackId);
 				if (track) {
-					tracksList.push([parseInt(trackIdx), track]);
+					tracksList.push([trackIdx, track]);
 				}
 			}
 			return tracksList;
@@ -143,7 +148,7 @@ export const PlayerStore = types
 
 		// -
 
-		get historyTracks() {
+		getHistoryTracks() {
 			const store = getRoot(self);
 			const tracks = store.tracks;
 
@@ -253,6 +258,16 @@ export const PlayerStore = types
 			for (const trackId of trackIds) {
 				self.playList.push(trackId);
 			}
+			self.renderBurst = uuid();
+		},
+
+		remove: (trackId) => {
+			const trackIdx = self.playList.indexOf(trackId);
+			if (trackIdx == self.playIdx) {
+				self.audioStop();
+				self.playIdx = -1;
+			}
+			self.playList.splice(trackIdx, 1);
 		},
 
 		clear: () => {
@@ -273,6 +288,13 @@ export const PlayerStore = types
 			}
 			self.historyList.splice(0, 0, trackId);
 			self.save();
+		},
+
+		removeFromHistory: (trackId) => {
+			const trackIdx = self.historyList.indexOf(trackId);
+			if (trackIdx > -1) {
+				self.historyList.splice(trackIdx, 1);
+			}
 		},
 
 		populateHistory: (trackIds) => {

@@ -484,13 +484,6 @@ rootStore.app.init(
 const TAG_Root = () => {}
 const Root = observer(() => {
 
-	React.useEffect(() => {
-		console.log('add event focus');
-		window.addEventListener('focus', (event) => {
-			rootStore.player.refreshSlider();
-		});
-	}, []);
-
 	// Render
 	// ==================================================================================================
 
@@ -502,6 +495,9 @@ const Root = observer(() => {
 				contexts={contexts}
 				right={<PlayerDrawer />}
 				popups={popups}
+				callbackFocus={() => {
+					rootStore.player.refreshSlider();
+				}}
 			/>
 		</RootStoreContext.Provider>
 	)
