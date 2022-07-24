@@ -9,12 +9,17 @@ import {
 	Header,
 	HeaderDivider
 } from 'nexus/layout/header/Header';
+import { Row } from 'nexus/layout/row/Row';
+
 import { SearchHeaderMiddle } from 'nexus/contexts/search/Search';
 import { AboutHeaderLeft } from 'nexus/contexts/about/About';
 import { AdminHeaderLeft } from 'nexus/contexts/admin/Admin';
 
 import { Icon } from 'nexus/ui/icon/Icon';
 import { IconButton } from 'nexus/ui/button/Button';
+import { Popover } from 'nexus/ui/popover/Popover';
+import { Avatar } from 'nexus/ui/avatar/Avatar';
+import { Slider } from 'nexus/ui/slider/Slider';
 
 import { ArtistsHeaderLeft } from 'gramophone_client/contexts/artists/Artists';
 import { AlbumsHeaderLeft } from 'gramophone_client/contexts/albums/Albums';
@@ -48,11 +53,30 @@ export const ContextualHeader = observer((props) => {
 	const authContext = app.authContext;
 
 	const drawerOpen = player.drawerOpen;
+	const volume = player.volume;
+
+	// From ... states
+
+	const [anchorVolume, setAnchorVolume] = React.useState(null);
 
 	// ...
 
 	// Events
 	// ==================================================================================================
+
+	const handleMenuVolume = (event) => {
+		setAnchorVolume(event.currentTarget);
+	}
+
+	const handleCloseMenuVolume = () => {
+		setAnchorVolume(null);
+	}
+
+	const handleVolumeChange = (volume) => {
+		player.setVolume(volume);
+	}
+
+	// -
 
 	const handleQueueClick = () => {
 		player.toggleDrawer();
@@ -171,12 +195,63 @@ export const ContextualHeader = observer((props) => {
 	headerRight = (
 		<React.Fragment>
 			{headerRight}
-			<IconButton>
-				<Icon
-					name="volume_up"
-					color="white"
-				/>
-			</IconButton>
+
+			<div data-flex="0">
+				<IconButton
+					onClick={(e) => handleMenuVolume(e)}
+				>
+					<Icon
+						name="volume_up"
+						color="white"
+					/>
+				</IconButton>
+				<Popover
+					id="pop-colume"
+					open={Boolean(anchorVolume)}
+					anchorEl={anchorVolume}
+					onClose={handleCloseMenuVolume}
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'center',
+					}}
+					transformOrigin={{
+						vertical: 'top',
+						horizontal: 'center',
+					}}
+					style={{
+						width: '200px',
+					}}
+				>
+					<Row
+						align="center"
+						spacing="none"
+					>
+						<Avatar
+							color="transparent"
+							size="small"
+							iconName="volume_mute"
+							iconColor="typography"
+						/>
+						<Slider
+							value={volume}
+							color="secondary"
+							min={0}
+							max={100}
+							onChangeCommitted={handleVolumeChange}
+							style={{
+								minWidth: '120px',
+							}}
+						/>
+						<Avatar
+							color="transparent"
+							size="small"
+							iconName="volume_up"
+							iconColor="typography"
+						/>
+					</Row>
+				</Popover>
+			</div>
+
 			<IconButton
 				onClick={() => handleQueueClick()}
 			>

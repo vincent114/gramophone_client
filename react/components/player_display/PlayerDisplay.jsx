@@ -93,8 +93,6 @@ export const PlayerDisplay = observer((props) => {
 		cover = album.cover;
 	}
 
-	console.log("Render Player");
-
 	// Events
 	// ==================================================================================================
 

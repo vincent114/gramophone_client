@@ -678,8 +678,6 @@ export const HomePage = observer((props) => {
 		}
 	}, [loaded, initialized]);
 
-	console.log("Render Home")
-
 	// ...
 
 	// Events
@@ -812,8 +810,8 @@ export const HomePage = observer((props) => {
 										anchorEl={anchorAddSection}
 										onClose={handleCloseAdd}
 										anchorOrigin={{
-											vertical: 'bottom',
-											horizontal: 'center',
+											vertical: 'top',
+											horizontal: 'left',
 										}}
 										transformOrigin={{
 											vertical: 'top',

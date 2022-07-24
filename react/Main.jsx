@@ -447,6 +447,9 @@ let initSnapshot = makeInitSnapshot(routes, {
 	'yearId': getFromStorage('lastYearId', ''),
 	'genreId': getFromStorage('lastGenreId', ''),
 	'playlistId': getFromStorage('lastPlaylistId', ''),
+	'player': {
+		'volume': getFromStorage('volume', 25, 'int'),
+	},
 });
 
 export const rootStore = RootStore.create(initSnapshot);
@@ -480,6 +483,13 @@ rootStore.app.init(
 
 const TAG_Root = () => {}
 const Root = observer(() => {
+
+	React.useEffect(() => {
+		console.log('add event focus');
+		window.addEventListener('focus', (event) => {
+			rootStore.player.refreshSlider();
+		});
+	}, []);
 
 	// Render
 	// ==================================================================================================

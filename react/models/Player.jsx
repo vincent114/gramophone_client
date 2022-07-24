@@ -198,6 +198,14 @@ export const PlayerStore = types
 			self[field] = value;
 		},
 
+		setVolume: (value) => {
+			self.volume = value;
+			setToStorage("volume", value);
+			if (window.audio) {
+				window.audio.volume = value / 100;
+			}
+		},
+
 		toggleDrawer: () => {
 			self.drawerOpen = !self.drawerOpen;
 		},
@@ -356,6 +364,14 @@ export const PlayerStore = types
 		},
 
 		// -
+
+		refreshSlider: () => {
+			if (window.audio) {
+				slider.current = window.audio.currentTime;
+			} else {
+				slider.current = 0;
+			}
+		},
 
 		_stopSlideInterval: () => {
 			clearInterval(window.audioInterval);
