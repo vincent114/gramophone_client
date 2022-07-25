@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 70374:
+/***/ 84890:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1144,6 +1144,30 @@ var AlignVerticalCenterIcon = function AlignVerticalCenterIcon(props) {
     points: "22,11 17,11 17,6 14,6 14,11 10,11 10,3 7,3 7,11 1.84,11 1.84,13 7,13 7,21 10,21 10,13 14,13 14,18 17,18 17,13 22,13"
   }));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/AllInclusive.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var AllInclusiveIcon = function AllInclusiveIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M18.6 6.62c-1.44 0-2.8.56-3.77 1.53L7.8 14.39c-.64.64-1.49.99-2.4.99-1.87 0-3.39-1.51-3.39-3.38S3.53 8.62 5.4 8.62c.91 0 1.76.35 2.44 1.03l1.13 1 1.51-1.34L9.22 8.2C8.2 7.18 6.84 6.62 5.4 6.62 2.42 6.62 0 9.04 0 12s2.42 5.38 5.4 5.38c1.44 0 2.8-.56 3.77-1.53l7.03-6.24c.64-.64 1.49-.99 2.4-.99 1.87 0 3.39 1.51 3.39 3.38s-1.52 3.38-3.39 3.38c-.9 0-1.76-.35-2.44-1.03l-1.14-1.01-1.51 1.34 1.27 1.12c1.02 1.01 2.37 1.57 3.82 1.57 2.98 0 5.4-2.41 5.4-5.38s-2.42-5.37-5.4-5.37z"
+  }));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/AlternateEmail.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -1402,6 +1426,31 @@ var BadgeIcon = function BadgeIcon(props) {
   }), /*#__PURE__*/react.createElement("path", {
     d: "M11.08,16.18C10.44,15.9,9.74,15.75,9,15.75s-1.44,0.15-2.08,0.43C6.36,16.42,6,16.96,6,17.57V18h6v-0.43 C12,16.96,11.64,16.42,11.08,16.18z"
   }))));
+};
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Bolt.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var BoltIcon = function BoltIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("rect", {
+    fill: "none",
+    height: "24",
+    width: "24"
+  })), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("path", {
+    d: "M11,21h-1l1-7H7.5c-0.88,0-0.33-0.75-0.31-0.78C8.48,10.94,10.42,7.54,13.01,3h1l-1,7h3.51c0.4,0,0.62,0.19,0.4,0.66 C12.97,17.55,11,21,11,21z"
+  })));
 };
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Book.jsx
  // Functions Components ReactJS
@@ -2489,6 +2538,30 @@ var InputIcon = function InputIcon(props) {
     opacity: ".87"
   })), /*#__PURE__*/react.createElement("path", {
     d: "M21 3.01H3c-1.1 0-2 .9-2 2V9h2V4.99h18v14.03H3V15H1v4.01c0 1.1.9 1.98 2 1.98h18c1.1 0 2-.88 2-1.98v-14c0-1.11-.9-2-2-2zM11 16l4-4-4-4v3H1v2h10v3zM21 3.01H3c-1.1 0-2 .9-2 2V9h2V4.99h18v14.03H3V15H1v4.01c0 1.1.9 1.98 2 1.98h18c1.1 0 2-.88 2-1.98v-14c0-1.11-.9-2-2-2zM11 16l4-4-4-4v3H1v2h10v3z"
+  }));
+};
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/InsertDriveFile.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var InsertDriveFileIcon = function InsertDriveFileIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"
   }));
 };
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Inventory2.jsx
@@ -4643,6 +4716,9 @@ var Icon = __webpack_require__(73244);
 
 
 
+
+
+
  // Datas
 // -------------------------------------------------------------------------------------------------------------
 
@@ -4657,6 +4733,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'album': AlbumIcon,
   'align_horizontal_center': AlignHorizontalCenterIcon,
   'align_vertical_center_black': AlignVerticalCenterIcon,
+  'all_inclusive': AllInclusiveIcon,
   'alternate_email': AlternateEmailIcon,
   'announcement': AnnouncementIcon,
   'api': ApiIcon,
@@ -4667,6 +4744,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'art_track': ArtTrackIcon,
   'audiotrack': AudiotrackIcon,
   'badge': BadgeIcon,
+  'bolt': BoltIcon,
   'book': BookIcon,
   'bug_report': BugReportIcon,
   'call_to_action': CallToActionIcon,
@@ -4710,6 +4788,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'hourglass_empty': HourglassEmptyIcon,
   'info': InfoIcon,
   'input': InputIcon,
+  'insert_drive_file': InsertDriveFileIcon,
   'inventory_2': Inventory2Icon,
   'launch': LaunchIcon,
   'layers': LayersIcon,
@@ -6823,6 +6902,54 @@ var dateTools = {
 
     return missing;
   },
+  fromDeltaToDiff: function fromDeltaToDiff(delta) {
+    var diff = {};
+    delta = Math.floor(delta / 1000);
+    diff.sec = delta % 60;
+    delta = Math.floor((delta - diff.sec) / 60);
+    diff.min = delta % 60;
+    delta = Math.floor((delta - diff.min) / 60);
+    diff.hour = delta % 24;
+    delta = Math.floor((delta - diff.hour) / 24);
+    diff.day = delta;
+    return diff;
+  },
+  fromDurationToFrench: function fromDurationToFrench(duration) {
+    // milliseconds -> 5 secondes, 2 heures, ...
+    // ---
+    var self = this;
+    var durationText = '';
+    var durationRemaining = '';
+    var diff = self.fromDeltaToDiff(duration); // Moins d'une seconde ?
+
+    if (diff.sec < 1) {
+      durationText = "moins d'une seconde";
+    } // Au moins une seconde ?
+
+
+    if (diff.sec > 0) {
+      durationText = diff.sec > 1 ? 'secondes' : 'seconde';
+      durationText = "".concat(diff.sec, " ").concat(durationText);
+    } // Au moins une minute ?
+
+
+    if (diff.min >= 1) {
+      durationText = diff.min > 1 ? 'minutes' : 'minute';
+      durationText = "".concat(diff.min, " ").concat(durationText);
+    } // Au moins une heure ?
+
+
+    if (diff.hour >= 1) {
+      if (diff.min > 0) {
+        durationRemaining = " et ".concat(durationText);
+      }
+
+      durationText = diff.hour > 1 ? 'heures' : 'heure';
+      durationText = "".concat(diff.hour, " ").concat(durationText);
+    }
+
+    return "".concat(durationText).concat(durationRemaining);
+  },
   // Operations
   // -
   // addTime: function(hours_iso, to_add, what_to_add) {
@@ -8801,9 +8928,9 @@ var Indicator_Indicator = (0,es/* observer */.Pi)(function (props) {
   // ==================================================================================================
 
 
-  var handleClick = function handleClick() {
+  var handleClick = function handleClick(e) {
     if (callbackClick) {
-      callbackClick();
+      callbackClick(e);
     }
   }; // Render
   // ==================================================================================================
@@ -8816,11 +8943,14 @@ var Indicator_Indicator = (0,es/* observer */.Pi)(function (props) {
       "clickable": callbackClick
     }, className),
     style: style,
-    onClick: function onClick() {
-      return handleClick();
+    onClick: function onClick(e) {
+      return handleClick(e);
     }
   }, icon, /*#__PURE__*/react.createElement("div", {
-    className: "nx-indicator-children"
+    className: "nx-indicator-children",
+    style: {
+      'textAlign': icon ? "left" : "center"
+    }
   }, children));
 
   if (href) {
@@ -8834,7 +8964,10 @@ var Indicator_Indicator = (0,es/* observer */.Pi)(function (props) {
       target: "_blanc",
       style: style
     }, icon, /*#__PURE__*/react.createElement("div", {
-      className: "nx-indicator-children"
+      className: "nx-indicator-children",
+      style: {
+        'textAlign': icon ? "left" : "center"
+      }
     }, children));
   }
 
@@ -9500,11 +9633,13 @@ var ListText = function ListText(props) {
       "with-icon": withIcon
     })
   }, primary && /*#__PURE__*/react.createElement(Typography_Typography, {
-    className: "nx-list-text-primary"
+    className: "nx-list-text-primary",
+    ellipsis: true
   }, primary), secondary && /*#__PURE__*/react.createElement(Typography_Typography, {
     variant: "description",
     size: "small",
     className: "nx-list-text-secondary",
+    ellipsis: true,
     style: {
       marginTop: primary ? '2px' : '0px'
     }
@@ -22196,11 +22331,22 @@ var Paper_Paper = function Paper(props) {
 // EXTERNAL MODULE: ./contexts/album/Album.css
 var Album = __webpack_require__(95060);
 ;// CONCATENATED MODULE: ./contexts/album/Album.jsx
-function Album_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Album_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function Album_slicedToArray(arr, i) { return Album_arrayWithHoles(arr) || Album_iterableToArrayLimit(arr, i) || Album_unsupportedIterableToArray(arr, i) || Album_nonIterableRest(); }
+
+function Album_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function Album_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function Album_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function Album_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Album_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function Album_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Album_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Album_arrayLikeToArray(o, minLen); }
 
 function Album_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+
 
 
 
@@ -22556,7 +22702,166 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
   };
 }); // Functions Components ReactJS
 // ======================================================================================================
-// ***** RenderAlbum *****
+// ***** AlbumContextualMenu *****
+// *******************************
+
+var TAG_AlbumContextualMenu = function TAG_AlbumContextualMenu() {};
+
+var AlbumContextualMenu = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var tracks = store.tracks;
+  var player = store.player;
+  var popupTrackMetadatas = store.popupTrackMetadatas;
+  var popupManagePlaylist = store.popupManagePlaylist; // From ... states
+
+  var _React$useState = react.useState(null),
+      _React$useState2 = Album_slicedToArray(_React$useState, 2),
+      anchorMenu = _React$useState2[0],
+      setAnchorMenu = _React$useState2[1]; // From ... props
+
+
+  var album = props.album;
+  var origin = props.origin ? props.origin : "album"; // album
+
+  var size = props.size ? props.size : null;
+  var color = props.color ? props.color : null;
+  var children = props.children;
+  var callbackClick = props.callbackClick;
+  var className = props.className ? props.className : "";
+  var style = props.style ? props.style : {}; // ...
+  // Events
+  // ==================================================================================================
+
+  var handleOpenMenu = function handleOpenMenu(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    setAnchorMenu(event.currentTarget);
+  };
+
+  var handleCloseMenu = function handleCloseMenu() {
+    setAnchorMenu(null);
+  }; // -
+
+
+  var handleGoto = function handleGoto(gotoContext, gotoContextId) {
+    store.navigateTo(gotoContext, gotoContextId);
+    handleCloseMenu();
+  }; // -
+
+
+  var handleAddPlaylist = function handleAddPlaylist() {
+    popupManagePlaylist.setField("mode", "add");
+    popupManagePlaylist.setField("sourceId", album.id);
+    popupManagePlaylist.setField("sourceType", "album");
+    popupManagePlaylist.open();
+    handleCloseMenu();
+  };
+
+  var handleAddToQueue = function handleAddToQueue() {
+    album.queue();
+    handleCloseMenu();
+  }; // -
+
+
+  var handleDelete = function handleDelete() {// TODO
+  }; // Render
+  // ==================================================================================================
+
+
+  return /*#__PURE__*/react.createElement("div", {
+    className: (0,clsx_m/* default */.Z)(className),
+    style: style,
+    onClick: function onClick(e) {
+      if (callbackClick) {
+        callbackClick(e);
+      }
+    }
+  }, /*#__PURE__*/react.createElement(IconButton, {
+    size: size,
+    iconName: "more_horiz",
+    color: color,
+    onClick: function onClick(e) {
+      return handleOpenMenu(e);
+    }
+  }), /*#__PURE__*/react.createElement(Popover_Popover, {
+    id: "pop-album-".concat(album.id),
+    open: Boolean(anchorMenu),
+    anchorEl: anchorMenu,
+    onClose: handleCloseMenu,
+    anchorOrigin: {
+      vertical: 'bottom',
+      horizontal: 'center'
+    },
+    transformOrigin: {
+      vertical: 'top',
+      horizontal: 'center'
+    }
+  }, album && /*#__PURE__*/react.createElement(List_List, {
+    style: {
+      paddingTop: '10px',
+      paddingBottom: '10px'
+    }
+  }, /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleGoto("artist", album.linkedArtist.id);
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "face"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Aller \xE0 l'artiste")), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleGoto("genre", album.linkedGenre.id);
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "local_bar"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Aller au genre")), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleGoto("year", album.linkedYear.id);
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "date_range"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Aller \xE0 l'ann\xE9e")), /*#__PURE__*/react.createElement(Divider_Divider, {
+    spacing: "medium"
+  }), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleAddPlaylist();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "playlist_add"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Ajouter \xE0 une playlist")), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleAddToQueue();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "queue_music"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Ajouter \xE0 la liste de lecture")), /*#__PURE__*/react.createElement(Divider_Divider, {
+    spacing: "medium"
+  }), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleDelete();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "delete"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Supprimer l'indexation")), children)));
+}); // ***** RenderAlbum *****
 // ***********************
 
 var TAG_RenderAlbum = function TAG_RenderAlbum() {};
@@ -22692,12 +22997,6 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
         return handlePlayAlbumClick();
       }
     }), /*#__PURE__*/react.createElement(IconButton, {
-      iconName: "queue_music",
-      color: "hot",
-      onClick: function onClick() {
-        return handleQueueAlbumClick();
-      }
-    }), /*#__PURE__*/react.createElement(IconButton, {
       iconName: "casino",
       color: "hot",
       style: {
@@ -22709,11 +23008,11 @@ var RenderAlbum = (0,es/* observer */.Pi)(function (props) {
     })),
     right: /*#__PURE__*/react.createElement("div", {
       className: "h-col"
-    }, /*#__PURE__*/react.createElement(IconButton, {
-      iconName: "more_horiz",
+    }, /*#__PURE__*/react.createElement(AlbumContextualMenu, {
+      album: album,
+      origin: "album",
       color: "typography",
-      disabled: isLoading // onClick={() => handleThrowDiceClick()}
-
+      className: "flex-0"
     }))
   })))), discs.map(function (disc, discIdx) {
     var discTracks = tracksByDiscs[disc];
@@ -28100,7 +28399,6 @@ function Admin_arrayLikeToArray(arr, len) { if (len == null || len > arr.length)
 
 
 
- // import { Field } from 'nexus/forms/field/Field';
 
 
 
@@ -28121,7 +28419,8 @@ var TAG_RenderAdminFolders = function TAG_RenderAdminFolders() {};
 var RenderAdminFolders = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
-  var library = store.library; // From ... store
+  var library = store.library;
+  var popupIgnoredFiles = store.popupIgnoredFiles; // From ... store
 
   var isLoading = app.isLoading;
   var nbFolders = library.nbFolders;
@@ -28159,6 +28458,13 @@ var RenderAdminFolders = (0,es/* observer */.Pi)(function (props) {
 
   var handleFolderClick = function handleFolderClick(folderPath) {
     ipc.send('showItemInFolder', [folderPath]);
+  };
+
+  var handleIgnoredFilesClick = function handleIgnoredFilesClick(sourceFolder) {
+    if (sourceFolder.nb_files_ignored > 0) {
+      popupIgnoredFiles.setField('folderPath', sourceFolder.folder_path);
+      popupIgnoredFiles.open();
+    }
   };
 
   var handleFolderDelete = function handleFolderDelete(folderPath) {
@@ -28225,12 +28531,21 @@ var RenderAdminFolders = (0,es/* observer */.Pi)(function (props) {
         marginRight: "5px",
         paddingLeft: "5px",
         paddingRight: "10px"
+      },
+      callbackClick: function callbackClick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        handleIgnoredFilesClick(sourceFolder);
       }
     }, sourceFolder.nb_files_ignored));
   })), /*#__PURE__*/react.createElement(IconButton, {
     iconName: "add",
     color: "info",
     disabled: isLoading,
+    size: "small",
+    style: {
+      marginLeft: '10px'
+    },
     onClick: function onClick() {
       return handleAddFolder("source");
     }
@@ -28294,9 +28609,10 @@ var RenderAdminScan = (0,es/* observer */.Pi)(function (props) {
     variant: "contrasted",
     padding: "big",
     color: fullScanInfos.severity,
+    iconName: "all_inclusive",
     className: "flex-0",
     style: {
-      minWidth: "100px"
+      minWidth: "120px"
     }
   }, fullScanInfos.title), /*#__PURE__*/react.createElement(Typography_Typography, {
     size: "small",
@@ -28324,9 +28640,10 @@ var RenderAdminScan = (0,es/* observer */.Pi)(function (props) {
     variant: "contrasted",
     padding: "big",
     color: quickScanInfos.severity,
+    iconName: "bolt",
     className: "flex-0",
     style: {
-      minWidth: "100px"
+      minWidth: "120px"
     }
   }, quickScanInfos.title), /*#__PURE__*/react.createElement(Typography_Typography, {
     size: "small",
@@ -28489,6 +28806,7 @@ function Library_arrayLikeToArray(arr, len) { if (len == null || len > arr.lengt
 
 
 
+
  // Models
 // ======================================================================================================
 // ***** LibraryIgnoredFileStore *****
@@ -28499,6 +28817,21 @@ var TAG_LibraryIgnoredFileStore = function TAG_LibraryIgnoredFileStore() {};
 var LibraryIgnoredFileStore = mobx_state_tree_module/* types.model */.V5.model({
   file_path: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   reason: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string)
+}).views(function (self) {
+  return {
+    get label() {
+      if (self.file_path) {
+        var filePathParts = self.file_path.split('/');
+
+        if (filePathParts.length > 0) {
+          return filePathParts[filePathParts.length - 1];
+        }
+      }
+
+      return "";
+    }
+
+  };
 }).actions(function (self) {
   return {
     setField: function setField(field, value) {
@@ -28612,6 +28945,7 @@ var LibraryFolderStore = mobx_state_tree_module/* types.model */.V5.model({
         var newIgnoredFile = LibraryIgnoredFileStore.create({});
         newIgnoredFile.setField('file_path', filePath);
         newIgnoredFile.setField('reason', reason);
+        self.ignored_files.push(newIgnoredFile);
       }
     }
   };
@@ -28712,7 +29046,11 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
       var severity = "default";
 
       if (self.last_full_scan) {
-        subtitle = "Dernier scan ".concat(dateTools.calendarTime(self.last_full_scan).toLowerCase()); // TODO : duration
+        subtitle = "Dernier scan ".concat(dateTools.calendarTime(self.last_full_scan).toLowerCase());
+
+        if (self.last_full_scan_duration) {
+          subtitle = "".concat(subtitle, " en ").concat(dateTools.fromDurationToFrench(self.last_full_scan_duration));
+        }
 
         severity = self.last_full_scan_error ? "error" : "success";
       }
@@ -28737,7 +29075,11 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
       var severity = "default";
 
       if (self.last_quick_scan) {
-        subtitle = "Dernier scan ".concat(dateTools.calendarTime(self.last_quick_scan).toLowerCase()); // TODO : duration
+        subtitle = "Dernier scan ".concat(dateTools.calendarTime(self.last_quick_scan).toLowerCase());
+
+        if (self.last_quick_scan_duration) {
+          subtitle = "".concat(subtitle, " en ").concat(dateTools.fromDurationToFrench(self.last_quick_scan_duration));
+        }
 
         severity = self.last_quick_scan_error ? "error" : "success";
       }
@@ -29116,6 +29458,124 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
       }
     }
   };
+});
+// EXTERNAL MODULE: ./popups/ignored_files/PopupIgnoredFiles.css
+var PopupIgnoredFiles = __webpack_require__(65650);
+;// CONCATENATED MODULE: ./popups/ignored_files/PopupIgnoredFiles.jsx
+
+
+
+
+
+
+
+
+ // Models
+// ======================================================================================================
+// ***** PopupIgnoredFilesStore *****
+// **********************************
+
+var TAG_PopupIgnoredFilesStore = function TAG_PopupIgnoredFilesStore() {};
+
+var PopupIgnoredFilesStore = mobx_state_tree_module/* types.model */.V5.model({
+  folderPath: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string)
+}).views(function (self) {
+  return {
+    // Bools
+    // -
+    get isOpen() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var popup = app.popup;
+      return popup.isOpen(popupIgnoredFilesKey);
+    }
+
+  };
+}).actions(function (self) {
+  return {
+    setField: function setField(field, value) {
+      self[field] = value;
+    },
+    // -
+    open: function open() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var popup = app.popup;
+      popup.open(popupIgnoredFilesKey);
+    }
+  };
+}); // Functions Components ReactJS
+// ======================================================================================================
+// ***** PopupIgnoredFiles *****
+// *****************************
+
+var TAG_PopupIgnoredFiles = function TAG_PopupIgnoredFiles() {};
+
+var popupIgnoredFilesKey = 'popupPopupIgnoredFiles';
+var PopupIgnoredFiles_PopupIgnoredFiles = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var popup = app.popup;
+  var popupIgnoredFiles = store.popupIgnoredFiles;
+  var library = store.library; // From ... store
+
+  var isLoading = app.isLoading;
+  var isOpen = popupIgnoredFiles.isOpen;
+  var folderPath = popupIgnoredFiles.folderPath;
+  var folder = library.getFolder(folderPath);
+  var ignoredFiles = folder.ignored_files;
+  var nbIgnoredFiles = ignoredFiles.length; // ...
+  // Events
+  // ==================================================================================================
+
+  var handleFileClick = function handleFileClick(filePath) {
+    ipc.send('showItemInFolder', [filePath]);
+  }; // Render
+  // ==================================================================================================
+  // Popup --> Title
+  // -----------------------------------------------
+
+
+  var popupTitle = "".concat(nbIgnoredFiles, " ").concat(nbIgnoredFiles > 1 ? "Fichiers ignorés" : "Fichier ignoré"); // Popup --> Content
+  // -----------------------------------------------
+
+  var popupContent = null;
+
+  if (isOpen) {
+    popupContent = /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(List_List, null, ignoredFiles.map(function (ignoredFile, ignoredFileIdx) {
+      return /*#__PURE__*/react.createElement(ListItem, {
+        key: "ignored-file-".concat(ignoredFileIdx),
+        hoverable: true,
+        style: {
+          marginBottom: '5px'
+        },
+        onClick: function onClick() {
+          return handleFileClick(ignoredFile.file_path);
+        }
+      }, /*#__PURE__*/react.createElement(List_ListIcon, {
+        name: "insert_drive_file"
+      }), /*#__PURE__*/react.createElement(ListText, {
+        primary: ignoredFile.reason,
+        secondary: ignoredFile.file_path
+      }));
+    })));
+  } // -----------------------------------------------
+
+
+  return /*#__PURE__*/react.createElement(Popup_Popup, {
+    id: popupIgnoredFilesKey,
+    title: popupTitle,
+    maxWidth: "md" // style={{
+    // 	minWidth: '600px',
+    // 	maxWidth: '600px',
+    // }}
+    // contentStyle={{
+    // 	padding: '0px',
+    // 	minHeight: '600px',
+    // 	maxHeight: '600px',
+    // }}
+
+  }, popupContent);
 });
 // EXTERNAL MODULE: ./popups/jump_to/PopupJumpTo.css
 var PopupJumpTo = __webpack_require__(82038);
@@ -29614,6 +30074,7 @@ function Main_defineProperty(obj, key, value) { if (key in obj) { Object.defineP
 
 
 
+
  // Functions
 // ======================================================================================================
 
@@ -29698,6 +30159,7 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
   library: mobx_state_tree_module/* types.optional */.V5.optional(LibraryStore, {}),
   player: mobx_state_tree_module/* types.optional */.V5.optional(PlayerStore, {}),
   // -
+  popupIgnoredFiles: mobx_state_tree_module/* types.optional */.V5.optional(PopupIgnoredFilesStore, {}),
   popupJumpTo: mobx_state_tree_module/* types.optional */.V5.optional(PopupJumpToStore, {}),
   popupZoomCover: mobx_state_tree_module/* types.optional */.V5.optional(PopupZoomCoverStore, {}),
   popupTrackMetadatas: mobx_state_tree_module/* types.optional */.V5.optional(PopupTrackMetadatasStore, {}),
@@ -29901,7 +30363,7 @@ var contexts = {
 }; // Popups
 // -
 
-var popups = (_popups = {}, Main_defineProperty(_popups, popupJumpToKey, PopupJumpTo_PopupJumpTo), Main_defineProperty(_popups, popupZoomCoverKey, PopupZoomCover_PopupZoomCover), Main_defineProperty(_popups, popupTrackMetadatasKey, PopupTrackMetadatas_PopupTrackMetadatas), Main_defineProperty(_popups, popupManagePlaylistKey, PopupManagePlaylist_PopupManagePlaylist), _popups); // Routes
+var popups = (_popups = {}, Main_defineProperty(_popups, popupIgnoredFilesKey, PopupIgnoredFiles_PopupIgnoredFiles), Main_defineProperty(_popups, popupJumpToKey, PopupJumpTo_PopupJumpTo), Main_defineProperty(_popups, popupZoomCoverKey, PopupZoomCover_PopupZoomCover), Main_defineProperty(_popups, popupTrackMetadatasKey, PopupTrackMetadatas_PopupTrackMetadatas), Main_defineProperty(_popups, popupManagePlaylistKey, PopupManagePlaylist_PopupManagePlaylist), _popups); // Routes
 // -
 
 var routes = {
@@ -30153,6 +30615,13 @@ window.addEventListener('DOMContentLoaded', function () {
 /***/ }),
 
 /***/ 30114:
+/***/ (() => {
+
+// extracted by extract-css-chunks-webpack-plugin
+
+/***/ }),
+
+/***/ 65650:
 /***/ (() => {
 
 // extracted by extract-css-chunks-webpack-plugin
@@ -31179,7 +31648,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(70374)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(84890)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

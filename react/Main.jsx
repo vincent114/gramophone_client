@@ -33,6 +33,11 @@ import { LibraryStore } from 'gramophone_client/models/Library';
 import { PlayerStore } from 'gramophone_client/models/Player';
 
 import {
+	PopupIgnoredFilesStore,
+	popupIgnoredFilesKey,
+	PopupIgnoredFiles
+} from 'gramophone_client/popups/ignored_files/PopupIgnoredFiles';
+import {
 	PopupJumpToStore,
 	popupJumpToKey,
 	PopupJumpTo
@@ -164,6 +169,7 @@ const RootStore = types
 
 		// -
 
+		popupIgnoredFiles: types.optional(PopupIgnoredFilesStore, {}),
 		popupJumpTo: types.optional(PopupJumpToStore, {}),
 		popupZoomCover: types.optional(PopupZoomCoverStore, {}),
 		popupTrackMetadatas: types.optional(PopupTrackMetadatasStore, {}),
@@ -368,6 +374,7 @@ let contexts = {
 // -
 
 let popups = {
+	[popupIgnoredFilesKey] : PopupIgnoredFiles,
 	[popupJumpToKey]: PopupJumpTo,
 	[popupZoomCoverKey]: PopupZoomCover,
 	[popupTrackMetadatasKey]: PopupTrackMetadatas,

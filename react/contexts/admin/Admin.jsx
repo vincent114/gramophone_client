@@ -6,7 +6,6 @@ import { RenderSectionTheme } from 'nexus/contexts/preferences/Preferences';
 
 import { Heading } from 'nexus/forms/heading/Heading';
 import { Indicator } from 'nexus/forms/indicator/Indicator';
-// import { Field } from 'nexus/forms/field/Field';
 
 import { Section } from 'nexus/layout/section/Section';
 import { Row } from 'nexus/layout/row/Row';
@@ -39,6 +38,7 @@ export const RenderAdminFolders = observer((props) => {
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
 	const library = store.library;
+	const popupIgnoredFiles = store.popupIgnoredFiles;
 
 	// From ... store
 
@@ -73,6 +73,13 @@ export const RenderAdminFolders = observer((props) => {
 
 	const handleFolderClick = (folderPath) => {
 		ipc.send('showItemInFolder', [folderPath]);
+	}
+
+	const handleIgnoredFilesClick = (sourceFolder) => {
+		if (sourceFolder.nb_files_ignored > 0) {
+			popupIgnoredFiles.setField('folderPath', sourceFolder.folder_path);
+			popupIgnoredFiles.open();
+		}
 	}
 
 	const handleFolderDelete = (folderPath) => {
@@ -148,6 +155,11 @@ export const RenderAdminFolders = observer((props) => {
 								paddingLeft: "5px",
 								paddingRight: "10px",
 							}}
+							callbackClick={(e) => {
+								e.preventDefault();
+								e.stopPropagation();
+								handleIgnoredFilesClick(sourceFolder);
+							}}
 						>
 							{sourceFolder.nb_files_ignored}
 						</Indicator>
@@ -158,6 +170,10 @@ export const RenderAdminFolders = observer((props) => {
 				iconName="add"
 				color="info"
 				disabled={isLoading}
+				size="small"
+				style={{
+					marginLeft: '10px',
+				}}
 				onClick={() => handleAddFolder("source")}
 			/>
 
@@ -231,6 +247,10 @@ export const RenderAdminFolders = observer((props) => {
 							iconName="add"
 							color="info"
 							disabled={isLoading || nbFolders == 0}
+							size="small"
+							style={{
+								marginLeft: '10px',
+							}}
 							onClick={() => handleAddFolder("copy")}
 						/>
 					)}
@@ -320,9 +340,10 @@ export const RenderAdminScan = observer((props) => {
 					variant="contrasted"
 					padding="big"
 					color={fullScanInfos.severity}
+					iconName="all_inclusive"
 					className="flex-0"
 					style={{
-						minWidth: "100px",
+						minWidth: "120px",
 					}}
 				>
 					{fullScanInfos.title}
@@ -359,9 +380,10 @@ export const RenderAdminScan = observer((props) => {
 					variant="contrasted"
 					padding="big"
 					color={quickScanInfos.severity}
+					iconName="bolt"
 					className="flex-0"
 					style={{
-						minWidth: "100px",
+						minWidth: "120px",
 					}}
 				>
 					{quickScanInfos.title}

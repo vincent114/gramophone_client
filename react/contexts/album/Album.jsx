@@ -29,6 +29,14 @@ import { IconButton } from 'nexus/ui/button/Button';
 import { Avatar } from 'nexus/ui/avatar/Avatar';
 import { Paper } from 'nexus/ui/paper/Paper';
 import { Icon } from 'nexus/ui/icon/Icon';
+import { Popover } from 'nexus/ui/popover/Popover';
+import {
+	List,
+	ListItem,
+	ListIcon,
+	ListText
+} from 'nexus/ui/list/List';
+import { Divider } from 'nexus/ui/divider/Divider';
 
 import { uuid, getLetter } from 'nexus/utils/Datas';
 
@@ -336,6 +344,208 @@ export const AlbumStore = types
 // Functions Components ReactJS
 // ======================================================================================================
 
+// ***** AlbumContextualMenu *****
+// *******************************
+
+const TAG_AlbumContextualMenu = () => {}
+export const AlbumContextualMenu = observer((props) => {
+
+	const store = React.useContext(window.storeContext);
+	const app = store.app;
+	const tracks = store.tracks;
+	const player = store.player;
+	const popupTrackMetadatas = store.popupTrackMetadatas;
+	const popupManagePlaylist = store.popupManagePlaylist;
+
+	// From ... states
+
+	const [anchorMenu, setAnchorMenu] = React.useState(null);
+
+	// From ... props
+
+	const album = props.album;
+	const origin = (props.origin) ? props.origin : "album"; // album
+	const size = (props.size) ? props.size : null;
+	const color = (props.color) ? props.color : null;
+
+	const children = props.children;
+
+	const callbackClick = props.callbackClick;
+
+	let className = (props.className) ? props.className : "";
+	let style = (props.style) ? props.style : {};
+
+	// ...
+
+	// Events
+	// ==================================================================================================
+
+	const handleOpenMenu = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
+		setAnchorMenu(event.currentTarget);
+	}
+
+	const handleCloseMenu = () => {
+		setAnchorMenu(null);
+	}
+
+	// -
+
+	const handleGoto = (gotoContext, gotoContextId) => {
+		store.navigateTo(gotoContext, gotoContextId);
+		handleCloseMenu();
+	}
+
+	// -
+
+	const handleAddPlaylist = () => {
+		popupManagePlaylist.setField("mode", "add");
+		popupManagePlaylist.setField("sourceId", album.id);
+		popupManagePlaylist.setField("sourceType", "album");
+		popupManagePlaylist.open();
+		handleCloseMenu();
+	}
+
+	const handleAddToQueue = () => {
+		album.queue();
+		handleCloseMenu();
+	}
+
+	// -
+
+	const handleDelete = () => {
+		// TODO
+	}
+
+	// Render
+	// ==================================================================================================
+
+	return (
+		<div
+			className={clsx(
+				className,
+			)}
+			style={style}
+			onClick={(e) => {
+				if (callbackClick) {
+					callbackClick(e);
+				}
+			}}
+		>
+			<IconButton
+				size={size}
+				iconName="more_horiz"
+				color={color}
+				onClick={(e) => handleOpenMenu(e)}
+			/>
+			<Popover
+				id={`pop-album-${album.id}`}
+				open={Boolean(anchorMenu)}
+				anchorEl={anchorMenu}
+				onClose={handleCloseMenu}
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'center',
+				}}
+				transformOrigin={{
+					vertical: 'top',
+					horizontal: 'center',
+				}}
+			>
+				{album && (
+					<List
+						style={{
+							paddingTop: '10px',
+							paddingBottom: '10px',
+						}}
+					>
+
+						<ListItem
+							size="small"
+							onClick={() => handleGoto("artist", album.linkedArtist.id)}
+						>
+							<ListIcon
+								name="face"
+							/>
+							<ListText withIcon={true}>
+								Aller à l'artiste
+							</ListText>
+						</ListItem>
+
+						<ListItem
+							size="small"
+							onClick={() => handleGoto("genre", album.linkedGenre.id)}
+						>
+							<ListIcon
+								name="local_bar"
+							/>
+							<ListText withIcon={true}>
+								Aller au genre
+							</ListText>
+						</ListItem>
+
+						<ListItem
+							size="small"
+							onClick={() => handleGoto("year", album.linkedYear.id)}
+						>
+							<ListIcon
+								name="date_range"
+							/>
+							<ListText withIcon={true}>
+								Aller à l'année
+							</ListText>
+						</ListItem>
+
+						<Divider spacing="medium" />
+
+						<ListItem
+							size="small"
+							onClick={() => handleAddPlaylist()}
+						>
+							<ListIcon
+								name="playlist_add"
+							/>
+							<ListText withIcon={true}>
+								Ajouter à une playlist
+							</ListText>
+						</ListItem>
+
+						<ListItem
+							size="small"
+							onClick={() => handleAddToQueue()}
+						>
+							<ListIcon
+								name="queue_music"
+							/>
+							<ListText withIcon={true}>
+								Ajouter à la liste de lecture
+							</ListText>
+						</ListItem>
+
+						<Divider spacing="medium" />
+
+						<ListItem
+							size="small"
+							onClick={() => handleDelete()}
+						>
+							<ListIcon
+								name="delete"
+							/>
+							<ListText withIcon={true}>
+								Supprimer l'indexation
+							</ListText>
+						</ListItem>
+
+						{children}
+
+					</List>
+				)}
+			</Popover>
+		</div>
+	)
+})
+
 // ***** RenderAlbum *****
 // ***********************
 
@@ -516,11 +726,6 @@ export const RenderAlbum = observer((props) => {
 										onClick={() => handlePlayAlbumClick()}
 									/>
 									<IconButton
-										iconName="queue_music"
-										color="hot"
-										onClick={() => handleQueueAlbumClick()}
-									/>
-									<IconButton
 										iconName="casino"
 										color="hot"
 										style={{
@@ -532,11 +737,11 @@ export const RenderAlbum = observer((props) => {
 							)}
 							right={(
 								<div className="h-col">
-									<IconButton
-										iconName="more_horiz"
+									<AlbumContextualMenu
+										album={album}
+										origin="album"
 										color="typography"
-										disabled={isLoading}
-										// onClick={() => handleThrowDiceClick()}
+										className="flex-0"
 									/>
 								</div>
 							)}

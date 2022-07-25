@@ -23,6 +23,19 @@ export const LibraryIgnoredFileStore = types
 		file_path: types.maybeNull(types.string),
 		reason: types.maybeNull(types.string),
 	})
+	.views(self => ({
+
+		get label() {
+			if (self.file_path) {
+				const filePathParts = self.file_path.split('/');
+				if (filePathParts.length > 0) {
+					return filePathParts[filePathParts.length - 1];
+				}
+			}
+			return "";
+		},
+
+	}))
 	.actions(self => ({
 
 		setField: (field, value) => {
@@ -130,6 +143,7 @@ export const LibraryFolderStore = types
 				const newIgnoredFile = LibraryIgnoredFileStore.create({});
 				newIgnoredFile.setField('file_path', filePath);
 				newIgnoredFile.setField('reason', reason);
+				self.ignored_files.push(newIgnoredFile);
 			}
 		},
 
@@ -221,7 +235,9 @@ export const LibraryStore = types
 
 			if (self.last_full_scan) {
 				subtitle = `Dernier scan ${dateTools.calendarTime(self.last_full_scan).toLowerCase()}`;
-				// TODO : duration
+				if (self.last_full_scan_duration) {
+					subtitle = `${subtitle} en ${dateTools.fromDurationToFrench(self.last_full_scan_duration)}`;
+				}
 				severity = (self.last_full_scan_error) ? "error" : "success";
 			}
 			if (app.tasks.indexOf('scan_full') > -1) {
@@ -247,7 +263,9 @@ export const LibraryStore = types
 
 			if (self.last_quick_scan) {
 				subtitle = `Dernier scan ${dateTools.calendarTime(self.last_quick_scan).toLowerCase()}`;
-				// TODO : duration
+				if (self.last_quick_scan_duration) {
+					subtitle = `${subtitle} en ${dateTools.fromDurationToFrench(self.last_quick_scan_duration)}`;
+				}
 				severity = (self.last_quick_scan_error) ? "error" : "success";
 			}
 			if (app.tasks.indexOf('scan_quick') > -1) {
