@@ -400,7 +400,7 @@ export const AlbumContextualMenu = observer((props) => {
 	// -
 
 	const handleAddPlaylist = () => {
-		popupManagePlaylist.setField("mode", "add");
+		popupManagePlaylist.init("add", "playlist");
 		popupManagePlaylist.setField("sourceId", album.id);
 		popupManagePlaylist.setField("sourceType", "album");
 		popupManagePlaylist.open();

@@ -23,6 +23,7 @@ export const PlaylistStore = types
 		ts_playlist: types.maybeNull(types.string),
 
 		permanent: false,
+		group: types.maybeNull(types.string),
 
 		tracks_ids: types.optional(types.array(types.string), []),
 	})

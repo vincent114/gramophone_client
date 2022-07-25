@@ -304,6 +304,12 @@ export const AlbumThumbnail = observer((props) => {
 		setHover(false);
 	}
 
+	// -
+
+	const handleArtistClick = (artistId) => {
+		store.navigateTo("artist", artistId);
+	}
+
 	// Render
 	// ==================================================================================================
 
@@ -381,6 +387,11 @@ export const AlbumThumbnail = observer((props) => {
 			callbackEnter={handleEnter}
 			callbackLeave={handleLeave}
 			callbackClick={callbackClick}
+			callbackSubtitle={(e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				handleArtistClick(album.linkedArtist.id)
+			}}
 		/>
 	)
 })

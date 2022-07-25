@@ -695,6 +695,7 @@ export const HomePage = observer((props) => {
 
 	const handleAddSectionClick = (sectionKey) => {
 		home.displaySection(sectionKey);
+		handleCloseAdd();
 	}
 
 	// -

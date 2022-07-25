@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 84890:
+/***/ 49583:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1385,6 +1385,36 @@ var AudiotrackIcon = function AudiotrackIcon(props) {
     d: "M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6zm-2 16c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"
   }));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/AutoAwesome.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var AutoAwesomeIcon = function AutoAwesomeIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("rect", {
+    fill: "none",
+    height: "24",
+    width: "24",
+    x: "0"
+  })), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("polygon", {
+    points: "19,9 20.25,6.25 23,5 20.25,3.75 19,1 17.75,3.75 15,5 17.75,6.25"
+  }), /*#__PURE__*/react.createElement("polygon", {
+    points: "19,15 17.75,17.75 15,19 17.75,20.25 19,23 20.25,20.25 23,19 20.25,17.75"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M11.5,9.5L9,4L6.5,9.5L1,12l5.5,2.5L9,20l2.5-5.5L17,12L11.5,9.5z M9.99,12.99L9,15.17l-0.99-2.18L5.83,12l2.18-0.99 L9,8.83l0.99,2.18L12.17,12L9.99,12.99z"
+  }))));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Badge.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -2267,6 +2297,30 @@ var FolderIcon = function FolderIcon(props) {
     fill: "none"
   }), /*#__PURE__*/react.createElement("path", {
     d: "M9.17 6l2 2H20v10H4V6h5.17M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"
+  }));
+};
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/FolderSpecial.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var FolderSpecialIcon = function FolderSpecialIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V6h5.17l2 2H20v10zm-6.92-3.96L12.39 17 15 15.47 17.61 17l-.69-2.96 2.3-1.99-3.03-.26L15 9l-1.19 2.79-3.03.26z"
   }));
 };
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/FolderZip.jsx
@@ -3439,6 +3493,46 @@ var PlaylistAddIcon = function PlaylistAddIcon(props) {
     d: "M14,10H3v2h11V10z M14,6H3v2h11V6z M18,14v-4h-2v4h-4v2h4v4h2v-4h4v-2H18z M3,16h7v-2H3V16z"
   })));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/PlaylistAddCheck.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var PlaylistAddCheckIcon = function PlaylistAddCheckIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("rect", {
+    fill: "none",
+    height: "24",
+    width: "24"
+  })), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("rect", {
+    height: "2",
+    width: "11",
+    x: "3",
+    y: "10"
+  }), /*#__PURE__*/react.createElement("rect", {
+    height: "2",
+    width: "11",
+    x: "3",
+    y: "6"
+  }), /*#__PURE__*/react.createElement("rect", {
+    height: "2",
+    width: "7",
+    x: "3",
+    y: "14"
+  }), /*#__PURE__*/react.createElement("polygon", {
+    points: "20.59,11.93 16.34,16.17 14.22,14.05 12.81,15.46 16.34,19 22,13.34"
+  }))));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/PlaylistPlay.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -3958,6 +4052,31 @@ var SmartButtonIcon = function SmartButtonIcon(props) {
     width: "24"
   }), /*#__PURE__*/react.createElement("path", {
     d: "M22,9v6c0,1.1-0.9,2-2,2h-1l0-2h1V9H4v6h6v2H4c-1.1,0-2-0.9-2-2V9c0-1.1,0.9-2,2-2h16C21.1,7,22,7.9,22,9z M14.5,19 l1.09-2.41L18,15.5l-2.41-1.09L14.5,12l-1.09,2.41L11,15.5l2.41,1.09L14.5,19z M17,14l0.62-1.38L19,12l-1.38-0.62L17,10l-0.62,1.38 L15,12l1.38,0.62L17,14z M14.5,19l1.09-2.41L18,15.5l-2.41-1.09L14.5,12l-1.09,2.41L11,15.5l2.41,1.09L14.5,19z M17,14l0.62-1.38 L19,12l-1.38-0.62L17,10l-0.62,1.38L15,12l1.38,0.62L17,14z"
+  })));
+};
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/SnippetFolder.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var SnippetFolderIcon = function SnippetFolderIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("rect", {
+    fill: "none",
+    height: "24",
+    width: "24"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M20,6h-8l-2-2H4C2.9,4,2.01,4.9,2.01,6L2,18c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V8C22,6.9,21.1,6,20,6z M20,18L4,18V6h5.17 l2,2H20V18z M17.5,12.12v3.38l-3,0v-5h1.38L17.5,12.12z M13,9v8l6,0v-5.5L16.5,9H13z"
   })));
 };
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Source.jsx
@@ -4719,6 +4838,10 @@ var Icon = __webpack_require__(73244);
 
 
 
+
+
+
+
  // Datas
 // -------------------------------------------------------------------------------------------------------------
 
@@ -4743,6 +4866,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'arrow_forward': ArrowForwardIcon,
   'art_track': ArtTrackIcon,
   'audiotrack': AudiotrackIcon,
+  'auto_awesome': AutoAwesomeIcon,
   'badge': BadgeIcon,
   'bolt': BoltIcon,
   'book': BookIcon,
@@ -4777,6 +4901,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'feedback_black': FeedbackIcon,
   'file_download': FileDownloadIcon,
   'folder': FolderIcon,
+  'folder_special': FolderSpecialIcon,
   'folder_zip': FolderZipIcon,
   'forum': ForumIcon,
   'fullscreen': FullscreenIcon,
@@ -4822,6 +4947,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'play_arrow': PlayArrowIcon,
   'play_circle_filled': PlayCircleFilledIcon,
   'playlist_add': PlaylistAddIcon,
+  'playlist_add_check': PlaylistAddCheckIcon,
   'playlist_play': PlaylistPlayIcon,
   'playlist_remove': PlaylistRemoveIcon,
   'power_setting': PowerSettingIcon,
@@ -4842,6 +4968,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'skip_next': SkipNextIcon,
   'skip_previous': SkipPreviousIcon,
   'smart_button': SmartButtonIcon,
+  'snippet_folder': SnippetFolderIcon,
   'source': SourceIcon,
   'sports_esports': SportsEsportsIcon,
   'star': StarIcon,
@@ -6950,6 +7077,46 @@ var dateTools = {
 
     return "".concat(durationText).concat(durationRemaining);
   },
+  // -
+  humanizeDate: function humanizeDate(value, format) {
+    // https://momentjs.com
+    return moment(value).format(format);
+  },
+  dateToHumanizedDay: function dateToHumanizedDay(date) {
+    // AAAA-MM-JJ -> Vendredi
+    // ---
+    var self = this;
+    return self.humanizeDate(date, 'dddd');
+  },
+  dateToFrenchSmall: function dateToFrenchSmall(date) {
+    // AAAA-MM-JJ -> 10 novembre
+    // -
+    var self = this;
+    return self.humanizeDate(date, 'Do MMMM');
+  },
+  dateToFrench: function dateToFrench(date) {
+    // AAAA-MM-JJ -> 10 novembre 2021
+    // -
+    var self = this;
+
+    if (!date) {
+      date = new Date();
+    }
+
+    return self.humanizeDate(date, 'Do MMMM YYYY');
+  },
+  dateToFrenchLong: function dateToFrenchLong(date) {
+    // AAAA-MM-JJ -> mer. 10 novembre 2021
+    // -
+    var self = this;
+    return self.humanizeDate(date, 'dd Do MMM YYYY');
+  },
+  dateToFrenchFull: function dateToFrenchFull(date) {
+    // AAAA-MM-JJ -> mercredi 10 novembre 2021
+    // -
+    var self = this;
+    return self.humanizeDate(date, 'dddd Do MMMM YYYY');
+  },
   // Operations
   // -
   // addTime: function(hours_iso, to_add, what_to_add) {
@@ -7065,6 +7232,7 @@ var dateTools = {
 
     return weekKey;
   },
+  // -
   getNowIso: function getNowIso() {
     // Now -> AAAA-MM-JJTHH:MM:SS.xxxxx
     // ---
@@ -7076,6 +7244,14 @@ var dateTools = {
     // ---
     var self = this;
     return self.getNowIso().substring(0, 10);
+  },
+  getHourIso: function getHourIso() {
+    var withSeconds = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    // Now -> HH:MM
+    // ---
+    var now = new Date();
+    var tmplt = withSeconds ? "HH:mm:ss" : "HH:mm";
+    return (0,format/* default */.Z)(now, tmplt);
   }
 };
 // EXTERNAL MODULE: ../../nexus/react/forms/field/Field.css
@@ -10501,7 +10677,7 @@ function Popover_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var TAG_Popover = function TAG_Popover() {};
 
 var Popover_Popover = function Popover(props) {
-  var popoverStyle = props.style ? props.style : {};
+  var popoverStyle = props.style ? Datas_copyObj(props.style) : {};
   popoverStyle['opacity'] = 0; // From ... states
 
   var _React$useState = react.useState(popoverStyle),
@@ -20670,7 +20846,7 @@ var TrackContextualMenu = (0,es/* observer */.Pi)(function (props) {
 
 
   var handleAddPlaylist = function handleAddPlaylist() {
-    popupManagePlaylist.setField("mode", "add");
+    popupManagePlaylist.init("add", "playlist");
     popupManagePlaylist.setField("sourceId", track.id);
     popupManagePlaylist.setField("sourceType", "track");
     popupManagePlaylist.open();
@@ -22751,7 +22927,7 @@ var AlbumContextualMenu = (0,es/* observer */.Pi)(function (props) {
 
 
   var handleAddPlaylist = function handleAddPlaylist() {
-    popupManagePlaylist.setField("mode", "add");
+    popupManagePlaylist.init("add", "playlist");
     popupManagePlaylist.setField("sourceId", album.id);
     popupManagePlaylist.setField("sourceType", "album");
     popupManagePlaylist.open();
@@ -23197,6 +23373,7 @@ var Thumbnail_Thumbnail = (0,es/* observer */.Pi)(function (props) {
   var callbackEnter = props.callbackEnter;
   var callbackLeave = props.callbackLeave;
   var callbackClick = props.callbackClick;
+  var callbackSubtitle = props.callbackSubtitle;
   var className = props.className ? props.className : "";
   var rootStyle = props.rootStyle ? Datas_copyObj(props.rootStyle) : {};
   var style = props.style ? Datas_copyObj(props.style) : {}; // ...
@@ -23251,6 +23428,12 @@ var Thumbnail_Thumbnail = (0,es/* observer */.Pi)(function (props) {
     if (callbackClick) {
       callbackClick();
     }
+  };
+
+  var handleSubtitleClick = function handleSubtitleClick(e) {
+    if (callbackSubtitle) {
+      callbackSubtitle(e);
+    }
   }; // Render
   // ==================================================================================================
 
@@ -23288,7 +23471,12 @@ var Thumbnail_Thumbnail = (0,es/* observer */.Pi)(function (props) {
   }, title && /*#__PURE__*/react.createElement("div", {
     className: "nx-thumbnail-title"
   }, title), subtitle && /*#__PURE__*/react.createElement("div", {
-    className: "nx-thumbnail-subtitle"
+    className: "nx-thumbnail-subtitle",
+    onClick: function onClick(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      handleSubtitleClick(e);
+    }
   }, subtitle)));
 }); // ***** ThumbnailGhost *****
 // **************************
@@ -23630,6 +23818,11 @@ var AlbumThumbnail = (0,es/* observer */.Pi)(function (props) {
 
   var handleLeave = function handleLeave(evt) {
     setHover(false);
+  }; // -
+
+
+  var handleArtistClick = function handleArtistClick(artistId) {
+    store.navigateTo("artist", artistId);
   }; // Render
   // ==================================================================================================
   // Thumbnail :: Bottom Right
@@ -23698,7 +23891,12 @@ var AlbumThumbnail = (0,es/* observer */.Pi)(function (props) {
     rootStyle: style,
     callbackEnter: handleEnter,
     callbackLeave: handleLeave,
-    callbackClick: callbackClick
+    callbackClick: callbackClick,
+    callbackSubtitle: function callbackSubtitle(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      handleArtistClick(album.linkedArtist.id);
+    }
   });
 }); // ***** RenderAlbums *****
 // ************************
@@ -26809,6 +27007,7 @@ var PlaylistStore = mobx_state_tree_module/* types.model */.V5.model({
   name: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   ts_playlist: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   permanent: false,
+  group: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   tracks_ids: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), [])
 }).actions(function (self) {
   return {
@@ -26906,13 +27105,23 @@ function Playlists_slicedToArray(arr, i) { return Playlists_arrayWithHoles(arr) 
 
 function Playlists_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
+function Playlists_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function Playlists_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function Playlists_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Playlists_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
 function Playlists_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Playlists_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Playlists_arrayLikeToArray(o, minLen); }
 
 function Playlists_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function Playlists_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function Playlists_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
 
 
 
@@ -26943,13 +27152,28 @@ function Playlists_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
  // Models
 // ======================================================================================================
-// ***** PlaylistsStore *****
+// ***** PlaylistFolderStore *****
+// *******************************
+
+var TAG_PlaylistFolderStore = function TAG_PlaylistFolderStore() {};
+
+var PlaylistFolderStore = mobx_state_tree_module/* types.model */.V5.model({
+  id: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  name: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string)
+}).actions(function (self) {
+  return {
+    setField: function setField(field, value) {
+      self[field] = value;
+    }
+  };
+}); // ***** PlaylistsStore *****
 // **************************
 
 var TAG_PlaylistsStore = function TAG_PlaylistsStore() {};
 
 var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
   by_id: mobx_state_tree_module/* types.map */.V5.map(PlaylistStore),
+  folders: mobx_state_tree_module/* types.map */.V5.map(PlaylistFolderStore),
   loaded: false
 }).views(function (self) {
   return {
@@ -26964,8 +27188,60 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
       return Object.entries(self.by_id.toJSON()).length;
     },
 
+    get nbFolders() {
+      return Object.entries(self.folders.toJSON()).length;
+    },
+
     // Getters
     // -
+    getPermanent: function getPermanent() {
+      var permanent = [];
+      var playlistFavorites = self.by_id.get('favorites');
+
+      if (playlistFavorites) {
+        permanent.push(playlistFavorites);
+      }
+
+      var playlistMix = self.by_id.get('mix');
+
+      if (playlistMix) {
+        permanent.push(playlistMix);
+      }
+
+      return permanent;
+    },
+    getGrouped: function getGrouped() {
+      var byGroup = {};
+
+      var _iterator = Playlists_createForOfIteratorHelper(self.by_id.entries()),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var _step$value = Playlists_slicedToArray(_step.value, 2),
+              playlistId = _step$value[0],
+              playlist = _step$value[1];
+
+          if (playlist.permanent) {
+            continue;
+          }
+
+          var group = playlist.group;
+
+          if (!byGroup.hasOwnProperty(group)) {
+            byGroup[group] = [];
+          }
+
+          byGroup[group].push(playlist);
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      return byGroup;
+    },
     getById: function getById(playlistId) {
       var playlist = self.by_id.get(playlistId);
 
@@ -26985,8 +27261,8 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
     update: function update(raw) {
       self.by_id = {};
 
-      for (var _i = 0, _Object$entries = Object.entries(raw.by_id); _i < _Object$entries.length; _i++) {
-        var _Object$entries$_i = Playlists_slicedToArray(_Object$entries[_i], 2),
+      for (var _i2 = 0, _Object$entries = Object.entries(raw.by_id); _i2 < _Object$entries.length; _i2++) {
+        var _Object$entries$_i = Playlists_slicedToArray(_Object$entries[_i2], 2),
             playlistId = _Object$entries$_i[0],
             playlistRaw = _Object$entries$_i[1];
 
@@ -27004,10 +27280,17 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
       var app = store.app;
 
       store._readJsonFile(self.playlistsCollectionFilePath, {
-        by_id: {}
+        by_id: {},
+        folders: {}
       }, function (raw) {
         // self.update(raw);
         app.saveValue(['playlists', 'by_id'], raw.by_id, function () {
+          var permanentAdded = self.ensurePermanent();
+
+          if (permanentAdded) {
+            self.save();
+          }
+
           self.setField('loaded', true);
 
           if (callback) {
@@ -27026,6 +27309,48 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
       if (callback) {
         callback();
       }
+    },
+    // -
+    ensurePermanent: function ensurePermanent() {
+      // On s'assure de la présence des playlist permanentes
+      // -
+      var atLeastOneAdded = false; // Playlist de favoris ?
+      // ---------------------------------------------------
+
+      var playlistFavoritesId = "favorites";
+      var playlistFavorites = self.by_id.get(playlistFavoritesId);
+
+      if (!playlistFavorites) {
+        playlistFavorites = PlaylistStore.create({
+          "id": playlistFavoritesId,
+          "name": "Titres favoris",
+          "ts_playlist": dateTools.getNowIso(),
+          "permanent": true,
+          "tracks_ids": []
+        });
+        self.by_id.set(playlistFavoritesId, playlistFavorites);
+        atLeastOneAdded = true;
+      } // Playlist du mix courant ?
+      // ---------------------------------------------------
+
+
+      var playlistMixId = "mix";
+      var playlistMix = self.by_id.get(playlistMixId);
+
+      if (!playlistMix) {
+        playlistMix = PlaylistStore.create({
+          "id": playlistMixId,
+          "name": "Mix du moment",
+          "ts_playlist": dateTools.getNowIso(),
+          "permanent": true,
+          "tracks_ids": []
+        });
+        self.by_id.set(playlistMixId, playlistMix);
+        atLeastOneAdded = true;
+      } // ---------------------------------------------------
+
+
+      return atLeastOneAdded;
     }
   };
 }); // Functions Components ReactJS
@@ -27039,17 +27364,58 @@ var RenderPlaylists = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
   var playlists = store.playlists;
-  var popupManagePlaylist = store.popupManagePlaylist; // From ... store
+  var popupManagePlaylist = store.popupManagePlaylist; // From ... states
+
+  var _React$useState = react.useState(null),
+      _React$useState2 = Playlists_slicedToArray(_React$useState, 2),
+      anchorMenu = _React$useState2[0],
+      setAnchorMenu = _React$useState2[1]; // From ... store
+
 
   var isLoading = store.isLoading;
-  var nbPlaylists = playlists.nbPlaylists; // ...
+  var nbPlaylists = playlists.nbPlaylists;
+  var nbFolders = playlists.nbFolders;
+  var playlistsPermanent = playlists.getPermanent();
+  var playlistsGrouped = playlists.getGrouped(); // ...
   // Events
   // ==================================================================================================
 
-  var handleAddClick = function handleAddClick() {
-    popupManagePlaylist.setField("mode", "add");
+  var handleOpenMenu = function handleOpenMenu(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    setAnchorMenu(event.currentTarget);
+  };
+
+  var handleCloseMenu = function handleCloseMenu() {
+    setAnchorMenu(null);
+  }; // -
+
+
+  var handleAddPlaylistClick = function handleAddPlaylistClick() {
+    popupManagePlaylist.init("create", "playlist");
     popupManagePlaylist.open();
-  }; // Renderers
+    handleCloseMenu();
+  };
+
+  var handleAddFolderClick = function handleAddFolderClick() {
+    popupManagePlaylist.init("create", "folder");
+    popupManagePlaylist.open();
+    handleCloseMenu();
+  }; // -
+
+
+  var handlePlaylistClick = function handlePlaylistClick(playlistId) {
+    store.navigateTo('playlist', playlistId);
+  };
+
+  var handleShuffleClick = function handleShuffleClick(playlistId) {// TODO
+  };
+
+  var handlePlayClick = function handlePlayClick(playlistId) {// TODO
+  }; // -
+
+
+  var handleAddFolder = function handleAddFolder(evt) {}; // Renderers
   // ==================================================================================================
 
 
@@ -27058,16 +27424,178 @@ var RenderPlaylists = (0,es/* observer */.Pi)(function (props) {
     avatarIconColor: "typography",
     title: "".concat(nbPlaylists, " ").concat(nbPlaylists > 1 ? "Playlists" : "Playlist"),
     right: /*#__PURE__*/react.createElement("div", {
-      className: "h-col"
+      className: "flex-0"
     }, /*#__PURE__*/react.createElement(IconButton, {
-      iconName: "add",
-      color: "hot",
-      disabled: isLoading,
-      onClick: function onClick() {
-        return handleAddClick();
+      iconName: "more_horiz",
+      color: "typography",
+      onClick: function onClick(e) {
+        return handleOpenMenu(e);
       }
-    }))
-  }));
+    }), /*#__PURE__*/react.createElement(Popover_Popover, {
+      id: "pop-playlists",
+      open: Boolean(anchorMenu),
+      anchorEl: anchorMenu,
+      onClose: handleCloseMenu,
+      anchorOrigin: {
+        vertical: 'bottom',
+        horizontal: 'center'
+      },
+      transformOrigin: {
+        vertical: 'top',
+        horizontal: 'center'
+      }
+    }, /*#__PURE__*/react.createElement(List_List, {
+      style: {
+        paddingTop: '10px',
+        paddingBottom: '10px'
+      }
+    }, /*#__PURE__*/react.createElement(ListItem, {
+      size: "small",
+      onClick: function onClick() {
+        return handleAddPlaylistClick();
+      }
+    }, /*#__PURE__*/react.createElement(List_ListIcon, {
+      name: "playlist_add"
+    }), /*#__PURE__*/react.createElement(ListText, {
+      withIcon: true
+    }, "Cr\xE9er une nouvelle playlist")), /*#__PURE__*/react.createElement(ListItem, {
+      size: "small",
+      onClick: function onClick() {
+        return handleAddFolderClick();
+      }
+    }, /*#__PURE__*/react.createElement(List_ListIcon, {
+      name: "snippet_folder"
+    }), /*#__PURE__*/react.createElement(ListText, {
+      withIcon: true
+    }, "Cr\xE9er un nouveau dossier de playlist")))))
+  }), /*#__PURE__*/react.createElement(Group_Group, {
+    id: "group-automatic",
+    key: "group-automatic"
+  }, /*#__PURE__*/react.createElement(Group_GroupDivider, {
+    spacing: "big",
+    left: /*#__PURE__*/react.createElement(Typography_Typography, {
+      variant: "title",
+      color: "secondary",
+      style: {
+        minWidth: '100px',
+        marginRight: '20px'
+      }
+    }, "Automatiques"),
+    center: /*#__PURE__*/react.createElement(Avatar_Avatar, {
+      size: "small",
+      color: "rgba(111, 126, 140, 0.1)",
+      textColor: "typography",
+      style: {
+        fontSize: '14px',
+        color: 'gray'
+      }
+    }, playlistsPermanent.length),
+    right: /*#__PURE__*/react.createElement(Avatar_Avatar // size="small"
+    , {
+      iconName: "auto_awesome",
+      iconColor: "warning",
+      color: "transparent"
+    })
+  }), /*#__PURE__*/react.createElement(TableContainer, {
+    component: Paper_Paper,
+    style: {
+      marginLeft: '20px',
+      marginRight: '20px',
+      padding: '0px'
+    }
+  }, /*#__PURE__*/react.createElement(Table_Table, null, /*#__PURE__*/react.createElement(TableBody, null, playlistsPermanent.map(function (playlist, playlistIdx) {
+    return /*#__PURE__*/react.createElement(TableRow, {
+      key: "playlist-permanent-".concat(playlistIdx),
+      hoverable: true,
+      callbackClick: function callbackClick() {
+        return handlePlaylistClick(playlist.id);
+      }
+    }, /*#__PURE__*/react.createElement(TableCell, {
+      size: "small"
+    }, playlist.name), /*#__PURE__*/react.createElement(TableCell, {
+      size: "small",
+      width: "48px"
+    }, /*#__PURE__*/react.createElement(IconButton, {
+      size: "small",
+      iconName: "shuffle",
+      color: "info",
+      className: "flex-0",
+      onClick: function onClick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        handleShuffleClick(playlist.id);
+      }
+    })), /*#__PURE__*/react.createElement(TableCell, {
+      size: "small",
+      width: "48px"
+    }, /*#__PURE__*/react.createElement(IconButton, {
+      size: "small",
+      iconName: "play_arrow",
+      color: "hot",
+      className: "flex-0",
+      onClick: function onClick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        handlePlayClick(playlist.id);
+      }
+    })));
+  }))))), /*#__PURE__*/react.createElement(Group_Group, {
+    id: "group-manual",
+    key: "group-manual"
+  }, /*#__PURE__*/react.createElement(Group_GroupDivider, {
+    spacing: "big",
+    left: /*#__PURE__*/react.createElement(Typography_Typography, {
+      variant: "title",
+      color: "secondary",
+      style: {
+        minWidth: '100px',
+        marginRight: '20px'
+      }
+    }, "Manuelles"),
+    center: /*#__PURE__*/react.createElement(Avatar_Avatar, {
+      size: "small",
+      color: "rgba(111, 126, 140, 0.1)",
+      textColor: "typography",
+      style: {
+        fontSize: '14px',
+        color: 'gray'
+      }
+    }, nbPlaylists - playlistsPermanent.length),
+    right: /*#__PURE__*/react.createElement(Avatar_Avatar // size="small"
+    , {
+      iconName: "playlist_add_check",
+      iconColor: "warning",
+      color: "transparent"
+    })
+  })), /*#__PURE__*/react.createElement(Group_Group, {
+    id: "group-folders",
+    key: "group-folders"
+  }, /*#__PURE__*/react.createElement(Group_GroupDivider, {
+    spacing: "big",
+    left: /*#__PURE__*/react.createElement(Typography_Typography, {
+      variant: "title",
+      color: "secondary",
+      style: {
+        minWidth: '100px',
+        marginRight: '20px'
+      }
+    }, "Dossiers"),
+    center: /*#__PURE__*/react.createElement(Avatar_Avatar, {
+      size: "small",
+      color: "rgba(111, 126, 140, 0.1)",
+      textColor: "typography",
+      style: {
+        fontSize: '14px',
+        color: 'gray'
+      }
+    }, nbFolders),
+    right: /*#__PURE__*/react.createElement(Avatar_Avatar // size="small"
+    , {
+      iconName: "folder_special",
+      iconColor: "warning",
+      color: "transparent"
+    })
+  })));
 }); // ***** PlaylistsHeaderLeft *****
 // *******************************
 
@@ -28155,6 +28683,7 @@ var HomePage = (0,es/* observer */.Pi)(function (props) {
 
   var handleAddSectionClick = function handleAddSectionClick(sectionKey) {
     home.displaySection(sectionKey);
+    handleCloseAdd();
   }; // -
 
 
@@ -29952,6 +30481,14 @@ var PopupManagePlaylist = __webpack_require__(28782);
 
 
 
+
+
+
+
+
+
+
+
  // Models
 // ======================================================================================================
 // ***** PopupManagePlaylistStore *****
@@ -29962,8 +30499,16 @@ var TAG_PopupManagePlaylistStore = function TAG_PopupManagePlaylistStore() {};
 var PopupManagePlaylistStore = mobx_state_tree_module/* types.model */.V5.model({
   mode: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   // create, edit, add
+  // create + edit
+  draftKind: 'playlist',
+  // playlist, folder
+  draftId: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  draftPlaylist: mobx_state_tree_module/* types.optional */.V5.optional(PlaylistStore, {}),
+  draftFolder: mobx_state_tree_module/* types.optional */.V5.optional(PlaylistFolderStore, {}),
+  // add
+  // -
   sourceId: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
-  sourceType: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string) // track, album
+  sourceType: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string) // track, album, playlist
 
 }).views(function (self) {
   return {
@@ -29983,11 +30528,56 @@ var PopupManagePlaylistStore = mobx_state_tree_module/* types.model */.V5.model(
       self[field] = value;
     },
     // -
+    init: function init(mode, kind) {
+      var id = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+      self.mode = mode;
+      self.draftKind = kind;
+      self.draftId = id;
+      self.draftPlaylist = PlaylistStore.create({});
+      self.draftFolder = PlaylistFolderStore.create({}); // create
+      // -
+
+      if (mode == 'create' && kind == 'playlist') {
+        self.draftPlaylist = PlaylistStore.create({
+          "id": uuid(),
+          "name": "Du ".concat(dateTools.dateToFrench(), " ").concat(dateTools.getHourIso()),
+          "ts_playlist": dateTools.getNowIso(),
+          "permanent": false,
+          "group": "",
+          "tracks_ids": []
+        });
+      }
+
+      if (mode == 'create' && kind == 'folder') {
+        self.draftFolder = PlaylistFolderStore.create({
+          "id": uuid(),
+          "name": "Nouveau dossier"
+        });
+      } // edit
+      // -
+
+
+      if (mode == 'edit' && kind == 'playlist') {// TODO
+      }
+
+      if (mode == 'edit' && kind == 'folder') {// TODO
+      } // add
+      // -
+      // TODO
+
+    },
+    // -
     open: function open() {
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
       var popup = app.popup;
       popup.open(popupManagePlaylistKey);
+    },
+    close: function close() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var popup = app.popup;
+      popup.close(popupManagePlaylistKey);
     }
   };
 }); // Functions Components ReactJS
@@ -30005,33 +30595,78 @@ var PopupManagePlaylist_PopupManagePlaylist = (0,es/* observer */.Pi)(function (
   var popupManagePlaylist = store.popupManagePlaylist; // From ... store
 
   var isLoading = app.isLoading;
-  var isOpen = popupManagePlaylist.isOpen; // Render
+  var isOpen = popupManagePlaylist.isOpen;
+  var mode = popupManagePlaylist.mode;
+  var draftKind = popupManagePlaylist.draftKind; // ...
+  // Events
+  // ==================================================================================================
+
+  var handleBtnClose = function handleBtnClose() {
+    popupManagePlaylist.close();
+  }; // Render
   // ==================================================================================================
   // Popup --> Title
   // -----------------------------------------------
 
-  var popupTitle = "Playlist"; // Popup --> Content
+
+  var popupTitle = draftKind == "playlist" ? "Playlist" : "Dossier";
+
+  if (mode == "create") {
+    popupTitle = draftKind == "playlist" ? "Nouvelle playlist" : "Nouveau dossier";
+  }
+
+  if (mode == "edit") {
+    popupTitle = draftKind == "playlist" ? "Modification playlist" : "Modification dossier";
+  }
+
+  if (mode == "add") {
+    popupTitle = "Choix de la destination";
+  } // Popup --> Content
   // -----------------------------------------------
+
 
   var popupContent = null;
 
   if (isOpen) {
-    popupContent = /*#__PURE__*/react.createElement("div", null, "...");
-  } // -----------------------------------------------
+    var sourceType = popupManagePlaylist.sourceType;
+    popupContent = /*#__PURE__*/react.createElement("div", null, draftKind == 'playlist' && ['create', 'edit'].includes(mode) && /*#__PURE__*/react.createElement(Field_Field, {
+      id: "txt-playlist-name",
+      component: "input",
+      label: "Nom",
+      savePath: ['popupManagePlaylist', 'draftPlaylist', 'name'],
+      disabled: isLoading
+    }), draftKind == 'folder' && ['create', 'edit'].includes(mode) && /*#__PURE__*/react.createElement(Field_Field, {
+      id: "txt-folder-name",
+      component: "input",
+      label: "Nom",
+      savePath: ['popupManagePlaylist', 'draftFolder', 'name'],
+      disabled: isLoading
+    }));
+  } // Popup --> Buttons
+  // -----------------------------------------------
 
+
+  var popupButtons = [];
+  popupButtons.push( /*#__PURE__*/react.createElement(Button_Button, {
+    key: "btn-manage-playlist-cancel",
+    disabled: isLoading,
+    onClick: function onClick() {
+      return handleBtnClose();
+    }
+  }, "Annuler"));
+  popupButtons.push( /*#__PURE__*/react.createElement(Button_Button, {
+    key: "btn-manage-playlist-validate",
+    disabled: isLoading,
+    color: "primary",
+    onClick: function onClick() {
+      return handleBtnValidate();
+    }
+  }, mode == "create" && "Créer", mode == "edit" && "Modifier", mode == "add" && "Ajouter")); // -----------------------------------------------
 
   return /*#__PURE__*/react.createElement(Popup_Popup, {
     id: popupManagePlaylistKey,
-    title: popupTitle // style={{
-    // 	minWidth: '600px',
-    // 	maxWidth: '600px',
-    // }}
-    // contentStyle={{
-    // 	padding: '0px',
-    // 	minHeight: '600px',
-    // 	maxHeight: '600px',
-    // }}
-
+    title: popupTitle,
+    buttons: popupButtons
   }, popupContent);
 });
 // EXTERNAL MODULE: ./Main.css
@@ -30411,7 +31046,8 @@ var initSnapshot = makeInitSnapshot(routes, {
         }
       }
     },
-    'scrollIgnoredContexts': ['home', 'about', 'admin', 'artist', 'album', 'years', 'year', 'genre', 'playlist']
+    'scrollIgnoredContexts': ['home', 'about', 'admin', 'artist', 'album', // 'years',
+    'year', 'genre', 'playlist']
   },
   'home': {
     'sectionDisplayed': Storage_getFromStorage('homeSectionDisplayed', ['showcased'], 'json')
@@ -31648,7 +32284,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(84890)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(49583)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

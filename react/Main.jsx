@@ -440,7 +440,7 @@ let initSnapshot = makeInitSnapshot(routes, {
 
 			'artist',
 			'album',
-			'years',
+			// 'years',
 			'year',
 			'genre',
 			'playlist',
