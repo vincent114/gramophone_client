@@ -3,6 +3,8 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import { PlaylistFolderStore } from 'gramophone_client/contexts/playlist_folder/PlaylistFolder';
+
 import { Helper } from 'nexus/ui/helper/Helper';
 
 import './Playlist.css';
@@ -23,10 +25,25 @@ export const PlaylistStore = types
 		ts_playlist: types.maybeNull(types.string),
 
 		permanent: false,
-		group: types.maybeNull(types.string),
 
+		folder_id: types.maybeNull(types.string),
 		tracks_ids: types.optional(types.array(types.string), []),
 	})
+	.views(self => ({
+
+		get linkedFolder() {
+			const store = getRoot(self);
+			const playlists = store.playlists;
+			if (self.folder_id) {
+				const folder = playlists.folders.get(self.folder_id);
+				if (folder) {
+					return folder;
+				}
+			}
+			return PlaylistFolderStore.create({});
+		},
+
+	}))
 	.actions(self => ({
 
 		setField: (field, value) => {
@@ -35,19 +52,20 @@ export const PlaylistStore = types
 
 		// -
 
-		update: (raw) => {
-			self.id = raw.id;
-			self.name = raw.name;
+		// update: (raw) => {
+		// 	self.id = raw.id;
+		// 	self.name = raw.name;
 
-			self.ts_playlist = raw.ts_playlist;
+		// 	self.ts_playlist = raw.ts_playlist;
 
-			self.permanent = raw.permanent;
+		// 	self.permanent = raw.permanent;
 
-			self.tracks_ids = [];
-			for (const trackId of raw.tracks_ids) {
-				self.tracks_ids.push(trackId);
-			}
-		},
+		// 	self.folder_id = raw.folder_id;
+		// 	self.tracks_ids = [];
+		// 	for (const trackId of raw.tracks_ids) {
+		// 		self.tracks_ids.push(trackId);
+		// 	}
+		// },
 
 	}))
 

@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
 import { PlaylistStore } from 'gramophone_client/contexts/playlist/Playlist';
+import { PlaylistFolderStore } from 'gramophone_client/contexts/playlist_folder/PlaylistFolder';
 
 import {
 	TableContainer,
@@ -42,23 +43,6 @@ import './Playlists.css';
 
 // Models
 // ======================================================================================================
-
-// ***** PlaylistFolderStore *****
-// *******************************
-
-const TAG_PlaylistFolderStore = () => {}
-export const PlaylistFolderStore = types
-	.model({
-		id: types.maybeNull(types.string),
-		name: types.maybeNull(types.string),
-	})
-	.actions(self => ({
-
-		setField: (field, value) => {
-			self[field] = value;
-		},
-
-	}))
 
 // ***** PlaylistsStore *****
 // **************************
@@ -106,18 +90,21 @@ export const PlaylistsStore = types
 		},
 
 		getGrouped() {
-			let byGroup = {};
+			let byFolder = {
+				"": [],
+			};
 			for (const [playlistId, playlist] of self.by_id.entries()) {
 				if (playlist.permanent) {
 					continue;
 				}
-				const group = playlist.group;
-				if (!byGroup.hasOwnProperty(group)) {
-					byGroup[group] = [];
+				const folder = playlist.linkedFolder;
+				const folderKey = (folder.id) ? `${folder.name}|#|${folder.id}` : "";
+				if (!byFolder.hasOwnProperty(folderKey)) {
+					byFolder[folderKey] = [];
 				}
-				byGroup[group].push(playlist);
+				byFolder[folderKey].push(playlist);
 			}
-			return byGroup;
+			return byFolder;
 		},
 
 		getById(playlistId) {
@@ -128,6 +115,21 @@ export const PlaylistsStore = types
 			return playlist;
 		},
 
+		getFolders() {
+			let folders = [];
+			for (const [folderId, folder] of self.folders.entries()) {
+				folders.push(folder);
+			}
+			folders.sort(function (a, b) {
+				if (a.name > b.name)
+					return 1;
+				if (a.name < b.name)
+					return -1;
+				return 0;
+			});
+			return folders;
+		},
+
 	}))
 	.actions(self => ({
 
@@ -135,17 +137,32 @@ export const PlaylistsStore = types
 			self[field] = value;
 		},
 
+		setPlaylist: (playlistId, playlistDict) => {
+			const playlist = PlaylistStore.create(playlistDict);
+			self.by_id.set(playlistId, playlist);
+		},
+
+		setFolder: (folderId, folderDict) => {
+			const folder = PlaylistFolderStore.create(folderDict);
+			self.folders.set(folderId, folder);
+		},
+
 		// -
 
-		update: (raw) => {
-			self.by_id = {};
-			for (const [playlistId, playlistRaw] of Object.entries(raw.by_id)) {
-				const playlist = PlaylistStore.create({});
-				playlist.update(playlistRaw);
-				self.by_id.set(playlistId, playlist);
-			}
-			self.loaded = true;
-		},
+		// update: (raw) => {
+		// 	self.by_id = {};
+		// 	for (const [playlistId, playlistRaw] of Object.entries(raw.by_id)) {
+		// 		const playlist = PlaylistStore.create({});
+		// 		playlist.update(playlistRaw);
+		// 		self.by_id.set(playlistId, playlist);
+		// 	}
+		// 	for (const [folderId, folderRaw] of Object.entries(raw.folders)) {
+		// 		const folder = PlaylistFolderStore.create({});
+		// 		folder.update(folderRaw);
+		// 		self.folder.set(folderId, folder);
+		// 	}
+		// 	self.loaded = true;
+		// },
 
 		load: (callback) => {
 
@@ -163,16 +180,28 @@ export const PlaylistsStore = types
 				},
 				(raw) => {
 					// self.update(raw);
-					app.saveValue(['playlists', 'by_id'], raw.by_id, () => {
-						const permanentAdded = self.ensurePermanent();
-						if (permanentAdded) {
-							self.save();
+					// app.saveValue(['playlists', 'by_id'], raw.by_id, () => {
+					// 	const permanentAdded = self.ensurePermanent();
+					// 	if (permanentAdded) {
+					// 		self.save();
+					// 	}
+					// 	self.setField('loaded', true);
+					// 	if (callback) {
+					// 		callback();
+					// 	}
+					// });
+					app.applyPatches(
+						[
+							[['playlists', 'by_id'], raw.by_id],
+							[['playlists', 'folders'], raw.folders],
+						],
+						() => {
+							self.setField('loaded', true);
+							if (callback) {
+								callback();
+							}
 						}
-						self.setField('loaded', true);
-						if (callback) {
-							callback();
-						}
-					});
+					);
 				}
 			);
 		},
@@ -211,6 +240,7 @@ export const PlaylistsStore = types
 					"name": "Titres favoris",
 					"ts_playlist": dateTools.getNowIso(),
 					"permanent": true,
+					"folder_id": "",
 					"tracks_ids": [],
 				});
 				self.by_id.set(playlistFavoritesId, playlistFavorites);
@@ -229,6 +259,7 @@ export const PlaylistsStore = types
 					"name": "Mix du moment",
 					"ts_playlist": dateTools.getNowIso(),
 					"permanent": true,
+					"folder_id": "",
 					"tracks_ids": [],
 				});
 				self.by_id.set(playlistMixId, playlistMix);
@@ -269,6 +300,7 @@ export const RenderPlaylists = observer((props) => {
 
 	const playlistsPermanent = playlists.getPermanent();
 	const playlistsGrouped = playlists.getGrouped();
+	const folders = playlists.getFolders();
 
 	// ...
 
@@ -315,8 +347,8 @@ export const RenderPlaylists = observer((props) => {
 
 	// -
 
-	const handleAddFolder = (evt) => {
-
+	const handleFolderClick = (folderId) => {
+		store.navigateTo('playlist_folder', folderId);
 	}
 
 	// Renderers
@@ -527,6 +559,65 @@ export const RenderPlaylists = observer((props) => {
 					)}
 				/>
 
+				<TableContainer
+					component={Paper}
+					style={{
+						marginLeft: '20px',
+						marginRight: '20px',
+						padding: '0px',
+					}}
+				>
+					<Table>
+						<TableBody>
+							{playlistsGrouped[""].map((playlist, playlistIdx) => (
+								<TableRow
+									key={`playlist-manual-${playlistIdx}`}
+									hoverable={true}
+									callbackClick={() => handlePlaylistClick(playlist.id)}
+								>
+									<TableCell
+										size="small"
+									>
+										{playlist.name}
+									</TableCell>
+									<TableCell
+										size="small"
+										width="48px"
+									>
+										<IconButton
+											size="small"
+											iconName="shuffle"
+											color="info"
+											className="flex-0"
+											onClick={(e) => {
+												e.preventDefault();
+												e.stopPropagation();
+												handleShuffleClick(playlist.id);
+											}}
+										/>
+									</TableCell>
+									<TableCell
+										size="small"
+										width="48px"
+									>
+										<IconButton
+											size="small"
+											iconName="play_arrow"
+											color="hot"
+											className="flex-0"
+											onClick={(e) => {
+												e.preventDefault();
+												e.stopPropagation();
+												handlePlayClick(playlist.id);
+											}}
+										/>
+									</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
+				</TableContainer>
+
 			</Group>
 
 			<Group
@@ -569,6 +660,33 @@ export const RenderPlaylists = observer((props) => {
 						/>
 					)}
 				/>
+
+				<TableContainer
+					component={Paper}
+					style={{
+						marginLeft: '20px',
+						marginRight: '20px',
+						padding: '0px',
+					}}
+				>
+					<Table>
+						<TableBody>
+							{folders.map((folder, folderIdx) => (
+								<TableRow
+									key={`playlist-folder-${folderIdx}`}
+									hoverable={true}
+									callbackClick={() => handleFolderClick(folder.id)}
+								>
+									<TableCell
+										size="small"
+									>
+										{folder.name}
+									</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
+				</TableContainer>
 
 			</Group>
 
@@ -687,7 +805,7 @@ export const PlaylistsPage = observer((props) => {
 	}
 
 	return (
-		<div className="nx-page">
+		<div className="nx-page medium">
 			{renderPage()}
 			{renderHelper()}
 		</div>

@@ -27,6 +27,7 @@ import { GenresStore, GenresPage } from 'gramophone_client/contexts/genres/Genre
 import { GenrePage } from 'gramophone_client/contexts/genre/Genre';
 import { PlaylistsStore, PlaylistsPage } from 'gramophone_client/contexts/playlists/Playlists';
 import { PlaylistPage } from 'gramophone_client/contexts/playlist/Playlist';
+import { PlaylistFolderPage } from 'gramophone_client/contexts/playlist_folder/PlaylistFolder';
 import { AdminPage } from 'gramophone_client/contexts/admin/Admin';
 
 import { LibraryStore } from 'gramophone_client/models/Library';
@@ -161,6 +162,7 @@ const RootStore = types
 
 		playlists: types.optional(PlaylistsStore, {}),
 		playlistId: types.maybeNull(types.string),
+		playlistFolderId: types.maybeNull(types.string),
 
 		// -
 
@@ -327,7 +329,12 @@ const RootStore = types
 					{"op": "replace", "path": "/playlistId", "value": contextId},
 				]);
 			}
-
+			if (navContext == 'playlist_folder') {
+				setToStorage('lastPlaylistFolderId', contextId);
+				app.navigate('/main.html', 'playlist_folder', [
+					{"op": "replace", "path": "/playlistFolderId", "value": contextId},
+				]);
+			}
 		},
 
 		// -
@@ -366,6 +373,7 @@ let contexts = {
 	'genre': GenrePage,
 	'playlists': PlaylistsPage,
 	'playlist': PlaylistPage,
+	'playlist_folder': PlaylistFolderPage,
 
 	'admin': AdminPage,
 }
@@ -399,6 +407,7 @@ let routes = {
 	'genre:genreId': '/genre/:genreId',
 	'playlists': '/playlists',
 	'playlist:playlistId': '/playlist/:playlistId',
+	'playlist_folder:playlistFolderId': '/playlist_folder/:playlistFolderId',
 }
 
 // Store
@@ -440,10 +449,10 @@ let initSnapshot = makeInitSnapshot(routes, {
 
 			'artist',
 			'album',
-			// 'years',
 			'year',
 			'genre',
 			'playlist',
+			'playlist_folder',
 		],
 	},
 	'home': {
@@ -454,6 +463,7 @@ let initSnapshot = makeInitSnapshot(routes, {
 	'yearId': getFromStorage('lastYearId', ''),
 	'genreId': getFromStorage('lastGenreId', ''),
 	'playlistId': getFromStorage('lastPlaylistId', ''),
+	'playlistFolderId': getFromStorage('lastPlaylistFolderId', ''),
 	'player': {
 		'volume': getFromStorage('volume', 25, 'int'),
 	},

@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
 import { PlaylistStore } from 'gramophone_client/contexts/playlist/Playlist';
-import { PlaylistFolderStore } from 'gramophone_client/contexts/playlists/Playlists';
+import { PlaylistFolderStore } from 'gramophone_client/contexts/playlist_folder/PlaylistFolder';
 
 import { Field } from 'nexus/forms/field/Field';
 
@@ -29,6 +29,7 @@ export const PopupManagePlaylistStore = types
 		mode: types.maybeNull(types.string), // create, edit, add
 
 		// create + edit
+		// -
 
 		draftKind: 'playlist', // playlist, folder
 		draftId: types.maybeNull(types.string),
@@ -109,6 +110,43 @@ export const PopupManagePlaylistStore = types
 
 		},
 
+		validate: (callback) => {
+
+			const store = getRoot(self);
+			const app = store.app;
+
+			const mode = self.mode;
+			const draftKind = self.draftKind;
+			const draftPlaylist = self.draftPlaylist;
+			const draftFolder = self.draftFolder;
+
+			let errors = [];
+
+			if (['create', 'edit'].includes(mode)) {
+
+				// Pas de nom de playlist ?
+				if (draftKind == 'playlist' && !draftPlaylist.name) {
+					errors.push(app.addError(
+						['popupManagePlaylist', 'draftPlaylist', 'name'],
+						"Nom de la playlist manquant",
+					));
+				}
+
+				// Pas de nom de dossier ?
+				if (draftKind == 'folder' && !draftFolder.name) {
+					errors.push(app.addError(
+						['popupManagePlaylist', 'draftFolder', 'name'],
+						"Nom de du dossier manquant",
+					));
+				}
+			}
+
+			if (callback) {
+				callback(errors);
+			}
+			return errors;
+		},
+
 		// -
 
 		open: () => {
@@ -116,15 +154,19 @@ export const PopupManagePlaylistStore = types
 			const app = store.app;
 			const popup = app.popup;
 
+			app.clearErrors();
 			popup.open(popupManagePlaylistKey);
 		},
 
-		close: () => {
+		close: (callback) => {
 			const store = getRoot(self);
 			const app = store.app;
 			const popup = app.popup;
 
 			popup.close(popupManagePlaylistKey);
+			if (callback) {
+				callback();
+			}
 		},
 
 	}))
@@ -142,8 +184,10 @@ export const PopupManagePlaylist = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const snackbar = app.snackbar;
 	const popup = app.popup;
 	const popupManagePlaylist = store.popupManagePlaylist;
+	const playlists = store.playlists;
 
 	// From ... store
 
@@ -152,14 +196,45 @@ export const PopupManagePlaylist = observer((props) => {
 
 	const mode = popupManagePlaylist.mode;
 	const draftKind = popupManagePlaylist.draftKind;
+	const draftPlaylist = popupManagePlaylist.draftPlaylist;
+	const draftFolder = popupManagePlaylist.draftFolder;
 
 	// ...
 
 	// Events
 	// ==================================================================================================
 
+	const handleClose = () => {
+		popup.clearMessage(popupManagePlaylistKey);
+	}
+
+	// -
+
 	const handleBtnClose = () => {
-		popupManagePlaylist.close();
+		popupManagePlaylist.close(handleClose);
+	}
+
+	const handleBtnValidate = () => {
+		popup.clearMessage(popupManagePlaylistKey);
+		popupManagePlaylist.validate((errors) => {
+			if (errors.length == 0) {
+
+				if (draftKind == "playlist" && ['create', 'edit'].includes(mode)) {
+					playlists.setPlaylist(draftPlaylist.id, draftPlaylist.toJSON());
+					popupManagePlaylist.close();
+				}
+
+				if (draftKind == "folder" && ['create', 'edit'].includes(mode)) {
+					playlists.setFolder(draftFolder.id, draftFolder.toJSON());
+					popupManagePlaylist.close();
+				}
+
+				playlists.save();
+
+			} else {
+				popup.setMessage(popupManagePlaylistKey, "Vérifiez votre saisie", "warning");
+			}
+		});
 	}
 
 	// Render
@@ -249,6 +324,8 @@ export const PopupManagePlaylist = observer((props) => {
 			id={popupManagePlaylistKey}
 			title={popupTitle}
 			buttons={popupButtons}
+
+			callbackClose={handleClose}
 		>
 			{popupContent}
 		</Popup>
