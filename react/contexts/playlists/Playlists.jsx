@@ -3,8 +3,16 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
-import { PlaylistStore } from 'gramophone_client/contexts/playlist/Playlist';
-import { PlaylistFolderStore } from 'gramophone_client/contexts/playlist_folder/PlaylistFolder';
+import {
+	PlaylistStore,
+	PlaylistContextualMenu,
+	PlaylistRow
+} from 'gramophone_client/contexts/playlist/Playlist';
+import {
+	PlaylistFolderStore,
+	PlaylistFolderContextualMenu,
+	PlaylistFolderRow
+} from 'gramophone_client/contexts/playlist_folder/PlaylistFolder';
 
 import {
 	TableContainer,
@@ -331,26 +339,6 @@ export const RenderPlaylists = observer((props) => {
 		handleCloseMenu();
 	}
 
-	// -
-
-	const handlePlaylistClick = (playlistId) => {
-		store.navigateTo('playlist', playlistId);
-	}
-
-	const handleShuffleClick = (playlistId) => {
-		// TODO
-	}
-
-	const handlePlayClick = (playlistId) => {
-		// TODO
-	}
-
-	// -
-
-	const handleFolderClick = (folderId) => {
-		store.navigateTo('playlist_folder', folderId);
-	}
-
 	// Renderers
 	// ==================================================================================================
 
@@ -468,49 +456,10 @@ export const RenderPlaylists = observer((props) => {
 					<Table>
 						<TableBody>
 							{playlistsPermanent.map((playlist, playlistIdx) => (
-								<TableRow
+								<PlaylistRow
 									key={`playlist-permanent-${playlistIdx}`}
-									hoverable={true}
-									callbackClick={() => handlePlaylistClick(playlist.id)}
-								>
-									<TableCell
-										size="small"
-									>
-										{playlist.name}
-									</TableCell>
-									<TableCell
-										size="small"
-										width="48px"
-									>
-										<IconButton
-											size="small"
-											iconName="shuffle"
-											color="info"
-											className="flex-0"
-											onClick={(e) => {
-												e.preventDefault();
-												e.stopPropagation();
-												handleShuffleClick(playlist.id);
-											}}
-										/>
-									</TableCell>
-									<TableCell
-										size="small"
-										width="48px"
-									>
-										<IconButton
-											size="small"
-											iconName="play_arrow"
-											color="hot"
-											className="flex-0"
-											onClick={(e) => {
-												e.preventDefault();
-												e.stopPropagation();
-												handlePlayClick(playlist.id);
-											}}
-										/>
-									</TableCell>
-								</TableRow>
+									playlist={playlist}
+								/>
 							))}
 						</TableBody>
 					</Table>
@@ -570,49 +519,10 @@ export const RenderPlaylists = observer((props) => {
 					<Table>
 						<TableBody>
 							{playlistsGrouped[""].map((playlist, playlistIdx) => (
-								<TableRow
+								<PlaylistRow
 									key={`playlist-manual-${playlistIdx}`}
-									hoverable={true}
-									callbackClick={() => handlePlaylistClick(playlist.id)}
-								>
-									<TableCell
-										size="small"
-									>
-										{playlist.name}
-									</TableCell>
-									<TableCell
-										size="small"
-										width="48px"
-									>
-										<IconButton
-											size="small"
-											iconName="shuffle"
-											color="info"
-											className="flex-0"
-											onClick={(e) => {
-												e.preventDefault();
-												e.stopPropagation();
-												handleShuffleClick(playlist.id);
-											}}
-										/>
-									</TableCell>
-									<TableCell
-										size="small"
-										width="48px"
-									>
-										<IconButton
-											size="small"
-											iconName="play_arrow"
-											color="hot"
-											className="flex-0"
-											onClick={(e) => {
-												e.preventDefault();
-												e.stopPropagation();
-												handlePlayClick(playlist.id);
-											}}
-										/>
-									</TableCell>
-								</TableRow>
+									playlist={playlist}
+								/>
 							))}
 						</TableBody>
 					</Table>
@@ -672,17 +582,10 @@ export const RenderPlaylists = observer((props) => {
 					<Table>
 						<TableBody>
 							{folders.map((folder, folderIdx) => (
-								<TableRow
+								<PlaylistFolderRow
 									key={`playlist-folder-${folderIdx}`}
-									hoverable={true}
-									callbackClick={() => handleFolderClick(folder.id)}
-								>
-									<TableCell
-										size="small"
-									>
-										{folder.name}
-									</TableCell>
-								</TableRow>
+									folder={folder}
+								/>
 							))}
 						</TableBody>
 					</Table>

@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 80987:
+/***/ 75684:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2928,6 +2928,33 @@ var MenuBookIcon = function MenuBookIcon(props) {
     d: "M17.5,14.33c-1.7,0-3.24,0.29-4.5,0.83v1.66c1.13-0.64,2.7-0.99,4.5-0.99c0.88,0,1.73,0.09,2.5,0.26v-1.52 C19.21,14.41,18.36,14.33,17.5,14.33z"
   })))));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/ModeEdit.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var ModeEditIcon = function ModeEditIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("rect", {
+    fill: "none",
+    height: "24",
+    width: "24"
+  })), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("path", {
+    d: "M3,21l3.75,0L17.81,9.94l-3.75-3.75L3,17.25L3,21z M5,18.08l9.06-9.06l0.92,0.92L5.92,19L5,19L5,18.08z"
+  })), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("path", {
+    d: "M18.37,3.29c-0.39-0.39-1.02-0.39-1.41,0l-1.83,1.83l3.75,3.75l1.83-1.83c0.39-0.39,0.39-1.02,0-1.41L18.37,3.29z"
+  })))));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/ModelTraining.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -4449,6 +4476,30 @@ var TuneIcon = function TuneIcon(props) {
     d: "M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"
   }));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Usb.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var UsbIcon = function UsbIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M15 7v4h1v2h-3V5h2l-3-4-3 4h2v8H8v-2.07c.7-.37 1.2-1.08 1.2-1.93 0-1.21-.99-2.2-2.2-2.2S4.8 7.79 4.8 9c0 .85.5 1.56 1.2 1.93V13c0 1.11.89 2 2 2h3v3.05c-.71.37-1.2 1.1-1.2 1.95 0 1.22.99 2.2 2.2 2.2s2.2-.98 2.2-2.2c0-.85-.49-1.58-1.2-1.95V15h3c1.11 0 2-.89 2-2v-2h1V7h-4z"
+  }));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/VerifiedUser.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -4842,6 +4893,8 @@ var Icon = __webpack_require__(73244);
 
 
 
+
+
  // Datas
 // -------------------------------------------------------------------------------------------------------------
 
@@ -4926,6 +4979,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'memory': MemoryIcon,
   'menu': MenuIcon,
   'menu_book': MenuBookIcon,
+  'mode_edit': ModeEditIcon,
   'model_training': ModelTrainingIcon,
   'more_horiz': MoreHorizIcon,
   'more_vert': MoreVertIcon,
@@ -4983,6 +5037,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'toggle_off': ToggleOffIcon,
   'toggle_on': ToggleOnIcon,
   'tune': TuneIcon,
+  'usb': UsbIcon,
   'verified_user': VerifiedUserIcon,
   'view_column': ViewColumnIcon,
   'view_headline': ViewHeadlineIcon,
@@ -20405,11 +20460,11 @@ var TableRow = (0,es/* observer */.Pi)(function (props) {
 
   var cellStyle = {};
 
-  if (hover && hoverable && !faded) {
+  if (hover && hoverable && forceHover != false && !faded) {
     cellStyle['backgroundColor'] = hexToRgbA(theme.palette.primary.main, 0.1);
   }
 
-  if (active && callbackClick && !faded) {
+  if (active && forceHover != false && callbackClick && !faded) {
     cellStyle['backgroundColor'] = hexToRgbA(theme.palette.primary.main, 0.3);
   }
 
@@ -20795,6 +20850,7 @@ var TrackContextualMenu = (0,es/* observer */.Pi)(function (props) {
   var color = props.color ? props.color : null;
   var children = props.children;
   var callbackClick = props.callbackClick;
+  var callbackClose = props.callbackClose;
   var className = props.className ? props.className : "";
   var style = props.style ? props.style : {}; // From ... store
 
@@ -20810,6 +20866,10 @@ var TrackContextualMenu = (0,es/* observer */.Pi)(function (props) {
 
   var handleCloseMenu = function handleCloseMenu() {
     setAnchorMenu(null);
+
+    if (callbackClose) {
+      callbackClose();
+    }
   }; // -
 
 
@@ -20881,6 +20941,9 @@ var TrackContextualMenu = (0,es/* observer */.Pi)(function (props) {
     className: (0,clsx_m/* default */.Z)(className),
     style: style,
     onClick: function onClick(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
       if (callbackClick) {
         callbackClick(e);
       }
@@ -21109,7 +21172,8 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
     hoverable: true,
     faded: !track.checked,
     callbackEnter: handleEnter,
-    callbackLeave: handleLeave
+    callbackLeave: handleLeave,
+    forceHover: hover
   }, /*#__PURE__*/react.createElement(TableCell, {
     width: 56,
     align: "center",
@@ -21182,6 +21246,9 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
     origin: "album",
     style: {
       marginRight: '-4px'
+    },
+    callbackClose: function callbackClose() {
+      handleLeave();
     }
   })));
 });
@@ -21324,10 +21391,13 @@ var PlayerItem_PlayerItem = (0,es/* observer */.Pi)(function (props) {
   }, artistName)), /*#__PURE__*/react.createElement(TrackContextualMenu, {
     track: track,
     origin: "player",
-    className: "flex-0",
-    callbackClick: function callbackClick(e) {
-      e.stopPropagation();
-      e.preventDefault();
+    className: "flex-0" // callbackClick={(e) => {
+    // 	e.stopPropagation();
+    // 	e.preventDefault();
+    // }}
+    ,
+    callbackClose: function callbackClose() {
+      handleLeave();
     }
   }));
 });
@@ -26977,6 +27047,35 @@ var PlaylistFolder = __webpack_require__(97701);
 
 
 
+
+
+
+
+
+
+
+
+function PlaylistFolder_slicedToArray(arr, i) { return PlaylistFolder_arrayWithHoles(arr) || PlaylistFolder_iterableToArrayLimit(arr, i) || PlaylistFolder_unsupportedIterableToArray(arr, i) || PlaylistFolder_nonIterableRest(); }
+
+function PlaylistFolder_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function PlaylistFolder_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return PlaylistFolder_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return PlaylistFolder_arrayLikeToArray(o, minLen); }
+
+function PlaylistFolder_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function PlaylistFolder_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function PlaylistFolder_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
  // Models
 // ======================================================================================================
 // ***** PlaylistFolderStore *****
@@ -26996,7 +27095,174 @@ var PlaylistFolderStore = mobx_state_tree_module/* types.model */.V5.model({
   };
 }); // Functions Components ReactJS
 // ======================================================================================================
-// ***** RenderPlaylistFolder *****
+// ***** PlaylistFolderContextualMenu *****
+// ****************************************
+
+var TAG_PlaylistFolderContextualMenu = function TAG_PlaylistFolderContextualMenu() {};
+
+var PlaylistFolderContextualMenu = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app; // From ... states
+
+  var _React$useState = react.useState(null),
+      _React$useState2 = PlaylistFolder_slicedToArray(_React$useState, 2),
+      anchorMenu = _React$useState2[0],
+      setAnchorMenu = _React$useState2[1]; // From ... props
+
+
+  var folder = props.folder;
+  var size = props.size ? props.size : null;
+  var color = props.color ? props.color : null;
+  var callbackClick = props.callbackClick;
+  var callbackClose = props.callbackClose;
+  var className = props.className ? props.className : "";
+  var style = props.style ? props.style : {}; // ...
+  // Events
+  // ==================================================================================================
+
+  var handleOpenMenu = function handleOpenMenu(evt) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    setAnchorMenu(evt.currentTarget);
+  };
+
+  var handleCloseMenu = function handleCloseMenu() {
+    setAnchorMenu(null);
+
+    if (callbackClose) {
+      callbackClose();
+    }
+  }; // -
+
+
+  var handleEdit = function handleEdit() {
+    // TODO
+    handleCloseMenu();
+  };
+
+  var handleDelete = function handleDelete() {
+    // TODO
+    handleCloseMenu();
+  }; // Render
+  // ==================================================================================================
+
+
+  return /*#__PURE__*/react.createElement("div", {
+    className: (0,clsx_m/* default */.Z)(className),
+    style: style,
+    onClick: function onClick(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (callbackClick) {
+        callbackClick(e);
+      }
+    }
+  }, /*#__PURE__*/react.createElement(IconButton, {
+    size: size,
+    iconName: "more_horiz",
+    color: color,
+    onClick: function onClick(e) {
+      return handleOpenMenu(e);
+    }
+  }), /*#__PURE__*/react.createElement(Popover_Popover, {
+    id: "pop-folder-".concat(folder.id),
+    open: Boolean(anchorMenu),
+    anchorEl: anchorMenu,
+    onClose: handleCloseMenu,
+    anchorOrigin: {
+      vertical: 'bottom',
+      horizontal: 'center'
+    },
+    transformOrigin: {
+      vertical: 'top',
+      horizontal: 'center'
+    }
+  }, folder && /*#__PURE__*/react.createElement(List_List, {
+    style: {
+      paddingTop: '10px',
+      paddingBottom: '10px'
+    }
+  }, /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleEdit();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "mode_edit"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Renommer le dossier")), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleDelete();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "delete"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Supprimer le dossier")))));
+}); // ***** PlaylistFolderRow *****
+// *****************************
+
+var TAG_PlaylistFolderRow = function TAG_PlaylistFolderRow() {};
+
+var PlaylistFolderRow = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app; // From ... state
+
+  var _React$useState3 = react.useState(false),
+      _React$useState4 = PlaylistFolder_slicedToArray(_React$useState3, 2),
+      hover = _React$useState4[0],
+      setHover = _React$useState4[1]; // From ... props
+
+
+  var folder = props.folder; // From ... store
+
+  var isLoading = app.isLoading; // ...
+  // Events
+  // ==================================================================================================
+
+  var handleEnter = function handleEnter(evt) {
+    setHover(true);
+  };
+
+  var handleLeave = function handleLeave(evt) {
+    setHover(false);
+  }; // -
+
+
+  var handleFolderClick = function handleFolderClick(folderId) {
+    store.navigateTo('playlist_folder', folderId);
+  }; // Render
+  // ==================================================================================================
+
+
+  return /*#__PURE__*/react.createElement(TableRow, {
+    hoverable: true,
+    callbackEnter: handleEnter,
+    callbackLeave: handleLeave,
+    forceHover: hover,
+    callbackClick: function callbackClick() {
+      return handleFolderClick(folder.id);
+    }
+  }, /*#__PURE__*/react.createElement(TableCell, {
+    size: "small"
+  }, folder.name), /*#__PURE__*/react.createElement(TableCell, {
+    width: 56,
+    align: "right",
+    size: "tiny"
+  }, /*#__PURE__*/react.createElement(PlaylistFolderContextualMenu, {
+    folder: folder,
+    size: "small",
+    style: {
+      marginRight: '-4px'
+    },
+    callbackClose: function callbackClose() {
+      handleLeave();
+    }
+  })));
+}); // ***** RenderPlaylistFolder *****
 // ********************************
 
 var TAG_RenderPlaylistFolder = function TAG_RenderPlaylistFolder() {};
@@ -27066,6 +27332,36 @@ var Playlist = __webpack_require__(51985);
 
 
 
+
+
+
+
+
+
+
+function Playlist_slicedToArray(arr, i) { return Playlist_arrayWithHoles(arr) || Playlist_iterableToArrayLimit(arr, i) || Playlist_unsupportedIterableToArray(arr, i) || Playlist_nonIterableRest(); }
+
+function Playlist_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function Playlist_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Playlist_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Playlist_arrayLikeToArray(o, minLen); }
+
+function Playlist_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function Playlist_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function Playlist_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
+
+
  // Models
 // ======================================================================================================
 // ***** PlaylistStore *****
@@ -27118,7 +27414,240 @@ var PlaylistStore = mobx_state_tree_module/* types.model */.V5.model({
   };
 }); // Functions Components ReactJS
 // ======================================================================================================
-// ***** RenderPlaylist *****
+// ***** PlaylistContextualMenu *****
+// **********************************
+
+var TAG_PlaylistContextualMenu = function TAG_PlaylistContextualMenu() {};
+
+var PlaylistContextualMenu = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app; // From ... states
+
+  var _React$useState = react.useState(null),
+      _React$useState2 = Playlist_slicedToArray(_React$useState, 2),
+      anchorMenu = _React$useState2[0],
+      setAnchorMenu = _React$useState2[1]; // From ... props
+
+
+  var playlist = props.playlist;
+  var size = props.size ? props.size : null;
+  var color = props.color ? props.color : null;
+  var callbackClick = props.callbackClick;
+  var callbackClose = props.callbackClose;
+  var className = props.className ? props.className : "";
+  var style = props.style ? props.style : {}; // ...
+  // Events
+  // ==================================================================================================
+
+  var handleOpenMenu = function handleOpenMenu(evt) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    setAnchorMenu(evt.currentTarget);
+  };
+
+  var handleCloseMenu = function handleCloseMenu() {
+    setAnchorMenu(null);
+
+    if (callbackClose) {
+      callbackClose();
+    }
+  }; // -
+
+
+  var handleExport = function handleExport() {
+    // TODO
+    handleCloseMenu();
+  }; // -
+
+
+  var handleMove = function handleMove() {
+    // TODO
+    handleCloseMenu();
+  }; // -
+
+
+  var handleEdit = function handleEdit() {
+    // TODO
+    handleCloseMenu();
+  };
+
+  var handleDelete = function handleDelete() {
+    // TODO
+    handleCloseMenu();
+  }; // Render
+  // ==================================================================================================
+
+
+  return /*#__PURE__*/react.createElement("div", {
+    className: (0,clsx_m/* default */.Z)(className),
+    style: style,
+    onClick: function onClick(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (callbackClick) {
+        callbackClick(e);
+      }
+    }
+  }, /*#__PURE__*/react.createElement(IconButton, {
+    size: size,
+    iconName: "more_horiz",
+    color: color,
+    onClick: function onClick(e) {
+      return handleOpenMenu(e);
+    }
+  }), /*#__PURE__*/react.createElement(Popover_Popover, {
+    id: "pop-playlist-".concat(playlist.id),
+    open: Boolean(anchorMenu),
+    anchorEl: anchorMenu,
+    onClose: handleCloseMenu,
+    anchorOrigin: {
+      vertical: 'bottom',
+      horizontal: 'center'
+    },
+    transformOrigin: {
+      vertical: 'top',
+      horizontal: 'center'
+    }
+  }, playlist && /*#__PURE__*/react.createElement(List_List, {
+    style: {
+      paddingTop: '10px',
+      paddingBottom: '10px'
+    }
+  }, /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleExport();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "usb"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Exporter la playlist")), !playlist.permanent && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Divider_Divider, {
+    spacing: "medium"
+  }), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleMove();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "move_down"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "D\xE9placer la playlist")), /*#__PURE__*/react.createElement(Divider_Divider, {
+    spacing: "medium"
+  }), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleEdit();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "mode_edit"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Renommer la playlist")), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleDelete();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "delete"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Supprimer la playlist"))))));
+}); // ***** PlaylistRow *****
+// ***********************
+
+var TAG_PlaylistRow = function TAG_PlaylistRow() {};
+
+var PlaylistRow = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app; // From ... state
+
+  var _React$useState3 = react.useState(false),
+      _React$useState4 = Playlist_slicedToArray(_React$useState3, 2),
+      hover = _React$useState4[0],
+      setHover = _React$useState4[1]; // From ... props
+
+
+  var playlist = props.playlist; // From ... store
+
+  var isLoading = app.isLoading; // ...
+  // Events
+  // ==================================================================================================
+
+  var handleEnter = function handleEnter(evt) {
+    setHover(true);
+  };
+
+  var handleLeave = function handleLeave(evt) {
+    setHover(false);
+  }; // -
+
+
+  var handlePlaylistClick = function handlePlaylistClick(playlistId) {
+    store.navigateTo('playlist', playlistId);
+  };
+
+  var handleShuffleClick = function handleShuffleClick(playlistId) {// TODO
+  };
+
+  var handlePlayClick = function handlePlayClick(playlistId) {// TODO
+  }; // Render
+  // ==================================================================================================
+
+
+  return /*#__PURE__*/react.createElement(TableRow, {
+    hoverable: true,
+    callbackEnter: handleEnter,
+    callbackLeave: handleLeave,
+    forceHover: hover,
+    callbackClick: function callbackClick() {
+      return handlePlaylistClick(playlist.id);
+    }
+  }, /*#__PURE__*/react.createElement(TableCell, {
+    size: "small"
+  }, playlist.name), /*#__PURE__*/react.createElement(TableCell, {
+    size: "small",
+    width: "48px"
+  }, /*#__PURE__*/react.createElement(IconButton, {
+    size: "small",
+    iconName: "shuffle",
+    color: "info",
+    className: "flex-0",
+    onClick: function onClick(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      handleShuffleClick(playlist.id);
+    }
+  })), /*#__PURE__*/react.createElement(TableCell, {
+    size: "small",
+    width: "48px"
+  }, /*#__PURE__*/react.createElement(IconButton, {
+    size: "small",
+    iconName: "play_arrow",
+    color: "hot",
+    className: "flex-0",
+    onClick: function onClick(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      handlePlayClick(playlist.id);
+    }
+  })), /*#__PURE__*/react.createElement(TableCell, {
+    width: 56,
+    align: "right",
+    size: "tiny"
+  }, /*#__PURE__*/react.createElement(PlaylistContextualMenu, {
+    playlist: playlist,
+    size: "small",
+    style: {
+      marginRight: '-4px'
+    },
+    callbackClose: function callbackClose() {
+      handleLeave();
+    }
+  })));
+}); // ***** RenderPlaylist *****
 // **************************
 
 var TAG_RenderPlaylist = function TAG_RenderPlaylist() {};
@@ -27512,22 +28041,6 @@ var RenderPlaylists = (0,es/* observer */.Pi)(function (props) {
     popupManagePlaylist.init("create", "folder");
     popupManagePlaylist.open();
     handleCloseMenu();
-  }; // -
-
-
-  var handlePlaylistClick = function handlePlaylistClick(playlistId) {
-    store.navigateTo('playlist', playlistId);
-  };
-
-  var handleShuffleClick = function handleShuffleClick(playlistId) {// TODO
-  };
-
-  var handlePlayClick = function handlePlayClick(playlistId) {// TODO
-  }; // -
-
-
-  var handleFolderClick = function handleFolderClick(folderId) {
-    store.navigateTo('playlist_folder', folderId);
   }; // Renderers
   // ==================================================================================================
 
@@ -27617,41 +28130,10 @@ var RenderPlaylists = (0,es/* observer */.Pi)(function (props) {
       padding: '0px'
     }
   }, /*#__PURE__*/react.createElement(Table_Table, null, /*#__PURE__*/react.createElement(TableBody, null, playlistsPermanent.map(function (playlist, playlistIdx) {
-    return /*#__PURE__*/react.createElement(TableRow, {
+    return /*#__PURE__*/react.createElement(PlaylistRow, {
       key: "playlist-permanent-".concat(playlistIdx),
-      hoverable: true,
-      callbackClick: function callbackClick() {
-        return handlePlaylistClick(playlist.id);
-      }
-    }, /*#__PURE__*/react.createElement(TableCell, {
-      size: "small"
-    }, playlist.name), /*#__PURE__*/react.createElement(TableCell, {
-      size: "small",
-      width: "48px"
-    }, /*#__PURE__*/react.createElement(IconButton, {
-      size: "small",
-      iconName: "shuffle",
-      color: "info",
-      className: "flex-0",
-      onClick: function onClick(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        handleShuffleClick(playlist.id);
-      }
-    })), /*#__PURE__*/react.createElement(TableCell, {
-      size: "small",
-      width: "48px"
-    }, /*#__PURE__*/react.createElement(IconButton, {
-      size: "small",
-      iconName: "play_arrow",
-      color: "hot",
-      className: "flex-0",
-      onClick: function onClick(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        handlePlayClick(playlist.id);
-      }
-    })));
+      playlist: playlist
+    });
   }))))), /*#__PURE__*/react.createElement(Group_Group, {
     id: "group-manual",
     key: "group-manual"
@@ -27688,41 +28170,10 @@ var RenderPlaylists = (0,es/* observer */.Pi)(function (props) {
       padding: '0px'
     }
   }, /*#__PURE__*/react.createElement(Table_Table, null, /*#__PURE__*/react.createElement(TableBody, null, playlistsGrouped[""].map(function (playlist, playlistIdx) {
-    return /*#__PURE__*/react.createElement(TableRow, {
+    return /*#__PURE__*/react.createElement(PlaylistRow, {
       key: "playlist-manual-".concat(playlistIdx),
-      hoverable: true,
-      callbackClick: function callbackClick() {
-        return handlePlaylistClick(playlist.id);
-      }
-    }, /*#__PURE__*/react.createElement(TableCell, {
-      size: "small"
-    }, playlist.name), /*#__PURE__*/react.createElement(TableCell, {
-      size: "small",
-      width: "48px"
-    }, /*#__PURE__*/react.createElement(IconButton, {
-      size: "small",
-      iconName: "shuffle",
-      color: "info",
-      className: "flex-0",
-      onClick: function onClick(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        handleShuffleClick(playlist.id);
-      }
-    })), /*#__PURE__*/react.createElement(TableCell, {
-      size: "small",
-      width: "48px"
-    }, /*#__PURE__*/react.createElement(IconButton, {
-      size: "small",
-      iconName: "play_arrow",
-      color: "hot",
-      className: "flex-0",
-      onClick: function onClick(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        handlePlayClick(playlist.id);
-      }
-    })));
+      playlist: playlist
+    });
   }))))), /*#__PURE__*/react.createElement(Group_Group, {
     id: "group-folders",
     key: "group-folders"
@@ -27759,15 +28210,10 @@ var RenderPlaylists = (0,es/* observer */.Pi)(function (props) {
       padding: '0px'
     }
   }, /*#__PURE__*/react.createElement(Table_Table, null, /*#__PURE__*/react.createElement(TableBody, null, folders.map(function (folder, folderIdx) {
-    return /*#__PURE__*/react.createElement(TableRow, {
+    return /*#__PURE__*/react.createElement(PlaylistFolderRow, {
       key: "playlist-folder-".concat(folderIdx),
-      hoverable: true,
-      callbackClick: function callbackClick() {
-        return handleFolderClick(folder.id);
-      }
-    }, /*#__PURE__*/react.createElement(TableCell, {
-      size: "small"
-    }, folder.name));
+      folder: folder
+    });
   }))))));
 }); // ***** PlaylistsHeaderLeft *****
 // *******************************
@@ -32544,7 +32990,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(80987)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(75684)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

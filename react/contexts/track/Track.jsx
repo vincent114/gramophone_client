@@ -263,6 +263,7 @@ export const TrackContextualMenu = observer((props) => {
 	const children = props.children;
 
 	const callbackClick = props.callbackClick;
+	const callbackClose = props.callbackClose;
 
 	let className = (props.className) ? props.className : "";
 	let style = (props.style) ? props.style : {};
@@ -284,6 +285,9 @@ export const TrackContextualMenu = observer((props) => {
 
 	const handleCloseMenu = () => {
 		setAnchorMenu(null);
+		if (callbackClose) {
+			callbackClose();
+		}
 	}
 
 	// -
@@ -363,6 +367,8 @@ export const TrackContextualMenu = observer((props) => {
 			)}
 			style={style}
 			onClick={(e) => {
+				e.preventDefault();
+				e.stopPropagation();
 				if (callbackClick) {
 					callbackClick(e);
 				}
@@ -670,6 +676,7 @@ export const TrackRow = observer((props) => {
 			faded={!track.checked}
 			callbackEnter={handleEnter}
 			callbackLeave={handleLeave}
+			forceHover={hover}
 		>
 			<TableCell
 				width={56}
@@ -764,6 +771,9 @@ export const TrackRow = observer((props) => {
 					origin="album"
 					style={{
 						marginRight: '-4px',
+					}}
+					callbackClose={() => {
+						handleLeave();
 					}}
 				/>
 			</TableCell>

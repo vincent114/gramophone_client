@@ -138,9 +138,12 @@ export const PlayerItem = observer((props) => {
 				track={track}
 				origin="player"
 				className="flex-0"
-				callbackClick={(e) => {
-					e.stopPropagation();
-					e.preventDefault();
+				// callbackClick={(e) => {
+				// 	e.stopPropagation();
+				// 	e.preventDefault();
+				// }}
+				callbackClose={() => {
+					handleLeave();
 				}}
 			/>
 		</Row>
