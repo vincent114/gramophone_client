@@ -20,6 +20,7 @@ import {
 	ListText
 } from 'nexus/ui/list/List';
 import { Divider } from 'nexus/ui/divider/Divider';
+import { Typography } from 'nexus/ui/typography/Typography';
 
 import './Track.css';
 
@@ -607,6 +608,7 @@ export const TrackRow = observer((props) => {
 	// From ... props
 
 	const track = props.track;
+	const origin = (props.origin) ? props.origin : "album"; // album, playlist
 
 	// From ... store
 
@@ -670,15 +672,13 @@ export const TrackRow = observer((props) => {
 	// Render
 	// ==================================================================================================
 
-	return (
-		<TableRow
-			hoverable={true}
-			faded={!track.checked}
-			callbackEnter={handleEnter}
-			callbackLeave={handleLeave}
-			forceHover={hover}
-		>
+	let rowCells = [];
+
+	// Case à cocher
+	if (origin == "album") {
+		rowCells.push(
 			<TableCell
+				key={`track-${track.id}-checked`}
 				width={56}
 				align="center"
 				size="tiny"
@@ -691,7 +691,14 @@ export const TrackRow = observer((props) => {
 					callbackChange={() => handleCheckedChanged()}
 				/>
 			</TableCell>
+		)
+	}
+
+	// Favori
+	if (origin == "album") {
+		rowCells.push(
 			<TableCell
+				key={`track-${track.id}-favorite`}
 				width={56}
 				align="center"
 				size="tiny"
@@ -706,7 +713,14 @@ export const TrackRow = observer((props) => {
 					/>
 				)}
 			</TableCell>
+		)
+	}
+
+	// Mix
+	if (origin == "album") {
+		rowCells.push(
 			<TableCell
+				key={`track-${track.id}-starred`}
 				width={56}
 				align="center"
 				size="tiny"
@@ -721,62 +735,130 @@ export const TrackRow = observer((props) => {
 					/>
 				)}
 			</TableCell>
-			<TableCell
-				width={56}
-				size="tiny"
-				fontSize="13px"
-				align="center"
-			>
-				{(!isPlaying && !hover) && (
-					<span>{track.track}</span>
-				)}
-				{(!isPlaying && hover) && (
-					<IconButton
-						size="small"
-						iconName="play_circle_filled"
-						color="hot"
-						onClick={() => handlePlayClicked(track)}
-					/>
-				)}
-				{(isPlaying && !hover) && (
-					<Avatar
-						size="small"
-						color="transparent"
-						iconName="equalizer"
-						iconColor="hot"
-					/>
-				)}
-				{(isPlaying && hover) && (
-					<IconButton
-						size="small"
-						iconName="stop_circle"
-						color="hot"
-						onClick={() => handleStopClicked(track)}
-					/>
-				)}
-			</TableCell>
-			<TableCell
-				size="tiny"
-				fontSize="13px"
-			>
-				{track.name}
-			</TableCell>
-			<TableCell
-				width={56}
-				align="right"
-				size="tiny"
-			>
-				<TrackContextualMenu
-					track={track}
-					origin="album"
-					style={{
-						marginRight: '-4px',
-					}}
-					callbackClose={() => {
-						handleLeave();
-					}}
+		)
+	}
+
+	// Quick Play
+	rowCells.push(
+		<TableCell
+			key={`track-${track.id}-quickplay`}
+			width={56}
+			size="tiny"
+			fontSize="13px"
+			align="center"
+		>
+			{(!isPlaying && !hover && origin == "album") && (
+				<span>{track.track}</span>
+			)}
+			{(!isPlaying && hover) && (
+				<IconButton
+					size="small"
+					iconName="play_circle_filled"
+					color="hot"
+					onClick={() => handlePlayClicked(track)}
 				/>
+			)}
+			{(isPlaying && !hover) && (
+				<Avatar
+					size="small"
+					color="transparent"
+					iconName="equalizer"
+					iconColor="hot"
+				/>
+			)}
+			{(isPlaying && hover) && (
+				<IconButton
+					size="small"
+					iconName="stop_circle"
+					color="hot"
+					onClick={() => handleStopClicked(track)}
+				/>
+			)}
+		</TableCell>
+	)
+
+	// Track Name
+	rowCells.push(
+		<TableCell
+			key={`track-${track.id}-name`}
+			size="tiny"
+			fontSize="13px"
+		>
+			{track.name}
+		</TableCell>
+	)
+
+	// Artiste
+	if (origin == "playlist") {
+		rowCells.push(
+			<TableCell
+				key={`track-${track.id}-artist`}
+				style={{
+					maxWidth: '200px',
+				}}
+			>
+				<Typography
+					color="description"
+					size="small"
+					ellipsis={true}
+				>
+					{track.artist}
+				</Typography>
 			</TableCell>
+		)
+	}
+
+	// Album
+	if (origin == "playlist") {
+		rowCells.push(
+			<TableCell
+				key={`track-${track.id}-album`}
+				color="description"
+				style={{
+					maxWidth: '200px',
+				}}
+			>
+				<Typography
+					color="description"
+					size="small"
+					ellipsis={true}
+				>
+					{track.album}
+				</Typography>
+			</TableCell>
+		)
+	}
+
+	// Menu
+	rowCells.push(
+		<TableCell
+			key={`track-${track.id}-menu`}
+			width={56}
+			align="right"
+			size="tiny"
+		>
+			<TrackContextualMenu
+				track={track}
+				origin={origin}
+				style={{
+					marginRight: '-4px',
+				}}
+				callbackClose={() => {
+					handleLeave();
+				}}
+			/>
+		</TableCell>
+	)
+
+	return (
+		<TableRow
+			hoverable={true}
+			faded={!track.checked}
+			callbackEnter={handleEnter}
+			callbackLeave={handleLeave}
+			forceHover={hover}
+		>
+			{rowCells}
 		</TableRow>
 	)
 })

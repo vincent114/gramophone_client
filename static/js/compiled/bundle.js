@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 75684:
+/***/ 18082:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3984,6 +3984,30 @@ var SettingIcon = function SettingIcon(props) {
     d: "M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.09-.16-.26-.25-.44-.25-.06 0-.12.01-.17.03l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.06-.02-.12-.03-.18-.03-.17 0-.34.09-.43.25l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.09.16.26.25.44.25.06 0 .12-.01.17-.03l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.06.02.12.03.18.03.17 0 .34-.09.43-.25l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zm-1.98-1.71c.04.31.05.52.05.73 0 .21-.02.43-.05.73l-.14 1.13.89.7 1.08.84-.7 1.21-1.27-.51-1.04-.42-.9.68c-.43.32-.84.56-1.25.73l-1.06.43-.16 1.13-.2 1.35h-1.4l-.19-1.35-.16-1.13-1.06-.43c-.43-.18-.83-.41-1.23-.71l-.91-.7-1.06.43-1.27.51-.7-1.21 1.08-.84.89-.7-.14-1.13c-.03-.31-.05-.54-.05-.74s.02-.43.05-.73l.14-1.13-.89-.7-1.08-.84.7-1.21 1.27.51 1.04.42.9-.68c.43-.32.84-.56 1.25-.73l1.06-.43.16-1.13.2-1.35h1.39l.19 1.35.16 1.13 1.06.43c.43.18.83.41 1.23.71l.91.7 1.06-.43 1.27-.51.7 1.21-1.07.85-.89.7.14 1.13zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"
   }));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/SettingsBrightness.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var SettingsBrightnessIcon = function SettingsBrightnessIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02zM8 16h2.5l1.5 1.5 1.5-1.5H16v-2.5l1.5-1.5-1.5-1.5V8h-2.5L12 6.5 10.5 8H8v2.5L6.5 12 8 13.5V16zm4-7c1.66 0 3 1.34 3 3s-1.34 3-3 3V9z"
+  }));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Shuffle.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -4895,6 +4919,7 @@ var Icon = __webpack_require__(73244);
 
 
 
+
  // Datas
 // -------------------------------------------------------------------------------------------------------------
 
@@ -5018,6 +5043,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'science': ScienceIcon,
   'search': SearchIcon,
   'setting': SettingIcon,
+  'settings_brightness': SettingsBrightnessIcon,
   'shuffle': ShuffleIcon,
   'skip_next': SkipNextIcon,
   'skip_previous': SkipPreviousIcon,
@@ -10724,10 +10750,19 @@ function Popover_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
- // Functions Components ReactJS
-// -------------------------------------------------------------------------------------------------------------
+ // Functions
+// ======================================================================================================
+
+var createPortalNode = function createPortalNode(nodeId) {
+  var node = document.createElement("div");
+  node.setAttribute('id', "portal-".concat(nodeId));
+  document.body.append(node);
+  return node;
+}; // Functions Components ReactJS
+// ======================================================================================================
 // ***** Popover *****
 // *******************
+
 
 var TAG_Popover = function TAG_Popover() {};
 
@@ -10756,16 +10791,13 @@ var Popover_Popover = function Popover(props) {
   var transformOriginVertical = transformOrigin.vertical ? transformOrigin.vertical : 'top'; // top, center, bottom
 
   var transformOriginHorizontal = transformOrigin.horizontal ? transformOrigin.horizontal : 'center'; // left, center, right
+  // React.useEffect(() => {
+  // 	let node = document.getElementById(id);
+  // 	if (!node) {
+  // 		createPortalNode(id);
+  // 	}
+  // }, []);
 
-  react.useEffect(function () {
-    var node = document.getElementById(id);
-
-    if (!node) {
-      node = document.createElement("div");
-      node.setAttribute('id', "portal-".concat(id));
-      document.body.append(node);
-    }
-  }, []);
   react.useEffect(function () {
     if (open && anchorEl) {
       var popover = document.getElementById(id);
@@ -10860,6 +10892,14 @@ var Popover_Popover = function Popover(props) {
 
       setStyle(_popoverStyle);
     }
+
+    if (!open) {
+      var node = document.getElementById("portal-".concat(id));
+
+      if (node) {
+        node.remove();
+      }
+    }
   }, [open]); // Render
   // ==================================================================================================
 
@@ -10880,7 +10920,13 @@ var Popover_Popover = function Popover(props) {
         e.stopPropagation();
       }
     }, children));
-    popoverContent = /*#__PURE__*/react_dom.createPortal(content, document.getElementById("portal-".concat(id)));
+    var node = document.getElementById("portal-".concat(id));
+
+    if (!node) {
+      node = createPortalNode(id);
+    }
+
+    popoverContent = /*#__PURE__*/react_dom.createPortal(content, node);
   }
 
   return popoverContent;
@@ -13437,6 +13483,20 @@ var ThemeStore = mobx_state_tree_module/* types.model */.V5.model({
     setField: function setField(field, value) {
       self[field] = value;
     },
+    setMode: function setMode(value) {
+      Storage_setToStorage('nxThemeMode', value);
+      self.mode = value;
+    },
+    setModeAuto: function setModeAuto(value) {
+      Storage_setToStorage('nxThemeModeAuto', value, 'bool');
+      self.modeAuto = value;
+
+      if (value == true) {
+        self.mode = self.modeOS;
+      } else {
+        self.mode = getFromStorage('nxThemeMode', self.modeOS);
+      }
+    },
     // -
     updateOsMode: function updateOsMode(mode) {
       self.modeOS = mode;
@@ -13461,10 +13521,8 @@ var ThemeStore = mobx_state_tree_module/* types.model */.V5.model({
       // ---
       var mode = self.mode;
       var newValue = mode == 'light' ? 'dark' : 'light';
-      Storage_setToStorage('nxThemeMode', newValue);
-      Storage_setToStorage('nxThemeModeAuto', false, 'bool');
-      self.mode = newValue;
-      self.modeAuto = false;
+      self.setMode(newValue);
+      self.setModeAuto(false);
 
       if (callback) {
         callback(newValue);
@@ -16398,7 +16456,8 @@ var Header_Header = (0,es/* observer */.Pi)(function (props) {
   var headerDynamic = header.dynamic;
   var menuExpanded = menu.expanded;
   var menuPinned = menu.pinned;
-  var themeMode = theme.mode; // ...
+  var themeMode = theme.mode;
+  var themeModeAuto = theme.modeAuto; // ...
 
   if (!left && DEFAULT_HEADER_LEFT.hasOwnProperty(context)) {
     var LeftComponent = DEFAULT_HEADER_LEFT[context];
@@ -16515,15 +16574,40 @@ var Header_Header = (0,es/* observer */.Pi)(function (props) {
   var btnThemeMode = null;
 
   if (!breakPoint650) {
-    btnThemeMode = /*#__PURE__*/react.createElement(IconButton, {
-      onClick: function onClick() {
-        return handleThemeModeClick();
-      },
-      disabled: isLoading
-    }, /*#__PURE__*/react.createElement(Icon_Icon, {
-      name: themeMode == 'light' ? 'dark_mode' : 'light_mode',
-      color: "white"
-    }));
+    if (themeMode == 'light' && themeModeAuto) {
+      btnThemeMode = /*#__PURE__*/react.createElement(IconButton, {
+        onClick: function onClick() {
+          theme.setMode('dark');
+          theme.setModeAuto(false);
+        }
+      }, /*#__PURE__*/react.createElement(Icon_Icon, {
+        name: "dark_mode",
+        color: "white"
+      }));
+    }
+
+    if (themeMode == 'dark' && themeModeAuto) {
+      btnThemeMode = /*#__PURE__*/react.createElement(IconButton, {
+        onClick: function onClick() {
+          theme.setMode('light');
+          theme.setModeAuto(false);
+        }
+      }, /*#__PURE__*/react.createElement(Icon_Icon, {
+        name: "light_mode",
+        color: "white"
+      }));
+    }
+
+    if (!themeModeAuto) {
+      btnThemeMode = /*#__PURE__*/react.createElement(IconButton, {
+        onClick: function onClick() {
+          theme.setModeAuto(true);
+        }
+      }, /*#__PURE__*/react.createElement(Icon_Icon, {
+        name: "settings_brightness",
+        color: "white"
+      }));
+    }
   }
 
   var btnBugs = null;
@@ -20635,6 +20719,7 @@ function Track_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
  // Models
 // ======================================================================================================
 // ***** TrackStore *****
@@ -21113,7 +21198,9 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
       setHover = _React$useState4[1]; // From ... props
 
 
-  var track = props.track; // From ... store
+  var track = props.track;
+  var origin = props.origin ? props.origin : "album"; // album, playlist
+  // From ... store
 
   var isLoading = app.isLoading; // ...
 
@@ -21168,54 +21255,69 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
   // ==================================================================================================
 
 
-  return /*#__PURE__*/react.createElement(TableRow, {
-    hoverable: true,
-    faded: !track.checked,
-    callbackEnter: handleEnter,
-    callbackLeave: handleLeave,
-    forceHover: hover
-  }, /*#__PURE__*/react.createElement(TableCell, {
-    width: 56,
-    align: "center",
-    size: "tiny"
-  }, /*#__PURE__*/react.createElement(Field_Field, {
-    component: "checkbox",
-    ghostLabel: false,
-    savePath: ['tracks', 'by_id', track.id, 'checked'],
-    disabled: isLoading,
-    callbackChange: function callbackChange() {
-      return handleCheckedChanged();
-    }
-  })), /*#__PURE__*/react.createElement(TableCell, {
-    width: 56,
-    align: "center",
-    size: "tiny"
-  }, (hover || favorite) && /*#__PURE__*/react.createElement(IconButton, {
-    size: "small",
-    iconName: track.favorite ? "favorite" : "favorite_border",
-    color: track.favorite ? "error" : null,
-    disabled: isLoading,
-    onClick: function onClick() {
-      return handleFavoriteClicked(track);
-    }
-  })), /*#__PURE__*/react.createElement(TableCell, {
-    width: 56,
-    align: "center",
-    size: "tiny"
-  }, (hover || starred) && /*#__PURE__*/react.createElement(IconButton, {
-    size: "small",
-    iconName: track.starred ? "star" : "star_outline",
-    color: track.starred ? "warning" : null,
-    disabled: isLoading,
-    onClick: function onClick() {
-      return handleStarredClicked(track);
-    }
-  })), /*#__PURE__*/react.createElement(TableCell, {
+  var rowCells = []; // Case à cocher
+
+  if (origin == "album") {
+    rowCells.push( /*#__PURE__*/react.createElement(TableCell, {
+      key: "track-".concat(track.id, "-checked"),
+      width: 56,
+      align: "center",
+      size: "tiny"
+    }, /*#__PURE__*/react.createElement(Field_Field, {
+      component: "checkbox",
+      ghostLabel: false,
+      savePath: ['tracks', 'by_id', track.id, 'checked'],
+      disabled: isLoading,
+      callbackChange: function callbackChange() {
+        return handleCheckedChanged();
+      }
+    })));
+  } // Favori
+
+
+  if (origin == "album") {
+    rowCells.push( /*#__PURE__*/react.createElement(TableCell, {
+      key: "track-".concat(track.id, "-favorite"),
+      width: 56,
+      align: "center",
+      size: "tiny"
+    }, (hover || favorite) && /*#__PURE__*/react.createElement(IconButton, {
+      size: "small",
+      iconName: track.favorite ? "favorite" : "favorite_border",
+      color: track.favorite ? "error" : null,
+      disabled: isLoading,
+      onClick: function onClick() {
+        return handleFavoriteClicked(track);
+      }
+    })));
+  } // Mix
+
+
+  if (origin == "album") {
+    rowCells.push( /*#__PURE__*/react.createElement(TableCell, {
+      key: "track-".concat(track.id, "-starred"),
+      width: 56,
+      align: "center",
+      size: "tiny"
+    }, (hover || starred) && /*#__PURE__*/react.createElement(IconButton, {
+      size: "small",
+      iconName: track.starred ? "star" : "star_outline",
+      color: track.starred ? "warning" : null,
+      disabled: isLoading,
+      onClick: function onClick() {
+        return handleStarredClicked(track);
+      }
+    })));
+  } // Quick Play
+
+
+  rowCells.push( /*#__PURE__*/react.createElement(TableCell, {
+    key: "track-".concat(track.id, "-quickplay"),
     width: 56,
     size: "tiny",
     fontSize: "13px",
     align: "center"
-  }, !isPlaying && !hover && /*#__PURE__*/react.createElement("span", null, track.track), !isPlaying && hover && /*#__PURE__*/react.createElement(IconButton, {
+  }, !isPlaying && !hover && origin == "album" && /*#__PURE__*/react.createElement("span", null, track.track), !isPlaying && hover && /*#__PURE__*/react.createElement(IconButton, {
     size: "small",
     iconName: "play_circle_filled",
     color: "hot",
@@ -21234,16 +21336,51 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
     onClick: function onClick() {
       return handleStopClicked(track);
     }
-  })), /*#__PURE__*/react.createElement(TableCell, {
+  }))); // Track Name
+
+  rowCells.push( /*#__PURE__*/react.createElement(TableCell, {
+    key: "track-".concat(track.id, "-name"),
     size: "tiny",
     fontSize: "13px"
-  }, track.name), /*#__PURE__*/react.createElement(TableCell, {
+  }, track.name)); // Artiste
+
+  if (origin == "playlist") {
+    rowCells.push( /*#__PURE__*/react.createElement(TableCell, {
+      key: "track-".concat(track.id, "-artist"),
+      style: {
+        maxWidth: '200px'
+      }
+    }, /*#__PURE__*/react.createElement(Typography_Typography, {
+      color: "description",
+      size: "small",
+      ellipsis: true
+    }, track.artist)));
+  } // Album
+
+
+  if (origin == "playlist") {
+    rowCells.push( /*#__PURE__*/react.createElement(TableCell, {
+      key: "track-".concat(track.id, "-album"),
+      color: "description",
+      style: {
+        maxWidth: '200px'
+      }
+    }, /*#__PURE__*/react.createElement(Typography_Typography, {
+      color: "description",
+      size: "small",
+      ellipsis: true
+    }, track.album)));
+  } // Menu
+
+
+  rowCells.push( /*#__PURE__*/react.createElement(TableCell, {
+    key: "track-".concat(track.id, "-menu"),
     width: 56,
     align: "right",
     size: "tiny"
   }, /*#__PURE__*/react.createElement(TrackContextualMenu, {
     track: track,
-    origin: "album",
+    origin: origin,
     style: {
       marginRight: '-4px'
     },
@@ -21251,6 +21388,13 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
       handleLeave();
     }
   })));
+  return /*#__PURE__*/react.createElement(TableRow, {
+    hoverable: true,
+    faded: !track.checked,
+    callbackEnter: handleEnter,
+    callbackLeave: handleLeave,
+    forceHover: hover
+  }, rowCells);
 });
 // EXTERNAL MODULE: ./components/items/PlayerItem.css
 var PlayerItem = __webpack_require__(90620);
@@ -25122,6 +25266,65 @@ var TracksStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       return load ? randomTracks : randomTracksIds;
+    },
+    // -
+    getFavorites: function getFavorites() {
+      var favorites = [];
+
+      var _iterator2 = Tracks_createForOfIteratorHelper(self.by_id.entries()),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var _step2$value = Tracks_slicedToArray(_step2.value, 2),
+              trackId = _step2$value[0],
+              track = _step2$value[1];
+
+          if (track.favorite) {
+            favorites.push(track);
+          }
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+
+      favorites.sort(function (a, b) {
+        if (a.name > b.name) return 1;
+        if (a.name < b.name) return -1;
+        return 0;
+      });
+      return favorites;
+    },
+    getStarred: function getStarred() {
+      var starred = [];
+
+      var _iterator3 = Tracks_createForOfIteratorHelper(self.by_id.entries()),
+          _step3;
+
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var _step3$value = Tracks_slicedToArray(_step3.value, 2),
+              trackId = _step3$value[0],
+              track = _step3$value[1];
+
+          if (track.starred) {
+            starred.push(track);
+          }
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
+
+      starred.sort(function (a, b) {
+        if (a.name > b.name) return 1;
+        if (a.name < b.name) return -1;
+        return 0;
+      });
+      return starred;
     }
   };
 }).actions(function (self) {
@@ -27102,7 +27305,10 @@ var TAG_PlaylistFolderContextualMenu = function TAG_PlaylistFolderContextualMenu
 
 var PlaylistFolderContextualMenu = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
-  var app = store.app; // From ... states
+  var app = store.app;
+  var snackbar = app.snackbar;
+  var playlists = store.playlists;
+  var popupManagePlaylist = store.popupManagePlaylist; // From ... states
 
   var _React$useState = react.useState(null),
       _React$useState2 = PlaylistFolder_slicedToArray(_React$useState, 2),
@@ -27136,12 +27342,22 @@ var PlaylistFolderContextualMenu = (0,es/* observer */.Pi)(function (props) {
 
 
   var handleEdit = function handleEdit() {
-    // TODO
+    popupManagePlaylist.init("edit", "folder", folder.id);
+    popupManagePlaylist.open();
     handleCloseMenu();
   };
 
   var handleDelete = function handleDelete() {
-    // TODO
+    var CONFIRM_DELETE_MSG = "\xCAtes-vous s\xFBr de vouloir supprimer le dossier ".concat(folder.name, " ?");
+
+    if (confirm(CONFIRM_DELETE_MSG)) {
+      store.navigateTo('playlists', null, null, null, function () {
+        playlists.removeFolder(folder.id);
+        playlists.save();
+        snackbar.update(true, "Dossier supprimée.", "success");
+      });
+    }
+
     handleCloseMenu();
   }; // Render
   // ==================================================================================================
@@ -27324,32 +27540,40 @@ var PlaylistFolderPage = (0,es/* observer */.Pi)(function (props) {
 // EXTERNAL MODULE: ./contexts/playlist/Playlist.css
 var Playlist = __webpack_require__(51985);
 ;// CONCATENATED MODULE: ./contexts/playlist/Playlist.jsx
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function Playlist_slicedToArray(arr, i) { return Playlist_arrayWithHoles(arr) || Playlist_iterableToArrayLimit(arr, i) || Playlist_unsupportedIterableToArray(arr, i) || Playlist_nonIterableRest(); }
 
 function Playlist_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function Playlist_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function Playlist_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function Playlist_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Playlist_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function Playlist_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Playlist_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Playlist_arrayLikeToArray(o, minLen); }
 
 function Playlist_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function Playlist_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function Playlist_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
 
 
 
@@ -27378,6 +27602,11 @@ var PlaylistStore = mobx_state_tree_module/* types.model */.V5.model({
   tracks_ids: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), [])
 }).views(function (self) {
   return {
+    get nbTracks() {
+      return self.tracks_ids.length;
+    },
+
+    // -
     get linkedFolder() {
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var playlists = store.playlists;
@@ -27391,14 +27620,55 @@ var PlaylistStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       return PlaylistFolderStore.create({});
-    }
+    },
 
+    // Getters
+    // -
+    getTracks: function getTracks() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var tracks = store.tracks;
+      var tracksList = [];
+
+      if (self.permanent) {
+        // From tracks favorite
+        if (self.id == 'favorites') {
+          tracksList = tracks.getFavorites();
+        } // From tracks starred
+
+
+        if (self.id == 'mix') {
+          tracksList = tracks.getStarred();
+        }
+      } else {
+        // From local tracks_ids
+        var _iterator = Playlist_createForOfIteratorHelper(self.tracks_ids),
+            _step;
+
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var trackId = _step.value;
+            var track = tracks.by_id.get(trackId);
+
+            if (track) {
+              tracksList.push(track);
+            }
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      }
+
+      return tracksList;
+    }
   };
 }).actions(function (self) {
   return {
     setField: function setField(field, value) {
       self[field] = value;
-    } // -
+    },
+    // -
     // update: (raw) => {
     // 	self.id = raw.id;
     // 	self.name = raw.name;
@@ -27410,7 +27680,79 @@ var PlaylistStore = mobx_state_tree_module/* types.model */.V5.model({
     // 		self.tracks_ids.push(trackId);
     // 	}
     // },
+    clear: function clear() {
+      // Nettoyage des morceaux de la playlist
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var tracks = store.tracks;
+      self.tracks_ids = [];
 
+      if (self.permanent) {
+        var _iterator2 = Playlist_createForOfIteratorHelper(tracks.by_id.entries()),
+            _step2;
+
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var _step2$value = Playlist_slicedToArray(_step2.value, 2),
+                trackId = _step2$value[0],
+                track = _step2$value[1];
+
+            // Nettoyage des favoris
+            if (self.id == 'favorites' && track.favorite) {
+              track.setField('favorite', false);
+            } // Nettoyage des étoilées
+
+
+            if (self.id == 'mix' && track.starred) {
+              track.setField('starred', false);
+            }
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+      }
+    },
+    // -
+    addTrack: function addTrack(trackId) {
+      if (self.tracks_ids.indexOf(trackId) == -1) {
+        self.tracks_ids.push(trackId);
+      }
+    },
+    populateWith: function populateWith(sourceKind, sourceId) {
+      // Ajoute un ou plusieurs morceaux à la playlist
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var albums = store.albums;
+      var tracks = store.tracks;
+
+      if (sourceKind == 'track') {
+        self.addTrack(sourceId);
+      }
+
+      if (sourceKind == 'album') {
+        var album = albums.by_id.get(sourceId);
+
+        if (album) {
+          var trackIds = album.getPlayable(false);
+
+          var _iterator3 = Playlist_createForOfIteratorHelper(trackIds),
+              _step3;
+
+          try {
+            for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+              var trackId = _step3.value;
+              self.addTrack(trackId);
+            }
+          } catch (err) {
+            _iterator3.e(err);
+          } finally {
+            _iterator3.f();
+          }
+        }
+      }
+    }
   };
 }); // Functions Components ReactJS
 // ======================================================================================================
@@ -27421,7 +27763,11 @@ var TAG_PlaylistContextualMenu = function TAG_PlaylistContextualMenu() {};
 
 var PlaylistContextualMenu = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
-  var app = store.app; // From ... states
+  var app = store.app;
+  var snackbar = app.snackbar;
+  var tracks = store.tracks;
+  var playlists = store.playlists;
+  var popupManagePlaylist = store.popupManagePlaylist; // From ... states
 
   var _React$useState = react.useState(null),
       _React$useState2 = Playlist_slicedToArray(_React$useState, 2),
@@ -27460,19 +27806,47 @@ var PlaylistContextualMenu = (0,es/* observer */.Pi)(function (props) {
   }; // -
 
 
+  var handleClear = function handleClear() {
+    var CONFIRM_CLEAR_MSG = "\xCAtes-vous s\xFBr de vouloir vider la playlist ".concat(playlist.name, " ?");
+
+    if (confirm(CONFIRM_CLEAR_MSG)) {
+      playlist.clear();
+
+      if (playlist.permanent) {
+        tracks.save();
+      } else {
+        playlists.save();
+      }
+    }
+
+    handleCloseMenu();
+  }; // -
+
+
   var handleMove = function handleMove() {
-    // TODO
+    popupManagePlaylist.init("move", "playlist", playlist.id);
+    popupManagePlaylist.open();
     handleCloseMenu();
   }; // -
 
 
   var handleEdit = function handleEdit() {
-    // TODO
+    popupManagePlaylist.init("edit", "playlist", playlist.id);
+    popupManagePlaylist.open();
     handleCloseMenu();
   };
 
   var handleDelete = function handleDelete() {
-    // TODO
+    var CONFIRM_DELETE_MSG = "\xCAtes-vous s\xFBr de vouloir supprimer la playlist ".concat(playlist.name, " ?");
+
+    if (confirm(CONFIRM_DELETE_MSG)) {
+      store.navigateTo('playlists', null, null, null, function () {
+        playlists.remove(playlist.id);
+        playlists.save();
+        snackbar.update(true, "Playlist supprimée.", "success");
+      });
+    }
+
     handleCloseMenu();
   }; // Render
   // ==================================================================================================
@@ -27523,7 +27897,18 @@ var PlaylistContextualMenu = (0,es/* observer */.Pi)(function (props) {
     name: "usb"
   }), /*#__PURE__*/react.createElement(ListText, {
     withIcon: true
-  }, "Exporter la playlist")), !playlist.permanent && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Divider_Divider, {
+  }, "Exporter la playlist")), /*#__PURE__*/react.createElement(Divider_Divider, {
+    spacing: "medium"
+  }), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleClear();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "cleaning_services"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Vider la playlist")), !playlist.permanent && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Divider_Divider, {
     spacing: "medium"
   }), /*#__PURE__*/react.createElement(ListItem, {
     size: "small",
@@ -27609,6 +27994,12 @@ var PlaylistRow = (0,es/* observer */.Pi)(function (props) {
     size: "small"
   }, playlist.name), /*#__PURE__*/react.createElement(TableCell, {
     size: "small",
+    width: "100px"
+  }, !playlist.permanent && /*#__PURE__*/react.createElement(Typography_Typography, {
+    size: "small",
+    variant: "description"
+  }, "".concat(playlist.nbTracks, " ").concat(playlist.nbTracks > 1 ? "titres" : "titre"))), /*#__PURE__*/react.createElement(TableCell, {
+    size: "small",
     width: "48px"
   }, /*#__PURE__*/react.createElement(IconButton, {
     size: "small",
@@ -27661,10 +28052,84 @@ var RenderPlaylist = (0,es/* observer */.Pi)(function (props) {
   var playlistId = store.playlistId;
   var playlist = playlists.by_id.get(playlistId); // ...
 
-  console.log(playlist.toJSON()); // Render
+  var playListTracks = playlist.getTracks();
+  var nbTracks = playListTracks.length; // ...
+  // Events
   // ==================================================================================================
 
-  return /*#__PURE__*/react.createElement("div", null);
+  var handlePlayClick = function handlePlayClick() {// TODO
+  };
+
+  var handleThrowDiceClick = function handleThrowDiceClick() {// TODO
+  }; // Render
+  // ==================================================================================================
+
+
+  return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Ribbon_Ribbon, {
+    avatarIconName: playlist.permanent ? "auto_awesome" : "playlist_play",
+    avatarIconColor: "typography",
+    title: playlist.name,
+    right: /*#__PURE__*/react.createElement("div", {
+      className: "h-col"
+    }, /*#__PURE__*/react.createElement(IconButton, {
+      iconName: "play_arrow",
+      color: "hot",
+      onClick: function onClick() {
+        return handlePlayClick();
+      }
+    }), /*#__PURE__*/react.createElement(IconButton, {
+      iconName: "casino",
+      color: "hot",
+      disabled: isLoading,
+      onClick: function onClick() {
+        return handleThrowDiceClick();
+      }
+    }), /*#__PURE__*/react.createElement(PlaylistContextualMenu, {
+      playlist: playlist,
+      color: "typography"
+    }))
+  }, /*#__PURE__*/react.createElement(Row_Row, null, /*#__PURE__*/react.createElement(Typography_Typography, {
+    variant: "description",
+    className: "flex-0",
+    style: {
+      marginLeft: '10px'
+    }
+  }, "\u2022"), /*#__PURE__*/react.createElement(Typography_Typography, {
+    variant: "description",
+    className: "flex-0"
+  }, nbTracks, " ", nbTracks > 1 ? "titres" : "titre"))), /*#__PURE__*/react.createElement(TableContainer, {
+    component: Paper_Paper,
+    style: {
+      marginTop: '40px',
+      padding: '0px'
+    }
+  }, /*#__PURE__*/react.createElement(Table_Table, null, /*#__PURE__*/react.createElement(TableHead, null, /*#__PURE__*/react.createElement(TableRow, null, /*#__PURE__*/react.createElement(TableCell, {
+    header: true,
+    width: 56,
+    align: "center"
+  }), /*#__PURE__*/react.createElement(TableCell, {
+    header: true
+  }, "Titre"), /*#__PURE__*/react.createElement(TableCell, {
+    header: true,
+    style: {
+      maxWidth: '200px'
+    }
+  }, "Artiste"), /*#__PURE__*/react.createElement(TableCell, {
+    header: true,
+    style: {
+      maxWidth: '200px'
+    }
+  }, "Album"), /*#__PURE__*/react.createElement(TableCell, {
+    header: true,
+    width: 56,
+    align: "right"
+  }))), /*#__PURE__*/react.createElement(TableBody, null, playListTracks.map(function (track, trackIdx) {
+    return /*#__PURE__*/react.createElement(TrackRow, {
+      key: "track-".concat(trackIdx),
+      track: track,
+      origin: "playlist"
+    });
+  })))));
 }); // ***** PlaylistPage *****
 // ************************
 
@@ -27703,7 +28168,7 @@ var PlaylistPage = (0,es/* observer */.Pi)(function (props) {
 
 
   return /*#__PURE__*/react.createElement("div", {
-    className: "c-page"
+    className: "nx-page medium"
   }, renderPage(), renderHelper());
 });
 // EXTERNAL MODULE: ./contexts/playlists/Playlists.css
@@ -27788,6 +28253,73 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
       return Object.entries(self.folders.toJSON()).length;
     },
 
+    // -
+    get playlistItems() {
+      var items = [];
+
+      var _iterator = Playlists_createForOfIteratorHelper(self.by_id.entries()),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var _step$value = Playlists_slicedToArray(_step.value, 2),
+              playlistId = _step$value[0],
+              playlist = _step$value[1];
+
+          if (playlist.permanent) {
+            continue;
+          }
+
+          items.push({
+            value: playlistId,
+            label: playlist.name
+          });
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      items.sort(function (a, b) {
+        if (a.label > b.label) return 1;
+        if (a.label < b.label) return -1;
+        return 0;
+      });
+      return items;
+    },
+
+    get folderItems() {
+      var items = [];
+
+      var _iterator2 = Playlists_createForOfIteratorHelper(self.folders.entries()),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var _step2$value = Playlists_slicedToArray(_step2.value, 2),
+              folderId = _step2$value[0],
+              folder = _step2$value[1];
+
+          items.push({
+            value: folderId,
+            label: folder.name
+          });
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+
+      items.sort(function (a, b) {
+        if (a.label > b.label) return 1;
+        if (a.label < b.label) return -1;
+        return 0;
+      });
+      return items;
+    },
+
     // Getters
     // -
     getPermanent: function getPermanent() {
@@ -27811,14 +28343,14 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
         "": []
       };
 
-      var _iterator = Playlists_createForOfIteratorHelper(self.by_id.entries()),
-          _step;
+      var _iterator3 = Playlists_createForOfIteratorHelper(self.by_id.entries()),
+          _step3;
 
       try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var _step$value = Playlists_slicedToArray(_step.value, 2),
-              playlistId = _step$value[0],
-              playlist = _step$value[1];
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var _step3$value = Playlists_slicedToArray(_step3.value, 2),
+              playlistId = _step3$value[0],
+              playlist = _step3$value[1];
 
           if (playlist.permanent) {
             continue;
@@ -27834,9 +28366,9 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
           byFolder[folderKey].push(playlist);
         }
       } catch (err) {
-        _iterator.e(err);
+        _iterator3.e(err);
       } finally {
-        _iterator.f();
+        _iterator3.f();
       }
 
       return byFolder;
@@ -27853,21 +28385,21 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
     getFolders: function getFolders() {
       var folders = [];
 
-      var _iterator2 = Playlists_createForOfIteratorHelper(self.folders.entries()),
-          _step2;
+      var _iterator4 = Playlists_createForOfIteratorHelper(self.folders.entries()),
+          _step4;
 
       try {
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          var _step2$value = Playlists_slicedToArray(_step2.value, 2),
-              folderId = _step2$value[0],
-              folder = _step2$value[1];
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+          var _step4$value = Playlists_slicedToArray(_step4.value, 2),
+              folderId = _step4$value[0],
+              folder = _step4$value[1];
 
           folders.push(folder);
         }
       } catch (err) {
-        _iterator2.e(err);
+        _iterator4.e(err);
       } finally {
-        _iterator2.f();
+        _iterator4.f();
       }
 
       folders.sort(function (a, b) {
@@ -27990,6 +28522,13 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
 
 
       return atLeastOneAdded;
+    },
+    // -
+    remove: function remove(playlistId) {
+      self.by_id["delete"](playlistId);
+    },
+    removeFolder: function removeFolder(folderId) {
+      self.folders["delete"](folderId);
     }
   };
 }); // Functions Components ReactJS
@@ -31120,7 +31659,7 @@ var TAG_PopupManagePlaylistStore = function TAG_PopupManagePlaylistStore() {};
 
 var PopupManagePlaylistStore = mobx_state_tree_module/* types.model */.V5.model({
   mode: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
-  // create, edit, add
+  // create, edit, add, move
   // create + edit
   // -
   draftKind: 'playlist',
@@ -31131,8 +31670,11 @@ var PopupManagePlaylistStore = mobx_state_tree_module/* types.model */.V5.model(
   // add
   // -
   sourceId: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
-  sourceType: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string) // track, album, playlist
-
+  sourceType: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  // track, album, playlist
+  // move
+  // -
+  destinationId: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string)
 }).views(function (self) {
   return {
     // Bools
@@ -31153,6 +31695,8 @@ var PopupManagePlaylistStore = mobx_state_tree_module/* types.model */.V5.model(
     // -
     init: function init(mode, kind) {
       var id = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var playlists = store.playlists;
       self.mode = mode;
       self.draftKind = kind;
       self.draftId = id;
@@ -31180,10 +31724,20 @@ var PopupManagePlaylistStore = mobx_state_tree_module/* types.model */.V5.model(
       // -
 
 
-      if (mode == 'edit' && kind == 'playlist') {// TODO
+      if (mode == 'edit' && kind == 'playlist') {
+        var playlist = playlists.by_id.get(id);
+
+        if (playlist) {
+          self.draftPlaylist = PlaylistStore.create(playlist.toJSON());
+        }
       }
 
-      if (mode == 'edit' && kind == 'folder') {// TODO
+      if (mode == 'edit' && kind == 'folder') {
+        var folder = playlists.folders.get(id);
+
+        if (folder) {
+          self.draftFolder = PlaylistFolderStore.create(folder.toJSON());
+        }
       } // add
       // -
       // TODO
@@ -31207,6 +31761,20 @@ var PopupManagePlaylistStore = mobx_state_tree_module/* types.model */.V5.model(
 
         if (draftKind == 'folder' && !draftFolder.name) {
           errors.push(app.addError(['popupManagePlaylist', 'draftFolder', 'name'], "Nom de du dossier manquant"));
+        }
+      }
+
+      if (mode == 'add') {
+        // Pas de destination ?
+        if (!self.destinationId) {
+          errors.push(app.addError(['popupManagePlaylist', 'destinationId'], "Playlist de destination manquante"));
+        }
+      }
+
+      if (mode == 'move') {
+        // Pas de destination ?
+        if (!self.destinationId) {
+          errors.push(app.addError(['popupManagePlaylist', 'destinationId'], "Dossier de destination manquant"));
         }
       }
 
@@ -31255,8 +31823,30 @@ var PopupManagePlaylist_PopupManagePlaylist = (0,es/* observer */.Pi)(function (
   var isOpen = popupManagePlaylist.isOpen;
   var mode = popupManagePlaylist.mode;
   var draftKind = popupManagePlaylist.draftKind;
+  var draftId = popupManagePlaylist.draftId;
   var draftPlaylist = popupManagePlaylist.draftPlaylist;
-  var draftFolder = popupManagePlaylist.draftFolder; // ...
+  var draftFolder = popupManagePlaylist.draftFolder;
+  var sourceId = popupManagePlaylist.sourceId;
+  var sourceType = popupManagePlaylist.sourceType;
+  var destinationId = popupManagePlaylist.destinationId; // ...
+
+  react.useEffect(function () {
+    if (draftKind == "playlist" && ['create', 'edit'].includes(mode)) {
+      var fieldName = document.getElementById("txt-playlist-name");
+
+      if (fieldName) {
+        fieldName.focus();
+      }
+    }
+
+    if (draftKind == "folder" && ['create', 'edit'].includes(mode)) {
+      var _fieldName = document.getElementById("txt-folder-name");
+
+      if (_fieldName) {
+        _fieldName.focus();
+      }
+    }
+  }, [isOpen]); // ...
   // Events
   // ==================================================================================================
 
@@ -31275,17 +31865,34 @@ var PopupManagePlaylist_PopupManagePlaylist = (0,es/* observer */.Pi)(function (
       if (errors.length == 0) {
         if (draftKind == "playlist" && ['create', 'edit'].includes(mode)) {
           playlists.setPlaylist(draftPlaylist.id, draftPlaylist.toJSON());
-          popupManagePlaylist.close();
         }
 
         if (draftKind == "folder" && ['create', 'edit'].includes(mode)) {
           playlists.setFolder(draftFolder.id, draftFolder.toJSON());
-          popupManagePlaylist.close();
         }
 
+        if (mode == 'add') {
+          var playlist = playlists.by_id.get(destinationId);
+
+          if (playlist) {
+            playlist.populateWith(sourceType, sourceId);
+            snackbar.update(true, "Ajout effectué.", "success");
+          }
+        }
+
+        if (mode == 'move') {
+          var _playlist = playlists.by_id.get(draftId);
+
+          if (_playlist) {
+            _playlist.setField('folder_id', destinationId);
+
+            snackbar.update(true, "Playlist déplacée.", "success");
+          }
+        }
+
+        popupManagePlaylist.close();
         playlists.save();
-      } else {
-        popup.setMessage(popupManagePlaylistKey, "Vérifiez votre saisie", "warning");
+      } else {// popup.setMessage(popupManagePlaylistKey, "Vérifiez votre saisie", "warning");
       }
     });
   }; // Render
@@ -31304,7 +31911,7 @@ var PopupManagePlaylist_PopupManagePlaylist = (0,es/* observer */.Pi)(function (
     popupTitle = draftKind == "playlist" ? "Modification playlist" : "Modification dossier";
   }
 
-  if (mode == "add") {
+  if (mode == "add" || mode == "move") {
     popupTitle = "Choix de la destination";
   } // Popup --> Content
   // -----------------------------------------------
@@ -31313,7 +31920,9 @@ var PopupManagePlaylist_PopupManagePlaylist = (0,es/* observer */.Pi)(function (
   var popupContent = null;
 
   if (isOpen) {
-    var sourceType = popupManagePlaylist.sourceType;
+    var _sourceType = popupManagePlaylist.sourceType;
+    var playlistItems = playlists.playlistItems;
+    var folderItems = playlists.folderItems;
     popupContent = /*#__PURE__*/react.createElement("div", null, draftKind == 'playlist' && ['create', 'edit'].includes(mode) && /*#__PURE__*/react.createElement(Field_Field, {
       id: "txt-playlist-name",
       component: "input",
@@ -31326,6 +31935,22 @@ var PopupManagePlaylist_PopupManagePlaylist = (0,es/* observer */.Pi)(function (
       label: "Nom",
       savePath: ['popupManagePlaylist', 'draftFolder', 'name'],
       disabled: isLoading
+    }), mode == 'add' && /*#__PURE__*/react.createElement(Field_Field, {
+      id: "lst-playlist-destination",
+      component: "select",
+      label: "Playlist",
+      datas: playlistItems,
+      savePath: ['popupManagePlaylist', 'destinationId'],
+      disabled: isLoading,
+      canBeEmpty: true
+    }), mode == 'move' && /*#__PURE__*/react.createElement(Field_Field, {
+      id: "lst-folder-destination",
+      component: "select",
+      label: "Dossier",
+      datas: folderItems,
+      savePath: ['popupManagePlaylist', 'destinationId'],
+      disabled: isLoading,
+      canBeEmpty: true
     }));
   } // Popup --> Buttons
   // -----------------------------------------------
@@ -31346,7 +31971,7 @@ var PopupManagePlaylist_PopupManagePlaylist = (0,es/* observer */.Pi)(function (
     onClick: function onClick() {
       return handleBtnValidate();
     }
-  }, mode == "create" && "Créer", mode == "edit" && "Modifier", mode == "add" && "Ajouter")); // -----------------------------------------------
+  }, mode == "create" && "Créer", mode == "edit" && "Modifier", mode == "add" && "Ajouter", mode == "move" && "Déplacer")); // -----------------------------------------------
 
   return /*#__PURE__*/react.createElement(Popup_Popup, {
     id: popupManagePlaylistKey,
@@ -31642,7 +32267,7 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
 
 
       if (navContext == 'playlists') {
-        app.navigate('/main.html', 'playlists');
+        app.navigate('/main.html', 'playlists', null, callback);
       }
 
       if (navContext == 'playlist') {
@@ -32990,7 +33615,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(75684)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(18082)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

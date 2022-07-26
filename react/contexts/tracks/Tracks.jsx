@@ -111,6 +111,42 @@ export const TracksStore = types
 			return (load) ? randomTracks : randomTracksIds;
 		},
 
+		// -
+
+		getFavorites() {
+			let favorites = [];
+			for (const [trackId, track] of self.by_id.entries()) {
+				if (track.favorite) {
+					favorites.push(track);
+				}
+			}
+			favorites.sort(function (a, b) {
+				if (a.name > b.name)
+					return 1;
+				if (a.name < b.name)
+					return -1;
+				return 0;
+			});
+			return favorites;
+		},
+
+		getStarred() {
+			let starred = [];
+			for (const [trackId, track] of self.by_id.entries()) {
+				if (track.starred) {
+					starred.push(track);
+				}
+			}
+			starred.sort(function (a, b) {
+				if (a.name > b.name)
+					return 1;
+				if (a.name < b.name)
+					return -1;
+				return 0;
+			});
+			return starred;
+		},
+
 	}))
 	.actions(self => ({
 

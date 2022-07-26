@@ -26,7 +26,7 @@ import './PopupManagePlaylist.css';
 const TAG_PopupManagePlaylistStore = () => {}
 export const PopupManagePlaylistStore = types
 	.model({
-		mode: types.maybeNull(types.string), // create, edit, add
+		mode: types.maybeNull(types.string), // create, edit, add, move
 
 		// create + edit
 		// -
@@ -41,6 +41,11 @@ export const PopupManagePlaylistStore = types
 
 		sourceId: types.maybeNull(types.string),
 		sourceType: types.maybeNull(types.string), // track, album, playlist
+
+		// move
+		// -
+
+		destinationId: types.maybeNull(types.string),
 	})
 	.views(self => ({
 
@@ -65,6 +70,9 @@ export const PopupManagePlaylistStore = types
 		// -
 
 		init: (mode, kind, id="") => {
+
+			const store = getRoot(self);
+			const playlists = store.playlists;
 
 			self.mode = mode;
 			self.draftKind = kind;
@@ -97,10 +105,16 @@ export const PopupManagePlaylistStore = types
 			// -
 
 			if (mode == 'edit' && kind == 'playlist') {
-				// TODO
+				const playlist = playlists.by_id.get(id);
+				if (playlist) {
+					self.draftPlaylist = PlaylistStore.create(playlist.toJSON());
+				}
 			}
 			if (mode == 'edit' && kind == 'folder') {
-				// TODO
+				const folder = playlists.folders.get(id);
+				if (folder) {
+					self.draftFolder = PlaylistFolderStore.create(folder.toJSON());
+				}
 			}
 
 			// add
@@ -137,6 +151,28 @@ export const PopupManagePlaylistStore = types
 					errors.push(app.addError(
 						['popupManagePlaylist', 'draftFolder', 'name'],
 						"Nom de du dossier manquant",
+					));
+				}
+			}
+
+			if (mode == 'add') {
+
+				// Pas de destination ?
+				if (!self.destinationId) {
+					errors.push(app.addError(
+						['popupManagePlaylist', 'destinationId'],
+						"Playlist de destination manquante",
+					));
+				}
+			}
+
+			if (mode == 'move') {
+
+				// Pas de destination ?
+				if (!self.destinationId) {
+					errors.push(app.addError(
+						['popupManagePlaylist', 'destinationId'],
+						"Dossier de destination manquant",
 					));
 				}
 			}
@@ -196,8 +232,31 @@ export const PopupManagePlaylist = observer((props) => {
 
 	const mode = popupManagePlaylist.mode;
 	const draftKind = popupManagePlaylist.draftKind;
+	const draftId = popupManagePlaylist.draftId;
 	const draftPlaylist = popupManagePlaylist.draftPlaylist;
 	const draftFolder = popupManagePlaylist.draftFolder;
+
+	const sourceId = popupManagePlaylist.sourceId;
+	const sourceType = popupManagePlaylist.sourceType;
+
+	const destinationId = popupManagePlaylist.destinationId;
+
+	// ...
+
+	React.useEffect(() => {
+		if (draftKind == "playlist" && ['create', 'edit'].includes(mode)) {
+			const fieldName = document.getElementById("txt-playlist-name");
+			if (fieldName) {
+				fieldName.focus();
+			}
+		}
+		if (draftKind == "folder" && ['create', 'edit'].includes(mode)) {
+			const fieldName = document.getElementById("txt-folder-name");
+			if (fieldName) {
+				fieldName.focus();
+			}
+		}
+	}, [isOpen]);
 
 	// ...
 
@@ -221,18 +280,33 @@ export const PopupManagePlaylist = observer((props) => {
 
 				if (draftKind == "playlist" && ['create', 'edit'].includes(mode)) {
 					playlists.setPlaylist(draftPlaylist.id, draftPlaylist.toJSON());
-					popupManagePlaylist.close();
 				}
 
 				if (draftKind == "folder" && ['create', 'edit'].includes(mode)) {
 					playlists.setFolder(draftFolder.id, draftFolder.toJSON());
-					popupManagePlaylist.close();
 				}
 
+				if (mode == 'add') {
+					const playlist = playlists.by_id.get(destinationId);
+					if (playlist) {
+						playlist.populateWith(sourceType, sourceId);
+						snackbar.update(true, "Ajout effectué.", "success");
+					}
+				}
+
+				if (mode == 'move') {
+					const playlist = playlists.by_id.get(draftId);
+					if (playlist) {
+						playlist.setField('folder_id', destinationId);
+						snackbar.update(true, "Playlist déplacée.", "success");
+					}
+				}
+
+				popupManagePlaylist.close();
 				playlists.save();
 
 			} else {
-				popup.setMessage(popupManagePlaylistKey, "Vérifiez votre saisie", "warning");
+				// popup.setMessage(popupManagePlaylistKey, "Vérifiez votre saisie", "warning");
 			}
 		});
 	}
@@ -250,7 +324,7 @@ export const PopupManagePlaylist = observer((props) => {
 	if (mode == "edit") {
 		popupTitle = (draftKind == "playlist") ? "Modification playlist" : "Modification dossier";
 	}
-	if (mode == "add") {
+	if (mode == "add" || mode == "move") {
 		popupTitle = "Choix de la destination";
 	}
 
@@ -261,6 +335,8 @@ export const PopupManagePlaylist = observer((props) => {
 	if (isOpen) {
 
 		const sourceType = popupManagePlaylist.sourceType;
+		const playlistItems = playlists.playlistItems;
+		const folderItems = playlists.folderItems;
 
 		popupContent = (
 			<div>
@@ -282,6 +358,30 @@ export const PopupManagePlaylist = observer((props) => {
 						label='Nom'
 						savePath={['popupManagePlaylist', 'draftFolder', 'name']}
 						disabled={isLoading}
+					/>
+				)}
+
+				{mode == 'add' && (
+					<Field
+						id="lst-playlist-destination"
+						component='select'
+						label="Playlist"
+						datas={playlistItems}
+						savePath={['popupManagePlaylist', 'destinationId']}
+						disabled={isLoading}
+						canBeEmpty={true}
+					/>
+				)}
+
+				{mode == 'move' && (
+					<Field
+						id="lst-folder-destination"
+						component='select'
+						label="Dossier"
+						datas={folderItems}
+						savePath={['popupManagePlaylist', 'destinationId']}
+						disabled={isLoading}
+						canBeEmpty={true}
 					/>
 				)}
 
@@ -314,6 +414,7 @@ export const PopupManagePlaylist = observer((props) => {
 			{(mode == "create") && "Créer"}
 			{(mode == "edit") && "Modifier"}
 			{(mode == "add") && "Ajouter"}
+			{(mode == "move") && "Déplacer"}
 		</Button>
 	)
 

@@ -81,6 +81,47 @@ export const PlaylistsStore = types
 			return Object.entries(self.folders.toJSON()).length;
 		},
 
+		// -
+
+		get playlistItems() {
+			let items = [];
+			for (const [playlistId, playlist] of self.by_id.entries()) {
+				if (playlist.permanent) {
+					continue;
+				}
+				items.push({
+					value: playlistId,
+					label: playlist.name,
+				});
+			}
+			items.sort(function (a, b) {
+				if (a.label > b.label)
+					return 1;
+				if (a.label < b.label)
+					return -1;
+				return 0;
+			});
+			return items;
+		},
+
+		get folderItems() {
+			let items = [];
+			for (const [folderId, folder] of self.folders.entries()) {
+				items.push({
+					value: folderId,
+					label: folder.name,
+				});
+			}
+			items.sort(function (a, b) {
+				if (a.label > b.label)
+					return 1;
+				if (a.label < b.label)
+					return -1;
+				return 0;
+			});
+			return items;
+		},
+
 		// Getters
 		// -
 
@@ -277,6 +318,16 @@ export const PlaylistsStore = types
 			// ---------------------------------------------------
 
 			return atLeastOneAdded;
+		},
+
+		// -
+
+		remove: (playlistId) => {
+			self.by_id.delete(playlistId);
+		},
+
+		removeFolder: (folderId) => {
+			self.folders.delete(folderId);
 		},
 
 	}))

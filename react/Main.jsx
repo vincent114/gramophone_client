@@ -321,7 +321,7 @@ const RootStore = types
 
 			// Playlists
 			if (navContext == 'playlists') {
-				app.navigate('/main.html', 'playlists');
+				app.navigate('/main.html', 'playlists', null, callback);
 			}
 			if (navContext == 'playlist') {
 				setToStorage('lastPlaylistId', contextId);

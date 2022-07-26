@@ -53,6 +53,9 @@ export const PlaylistFolderContextualMenu = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const snackbar = app.snackbar;
+	const playlists = store.playlists;
+	const popupManagePlaylist = store.popupManagePlaylist;
 
 	// From ... states
 
@@ -91,12 +94,20 @@ export const PlaylistFolderContextualMenu = observer((props) => {
 	// -
 
 	const handleEdit = () => {
-		// TODO
+		popupManagePlaylist.init("edit", "folder", folder.id);
+		popupManagePlaylist.open();
 		handleCloseMenu();
 	}
 
 	const handleDelete = () => {
-		// TODO
+		const CONFIRM_DELETE_MSG = `Êtes-vous sûr de vouloir supprimer le dossier ${folder.name} ?`;
+		if (confirm(CONFIRM_DELETE_MSG)) {
+			store.navigateTo('playlists', null, null, null, () => {
+				playlists.removeFolder(folder.id);
+				playlists.save();
+				snackbar.update(true, "Dossier supprimée.", "success");
+			})
+		}
 		handleCloseMenu();
 	}
 

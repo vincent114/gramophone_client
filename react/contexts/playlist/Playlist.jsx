@@ -4,6 +4,19 @@ import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
 import { PlaylistFolderStore } from 'gramophone_client/contexts/playlist_folder/PlaylistFolder';
+import { TrackRow } from 'gramophone_client/contexts/track/Track';
+
+import {
+	TableContainer,
+	Table,
+	TableHead,
+	TableBody,
+	TableRow,
+	TableCell
+} from 'nexus/forms/table/Table';
+
+import { Ribbon } from 'nexus/layout/ribbon/Ribbon';
+import { Row } from 'nexus/layout/row/Row';
 
 import { Helper } from 'nexus/ui/helper/Helper';
 import { IconButton } from 'nexus/ui/button/Button';
@@ -14,11 +27,9 @@ import {
 	ListIcon,
 	ListText
 } from 'nexus/ui/list/List';
-import {
-	TableRow,
-	TableCell
-} from 'nexus/forms/table/Table';
 import { Divider } from 'nexus/ui/divider/Divider';
+import { Typography } from 'nexus/ui/typography/Typography';
+import { Paper } from 'nexus/ui/paper/Paper';
 
 import './Playlist.css';
 
@@ -44,6 +55,12 @@ export const PlaylistStore = types
 	})
 	.views(self => ({
 
+		get nbTracks() {
+			return self.tracks_ids.length;
+		},
+
+		// -
+
 		get linkedFolder() {
 			const store = getRoot(self);
 			const playlists = store.playlists;
@@ -54,6 +71,40 @@ export const PlaylistStore = types
 				}
 			}
 			return PlaylistFolderStore.create({});
+		},
+
+		// Getters
+		// -
+
+		getTracks() {
+			const store = getRoot(self);
+			const tracks = store.tracks;
+
+			let tracksList = [];
+
+			if (self.permanent) {
+
+				// From tracks favorite
+				if (self.id == 'favorites') {
+					tracksList = tracks.getFavorites();
+				}
+
+				// From tracks starred
+				if (self.id == 'mix') {
+					tracksList = tracks.getStarred();
+				}
+
+			} else {
+
+				// From local tracks_ids
+				for (const trackId of self.tracks_ids) {
+					const track = tracks.by_id.get(trackId);
+					if (track) {
+						tracksList.push(track);
+					}
+				}
+			}
+			return tracksList;
 		},
 
 	}))
@@ -80,6 +131,63 @@ export const PlaylistStore = types
 		// 	}
 		// },
 
+		clear: () => {
+
+			// Nettoyage des morceaux de la playlist
+			// ---
+
+			const store = getRoot(self);
+			const tracks = store.tracks;
+
+			self.tracks_ids = [];
+
+			if (self.permanent) {
+				for (const [trackId, track] of tracks.by_id.entries()) {
+
+					// Nettoyage des favoris
+					if (self.id == 'favorites' && track.favorite) {
+						track.setField('favorite', false);
+					}
+
+					// Nettoyage des étoilées
+					if (self.id == 'mix' && track.starred) {
+						track.setField('starred', false);
+					}
+				}
+			}
+		},
+
+		// -
+
+		addTrack: (trackId) => {
+			if (self.tracks_ids.indexOf(trackId) == -1) {
+				self.tracks_ids.push(trackId);
+			}
+		},
+
+		populateWith: (sourceKind, sourceId) => {
+
+			// Ajoute un ou plusieurs morceaux à la playlist
+			// ---
+
+			const store = getRoot(self);
+			const albums = store.albums;
+			const tracks = store.tracks;
+
+			if (sourceKind == 'track') {
+				self.addTrack(sourceId);
+			}
+			if (sourceKind == 'album') {
+				const album = albums.by_id.get(sourceId);
+				if (album) {
+					const trackIds = album.getPlayable(false);
+					for (const trackId of trackIds) {
+						self.addTrack(trackId);
+					}
+				}
+			}
+		},
+
 	}))
 
 
@@ -94,6 +202,10 @@ export const PlaylistContextualMenu = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const snackbar = app.snackbar;
+	const tracks = store.tracks;
+	const playlists = store.playlists;
+	const popupManagePlaylist = store.popupManagePlaylist;
 
 	// From ... states
 
@@ -138,20 +250,44 @@ export const PlaylistContextualMenu = observer((props) => {
 
 	// -
 
+	const handleClear = () => {
+		const CONFIRM_CLEAR_MSG = `Êtes-vous sûr de vouloir vider la playlist ${playlist.name} ?`;
+		if (confirm(CONFIRM_CLEAR_MSG)) {
+			playlist.clear();
+			if (playlist.permanent) {
+				tracks.save();
+			} else {
+				playlists.save();
+			}
+		}
+		handleCloseMenu();
+	}
+
+	// -
+
 	const handleMove = () => {
-		// TODO
+		popupManagePlaylist.init("move", "playlist", playlist.id);
+		popupManagePlaylist.open();
 		handleCloseMenu();
 	}
 
 	// -
 
 	const handleEdit = () => {
-		// TODO
+		popupManagePlaylist.init("edit", "playlist", playlist.id);
+		popupManagePlaylist.open();
 		handleCloseMenu();
 	}
 
 	const handleDelete = () => {
-		// TODO
+		const CONFIRM_DELETE_MSG = `Êtes-vous sûr de vouloir supprimer la playlist ${playlist.name} ?`;
+		if (confirm(CONFIRM_DELETE_MSG)) {
+			store.navigateTo('playlists', null, null, null, () => {
+				playlists.remove(playlist.id);
+				playlists.save();
+				snackbar.update(true, "Playlist supprimée.", "success");
+			})
+		}
 		handleCloseMenu();
 	}
 
@@ -211,6 +347,21 @@ export const PlaylistContextualMenu = observer((props) => {
 								Exporter la playlist
 							</ListText>
 						</ListItem>
+
+						<Divider spacing="medium" />
+
+						<ListItem
+							size="small"
+							onClick={() => handleClear()}
+						>
+							<ListIcon
+								name="cleaning_services"
+							/>
+							<ListText withIcon={true}>
+								Vider la playlist
+							</ListText>
+						</ListItem>
+
 
 						{!playlist.permanent && (
 							<React.Fragment>
@@ -328,6 +479,19 @@ export const PlaylistRow = observer((props) => {
 			</TableCell>
 			<TableCell
 				size="small"
+				width="100px"
+			>
+				{!playlist.permanent && (
+					<Typography
+						size="small"
+						variant="description"
+					>
+						{`${playlist.nbTracks} ${(playlist.nbTracks > 1) ? "titres" : "titre"}`}
+					</Typography>
+				)}
+			</TableCell>
+			<TableCell
+				size="small"
 				width="48px"
 			>
 				<IconButton
@@ -397,13 +561,118 @@ export const RenderPlaylist = observer((props) => {
 
 	// ...
 
-	console.log(playlist.toJSON());
+	const playListTracks = playlist.getTracks();
+	const nbTracks = playListTracks.length;
+
+	// ...
+
+	// Events
+	// ==================================================================================================
+
+	const handlePlayClick = () => {
+		// TODO
+	}
+
+	const handleThrowDiceClick = () => {
+		// TODO
+	}
 
 	// Render
 	// ==================================================================================================
 
 	return (
 		<div>
+
+			<Ribbon
+				avatarIconName={(playlist.permanent) ? "auto_awesome" : "playlist_play"}
+				avatarIconColor="typography"
+				title={playlist.name}
+				right={(
+					<div className="h-col">
+						<IconButton
+							iconName="play_arrow"
+							color="hot"
+							onClick={() => handlePlayClick()}
+						/>
+						<IconButton
+							iconName="casino"
+							color="hot"
+							disabled={isLoading}
+							onClick={() => handleThrowDiceClick()}
+						/>
+						<PlaylistContextualMenu
+							playlist={playlist}
+							color="typography"
+						/>
+					</div>
+				)}
+			>
+				<Row>
+					<Typography
+						variant="description"
+						className="flex-0"
+						style={{
+							marginLeft: '10px'
+						}}
+					>
+						•
+					</Typography>
+					<Typography
+						variant="description"
+						className="flex-0"
+					>
+						{nbTracks} {(nbTracks > 1) ? "titres" : "titre"}
+					</Typography>
+				</Row>
+			</Ribbon>
+
+			<TableContainer
+				component={Paper}
+				style={{
+					marginTop: '40px',
+					padding: '0px',
+				}}
+			>
+				<Table>
+
+					<TableHead>
+						<TableRow>
+							<TableCell
+								header={true}
+								width={56}
+								align="center"
+							>
+							</TableCell>
+							<TableCell header={true}>
+								Titre
+							</TableCell>
+							<TableCell header={true} style={{maxWidth: '200px'}}>
+								Artiste
+							</TableCell>
+							<TableCell header={true} style={{maxWidth: '200px'}}>
+								Album
+							</TableCell>
+							<TableCell
+								header={true}
+								width={56}
+								align="right"
+							>
+							</TableCell>
+						</TableRow>
+					</TableHead>
+
+					<TableBody>
+						{playListTracks.map((track, trackIdx) => (
+							<TrackRow
+								key={`track-${trackIdx}`}
+								track={track}
+								origin="playlist"
+							/>
+						))}
+					</TableBody>
+
+				</Table>
+			</TableContainer>
 
 		</div>
 	)
@@ -458,7 +727,7 @@ export const PlaylistPage = observer((props) => {
 	// -------------------------------------------------
 
 	return (
-		<div className="c-page">
+		<div className="nx-page medium">
 			{renderPage()}
 			{renderHelper()}
 		</div>
