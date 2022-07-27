@@ -494,9 +494,9 @@ export const LibraryStore = types
 			// Réinitialisation des compteurs sur les dossiers
 			if (scope == 'full') {
 				albums.setField('last_added_ids', []);
-				for (const sourceFolder of self.source_folders) {
-					sourceFolder.resetCounters();
-				}
+			}
+			for (const sourceFolder of self.source_folders) {
+				sourceFolder.resetCounters();
 			}
 
 			if (!window.scanStopTime) {

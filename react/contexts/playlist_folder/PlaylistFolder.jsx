@@ -163,7 +163,7 @@ export const PlaylistFolderContextualMenu = observer((props) => {
 				playlists.removeFolder(folder.id);
 				playlists.save();
 				snackbar.update(true, "Dossier supprimée.", "success");
-			})
+			});
 		}
 		handleCloseMenu();
 	}

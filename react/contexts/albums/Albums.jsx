@@ -250,6 +250,83 @@ export const AlbumsStore = types
 			return added;
 		},
 
+		unindex: (albumId) => {
+
+			// Dé-indexation d'un album
+			// ---
+
+			const store = getRoot(self);
+			const tracks = store.tracks;
+			const years = store.years;
+			const genres = store.genres;
+			const artists = store.artists;
+
+			let unindexed = true;
+			let goAhead = true;
+
+			const album = self.by_id.get(albumId);
+			if (!album) {
+				unindexed = false;
+				goAhead = false;
+			}
+
+			if (goAhead) {
+
+				// Suppression des titres de l'album
+				for (const trackId of album.tracks_ids) {
+					tracks.unindex(trackId, true);
+				}
+
+				// Suppression de l'album dans l'année associée
+				if (album.year_id) {
+					const year = years.by_id.get(album.year_id);
+					if (year) {
+						year.removeAlbumId(albumId);
+
+						// Nettoyage de l'année ?
+						if (year.albums_ids.length == 0) {
+							years.unindex(year.id);
+						}
+					}
+				}
+
+				// Suppression de l'album dans le genre associé
+				if (album.genre_id) {
+					const genre = genres.by_id.get(album.genre_id);
+					if (genre) {
+						genre.removeAlbumId(albumId);
+
+						// Nettoyage du genre ?
+						if (genre.albums_ids.length == 0) {
+							genres.unindex(genre.id);
+						}
+					}
+				}
+
+				// Suppression de l'album dans l'artiste associé
+				if (album.artist_id) {
+					const artist = artists.by_id.get(album.artist_id);
+					if (artist) {
+						artist.removeAlbumId(albumId);
+
+						// Nettoyage de l'artiste ?
+						if (artist.albums_ids.length == 0) {
+							artists.unindex(artist.id);
+						}
+					}
+				}
+
+				// Suppression de la jaquette d'album
+				if (album.cover) {
+					ipc.send('remove', [album.cover]);
+				}
+
+				// Suppression de l'album
+				self.by_id.delete(albumId);
+			}
+			return unindexed;
+		},
+
 		// -
 
 		addLastAddedId: (albumId) => {

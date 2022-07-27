@@ -420,6 +420,17 @@ ipcMain.handle("copy", async (event, [sourcePath, targetPath]) => {
 	return result;
 });
 
+ipcMain.on("remove", async (event, [removePath]) => {
+
+	// Suppression du fichier
+	// ---
+
+	if (!removePath) { return null; }
+
+	const result = await fs.remove(removePath);
+	mainWindow.webContents.send("removed", result);
+});
+
 // ipc sync events
 // -------------------------------------------------------------------
 

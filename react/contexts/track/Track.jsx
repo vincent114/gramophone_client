@@ -245,6 +245,7 @@ export const TrackContextualMenu = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const snackbar = app.snackbar;
 	const tracks = store.tracks;
 	const player = store.player;
 	const playlists = store.playlists;
@@ -362,7 +363,16 @@ export const TrackContextualMenu = observer((props) => {
 	// -
 
 	const handleDelete = () => {
-		// TODO
+		const CONFIRM_UNINDEX = `Êtes-vous sûr de vouloir dé-indexer le titre ${track.name} ?`;
+		if (confirm(CONFIRM_UNINDEX)) {
+			const unindexed = tracks.unindex(track.id);
+			if (unindexed) {
+				store.save();
+				snackbar.update(true, "Titre dé-indexé avec succès.", "success");
+			} else {
+				snackbar.update(true, "Dé-indexation du titre échouée.", "error");
+			}
+		}
 	}
 
 	// Render

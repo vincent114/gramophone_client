@@ -1,0 +1,25 @@
+
+/* Popup Track Metadatas */
+/* ================================================================================================== */
+
+.g-metadatas-cover {
+	min-width: 180px;
+	max-width: 180px;
+	min-height: 180px;
+	max-height: 180px;
+	border-radius: 10px;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	background-color: rgba(111, 126, 140, 0.1);
+}
+
+.g-metadatas-cover .nx-icon {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.g-metadatas-cover img {
+	object-fit: cover;
+	max-width: 100%;
+}

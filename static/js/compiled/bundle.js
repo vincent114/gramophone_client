@@ -7050,6 +7050,10 @@ var dateTools = {
       date = new Date();
     }
 
+    if (typeof date == 'string') {
+      date = new Date(date);
+    }
+
     var hh = date.getHours();
     var mm = date.getMinutes();
     hh = hh.toString();
@@ -7224,6 +7228,10 @@ var dateTools = {
   dateToFrenchFull: function dateToFrenchFull(date) {
     // AAAA-MM-JJ -> mercredi 10 novembre 2021
     // -
+    if (!date) {
+      return "";
+    }
+
     var self = this;
     return self.humanizeDate(date, 'dddd Do MMMM YYYY');
   },
@@ -20946,6 +20954,7 @@ var TAG_TrackContextualMenu = function TAG_TrackContextualMenu() {};
 var TrackContextualMenu = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
+  var snackbar = app.snackbar;
   var tracks = store.tracks;
   var player = store.player;
   var playlists = store.playlists;
@@ -21053,7 +21062,19 @@ var TrackContextualMenu = (0,es/* observer */.Pi)(function (props) {
   }; // -
 
 
-  var handleDelete = function handleDelete() {// TODO
+  var handleDelete = function handleDelete() {
+    var CONFIRM_UNINDEX = "\xCAtes-vous s\xFBr de vouloir d\xE9-indexer le titre ".concat(track.name, " ?");
+
+    if (confirm(CONFIRM_UNINDEX)) {
+      var unindexed = tracks.unindex(track.id);
+
+      if (unindexed) {
+        store.save();
+        snackbar.update(true, "Titre dé-indexé avec succès.", "success");
+      } else {
+        snackbar.update(true, "Dé-indexation du titre échouée.", "error");
+      }
+    }
   }; // Render
   // ==================================================================================================
 
@@ -22866,6 +22887,9 @@ function Album_arrayLikeToArray(arr, len) { if (len == null || len > arr.length)
 
 
 
+
+
+
  // Models
 // ======================================================================================================
 // ***** AlbumStore *****
@@ -23146,6 +23170,13 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
         self.tracks_ids.push(trackId);
       }
     },
+    removeTrackId: function removeTrackId(trackId) {
+      var trackIdx = self.tracks_ids.indexOf(trackId);
+
+      if (trackIdx > -1) {
+        self.tracks_ids.splice(trackIdx, 1);
+      }
+    },
     // -
     play: function play(trackId) {
       // Lecture de tous les morceaux de l'album dans l'ordre
@@ -23192,7 +23223,10 @@ var TAG_AlbumContextualMenu = function TAG_AlbumContextualMenu() {};
 var AlbumContextualMenu = (0,es/* observer */.Pi)(function (props) {
   var store = react.useContext(window.storeContext);
   var app = store.app;
+  var snackbar = app.snackbar;
+  var search = store.search;
   var tracks = store.tracks;
+  var albums = store.albums;
   var player = store.player;
   var popupTrackMetadatas = store.popupTrackMetadatas;
   var popupManagePlaylist = store.popupManagePlaylist; // From ... states
@@ -23246,7 +23280,44 @@ var AlbumContextualMenu = (0,es/* observer */.Pi)(function (props) {
   }; // -
 
 
-  var handleDelete = function handleDelete() {// TODO
+  var handleDelete = function handleDelete() {
+    var CONFIRM_UNINDEX = "\xCAtes-vous s\xFBr de vouloir d\xE9-indexer l'album ".concat(album.name, " ?");
+
+    if (confirm(CONFIRM_UNINDEX)) {
+      player.audioStop();
+      player.clear();
+      search.clear();
+      app.clearHistory();
+
+      if (app.context == 'album' && store.albumId == album.id) {
+        app.navigateTo('home');
+      }
+
+      if (app.context == 'artist' && store.artistId == album.artist_id) {
+        app.navigateTo('home');
+      }
+
+      if (app.context == 'year' && store.yearId == album.year_id) {
+        app.navigateTo('home');
+      }
+
+      if (app.context == 'genre' && store.yearId == album.genre_id) {
+        app.navigateTo('home');
+      }
+
+      setTimeout(function () {
+        var unindexed = albums.unindex(album.id);
+
+        if (unindexed) {
+          setTimeout(function () {
+            store.save();
+          }, 1000);
+          snackbar.update(true, "Album dé-indexé avec succès.", "success");
+        } else {
+          snackbar.update(true, "Dé-indexation de l'album échouée.", "error");
+        }
+      }, 500);
+    }
   }; // Render
   // ==================================================================================================
 
@@ -24081,6 +24152,89 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       self.by_id.set(albumId, album);
       return added;
     },
+    unindex: function unindex(albumId) {
+      // Dé-indexation d'un album
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var tracks = store.tracks;
+      var years = store.years;
+      var genres = store.genres;
+      var artists = store.artists;
+      var unindexed = true;
+      var goAhead = true;
+      var album = self.by_id.get(albumId);
+
+      if (!album) {
+        unindexed = false;
+        goAhead = false;
+      }
+
+      if (goAhead) {
+        // Suppression des titres de l'album
+        var _iterator2 = Albums_createForOfIteratorHelper(album.tracks_ids),
+            _step2;
+
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var trackId = _step2.value;
+            tracks.unindex(trackId, true);
+          } // Suppression de l'album dans l'année associée
+
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+
+        if (album.year_id) {
+          var year = years.by_id.get(album.year_id);
+
+          if (year) {
+            year.removeAlbumId(albumId); // Nettoyage de l'année ?
+
+            if (year.albums_ids.length == 0) {
+              years.unindex(year.id);
+            }
+          }
+        } // Suppression de l'album dans le genre associé
+
+
+        if (album.genre_id) {
+          var genre = genres.by_id.get(album.genre_id);
+
+          if (genre) {
+            genre.removeAlbumId(albumId); // Nettoyage du genre ?
+
+            if (genre.albums_ids.length == 0) {
+              genres.unindex(genre.id);
+            }
+          }
+        } // Suppression de l'album dans l'artiste associé
+
+
+        if (album.artist_id) {
+          var artist = artists.by_id.get(album.artist_id);
+
+          if (artist) {
+            artist.removeAlbumId(albumId); // Nettoyage de l'artiste ?
+
+            if (artist.albums_ids.length == 0) {
+              artists.unindex(artist.id);
+            }
+          }
+        } // Suppression de la jaquette d'album
+
+
+        if (album.cover) {
+          ipc.send('remove', [album.cover]);
+        } // Suppression de l'album
+
+
+        self.by_id["delete"](albumId);
+      }
+
+      return unindexed;
+    },
     // -
     addLastAddedId: function addLastAddedId(albumId) {
       if (self.last_added_ids.indexOf(albumId) > -1) {
@@ -24465,6 +24619,7 @@ function Artist_arrayLikeToArray(arr, len) { if (len == null || len > arr.length
 
 
 
+
  // Models
 // ======================================================================================================
 // ***** ArtistStore *****
@@ -24551,6 +24706,13 @@ var ArtistStore = mobx_state_tree_module/* types.model */.V5.model({
     addAlbumId: function addAlbumId(albumId) {
       if (self.albums_ids.indexOf(albumId) == -1) {
         self.albums_ids.push(albumId);
+      }
+    },
+    removeAlbumId: function removeAlbumId(albumId) {
+      var albumIdx = self.albums_ids.indexOf(albumId);
+
+      if (albumIdx > -1) {
+        self.albums_ids.splice(albumIdx, 1);
       }
     },
     // -
@@ -24949,6 +25111,15 @@ var ArtistsStore = mobx_state_tree_module/* types.model */.V5.model({
       artist.addAlbumId(metas.albumID);
       self.by_id.set(artistId, artist);
       return added;
+    },
+    unindex: function unindex(artistId) {
+      // Dé-indexation d'un artiste
+      // ---
+      if (!artistId) {
+        return;
+      }
+
+      self.by_id["delete"](artistId);
     }
   };
 }); // Functions Components ReactJS
@@ -25501,6 +25672,58 @@ var TracksStore = mobx_state_tree_module/* types.model */.V5.model({
       self.by_id.set(trackId, track);
       return added;
     },
+    unindex: function unindex(trackId) {
+      var ignoreAlbums = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      // Dé-indexation d'un morceau
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var playlists = store.playlists;
+      var unindexed = true;
+      var goAhead = true;
+      var track = self.by_id.get(trackId);
+
+      if (!track) {
+        unindexed = false;
+        goAhead = false;
+      } // Déréférencement du titre dans l'album
+
+
+      if (goAhead && !ignoreAlbums && track.album_id) {
+        track.linkedAlbum.removeTrackId(trackId);
+      } // Suppression du titre dans les playlists
+
+
+      if (goAhead) {
+        var _iterator4 = Tracks_createForOfIteratorHelper(playlists.by_id.entries()),
+            _step4;
+
+        try {
+          for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+            var _step4$value = Tracks_slicedToArray(_step4.value, 2),
+                playlistId = _step4$value[0],
+                playlist = _step4$value[1];
+
+            if (playlist.permanent) {
+              continue;
+            }
+
+            playlist.removeTrack(trackId);
+          }
+        } catch (err) {
+          _iterator4.e(err);
+        } finally {
+          _iterator4.f();
+        }
+      } // Suppression du titre
+
+
+      if (goAhead) {
+        self.by_id["delete"](trackId);
+      }
+
+      return unindexed;
+    },
+    // -
     shuffle: function shuffle() {
       // Lecture aléatoire de titres
       // ---
@@ -25708,6 +25931,7 @@ function Year_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) 
 
 
 
+
  // Models
 // ======================================================================================================
 // ***** YearStore *****
@@ -25838,6 +26062,13 @@ var YearStore = mobx_state_tree_module/* types.model */.V5.model({
     addAlbumId: function addAlbumId(albumId) {
       if (self.albums_ids.indexOf(albumId) == -1) {
         self.albums_ids.push(albumId);
+      }
+    },
+    removeAlbumId: function removeAlbumId(albumId) {
+      var albumIdx = self.albums_ids.indexOf(albumId);
+
+      if (albumIdx > -1) {
+        self.albums_ids.splice(albumIdx, 1);
       }
     },
     // -
@@ -26341,6 +26572,15 @@ var YearsStore = mobx_state_tree_module/* types.model */.V5.model({
       year.addAlbumId(metas.albumID);
       self.by_id.set(yearId, year);
       return added;
+    },
+    unindex: function unindex(yearId) {
+      // Dé-indexation d'un année
+      // ---
+      if (!yearId) {
+        return;
+      }
+
+      self.by_id["delete"](yearId);
     }
   };
 }); // Functions Components ReactJS
@@ -26628,6 +26868,7 @@ function Genre_arrayLikeToArray(arr, len) { if (len == null || len > arr.length)
 
 
 
+
  // Models
 // ======================================================================================================
 // ***** GenreStore *****
@@ -26766,6 +27007,13 @@ var GenreStore = mobx_state_tree_module/* types.model */.V5.model({
     addAlbumId: function addAlbumId(albumId) {
       if (self.albums_ids.indexOf(albumId) == -1) {
         self.albums_ids.push(albumId);
+      }
+    },
+    removeAlbumId: function removeAlbumId(albumId) {
+      var albumIdx = self.albums_ids.indexOf(albumId);
+
+      if (albumIdx > -1) {
+        self.albums_ids.splice(albumIdx, 1);
       }
     },
     // -
@@ -27093,6 +27341,15 @@ var GenresStore = mobx_state_tree_module/* types.model */.V5.model({
       genre.addAlbumId(metas.albumID);
       self.by_id.set(genreId, genre);
       return added;
+    },
+    unindex: function unindex(genreId) {
+      // Dé-indexation d'un genre
+      // ---
+      if (!genreId) {
+        return;
+      }
+
+      self.by_id["delete"](genreId);
     }
   };
 }); // Functions Components ReactJS
@@ -28951,8 +29208,27 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
     remove: function remove(playlistId) {
       self.by_id["delete"](playlistId);
     },
-    removeFolder: function removeFolder(folderId) {
-      self.folders["delete"](folderId);
+    removeFolder: function removeFolder(folderIdToRemove) {
+      var _iterator4 = Playlists_createForOfIteratorHelper(self.folders.entries()),
+          _step4;
+
+      try {
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+          var _step4$value = Playlists_slicedToArray(_step4.value, 2),
+              folderId = _step4$value[0],
+              folder = _step4$value[1];
+
+          if (folder.parent == folderIdToRemove) {
+            folder.setField('parent', null);
+          }
+        }
+      } catch (err) {
+        _iterator4.e(err);
+      } finally {
+        _iterator4.f();
+      }
+
+      self.folders["delete"](folderIdToRemove);
     }
   };
 }); // Functions Components ReactJS
@@ -30449,7 +30725,8 @@ var SearchStore = mobx_state_tree_module/* types.model */.V5.model({}).actions(f
       self[field] = value;
     },
     // -
-    update: function update(raw) {}
+    update: function update(raw) {},
+    clear: function clear() {}
   };
 }); // Functions Components ReactJS
 // -------------------------------------------------------------------------------------------------------------
@@ -31448,20 +31725,20 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
 
       if (scope == 'full') {
         albums.setField('last_added_ids', []);
+      }
 
-        var _iterator10 = Library_createForOfIteratorHelper(self.source_folders),
-            _step10;
+      var _iterator10 = Library_createForOfIteratorHelper(self.source_folders),
+          _step10;
 
-        try {
-          for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
-            var sourceFolder = _step10.value;
-            sourceFolder.resetCounters();
-          }
-        } catch (err) {
-          _iterator10.e(err);
-        } finally {
-          _iterator10.f();
+      try {
+        for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+          var sourceFolder = _step10.value;
+          sourceFolder.resetCounters();
         }
+      } catch (err) {
+        _iterator10.e(err);
+      } finally {
+        _iterator10.f();
       }
 
       if (!window.scanStopTime) {
@@ -31976,6 +32253,14 @@ var PopupTrackMetadatas = __webpack_require__(56797);
 
 
 
+
+
+
+
+
+
+
+
  // Models
 // ======================================================================================================
 // ***** PopupTrackMetadatasStore *****
@@ -31987,6 +32272,12 @@ var PopupTrackMetadatasStore = mobx_state_tree_module/* types.model */.V5.model(
   trackId: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string)
 }).views(function (self) {
   return {
+    get track() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var tracks = store.tracks;
+      return tracks.by_id.get(self.trackId);
+    },
+
     // Bools
     // -
     get isOpen() {
@@ -32025,7 +32316,9 @@ var PopupTrackMetadatas_PopupTrackMetadatas = (0,es/* observer */.Pi)(function (
   var popupTrackMetadatas = store.popupTrackMetadatas; // From ... store
 
   var isLoading = app.isLoading;
-  var isOpen = popupTrackMetadatas.isOpen; // Render
+  var isOpen = popupTrackMetadatas.isOpen; // ...
+
+  var track = popupTrackMetadatas.track; // Render
   // ==================================================================================================
   // Popup --> Title
   // -----------------------------------------------
@@ -32036,22 +32329,128 @@ var PopupTrackMetadatas_PopupTrackMetadatas = (0,es/* observer */.Pi)(function (
   var popupContent = null;
 
   if (isOpen) {
-    popupContent = /*#__PURE__*/react.createElement("div", null, "...");
+    if (track) {
+      // id: types.maybeNull(types.string),
+      // name: types.maybeNull(types.string),
+      // disk: types.frozen(null),
+      // track: types.frozen(null),
+      // track_path: types.maybeNull(types.string),
+      // track_type: types.maybeNull(types.string),
+      // track_available: true,
+      // ts_file: types.maybeNull(types.string),
+      // ts_added: types.maybeNull(types.string),
+      // artist: types.maybeNull(types.string),
+      // album: types.maybeNull(types.string),
+      // checked: true,
+      // favorite: false,
+      // starred: false,
+      // album_id: types.maybeNull(types.string),
+      // artist_id: types.maybeNull(types.string),
+      // year_id: types.maybeNull(types.string),
+      // genre_id: types.maybeNull(types.string),
+      var linkedAlbum = track.linkedAlbum;
+      var linkedArtist = track.linkedArtist;
+      var linkedYear = track.linkedYear;
+      var linkedGenre = track.linkedGenre;
+      popupContent = /*#__PURE__*/react.createElement(Row_Row, {
+        spacing: "medium",
+        style: {
+          padding: '10px'
+        }
+      }, /*#__PURE__*/react.createElement("div", {
+        className: "g-metadatas-cover",
+        style: {
+          marginBottom: '10px'
+        }
+      }, !linkedAlbum.cover && /*#__PURE__*/react.createElement(Icon_Icon, {
+        name: "album",
+        color: "default",
+        style: {
+          width: '80px'
+        }
+      }), linkedAlbum.cover && /*#__PURE__*/react.createElement("img", {
+        src: linkedAlbum.cover
+      })), /*#__PURE__*/react.createElement(Column_Column, {
+        align: "stretch"
+      }, /*#__PURE__*/react.createElement(Row_Row, {
+        marginBottom: "normal"
+      }, /*#__PURE__*/react.createElement(Field_Field, {
+        id: "txt-track-name",
+        component: "input",
+        label: "Titre",
+        value: track.name,
+        disabled: true
+      })), /*#__PURE__*/react.createElement(Row_Row, {
+        marginBottom: "normal"
+      }, /*#__PURE__*/react.createElement(Field_Field, {
+        id: "txt-artist-name",
+        component: "input",
+        label: "Artiste",
+        value: linkedArtist.name,
+        disabled: true
+      })), /*#__PURE__*/react.createElement(Row_Row, {
+        marginBottom: "normal"
+      }, /*#__PURE__*/react.createElement(Field_Field, {
+        id: "txt-album-name",
+        component: "input",
+        label: "Album",
+        value: linkedAlbum.name,
+        disabled: true
+      })), /*#__PURE__*/react.createElement(Row_Row, {
+        marginBottom: "normal"
+      }, /*#__PURE__*/react.createElement(Field_Field, {
+        id: "txt-genre-name",
+        component: "input",
+        label: "Genre",
+        value: linkedGenre.name,
+        disabled: true
+      }), /*#__PURE__*/react.createElement(Field_Field, {
+        id: "txt-year-name",
+        component: "input",
+        label: "Genre",
+        value: linkedYear.name,
+        disabled: true
+      })), /*#__PURE__*/react.createElement(Row_Row, null, /*#__PURE__*/react.createElement("div", {
+        className: "h-col-small"
+      }, /*#__PURE__*/react.createElement(Field_Field, {
+        id: "txt-track",
+        component: "input",
+        label: "Piste",
+        value: track.track,
+        disabled: true
+      }), /*#__PURE__*/react.createElement(Field_Field, {
+        id: "txt-disc",
+        component: "input",
+        label: "Piste",
+        value: track.disc,
+        disabled: true
+      })), /*#__PURE__*/react.createElement("div", {
+        className: "responsive-hidden"
+      })), track.ts_added && /*#__PURE__*/react.createElement(Row_Row, {
+        style: {
+          marginTop: '10px'
+        }
+      }, /*#__PURE__*/react.createElement(Typography_Typography, {
+        variant: "description",
+        size: "small"
+      }, "Ajout\xE9 le ", dateTools.dateToFrenchFull(track.ts_added), " \xE0 ", dateTools.fromTimeToHumanized(track.ts_added)))));
+    } else {
+      popupContent = /*#__PURE__*/react.createElement(Helper_Helper, {
+        iconName: "album",
+        show: true,
+        inFlux: true,
+        style: {
+          minHeight: '600px'
+        }
+      });
+    }
   } // -----------------------------------------------
 
 
   return /*#__PURE__*/react.createElement(Popup_Popup, {
     id: popupTrackMetadatasKey,
-    title: popupTitle // style={{
-    // 	minWidth: '600px',
-    // 	maxWidth: '600px',
-    // }}
-    // contentStyle={{
-    // 	padding: '0px',
-    // 	minHeight: '600px',
-    // 	maxHeight: '600px',
-    // }}
-
+    title: popupTitle,
+    maxWidth: "md"
   }, popupContent);
 });
 // EXTERNAL MODULE: ./popups/manage_playlist/PopupManagePlaylist.css

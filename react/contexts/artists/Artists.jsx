@@ -172,6 +172,16 @@ export const ArtistsStore = types
 			return added;
 		},
 
+		unindex: (artistId) => {
+
+			// Dé-indexation d'un artiste
+			// ---
+
+			if (!artistId) { return; }
+
+			self.by_id.delete(artistId);
+		},
+
 	}))
 
 

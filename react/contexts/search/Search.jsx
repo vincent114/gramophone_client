@@ -32,6 +32,10 @@ export const SearchStore = types
 
 		},
 
+		clear: () => {
+
+		},
+
 	}))
 
 

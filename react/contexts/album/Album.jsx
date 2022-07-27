@@ -290,6 +290,13 @@ export const AlbumStore = types
 			}
 		},
 
+		removeTrackId: (trackId) => {
+			const trackIdx = self.tracks_ids.indexOf(trackId)
+			if (trackIdx > -1) {
+				self.tracks_ids.splice(trackIdx, 1);
+			}
+		},
+
 		// -
 
 		play: (trackId) => {
@@ -352,7 +359,10 @@ export const AlbumContextualMenu = observer((props) => {
 
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
+	const snackbar = app.snackbar;
+	const search = store.search;
 	const tracks = store.tracks;
+	const albums = store.albums;
 	const player = store.player;
 	const popupTrackMetadatas = store.popupTrackMetadatas;
 	const popupManagePlaylist = store.popupManagePlaylist;
@@ -415,7 +425,41 @@ export const AlbumContextualMenu = observer((props) => {
 	// -
 
 	const handleDelete = () => {
-		// TODO
+		const CONFIRM_UNINDEX = `Êtes-vous sûr de vouloir dé-indexer l'album ${album.name} ?`;
+		if (confirm(CONFIRM_UNINDEX)) {
+
+			player.audioStop();
+			player.clear();
+
+			search.clear();
+
+			app.clearHistory();
+
+			if (app.context == 'album' && store.albumId == album.id) {
+				app.navigateTo('home');
+			}
+			if (app.context == 'artist' && store.artistId == album.artist_id) {
+				app.navigateTo('home');
+			}
+			if (app.context == 'year' && store.yearId == album.year_id) {
+				app.navigateTo('home');
+			}
+			if (app.context == 'genre' && store.yearId == album.genre_id) {
+				app.navigateTo('home');
+			}
+
+			setTimeout(() => {
+				const unindexed = albums.unindex(album.id);
+				if (unindexed) {
+					setTimeout(() => {
+						store.save();
+					}, 1000)
+					snackbar.update(true, "Album dé-indexé avec succès.", "success");
+				} else {
+					snackbar.update(true, "Dé-indexation de l'album échouée.", "error");
+				}
+			}, 500);
+		}
 	}
 
 	// Render

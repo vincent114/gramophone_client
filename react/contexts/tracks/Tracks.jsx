@@ -245,6 +245,48 @@ export const TracksStore = types
 			return added;
 		},
 
+		unindex: (trackId, ignoreAlbums=false) => {
+
+			// Dé-indexation d'un morceau
+			// ---
+
+			const store = getRoot(self);
+			const playlists = store.playlists;
+
+			let unindexed = true;
+			let goAhead = true;
+
+			const track = self.by_id.get(trackId);
+			if (!track) {
+				unindexed = false;
+				goAhead = false;
+			}
+
+			// Déréférencement du titre dans l'album
+			if (goAhead && !ignoreAlbums && track.album_id) {
+				track.linkedAlbum.removeTrackId(trackId);
+			}
+
+			// Suppression du titre dans les playlists
+			if (goAhead) {
+				for (const [playlistId, playlist] of playlists.by_id.entries()) {
+					if (playlist.permanent) {
+						continue;
+					}
+					playlist.removeTrack(trackId);
+				}
+			}
+
+			// Suppression du titre
+			if (goAhead) {
+				self.by_id.delete(trackId);
+			}
+
+			return unindexed;
+		},
+
+		// -
+
 		shuffle: () => {
 
 			// Lecture aléatoire de titres

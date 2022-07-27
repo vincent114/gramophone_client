@@ -315,8 +315,13 @@ export const PlaylistsStore = types
 			self.by_id.delete(playlistId);
 		},
 
-		removeFolder: (folderId) => {
-			self.folders.delete(folderId);
+		removeFolder: (folderIdToRemove) => {
+			for (const [folderId, folder] of self.folders.entries()) {
+				if (folder.parent == folderIdToRemove) {
+					folder.setField('parent', null);
+				}
+			}
+			self.folders.delete(folderIdToRemove);
 		},
 
 	}))

@@ -125,6 +125,13 @@ export const YearStore = types
 			}
 		},
 
+		removeAlbumId: (albumId) => {
+			const albumIdx = self.albums_ids.indexOf(albumId);
+			if (albumIdx > -1) {
+				self.albums_ids.splice(albumIdx, 1);
+			}
+		},
+
 		// -
 
 		shuffle: () => {

@@ -158,7 +158,17 @@ export const YearsStore = types
 
 			self.by_id.set(yearId, year);
 			return added;
-		}
+		},
+
+		unindex: (yearId) => {
+
+			// Dé-indexation d'un année
+			// ---
+
+			if (!yearId) { return; }
+
+			self.by_id.delete(yearId);
+		},
 
 	}))
 

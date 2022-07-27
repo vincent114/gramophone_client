@@ -161,7 +161,17 @@ export const GenresStore = types
 
 			self.by_id.set(genreId, genre);
 			return added;
-		}
+		},
+
+		unindex: (genreId) => {
+
+			// Dé-indexation d'un genre
+			// ---
+
+			if (!genreId) { return; }
+
+			self.by_id.delete(genreId);
+		},
 
 	}))
 
