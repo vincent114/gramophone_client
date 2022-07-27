@@ -12,6 +12,7 @@ const windowStateKeeper = require('electron-window-state');
 const path = require('path');
 const fs = require('fs-extra');
 const { fork } = require('child_process');
+const os = require('os');
 
 let mainWindow = null;
 let indexer = null;
@@ -156,6 +157,14 @@ ipcMain.handle("writeJSON", async (event, [filePath, datas, options]) => {
 	return result;
 });
 
+ipcMain.handle("copy", async (event, [sourcePath, targetPath]) => {
+
+	// Copie de fichier
+	// ---
+
+	const result = await fs.copy(sourcePath, targetPath);
+	return result;
+});
 
 // ipc sync events
 // -------------------------------------------------------------------
@@ -238,4 +247,15 @@ ipcMain.on("showItemInFolder", (event, [fullPath]) => {
 	// ---
 
 	event.returnValue = shell.showItemInFolder(fullPath);
+});
+
+// ***** os *****
+// **************
+
+ipcMain.on("platform", (event, []) => {
+
+	// Met en évidence le fichier ou le dossier passé en paramètres dans le Finder / Explorateur
+	// ---
+
+	event.returnValue = os.platform();
 });

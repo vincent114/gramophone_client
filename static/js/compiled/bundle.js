@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 18082:
+/***/ 25975:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3784,6 +3784,30 @@ var RefreshIcon = function RefreshIcon(props) {
     d: "M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"
   }));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Repeat.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var RepeatIcon = function RepeatIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"
+  }));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Report.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -4920,6 +4944,7 @@ var Icon = __webpack_require__(73244);
 
 
 
+
  // Datas
 // -------------------------------------------------------------------------------------------------------------
 
@@ -5035,6 +5060,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'radio_button_checked': RadioButtonCheckedIcon,
   'radio_button_unchecked': RadioButtonUncheckedIcon,
   'refresh': RefreshIcon,
+  'repeat': RepeatIcon,
   'report': ReportIcon,
   'restore_from_trash': RestoreFromTrashIcon,
   'rocket': RocketIcon,
@@ -5719,11 +5745,13 @@ var IconButton = (0,es/* observer */.Pi)(function (props) {
 
 
   var title = props.title ? props.title : '';
-  var size = props.size ? props.size : 'normal'; // normal, small
+  var size = props.size ? props.size : 'normal'; // normal, small, tiny
 
   var disabled = props.disabled == true ? true : false;
   var iconName = props.iconName;
   var iconVariant = props.iconVariant ? props.iconVariant : "outlined"; // filled, outlined
+
+  var iconSize = props.iconSize ? props.iconSize : "normal"; // small, normal, large
 
   var children = props.children;
   var color = props.color ? props.color : 'default'; // primary, secondary, severityKey, custom, typography
@@ -5748,6 +5776,7 @@ var IconButton = (0,es/* observer */.Pi)(function (props) {
   if (!children && iconName) {
     content = /*#__PURE__*/react.createElement(Icon_Icon, {
       name: iconName,
+      size: iconSize,
       variant: iconVariant,
       color: iconColor
     });
@@ -20034,7 +20063,7 @@ var NxApp_NxApp = (0,es/* observer */.Pi)(function (props) {
     id: "nx-content"
   }, Menu && !isFullScreen && /*#__PURE__*/react.createElement(Menu, null), /*#__PURE__*/react.createElement("div", {
     id: "nx-main"
-  }, content, /*#__PURE__*/react.createElement(Snackbar_Snackbar, null)), !isFullScreen && /*#__PURE__*/react.createElement(Portal_Portal, null), right, popupsRendered)));
+  }, content), !isFullScreen && /*#__PURE__*/react.createElement(Portal_Portal, null), right, popupsRendered, /*#__PURE__*/react.createElement(Snackbar_Snackbar, null))));
 });
 ;// CONCATENATED MODULE: ../../nexus/react/models/services.jsx
 function services_slicedToArray(arr, i) { return services_arrayWithHoles(arr) || services_iterableToArrayLimit(arr, i) || services_unsupportedIterableToArray(arr, i) || services_nonIterableRest(); }
@@ -20919,6 +20948,7 @@ var TrackContextualMenu = (0,es/* observer */.Pi)(function (props) {
   var app = store.app;
   var tracks = store.tracks;
   var player = store.player;
+  var playlists = store.playlists;
   var popupTrackMetadatas = store.popupTrackMetadatas;
   var popupManagePlaylist = store.popupManagePlaylist; // From ... states
 
@@ -20929,6 +20959,7 @@ var TrackContextualMenu = (0,es/* observer */.Pi)(function (props) {
 
 
   var track = props.track;
+  var playlist = props.playlist;
   var origin = props.origin ? props.origin : "album"; // album, player, playlist, header
 
   var size = props.size ? props.size : "small";
@@ -21001,6 +21032,11 @@ var TrackContextualMenu = (0,es/* observer */.Pi)(function (props) {
   var handleAddToQueue = function handleAddToQueue() {
     player.populate([track.id]);
     handleCloseMenu();
+  };
+
+  var handleRemoveFromPlaylist = function handleRemoveFromPlaylist() {
+    playlist.removeTrack(track.id);
+    playlists.save();
   };
 
   var handleRemoveFromPlayer = function handleRemoveFromPlayer() {
@@ -21160,7 +21196,16 @@ var TrackContextualMenu = (0,es/* observer */.Pi)(function (props) {
     name: "queue_music"
   }), /*#__PURE__*/react.createElement(ListText, {
     withIcon: true
-  }, "Ajouter \xE0 la liste de lecture")), origin == 'player' && /*#__PURE__*/react.createElement(ListItem, {
+  }, "Ajouter \xE0 la liste de lecture")), origin == 'playlist' && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleRemoveFromPlaylist();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "playlist_remove"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Supprimer de la playlist"))), origin == 'player' && /*#__PURE__*/react.createElement(ListItem, {
     size: "small",
     onClick: function onClick() {
       return handleRemoveFromPlayer();
@@ -21199,6 +21244,7 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
 
 
   var track = props.track;
+  var playlist = props.playlist;
   var origin = props.origin ? props.origin : "album"; // album, playlist
   // From ... store
 
@@ -21239,7 +21285,13 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
     player.clear();
 
     if (track.isPlayerCandidate) {
-      linkedAlbum.play(track.id);
+      if (origin == 'album') {
+        linkedAlbum.play(track.id);
+      }
+
+      if (origin == 'playlist') {
+        playlist.play(track.id);
+      }
     } else {
       player.audioStop();
       player.clear();
@@ -21380,6 +21432,7 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
     size: "tiny"
   }, /*#__PURE__*/react.createElement(TrackContextualMenu, {
     track: track,
+    playlist: playlist,
     origin: origin,
     style: {
       marginRight: '-4px'
@@ -21638,6 +21691,10 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
 
       if (nextTrackIdx < self.playList.length) {
         return self.playList[nextTrackIdx];
+      } else {
+        if (self.repeatMode && self.playList.length > 0) {
+          return self.playList[0];
+        }
       }
 
       return "";
@@ -21679,7 +21736,6 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
 
       for (var trackIdx in self.playList) {
         trackIdx = parseInt(trackIdx);
-        console.log(trackIdx);
 
         if (playIdx > -1 && trackIdx <= playIdx) {
           continue;
@@ -21797,12 +21853,16 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
     toggleDrawer: function toggleDrawer() {
       self.drawerOpen = !self.drawerOpen;
     },
+    toggleRepeat: function toggleRepeat() {
+      self.repeatMode = !self.repeatMode;
+    },
     // -
     load: function load() {
       // Chargement des paramètres de la bibliothèque
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
+      self.repeatMode = Storage_getFromStorage('repeatMode', false, 'bool');
       var historyList = Storage_getFromStorage('historyList', [], 'json');
       self.historyList = historyList;
       self.loaded = true;
@@ -21810,6 +21870,7 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
     save: function save(callback) {
       // Sauvegarde des de l'historique de lecture
       // ---
+      Storage_setToStorage('repeatMode', self.repeatMode, 'bool');
       var historyList = self.historyList.toJSON();
       Storage_setToStorage('historyList', historyList, 'json');
 
@@ -21961,6 +22022,7 @@ var PlayerStore = mobx_state_tree_module/* types.model */.V5.model({
         self.read(nextTrackId);
       } else {
         self.audioStop();
+        self.playIdx = -1;
       }
     },
     // -
@@ -22324,7 +22386,8 @@ var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
   var style = props.style ? props.style : {}; // From ... store
 
   var track = player.playTrack;
-  var isPlaying = player.isPlaying; // const sliderCurrent = player.sliderCurrent;
+  var isPlaying = player.isPlaying;
+  var repeatMode = player.repeatMode; // const sliderCurrent = player.sliderCurrent;
   // const sliderMax = player.sliderMax;
   // ...
 
@@ -22340,6 +22403,11 @@ var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
   var handleCoverClick = function handleCoverClick() {
     popupZoomCover.setField("albumId", track.album_id);
     popupZoomCover.open();
+  };
+
+  var handleRepeat = function handleRepeat() {
+    player.toggleRepeat();
+    player.save();
   };
 
   var handleSliderChange = function handleSliderChange(newValue) {
@@ -22377,7 +22445,8 @@ var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
     spacing: "none",
     style: {
       "justifyContent": "space-evenly",
-      "paddingBottom": "6px"
+      "paddingBottom": "6px",
+      "paddingLeft": "24px"
     }
   }, track.name && /*#__PURE__*/react.createElement("div", {
     className: "g-player-display-title"
@@ -22385,6 +22454,20 @@ var PlayerDisplay_PlayerDisplay = (0,es/* observer */.Pi)(function (props) {
     className: "g-player-display-subtitle"
   }, track.subtitle)), /*#__PURE__*/react.createElement(PlayerDisplaySlider, {
     onChange: handleSliderChange
+  }), /*#__PURE__*/react.createElement(IconButton, {
+    size: "tiny",
+    iconName: "repeat",
+    iconSize: "small",
+    color: repeatMode ? "warning" : "#FFFFFF",
+    className: "flex-0",
+    style: {
+      zIndex: '100',
+      marginBottom: "5px",
+      marginRight: "5px"
+    },
+    onClick: function onClick(e) {
+      return handleRepeat(e);
+    }
   }), /*#__PURE__*/react.createElement(TrackContextualMenu, {
     track: track,
     size: "tiny",
@@ -23067,7 +23150,7 @@ var AlbumStore = mobx_state_tree_module/* types.model */.V5.model({
       player.read(trackId);
     },
     queue: function queue() {
-      // Ajout des morceau dans l'ordre dans la liste de lecture
+      // Ajout des morceaux dans l'ordre dans la liste de lecture
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var player = store.player;
@@ -27564,6 +27647,9 @@ function Playlist_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
+
 function Playlist_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Playlist_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function Playlist_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Playlist_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Playlist_arrayLikeToArray(o, minLen); }
@@ -27661,6 +27747,73 @@ var PlaylistStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       return tracksList;
+    },
+    getPlayable: function getPlayable() {
+      var load = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+      var trackIdOrigin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var tracksList = [];
+      var tracks = self.getTracks(); // A partir d'un certain titre ou depuis le début ?
+
+      var startIdx = 0;
+
+      if (trackIdOrigin != null) {
+        for (var trackIdx in tracks) {
+          var track = tracks[trackIdx];
+
+          if (track.id == trackIdOrigin) {
+            startIdx = parseInt(trackIdx);
+            break;
+          }
+        }
+      } // Récupération des titres
+
+
+      for (var _trackIdx in tracks) {
+        var _track = tracks[_trackIdx];
+
+        if (parseInt(_trackIdx) < startIdx) {
+          continue;
+        }
+
+        if (_track.isPlayerCandidate) {
+          if (load) {
+            tracksList.push(_track);
+          } else {
+            tracksList.push(_track.id);
+          }
+        }
+      }
+
+      return tracksList;
+    },
+    getTracksRandomly: function getTracksRandomly() {
+      var load = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var helpers = app.helpers;
+      var tracks = store.tracks;
+      var playableIds = self.getPlayable(false);
+      var howMany = playableIds.length;
+      var randomTracks = [];
+      var randomTracksIdxs = [];
+      var randomTracksIds = [];
+
+      while (randomTracksIdxs.length < howMany) {
+        var randomIdx = helpers.getRandomNumber(howMany) - 1;
+
+        if (randomTracksIdxs.indexOf(randomIdx) == -1) {
+          randomTracksIdxs.push(randomIdx);
+          var trackId = playableIds[randomIdx];
+          var track = tracks.by_id.get(trackId);
+
+          if (track && track.isShuffleCandidate) {
+            randomTracksIds.push(trackId);
+            randomTracks.push(track);
+          }
+        }
+      }
+
+      return load ? randomTracks : randomTracksIds;
     }
   };
 }).actions(function (self) {
@@ -27720,6 +27873,13 @@ var PlaylistStore = mobx_state_tree_module/* types.model */.V5.model({
         self.tracks_ids.push(trackId);
       }
     },
+    removeTrack: function removeTrack(trackId) {
+      var trackIdx = self.tracks_ids.indexOf(trackId);
+
+      if (trackIdx > -1) {
+        self.tracks_ids.splice(trackIdx, 1);
+      }
+    },
     populateWith: function populateWith(sourceKind, sourceId) {
       // Ajoute un ou plusieurs morceaux à la playlist
       // ---
@@ -27752,6 +27912,92 @@ var PlaylistStore = mobx_state_tree_module/* types.model */.V5.model({
           }
         }
       }
+    },
+    // -
+    play: function play(trackId) {
+      // Lecture de tous les morceaux de la playlist dans l'ordre
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var player = store.player;
+      var playbackIds = self.getPlayable(false);
+      player.audioStop();
+      player.clear();
+      player.populate(playbackIds);
+      player.read(trackId);
+    },
+    queue: function queue() {
+      // Ajout des morceaux dans l'ordre dans la liste de lecture
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var player = store.player;
+      var playbackIds = self.getPlayable(false);
+      player.populate(playbackIds);
+
+      if (playbackIds.length > 0 && player.playIdx == -1) {
+        player.setField("playIdx", 0);
+      }
+    },
+    shuffle: function shuffle() {
+      // Lecture aléatoire de tous les morceaux de la playlist
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var player = store.player;
+      var playbackIds = self.getTracksRandomly(false);
+      player.audioStop();
+      player.clear();
+      player.populate(playbackIds);
+      player.read();
+    },
+    // -
+    "export": function _export() {
+      // Exportation des titres la playlist vers un dossier
+      // ---
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var app = store.app;
+      var snackbar = app.snackbar;
+      var slashPath = store.slashPath;
+      var tracks = self.getPlayable();
+      var nbCopied = 0;
+      ipc.once('folderChoosed', function (folders) {
+        var _iterator4 = Playlist_createForOfIteratorHelper(folders),
+            _step4;
+
+        try {
+          for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+            var folder = _step4.value;
+
+            var _iterator5 = Playlist_createForOfIteratorHelper(tracks),
+                _step5;
+
+            try {
+              for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+                var track = _step5.value;
+                var exportSource = track.track_path;
+                var exportSourceParts = exportSource.split(slashPath);
+                var exportTarget = "".concat(folder).concat(slashPath).concat(exportSourceParts[exportSourceParts.length - 1]);
+                ipc.invoke('copy', [exportSource, exportTarget]).then(function (result) {
+                  nbCopied += 1;
+
+                  if (nbCopied == tracks.length) {
+                    snackbar.update(true, "Copie terminée.", "success");
+                  }
+                });
+              }
+            } catch (err) {
+              _iterator5.e(err);
+            } finally {
+              _iterator5.f();
+            }
+
+            break;
+          }
+        } catch (err) {
+          _iterator4.e(err);
+        } finally {
+          _iterator4.f();
+        }
+      });
+      ipc.send('chooseFolder');
     }
   };
 }); // Functions Components ReactJS
@@ -27801,7 +28047,12 @@ var PlaylistContextualMenu = (0,es/* observer */.Pi)(function (props) {
 
 
   var handleExport = function handleExport() {
-    // TODO
+    playlist["export"]();
+    handleCloseMenu();
+  };
+
+  var handleAddToQueue = function handleAddToQueue() {
+    playlist.queue();
     handleCloseMenu();
   }; // -
 
@@ -27897,7 +28148,16 @@ var PlaylistContextualMenu = (0,es/* observer */.Pi)(function (props) {
     name: "usb"
   }), /*#__PURE__*/react.createElement(ListText, {
     withIcon: true
-  }, "Exporter la playlist")), /*#__PURE__*/react.createElement(Divider_Divider, {
+  }, "Exporter la playlist")), /*#__PURE__*/react.createElement(ListItem, {
+    size: "small",
+    onClick: function onClick() {
+      return handleAddToQueue();
+    }
+  }, /*#__PURE__*/react.createElement(List_ListIcon, {
+    name: "queue_music"
+  }), /*#__PURE__*/react.createElement(ListText, {
+    withIcon: true
+  }, "Ajouter \xE0 la liste de lecture")), /*#__PURE__*/react.createElement(Divider_Divider, {
     spacing: "medium"
   }), /*#__PURE__*/react.createElement(ListItem, {
     size: "small",
@@ -27974,10 +28234,12 @@ var PlaylistRow = (0,es/* observer */.Pi)(function (props) {
     store.navigateTo('playlist', playlistId);
   };
 
-  var handleShuffleClick = function handleShuffleClick(playlistId) {// TODO
+  var handleShuffleClick = function handleShuffleClick(playlistId) {
+    playlist.shuffle();
   };
 
-  var handlePlayClick = function handlePlayClick(playlistId) {// TODO
+  var handlePlayClick = function handlePlayClick(playlistId) {
+    playlist.play();
   }; // Render
   // ==================================================================================================
 
@@ -28057,10 +28319,12 @@ var RenderPlaylist = (0,es/* observer */.Pi)(function (props) {
   // Events
   // ==================================================================================================
 
-  var handlePlayClick = function handlePlayClick() {// TODO
+  var handlePlayClick = function handlePlayClick() {
+    playlist.play();
   };
 
-  var handleThrowDiceClick = function handleThrowDiceClick() {// TODO
+  var handleThrowDiceClick = function handleThrowDiceClick() {
+    playlist.shuffle();
   }; // Render
   // ==================================================================================================
 
@@ -28127,6 +28391,7 @@ var RenderPlaylist = (0,es/* observer */.Pi)(function (props) {
     return /*#__PURE__*/react.createElement(TrackRow, {
       key: "track-".concat(trackIdx),
       track: track,
+      playlist: playlist,
       origin: "playlist"
     });
   })))));
@@ -28285,6 +28550,10 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
         if (a.label > b.label) return 1;
         if (a.label < b.label) return -1;
         return 0;
+      });
+      items.push({
+        "value": "new",
+        "label": "Nouvelle playlist..."
       });
       return items;
     },
@@ -31701,10 +31970,10 @@ var PopupManagePlaylistStore = mobx_state_tree_module/* types.model */.V5.model(
       self.draftKind = kind;
       self.draftId = id;
       self.draftPlaylist = PlaylistStore.create({});
-      self.draftFolder = PlaylistFolderStore.create({}); // create
+      self.draftFolder = PlaylistFolderStore.create({}); // create / add
       // -
 
-      if (mode == 'create' && kind == 'playlist') {
+      if ((mode == 'create' || mode == 'add') && kind == 'playlist') {
         self.draftPlaylist = PlaylistStore.create({
           "id": uuid(),
           "name": "Du ".concat(dateTools.dateToFrench(), " ").concat(dateTools.getHourIso()),
@@ -31738,10 +32007,7 @@ var PopupManagePlaylistStore = mobx_state_tree_module/* types.model */.V5.model(
         if (folder) {
           self.draftFolder = PlaylistFolderStore.create(folder.toJSON());
         }
-      } // add
-      // -
-      // TODO
-
+      }
     },
     validate: function validate(callback) {
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
@@ -31750,11 +32016,12 @@ var PopupManagePlaylistStore = mobx_state_tree_module/* types.model */.V5.model(
       var draftKind = self.draftKind;
       var draftPlaylist = self.draftPlaylist;
       var draftFolder = self.draftFolder;
+      var destinationId = self.destinationId;
       var errors = [];
 
-      if (['create', 'edit'].includes(mode)) {
+      if (['create', 'edit', 'add'].includes(mode)) {
         // Pas de nom de playlist ?
-        if (draftKind == 'playlist' && !draftPlaylist.name) {
+        if (draftKind == 'playlist' && !draftPlaylist.name && (['create', 'edit'].includes(mode) || destinationId == 'new')) {
           errors.push(app.addError(['popupManagePlaylist', 'draftPlaylist', 'name'], "Nom de la playlist manquant"));
         } // Pas de nom de dossier ?
 
@@ -31872,6 +32139,11 @@ var PopupManagePlaylist_PopupManagePlaylist = (0,es/* observer */.Pi)(function (
         }
 
         if (mode == 'add') {
+          if (destinationId == 'new') {
+            playlists.setPlaylist(draftPlaylist.id, draftPlaylist.toJSON());
+            destinationId = draftPlaylist.id;
+          }
+
           var playlist = playlists.by_id.get(destinationId);
 
           if (playlist) {
@@ -31923,7 +32195,18 @@ var PopupManagePlaylist_PopupManagePlaylist = (0,es/* observer */.Pi)(function (
     var _sourceType = popupManagePlaylist.sourceType;
     var playlistItems = playlists.playlistItems;
     var folderItems = playlists.folderItems;
-    popupContent = /*#__PURE__*/react.createElement("div", null, draftKind == 'playlist' && ['create', 'edit'].includes(mode) && /*#__PURE__*/react.createElement(Field_Field, {
+    popupContent = /*#__PURE__*/react.createElement("div", null, mode == 'add' && /*#__PURE__*/react.createElement(Field_Field, {
+      id: "lst-playlist-destination",
+      component: "select",
+      label: "Playlist",
+      datas: playlistItems,
+      savePath: ['popupManagePlaylist', 'destinationId'],
+      disabled: isLoading,
+      canBeEmpty: true,
+      style: {
+        marginBottom: destinationId == 'new' ? '5px' : '0px'
+      }
+    }), draftKind == 'playlist' && (['create', 'edit'].includes(mode) || destinationId == 'new') && /*#__PURE__*/react.createElement(Field_Field, {
       id: "txt-playlist-name",
       component: "input",
       label: "Nom",
@@ -31935,14 +32218,6 @@ var PopupManagePlaylist_PopupManagePlaylist = (0,es/* observer */.Pi)(function (
       label: "Nom",
       savePath: ['popupManagePlaylist', 'draftFolder', 'name'],
       disabled: isLoading
-    }), mode == 'add' && /*#__PURE__*/react.createElement(Field_Field, {
-      id: "lst-playlist-destination",
-      component: "select",
-      label: "Playlist",
-      datas: playlistItems,
-      savePath: ['popupManagePlaylist', 'destinationId'],
-      disabled: isLoading,
-      canBeEmpty: true
     }), mode == 'move' && /*#__PURE__*/react.createElement(Field_Field, {
       id: "lst-folder-destination",
       component: "select",
@@ -32112,15 +32387,20 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
   popupZoomCover: mobx_state_tree_module/* types.optional */.V5.optional(PopupZoomCoverStore, {}),
   popupTrackMetadatas: mobx_state_tree_module/* types.optional */.V5.optional(PopupTrackMetadatasStore, {}),
   popupManagePlaylist: mobx_state_tree_module/* types.optional */.V5.optional(PopupManagePlaylistStore, {}),
+  platform: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   loaded: false
-}) // .views(self => ({
-// 	get ajaxGramophone() {
-// 		const app = self.app;
-// 		const services = app.services;
-// 		return services.getAjaxBase('gramophone');
-// 	},
-// }))
-.actions(function (self) {
+}).views(function (self) {
+  return {
+    get slashPath() {
+      if (self.platform == 'win32') {
+        return '\\';
+      }
+
+      return '/';
+    }
+
+  };
+}).actions(function (self) {
   return {
     afterLoad: function afterLoad() {
       // La bibliothèque est-elle entièrement chargée ?
@@ -32383,7 +32663,8 @@ var initSnapshot = makeInitSnapshot(routes, {
   'playlistFolderId': Storage_getFromStorage('lastPlaylistFolderId', ''),
   'player': {
     'volume': Storage_getFromStorage('volume', 25, 'int')
-  }
+  },
+  'platform': ipc.sendSync('platform')
 });
 var rootStore = RootStore.create(initSnapshot);
 var RootStoreContext = /*#__PURE__*/react.createContext(rootStore);
@@ -33615,7 +33896,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(18082)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(25975)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

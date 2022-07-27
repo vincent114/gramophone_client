@@ -101,6 +101,10 @@ export const PlaylistsStore = types
 					return -1;
 				return 0;
 			});
+			items.push({
+				"value": "new",
+				"label": "Nouvelle playlist...",
+			});
 			return items;
 		},
 

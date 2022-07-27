@@ -81,10 +81,10 @@ export const PopupManagePlaylistStore = types
 			self.draftPlaylist = PlaylistStore.create({});
 			self.draftFolder = PlaylistFolderStore.create({});
 
-			// create
+			// create / add
 			// -
 
-			if (mode == 'create' && kind == 'playlist') {
+			if ((mode == 'create' || mode == 'add') && kind == 'playlist') {
 				self.draftPlaylist = PlaylistStore.create({
 					"id": uuid(),
 					"name": `Du ${dateTools.dateToFrench()} ${dateTools.getHourIso()}`,
@@ -116,12 +116,6 @@ export const PopupManagePlaylistStore = types
 					self.draftFolder = PlaylistFolderStore.create(folder.toJSON());
 				}
 			}
-
-			// add
-			// -
-
-			// TODO
-
 		},
 
 		validate: (callback) => {
@@ -133,13 +127,14 @@ export const PopupManagePlaylistStore = types
 			const draftKind = self.draftKind;
 			const draftPlaylist = self.draftPlaylist;
 			const draftFolder = self.draftFolder;
+			const destinationId = self.destinationId;
 
 			let errors = [];
 
-			if (['create', 'edit'].includes(mode)) {
+			if (['create', 'edit', 'add'].includes(mode)) {
 
 				// Pas de nom de playlist ?
-				if (draftKind == 'playlist' && !draftPlaylist.name) {
+				if (draftKind == 'playlist' && !draftPlaylist.name && (['create', 'edit'].includes(mode) || destinationId == 'new')) {
 					errors.push(app.addError(
 						['popupManagePlaylist', 'draftPlaylist', 'name'],
 						"Nom de la playlist manquant",
@@ -239,7 +234,7 @@ export const PopupManagePlaylist = observer((props) => {
 	const sourceId = popupManagePlaylist.sourceId;
 	const sourceType = popupManagePlaylist.sourceType;
 
-	const destinationId = popupManagePlaylist.destinationId;
+	let destinationId = popupManagePlaylist.destinationId;
 
 	// ...
 
@@ -287,6 +282,10 @@ export const PopupManagePlaylist = observer((props) => {
 				}
 
 				if (mode == 'add') {
+					if (destinationId == 'new') {
+						playlists.setPlaylist(draftPlaylist.id, draftPlaylist.toJSON());
+						destinationId = draftPlaylist.id;
+					}
 					const playlist = playlists.by_id.get(destinationId);
 					if (playlist) {
 						playlist.populateWith(sourceType, sourceId);
@@ -341,7 +340,22 @@ export const PopupManagePlaylist = observer((props) => {
 		popupContent = (
 			<div>
 
-				{(draftKind == 'playlist' && ['create', 'edit'].includes(mode)) && (
+				{mode == 'add' && (
+					<Field
+						id="lst-playlist-destination"
+						component='select'
+						label="Playlist"
+						datas={playlistItems}
+						savePath={['popupManagePlaylist', 'destinationId']}
+						disabled={isLoading}
+						canBeEmpty={true}
+						style={{
+							marginBottom: (destinationId == 'new') ? '5px' : '0px',
+						}}
+					/>
+				)}
+
+				{(draftKind == 'playlist' && (['create', 'edit'].includes(mode) || destinationId == 'new')) && (
 					<Field
 						id="txt-playlist-name"
 						component='input'
@@ -358,18 +372,6 @@ export const PopupManagePlaylist = observer((props) => {
 						label='Nom'
 						savePath={['popupManagePlaylist', 'draftFolder', 'name']}
 						disabled={isLoading}
-					/>
-				)}
-
-				{mode == 'add' && (
-					<Field
-						id="lst-playlist-destination"
-						component='select'
-						label="Playlist"
-						datas={playlistItems}
-						savePath={['popupManagePlaylist', 'destinationId']}
-						disabled={isLoading}
-						canBeEmpty={true}
 					/>
 				)}
 

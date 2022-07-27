@@ -247,6 +247,7 @@ export const TrackContextualMenu = observer((props) => {
 	const app = store.app;
 	const tracks = store.tracks;
 	const player = store.player;
+	const playlists = store.playlists;
 	const popupTrackMetadatas = store.popupTrackMetadatas;
 	const popupManagePlaylist = store.popupManagePlaylist;
 
@@ -257,6 +258,7 @@ export const TrackContextualMenu = observer((props) => {
 	// From ... props
 
 	const track = props.track;
+	const playlist = props.playlist;
 	const origin = (props.origin) ? props.origin : "album"; // album, player, playlist, header
 	const size = (props.size) ? props.size : "small";
 	const color = (props.color) ? props.color : null;
@@ -339,6 +341,11 @@ export const TrackContextualMenu = observer((props) => {
 	const handleAddToQueue = () => {
 		player.populate([track.id]);
 		handleCloseMenu();
+	}
+
+	const handleRemoveFromPlaylist = () => {
+		playlist.removeTrack(track.id);
+		playlists.save();
 	}
 
 	const handleRemoveFromPlayer = () => {
@@ -545,6 +552,22 @@ export const TrackContextualMenu = observer((props) => {
 							</ListItem>
 						)}
 
+						{origin == 'playlist' && (
+							<React.Fragment>
+								<ListItem
+									size="small"
+									onClick={() => handleRemoveFromPlaylist()}
+								>
+									<ListIcon
+										name="playlist_remove"
+									/>
+									<ListText withIcon={true}>
+										Supprimer de la playlist
+									</ListText>
+								</ListItem>
+							</React.Fragment>
+						)}
+
 						{origin == 'player' && (
 							<ListItem
 								size="small"
@@ -608,6 +631,7 @@ export const TrackRow = observer((props) => {
 	// From ... props
 
 	const track = props.track;
+	const playlist = props.playlist;
 	const origin = (props.origin) ? props.origin : "album"; // album, playlist
 
 	// From ... store
@@ -655,7 +679,12 @@ export const TrackRow = observer((props) => {
 		player.audioStop();
 		player.clear();
 		if (track.isPlayerCandidate) {
-			linkedAlbum.play(track.id);
+			if (origin == 'album') {
+				linkedAlbum.play(track.id);
+			}
+			if (origin == 'playlist') {
+				playlist.play(track.id);
+			}
 		} else {
 			player.audioStop();
 			player.clear();
@@ -839,6 +868,7 @@ export const TrackRow = observer((props) => {
 		>
 			<TrackContextualMenu
 				track={track}
+				playlist={playlist}
 				origin={origin}
 				style={{
 					marginRight: '-4px',

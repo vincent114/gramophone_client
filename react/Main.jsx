@@ -177,18 +177,21 @@ const RootStore = types
 		popupTrackMetadatas: types.optional(PopupTrackMetadatasStore, {}),
 		popupManagePlaylist: types.optional(PopupManagePlaylistStore, {}),
 
+		platform: types.maybeNull(types.string),
+
 		loaded: false,
 
 	})
-	// .views(self => ({
+	.views(self => ({
 
-	// 	get ajaxGramophone() {
-	// 		const app = self.app;
-	// 		const services = app.services;
-	// 		return services.getAjaxBase('gramophone');
-	// 	},
+		get slashPath() {
+			if (self.platform == 'win32') {
+				return '\\';
+			}
+			return '/';
+		},
 
-	// }))
+	}))
 	.actions(self => ({
 
 		afterLoad: () => {
@@ -467,6 +470,7 @@ let initSnapshot = makeInitSnapshot(routes, {
 	'player': {
 		'volume': getFromStorage('volume', 25, 'int'),
 	},
+	'platform': ipc.sendSync('platform'),
 });
 
 export const rootStore = RootStore.create(initSnapshot);

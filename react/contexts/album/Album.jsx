@@ -310,7 +310,7 @@ export const AlbumStore = types
 
 		queue: () => {
 
-			// Ajout des morceau dans l'ordre dans la liste de lecture
+			// Ajout des morceaux dans l'ordre dans la liste de lecture
 			// ---
 
 			const store = getRoot(self);

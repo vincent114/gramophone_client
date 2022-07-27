@@ -82,6 +82,7 @@ export const PlayerDisplay = observer((props) => {
 
 	const track = player.playTrack;
 	const isPlaying = player.isPlaying;
+	const repeatMode = player.repeatMode;
 
 	// const sliderCurrent = player.sliderCurrent;
 	// const sliderMax = player.sliderMax;
@@ -100,6 +101,11 @@ export const PlayerDisplay = observer((props) => {
 	const handleCoverClick = () => {
 		popupZoomCover.setField("albumId", track.album_id);
 		popupZoomCover.open();
+	}
+
+	const handleRepeat = () => {
+		player.toggleRepeat();
+		player.save();
 	}
 
 	const handleSliderChange = (newValue) => {
@@ -153,6 +159,7 @@ export const PlayerDisplay = observer((props) => {
 						style={{
 							"justifyContent": "space-evenly",
 							"paddingBottom": "6px",
+							"paddingLeft": "24px",
 						}}
 					>
 						{track.name && (
@@ -168,6 +175,19 @@ export const PlayerDisplay = observer((props) => {
 					</Column>
 					<PlayerDisplaySlider
 						onChange={handleSliderChange}
+					/>
+					<IconButton
+						size="tiny"
+						iconName="repeat"
+						iconSize="small"
+						color={(repeatMode) ? "warning" : "#FFFFFF"}
+						className="flex-0"
+						style={{
+							zIndex: '100',
+							marginBottom: "5px",
+							marginRight: "5px",
+						}}
+						onClick={(e) => handleRepeat(e)}
 					/>
 					<TrackContextualMenu
 						track={track}

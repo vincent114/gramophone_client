@@ -86,6 +86,10 @@ export const PlayerStore = types
 			const nextTrackIdx = self.playIdx + 1;
 			if (nextTrackIdx < self.playList.length) {
 				return self.playList[nextTrackIdx];
+			} else {
+				if (self.repeatMode && self.playList.length > 0) {
+					return self.playList[0];
+				}
 			}
 			return "";
 		},
@@ -116,7 +120,6 @@ export const PlayerStore = types
 			let tracksList = [];
 			for (let trackIdx in self.playList) {
 				trackIdx = parseInt(trackIdx);
-				console.log(trackIdx);
 				if (playIdx > -1 && (trackIdx <= playIdx)) {
 					continue;
 				}
@@ -215,6 +218,10 @@ export const PlayerStore = types
 			self.drawerOpen = !self.drawerOpen;
 		},
 
+		toggleRepeat: () => {
+			self.repeatMode = !self.repeatMode;
+		},
+
 		// -
 
 		load: () => {
@@ -224,6 +231,8 @@ export const PlayerStore = types
 
 			const store = getRoot(self);
 			const app = store.app;
+
+			self.repeatMode = getFromStorage('repeatMode', false, 'bool');
 
 			const historyList = getFromStorage('historyList', [], 'json');
 			self.historyList = historyList;
@@ -235,6 +244,8 @@ export const PlayerStore = types
 
 			// Sauvegarde des de l'historique de lecture
 			// ---
+
+			setToStorage('repeatMode', self.repeatMode, 'bool');
 
 			const historyList = self.historyList.toJSON();
 			setToStorage('historyList', historyList, 'json');
@@ -377,11 +388,12 @@ export const PlayerStore = types
 			// Lecture du titre suivant
 			// ---
 
-			const nextTrackId = self.nextTrackId;
+			let nextTrackId = self.nextTrackId;
 			if (nextTrackId) {
 				self.read(nextTrackId);
 			} else {
 				self.audioStop();
+				self.playIdx = -1;
 			}
 		},
 

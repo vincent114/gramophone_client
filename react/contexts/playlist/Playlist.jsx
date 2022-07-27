@@ -107,6 +107,69 @@ export const PlaylistStore = types
 			return tracksList;
 		},
 
+		getPlayable(load=true, trackIdOrigin=null) {
+			let tracksList = [];
+			const tracks = self.getTracks();
+
+			// A partir d'un certain titre ou depuis le début ?
+			let startIdx = 0;
+			if (trackIdOrigin != null) {
+				for (const trackIdx in tracks) {
+					const track = tracks[trackIdx];
+					if (track.id == trackIdOrigin) {
+						startIdx = parseInt(trackIdx);
+						break;
+					}
+				}
+			}
+
+			// Récupération des titres
+			for (const trackIdx in tracks) {
+				const track = tracks[trackIdx];
+				if (parseInt(trackIdx) < startIdx) {
+					continue;
+				}
+				if (track.isPlayerCandidate) {
+					if (load) {
+						tracksList.push(track);
+					} else {
+						tracksList.push(track.id);
+					}
+				}
+			}
+
+			return tracksList;
+		},
+
+		getTracksRandomly(load=true) {
+
+			const store = getRoot(self);
+			const app = store.app;
+			const helpers = app.helpers;
+			const tracks = store.tracks;
+
+			const playableIds = self.getPlayable(false);
+			const howMany = playableIds.length;
+
+			let randomTracks = [];
+			let randomTracksIdxs = [];
+			let randomTracksIds = [];
+
+			while (randomTracksIdxs.length < howMany) {
+				const randomIdx = helpers.getRandomNumber(howMany) - 1;
+				if (randomTracksIdxs.indexOf(randomIdx) == -1) {
+					randomTracksIdxs.push(randomIdx);
+					const trackId = playableIds[randomIdx];
+					const track = tracks.by_id.get(trackId);
+					if (track && track.isShuffleCandidate) {
+						randomTracksIds.push(trackId);
+						randomTracks.push(track);
+					}
+				}
+			}
+			return (load) ? randomTracks : randomTracksIds;
+		},
+
 	}))
 	.actions(self => ({
 
@@ -165,6 +228,13 @@ export const PlaylistStore = types
 			}
 		},
 
+		removeTrack: (trackId) => {
+			const trackIdx = self.tracks_ids.indexOf(trackId);
+			if (trackIdx > -1) {
+				self.tracks_ids.splice(trackIdx, 1);
+			}
+		},
+
 		populateWith: (sourceKind, sourceId) => {
 
 			// Ajoute un ou plusieurs morceaux à la playlist
@@ -186,6 +256,93 @@ export const PlaylistStore = types
 					}
 				}
 			}
+		},
+
+		// -
+
+		play: (trackId) => {
+
+			// Lecture de tous les morceaux de la playlist dans l'ordre
+			// ---
+
+			const store = getRoot(self);
+			const player = store.player;
+
+			const playbackIds = self.getPlayable(false);
+			player.audioStop();
+			player.clear();
+			player.populate(playbackIds);
+
+			player.read(trackId);
+		},
+
+		queue: () => {
+
+			// Ajout des morceaux dans l'ordre dans la liste de lecture
+			// ---
+
+			const store = getRoot(self);
+			const player = store.player;
+
+			const playbackIds = self.getPlayable(false);
+			player.populate(playbackIds);
+			if (playbackIds.length > 0 && player.playIdx == -1) {
+				player.setField("playIdx", 0);
+			}
+		},
+
+		shuffle: () => {
+
+			// Lecture aléatoire de tous les morceaux de la playlist
+			// ---
+
+			const store = getRoot(self);
+			const player = store.player;
+
+			const playbackIds = self.getTracksRandomly(false);
+			player.audioStop();
+			player.clear();
+			player.populate(playbackIds);
+			player.read();
+		},
+
+		// -
+
+		export: () => {
+
+			// Exportation des titres la playlist vers un dossier
+			// ---
+
+			const store = getRoot(self);
+			const app = store.app;
+			const snackbar = app.snackbar;
+			const slashPath = store.slashPath;
+			const tracks = self.getPlayable();
+
+			let nbCopied = 0;
+
+			ipc.once('folderChoosed', (folders) => {
+				for (const folder of folders) {
+					for (const track of tracks) {
+						const exportSource = track.track_path;
+						const exportSourceParts = exportSource.split(slashPath);
+						const exportTarget = `${folder}${slashPath}${exportSourceParts[exportSourceParts.length - 1]}`;
+
+						ipc.invoke('copy', [
+							exportSource,
+							exportTarget,
+						])
+						.then((result) => {
+							nbCopied += 1;
+							if (nbCopied == tracks.length) {
+								snackbar.update(true, "Copie terminée.", "success");
+							}
+						});
+					}
+					break;
+				}
+			});
+			ipc.send('chooseFolder');
 		},
 
 	}))
@@ -244,7 +401,12 @@ export const PlaylistContextualMenu = observer((props) => {
 	// -
 
 	const handleExport = () => {
-		// TODO
+		playlist.export();
+		handleCloseMenu();
+	}
+
+	const handleAddToQueue = () => {
+		playlist.queue();
 		handleCloseMenu();
 	}
 
@@ -345,6 +507,18 @@ export const PlaylistContextualMenu = observer((props) => {
 							/>
 							<ListText withIcon={true}>
 								Exporter la playlist
+							</ListText>
+						</ListItem>
+
+						<ListItem
+							size="small"
+							onClick={() => handleAddToQueue()}
+						>
+							<ListIcon
+								name="queue_music"
+							/>
+							<ListText withIcon={true}>
+								Ajouter à la liste de lecture
 							</ListText>
 						</ListItem>
 
@@ -454,11 +628,11 @@ export const PlaylistRow = observer((props) => {
 	}
 
 	const handleShuffleClick = (playlistId) => {
-		// TODO
+		playlist.shuffle();
 	}
 
 	const handlePlayClick = (playlistId) => {
-		// TODO
+		playlist.play();
 	}
 
 	// Render
@@ -570,11 +744,11 @@ export const RenderPlaylist = observer((props) => {
 	// ==================================================================================================
 
 	const handlePlayClick = () => {
-		// TODO
+		playlist.play();
 	}
 
 	const handleThrowDiceClick = () => {
-		// TODO
+		playlist.shuffle();
 	}
 
 	// Render
@@ -666,6 +840,7 @@ export const RenderPlaylist = observer((props) => {
 							<TrackRow
 								key={`track-${trackIdx}`}
 								track={track}
+								playlist={playlist}
 								origin="playlist"
 							/>
 						))}
