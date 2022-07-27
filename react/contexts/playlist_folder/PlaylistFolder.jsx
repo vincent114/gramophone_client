@@ -3,6 +3,23 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
+import { PlaylistRow } from 'gramophone_client/contexts/playlist/Playlist';
+
+import {
+	TableContainer,
+	Table,
+	TableHead,
+	TableBody,
+	TableRow,
+	TableCell
+} from 'nexus/forms/table/Table';
+
+import { Ribbon } from 'nexus/layout/ribbon/Ribbon';
+import {
+	GroupDivider,
+	Group,
+} from 'nexus/layout/group/Group';
+
 import { Helper } from 'nexus/ui/helper/Helper';
 import { IconButton } from 'nexus/ui/button/Button';
 import { Popover } from 'nexus/ui/popover/Popover';
@@ -12,10 +29,10 @@ import {
 	ListIcon,
 	ListText
 } from 'nexus/ui/list/List';
-import {
-	TableRow,
-	TableCell
-} from 'nexus/forms/table/Table';
+import { Avatar } from 'nexus/ui/avatar/Avatar';
+import { Paper } from 'nexus/ui/paper/Paper';
+import { Typography } from 'nexus/ui/typography/Typography';
+import { Divider } from 'nexus/ui/divider/Divider';
 
 import './PlaylistFolder.css';
 
@@ -33,6 +50,38 @@ export const PlaylistFolderStore = types
 		name: types.maybeNull(types.string),
 		parent: types.maybeNull(types.string),
 	})
+	.views(self => ({
+
+		// Getters
+		// -
+
+		getFolders() {
+			const store = getRoot(self);
+			const playlists = store.playlists;
+
+			let foldersList = [];
+			for (const [folderId, folder] of playlists.folders.entries()) {
+				if (folder.parent == self.id) {
+					foldersList.push(folder);
+				}
+			}
+			return foldersList;
+		},
+
+		getPlaylists() {
+			const store = getRoot(self);
+			const playlists = store.playlists;
+
+			let playlistsList = [];
+			for (const [playlistId, playlist] of playlists.by_id.entries()) {
+				if (!playlist.permanent && playlist.folder_id == self.id) {
+					playlistsList.push(playlist);
+				}
+			}
+			return playlistsList;
+		},
+
+	}))
 	.actions(self => ({
 
 		setField: (field, value) => {
@@ -89,6 +138,14 @@ export const PlaylistFolderContextualMenu = observer((props) => {
 		if (callbackClose) {
 			callbackClose();
 		}
+	}
+
+	// -
+
+	const handleMove = () => {
+		popupManagePlaylist.init("move", "folder", folder.id);
+		popupManagePlaylist.open();
+		handleCloseMenu();
 	}
 
 	// -
@@ -155,6 +212,20 @@ export const PlaylistFolderContextualMenu = observer((props) => {
 							paddingBottom: '10px',
 						}}
 					>
+
+						<ListItem
+							size="small"
+							onClick={() => handleMove()}
+						>
+							<ListIcon
+								name="move_down"
+							/>
+							<ListText withIcon={true}>
+								Déplacer le dossier
+							</ListText>
+						</ListItem>
+
+						<Divider spacing="medium" />
 
 						<ListItem
 							size="small"
@@ -280,15 +351,161 @@ export const RenderPlaylistFolder = observer((props) => {
 	const playlistFolderId = store.playlistFolderId;
 	const folder = playlists.folders.get(playlistFolderId);
 
-	// ...
+	const foldersList = folder.getFolders();
+	const playlistsList = folder.getPlaylists();
 
-	console.log(folder.toJSON());
+	// ...
 
 	// Render
 	// ==================================================================================================
 
 	return (
 		<div>
+
+			<Ribbon
+				avatarIconName="folder_special"
+				avatarIconColor="typography"
+				title={folder.name}
+				right={(
+					<div className="h-col">
+						<PlaylistFolderContextualMenu
+							folder={folder}
+							// size="small"
+							color="typography"
+						/>
+					</div>
+				)}
+			/>
+
+			{foldersList.length > 0 && (
+				<Group
+					id={`folder-${folder.id}-folder`}
+					key={`folder-${folder.id}-folder`}
+				>
+
+					<GroupDivider
+						spacing="big"
+						left={(
+							<Typography
+								variant="title"
+								color="secondary"
+								style={{
+									minWidth: '100px',
+									marginRight: '20px',
+								}}
+							>
+								Dossiers
+							</Typography>
+						)}
+						center={(
+							<Avatar
+								size="small"
+								color="rgba(111, 126, 140, 0.1)"
+								textColor="typography"
+								style={{
+									fontSize: '14px',
+									color: 'gray',
+								}}
+							>
+								{foldersList.length}
+							</Avatar>
+						)}
+						right={(
+							<Avatar
+								iconName="folder_special"
+								iconColor="warning"
+								color="transparent"
+							/>
+						)}
+					/>
+
+					<TableContainer
+						component={Paper}
+						style={{
+							marginLeft: '20px',
+							marginRight: '20px',
+							padding: '0px',
+						}}
+					>
+						<Table>
+							<TableBody>
+								{foldersList.map((folder, folderIdx) => (
+									<PlaylistFolderRow
+										key={`playlist-folder-${folder.id}`}
+										folder={folder}
+									/>
+								))}
+							</TableBody>
+						</Table>
+					</TableContainer>
+
+				</Group>
+			)}
+
+			{playlistsList.length > 0 && (
+				<Group
+					id={`folder-${folder.id}-playlists`}
+					key={`folder-${folder.id}-playlists`}
+				>
+
+					<GroupDivider
+						spacing="big"
+						left={(
+							<Typography
+								variant="title"
+								color="secondary"
+								style={{
+									minWidth: '100px',
+									marginRight: '20px',
+								}}
+							>
+								Playlists
+							</Typography>
+						)}
+						center={(
+							<Avatar
+								size="small"
+								color="rgba(111, 126, 140, 0.1)"
+								textColor="typography"
+								style={{
+									fontSize: '14px',
+									color: 'gray',
+								}}
+							>
+								{playlistsList.length}
+							</Avatar>
+						)}
+						right={(
+							<Avatar
+								iconName="playlist_play"
+								iconColor="warning"
+								color="transparent"
+							/>
+						)}
+					/>
+
+					<TableContainer
+						component={Paper}
+						style={{
+							marginLeft: '20px',
+							marginRight: '20px',
+							padding: '0px',
+						}}
+					>
+						<Table>
+							<TableBody>
+								{playlistsList.map((playlist, playlistIdx) => (
+									<PlaylistRow
+										key={`playlist-${playlist.id}`}
+										playlist={playlist}
+									/>
+								))}
+							</TableBody>
+						</Table>
+					</TableContainer>
+
+				</Group>
+			)}
 
 		</div>
 	)
@@ -343,7 +560,7 @@ export const PlaylistFolderPage = observer((props) => {
 	// -------------------------------------------------
 
 	return (
-		<div className="c-page">
+		<div className="nx-page medium">
 			{renderPage()}
 			{renderHelper()}
 		</div>

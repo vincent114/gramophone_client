@@ -49,6 +49,44 @@ export const PopupManagePlaylistStore = types
 	})
 	.views(self => ({
 
+		get folderItems() {
+			const store = getRoot(self);
+			const playlists = store.playlists;
+			const rootFolders = playlists.getRootFolders();
+
+			// Il doit au moins rester un dossier à la racine
+			if (rootFolders.length == 1 && rootFolders[0].id == self.draftId) {
+				return [];
+			}
+
+			const draftFolder = playlists.folders.get(self.draftId);
+
+			let items = [];
+			for (const [folderId, folder] of playlists.folders.entries()) {
+				if (folderId == self.draftId) {
+					continue;
+				}
+				if (folder.parent == self.draftId) {
+					continue;
+				}
+				if (draftFolder && folder.id == draftFolder.parent) {
+					continue;
+				}
+				items.push({
+					value: folderId,
+					label: folder.name,
+				});
+			}
+			items.sort(function (a, b) {
+				if (a.label > b.label)
+					return 1;
+				if (a.label < b.label)
+					return -1;
+				return 0;
+			});
+			return items;
+		},
+
 		// Bools
 		// -
 
@@ -116,6 +154,8 @@ export const PopupManagePlaylistStore = types
 					self.draftFolder = PlaylistFolderStore.create(folder.toJSON());
 				}
 			}
+
+			self.destinationId = "";
 		},
 
 		validate: (callback) => {
@@ -161,7 +201,7 @@ export const PopupManagePlaylistStore = types
 				}
 			}
 
-			if (mode == 'move') {
+			if (mode == 'move' && draftKind == 'playlist') {
 
 				// Pas de destination ?
 				if (!self.destinationId) {
@@ -281,6 +321,8 @@ export const PopupManagePlaylist = observer((props) => {
 					playlists.setFolder(draftFolder.id, draftFolder.toJSON());
 				}
 
+				// -
+
 				if (mode == 'add') {
 					if (destinationId == 'new') {
 						playlists.setPlaylist(draftPlaylist.id, draftPlaylist.toJSON());
@@ -293,11 +335,20 @@ export const PopupManagePlaylist = observer((props) => {
 					}
 				}
 
-				if (mode == 'move') {
+				// -
+
+				if (mode == 'move' && draftKind == 'playlist') {
 					const playlist = playlists.by_id.get(draftId);
 					if (playlist) {
 						playlist.setField('folder_id', destinationId);
 						snackbar.update(true, "Playlist déplacée.", "success");
+					}
+				}
+				if (mode == 'move' && draftKind == 'folder') {
+					const folder = playlists.folders.get(draftId);
+					if (folder) {
+						folder.setField('parent', destinationId);
+						snackbar.update(true, "Dossier déplacée.", "success");
 					}
 				}
 
@@ -335,7 +386,7 @@ export const PopupManagePlaylist = observer((props) => {
 
 		const sourceType = popupManagePlaylist.sourceType;
 		const playlistItems = playlists.playlistItems;
-		const folderItems = playlists.folderItems;
+		const folderItems = popupManagePlaylist.folderItems;
 
 		popupContent = (
 			<div>

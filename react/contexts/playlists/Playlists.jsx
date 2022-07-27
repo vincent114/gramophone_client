@@ -108,24 +108,6 @@ export const PlaylistsStore = types
 			return items;
 		},
 
-		get folderItems() {
-			let items = [];
-			for (const [folderId, folder] of self.folders.entries()) {
-				items.push({
-					value: folderId,
-					label: folder.name,
-				});
-			}
-			items.sort(function (a, b) {
-				if (a.label > b.label)
-					return 1;
-				if (a.label < b.label)
-					return -1;
-				return 0;
-			});
-			return items;
-		},
-
 		// Getters
 		// -
 
@@ -168,9 +150,12 @@ export const PlaylistsStore = types
 			return playlist;
 		},
 
-		getFolders() {
+		getRootFolders() {
 			let folders = [];
 			for (const [folderId, folder] of self.folders.entries()) {
+				if (folder.parent) {
+					continue;
+				}
 				folders.push(folder);
 			}
 			folders.sort(function (a, b) {
@@ -359,11 +344,10 @@ export const RenderPlaylists = observer((props) => {
 
 	const isLoading = store.isLoading;
 	const nbPlaylists = playlists.nbPlaylists;
-	const nbFolders = playlists.nbFolders;
 
 	const playlistsPermanent = playlists.getPermanent();
 	const playlistsGrouped = playlists.getGrouped();
-	const folders = playlists.getFolders();
+	const rootFolders = playlists.getRootFolders();
 
 	// ...
 
@@ -613,7 +597,7 @@ export const RenderPlaylists = observer((props) => {
 								color: 'gray',
 							}}
 						>
-							{nbFolders}
+							{rootFolders.length}
 						</Avatar>
 					)}
 					right={(
@@ -636,7 +620,7 @@ export const RenderPlaylists = observer((props) => {
 				>
 					<Table>
 						<TableBody>
-							{folders.map((folder, folderIdx) => (
+							{rootFolders.map((folder, folderIdx) => (
 								<PlaylistFolderRow
 									key={`playlist-folder-${folderIdx}`}
 									folder={folder}

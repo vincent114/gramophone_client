@@ -497,6 +497,18 @@ export const PlayerStore = types
 			}
 		},
 
+		audioToggle: () => {
+
+			// Reprend ou stoppe la lecture
+			// ---
+
+			if (window.audioInterval) {
+				self.audioPause();
+			} else {
+				self.audioPlay();
+			}
+		},
+
 		audioStop: () => {
 
 			// Stoppe la lecture du titre en cours

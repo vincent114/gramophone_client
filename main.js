@@ -13,15 +13,25 @@ const path = require('path');
 const fs = require('fs-extra');
 const { fork } = require('child_process');
 const os = require('os');
+const package = require('./package.json');
+
+
+// Datas
+// ======================================================================================================
 
 let mainWindow = null;
 let indexer = null;
+
+const platform = os.platform();
 
 
 // Functions
 // ======================================================================================================
 
 const createWindow = () => {
+
+	// Fenêtre de l'application
+	// ---
 
 	let winState = windowStateKeeper({
 		defaultWidth: 1000,
@@ -52,6 +62,245 @@ const createWindow = () => {
 	mainWindow.loadFile('main.html');
 }
 
+const initOsMenus = () => {
+
+	// Menu système de l'application (macOS)
+	// ---
+
+	if (platform != 'darwin') { return; }
+
+	let template = [];
+
+	template.push({
+		label: 'Gramophone',
+		submenu: [
+			{
+				label: 'A propos de Gramophone',
+				click () {
+					mainWindow.webContents.send("about");
+				}
+			},
+			{type: 'separator'},
+			{
+				label: 'Préférences',
+				accelerator: 'CmdOrCtrl+,',
+				click () {
+					mainWindow.webContents.send("admin");
+				}
+			},
+			{type: 'separator'},
+			{role: 'services', submenu: []},
+			{type: 'separator'},
+			{
+				role: 'hide',
+				label: 'Masquer Gramophone',
+			},
+			{
+				role: 'hideothers',
+				label: 'Masquer les autress',
+			},
+			{
+				role: 'unhide',
+				label: 'Tout afficher',
+			},
+			{type: 'separator'},
+			{
+				role: 'quit',
+				label: 'Quitter Gramophone',
+			}
+		]
+	});
+
+	template.push({
+		label: 'Edition',
+		submenu: [
+			{
+				role: 'undo',
+				label: 'Annuler',
+			},
+			{
+				role: 'redo',
+				label: 'Rétablir',
+			},
+			{type: 'separator'},
+			{
+				role: 'cut',
+				label: 'Couper',
+			},
+			{
+				role: 'copy',
+				label: 'Copier',
+			},
+			{
+				role: 'paste',
+				label: 'Coller',
+			},
+			{
+				role: 'selectall',
+				label: 'Tout sélectionner',
+			}
+		]
+	});
+
+	template.push({
+		label: 'Commandes',
+		submenu: [
+			{
+				label: 'Lecture',
+				click () {
+					mainWindow.webContents.send("audioPlay");
+				}
+			},
+			{
+				label: 'Pause',
+				click () {
+					mainWindow.webContents.send("audioPause");
+				}
+			},
+			{
+				label: 'Suivant',
+				click () {
+					mainWindow.webContents.send("readNext");
+				}
+			},
+			{
+				label: 'Précédent',
+				click () {
+					mainWindow.webContents.send("readPrevious");
+				}
+			},
+		]
+	});
+
+	if (!package.isProd) {
+		template.push({
+			label: 'Debug',
+			submenu: [
+				{
+					label: 'Recharger',
+					accelerator: 'Cmd+R',
+					click () {
+						mainWindow.reload()
+					}
+				},
+				{
+					label: 'Outils de développement',
+					accelerator: 'Alt+Cmd+I',
+					click () {
+						const win = BrowserWindow.getFocusedWindow();
+						win.webContents.openDevTools();
+					}
+				}
+			]
+		});
+	}
+
+	template.push({
+		role: 'window',
+		label: 'Fenêtre',
+		submenu: [
+			{
+				role: 'close',
+				label: 'Fermer',
+			},
+			{
+				role: 'minimize',
+				label: 'Réduire',
+			},
+			{role: 'zoom'},
+			{type: 'separator'},
+			{
+				role: 'front',
+				label: 'Tout ramener au premier plan',
+			}
+		]
+	});
+
+	const appMenu = Menu.buildFromTemplate(template);
+	Menu.setApplicationMenu(appMenu);
+}
+
+const initOsJumplist = () => {
+
+	// Fonctions contextuelles (barre des tâches sous Windows & dock sous macOS)
+	// ---
+
+	// if (osName != 'darwin') { return; }
+
+	let contextualItems = []
+
+	contextualItems.push({
+		label: 'Lecture',
+		click () {
+			mainWindow.webContents.send("audioPlay");
+		}
+	})
+	contextualItems.push({
+		label: 'Pause',
+		click () {
+			mainWindow.webContents.send("audioPause");
+		}
+	})
+	contextualItems.push({
+		label: 'Suivant',
+		click () {
+			mainWindow.webContents.send("readNext");
+		}
+	})
+	contextualItems.push({
+		label: 'Précédent',
+		click () {
+			mainWindow.webContents.send("readPrevious");
+		}
+	})
+
+	const dockMenu = Menu.buildFromTemplate(contextualItems);
+	app.dock.setMenu(dockMenu);
+}
+
+const initOSglobalHotkeys = () => {
+
+	// Initialisation des raccourci globaux système (pour les contrôles de lecture)
+	// ---
+
+	// 119 : MediaPlayPause | F8 : Play / Pause
+	// 177 : MediaPrevTrack | F7 : Previous
+	// 176 : MediaNextTrack | F9 : Next
+	// 178 : MediaStop : Stop
+
+	globalShortcut.unregisterAll();
+
+	// Hotkey Play / Pause
+	var ret = globalShortcut.register('MediaPlayPause', () => {
+		console.log('MediaPlayPause');
+		mainWindow.webContents.send("audioToggle");
+	});
+	var ret = globalShortcut.register('F8', () => {
+		mainWindow.webContents.send("audioToggle");
+	});
+
+	// Hotkey Stop
+	var ret = globalShortcut.register('MediaStop', () => {
+		mainWindow.webContents.send("audioStop");
+	});
+
+	// Hotkey Previous
+	var ret = globalShortcut.register('MediaPreviousTrack', () => {
+		mainWindow.webContents.send("readPrevious");
+	});
+	var ret = globalShortcut.register('F7', () => {
+		mainWindow.webContents.send("readPrevious");
+	});
+
+	// Hotkey Next
+	var ret = globalShortcut.register('MediaNextTrack', () => {
+		mainWindow.webContents.send("readNext");
+	});
+	var ret = globalShortcut.register('F9', () => {
+		mainWindow.webContents.send("readNext");
+	});
+}
+
 
 // Events
 // ======================================================================================================
@@ -68,7 +317,12 @@ app.on('window-all-closed', () => {
 });
 
 app.whenReady().then(() => {
+
 	createWindow();
+
+	initOsMenus();
+	initOsJumplist();
+	initOSglobalHotkeys();
 
 	// Re-création de la fenêtre sur macOS
 	app.on('activate', () => {
@@ -257,5 +511,5 @@ ipcMain.on("platform", (event, []) => {
 	// Met en évidence le fichier ou le dossier passé en paramètres dans le Finder / Explorateur
 	// ---
 
-	event.returnValue = os.platform();
+	event.returnValue = platform;
 });

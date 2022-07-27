@@ -220,6 +220,37 @@ const RootStore = types
 			if (library.isSourceAvailable && library.auto_scan_enabled) {
 				library.startScan(true);
 			}
+
+			// A l'écoute des commandes en provenance des menus de l'OS
+			// -
+
+			ipc.on('about', (datas) => {
+				app.navigateTo('about');
+			});
+			ipc.on('admin', (datas) => {
+				app.navigateTo('admin');
+			});
+
+			// -
+
+			ipc.on('audioPlay', (datas) => {
+				player.audioPlay();
+			});
+			ipc.on('audioPause', (datas) => {
+				player.audioPause();
+			});
+			ipc.on('audioToggle', (datas) => {
+				player.audioToggle();
+			});
+			ipc.on('audioStop', (datas) => {
+				player.audioStop();
+			});
+			ipc.on('readNext', (datas) => {
+				player.readNext();
+			});
+			ipc.on('readPrevious', (datas) => {
+				player.readPrevious();
+			});
 		},
 
 		update: (datas) => {

@@ -30,5 +30,6 @@
     "node-id3": "^0.2.3",
     "sanitize-filename": "^1.6.3",
     "walk": "^2.3.15"
-  }
+  },
+  "isProd": false
 }
