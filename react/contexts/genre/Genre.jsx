@@ -191,7 +191,7 @@ export const RenderGenre = observer((props) => {
 	// ==================================================================================================
 
 	const handleThrowDiceClick = () => {
-		// TODO
+		genre.shuffle();
 	}
 
 	// -

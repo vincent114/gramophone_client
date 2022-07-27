@@ -5,6 +5,11 @@ import clsx from 'clsx';
 
 import { AlbumThumbnail } from 'gramophone_client/contexts/albums/Albums';
 
+import {
+	TableRow,
+	TableCell
+} from 'nexus/forms/table/Table';
+
 import { Ribbon } from 'nexus/layout/ribbon/Ribbon';
 import { Row } from 'nexus/layout/row/Row';
 import { Grid } from 'nexus/layout/grid/Grid';
@@ -44,6 +49,12 @@ export const ArtistStore = types
 
 		get nbAlbums() {
 			return self.albums_ids.length;
+		},
+
+		get description() {
+			const nbAlbums = self.nbAlbums;
+			const description = `${nbAlbums} ${(nbAlbums > 1) ? "albums" : "album"}`;
+			return description;
 		},
 
 		// Getters
@@ -158,6 +169,115 @@ export const ArtistStore = types
 
 // Functions Components ReactJS
 // ======================================================================================================
+
+// ***** ArtistRow *****
+// *********************
+
+const TAG_ArtistRow = () => {}
+export const ArtistRow = observer((props) => {
+
+	const store = React.useContext(window.storeContext);
+	const app = store.app;
+
+	// From ... state
+
+	let [hover, setHover] = React.useState(false);
+
+	// From ... props
+
+	const artist = props.artist;
+
+	// ...
+
+	// Events
+	// ==================================================================================================
+
+	const handleEnter = (evt) => {
+		setHover(true);
+	}
+
+	const handleLeave = (evt) => {
+		setHover(false);
+	}
+
+	// -
+
+	const handleArtistClick = () => {
+		store.navigateTo('artist', artist.id);
+	}
+
+	const handleShuffleClick = () => {
+		artist.shuffle();
+	}
+
+	const handlePlayClick = () => {
+		artist.play();
+	}
+
+	// Render
+	// ==================================================================================================
+
+	return (
+		<TableRow
+			hoverable={true}
+			callbackEnter={handleEnter}
+			callbackLeave={handleLeave}
+			forceHover={hover}
+			callbackClick={() => handleArtistClick()}
+		>
+			<TableCell
+				size="small"
+			>
+				{artist.name}
+			</TableCell>
+			<TableCell
+				size="small"
+				width="100px"
+				align="right"
+			>
+				<Typography
+					size="small"
+					variant="description"
+					align="right"
+				>
+					{`${artist.nbAlbums} ${(artist.nbAlbums > 1) ? "albums" : "album"}`}
+				</Typography>
+			</TableCell>
+			<TableCell
+				width="36px"
+				size="small"
+			>
+				<IconButton
+					size="small"
+					iconName="shuffle"
+					color="info"
+					className="flex-0"
+					onClick={(e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						handleShuffleClick();
+					}}
+				/>
+			</TableCell>
+			<TableCell
+				width="36px"
+				size="small"
+			>
+				<IconButton
+					size="small"
+					iconName="play_arrow"
+					color="hot"
+					className="flex-0"
+					onClick={(e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						handlePlayClick();
+					}}
+				/>
+			</TableCell>
+		</TableRow>
+	)
+})
 
 // ***** RenderArtist *****
 // ************************

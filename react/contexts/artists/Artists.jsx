@@ -3,15 +3,16 @@ import { types, getRoot } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
-import { ArtistStore } from 'gramophone_client/contexts/artist/Artist';
+import {
+	ArtistStore,
+	ArtistRow
+} from 'gramophone_client/contexts/artist/Artist';
 
 import {
 	TableContainer,
 	Table,
 	TableHead,
 	TableBody,
-	TableRow,
-	TableCell
 } from 'nexus/forms/table/Table';
 
 import { HeaderTitle } from 'nexus/layout/header/Header';
@@ -237,26 +238,6 @@ export const RenderArtists = observer((props) => {
 		app.unfocus();
 	}
 
-	// -
-
-	const handleArtistClick = (artistId) => {
-		store.navigateTo('artist', artistId);
-	}
-
-	const handleShuffleClick = (artistId) => {
-		const artist = artists.by_id.get(artistId);
-		if (artist) {
-			artist.shuffle();
-		}
-	}
-
-	const handlePlayClick = (artistId) => {
-		const artist = artists.by_id.get(artistId);
-		if (artist) {
-			artist.play();
-		}
-	}
-
 	// Renderers
 	// ==================================================================================================
 
@@ -348,62 +329,10 @@ export const RenderArtists = observer((props) => {
 							<Table>
 								<TableBody>
 									{artistsLetter.map((artist, artistIdx) => (
-										<TableRow
+										<ArtistRow
 											key={`artist-${letter}-${artistIdx}`}
-											hoverable={true}
-											callbackClick={() => handleArtistClick(artist.id)}
-										>
-											<TableCell
-												size="small"
-											>
-												{artist.name}
-											</TableCell>
-											<TableCell
-												size="small"
-												width="100px"
-												align="right"
-											>
-												<Typography
-													size="small"
-													variant="description"
-													align="right"
-												>
-													{`${artist.nbAlbums} ${(artist.nbAlbums > 1) ? "albums" : "album"}`}
-												</Typography>
-											</TableCell>
-											<TableCell
-												width="36px"
-												size="small"
-											>
-												<IconButton
-													size="small"
-													iconName="shuffle"
-													color="info"
-													className="flex-0"
-													onClick={(e) => {
-														e.preventDefault();
-														e.stopPropagation();
-														handleShuffleClick(artist.id);
-													}}
-												/>
-											</TableCell>
-											<TableCell
-												width="36px"
-												size="small"
-											>
-												<IconButton
-													size="small"
-													iconName="play_arrow"
-													color="hot"
-													className="flex-0"
-													onClick={(e) => {
-														e.preventDefault();
-														e.stopPropagation();
-														handlePlayClick(artist.id);
-													}}
-												/>
-											</TableCell>
-										</TableRow>
+											artist={artist}
+										/>
 									))}
 								</TableBody>
 							</Table>

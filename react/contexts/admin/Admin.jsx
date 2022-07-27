@@ -71,7 +71,7 @@ export const RenderAdminFolders = observer((props) => {
 		ipc.send('chooseFolder');
 	}
 
-	const handleFolderClick = (folderPath) => {
+	const handleShowInFinderClick = (folderPath) => {
 		ipc.send('showItemInFolder', [folderPath]);
 	}
 
@@ -116,7 +116,7 @@ export const RenderAdminFolders = observer((props) => {
 					<ListItem
 						key={`source-folder-${sourceFolderIdx}`}
 						hoverable={true}
-						onClick={() => handleFolderClick(sourceFolder.folder_path)}
+						onClick={() => handleShowInFinderClick(sourceFolder.folder_path)}
 						callbackDelete={(e) => handleFolderDelete(sourceFolder.folder_path)}
 					>
 						<ListIcon name="folder" />

@@ -315,7 +315,6 @@ export const PlayerStore = types
 			self.save();
 		},
 
-
 		clearHistory: () => {
 			self.historyList = [];
 			self.save();

@@ -44,6 +44,7 @@ export const ContextualHeader = observer((props) => {
 	const store = React.useContext(window.storeContext);
 	const app = store.app;
 	const player = store.player;
+	const search = store.search;
 
 	// From ... store
 
@@ -63,6 +64,16 @@ export const ContextualHeader = observer((props) => {
 
 	// Events
 	// ==================================================================================================
+
+	const handleSearch = (savePath, value) => {
+		search.searchAll();
+	}
+
+	const handleClear = () => {
+		search.clear();
+	}
+
+	// -
 
 	const handleMenuVolume = (event) => {
 		setAnchorVolume(event.currentTarget);
@@ -101,6 +112,8 @@ export const ContextualHeader = observer((props) => {
 					marginRight: '10px',
 					minWidth: '200px',
 				}}
+				onSearch={handleSearch}
+				onClear={handleClear}
 			/>
 		)
 	}

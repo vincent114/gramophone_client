@@ -302,6 +302,11 @@ export const TrackContextualMenu = observer((props) => {
 		handleCloseMenu();
 	}
 
+	const handleShowInFinderClick = () => {
+		ipc.send('showItemInFolder', [track.track_path]);
+		handleCloseMenu();
+	}
+
 	// -
 
 	const handleToggleCheck = () => {
@@ -431,6 +436,18 @@ export const TrackContextualMenu = observer((props) => {
 							/>
 							<ListText withIcon={true}>
 								Afficher les informations
+							</ListText>
+						</ListItem>
+
+						<ListItem
+							size="small"
+							onClick={() => handleShowInFinderClick()}
+						>
+							<ListIcon
+								name="insert_drive_file"
+							/>
+							<ListText withIcon={true}>
+								Ouvrir l'emplacement
 							</ListText>
 						</ListItem>
 
@@ -642,7 +659,7 @@ export const TrackRow = observer((props) => {
 
 	const track = props.track;
 	const playlist = props.playlist;
-	const origin = (props.origin) ? props.origin : "album"; // album, playlist
+	const origin = (props.origin) ? props.origin : "album"; // album, playlist, search
 
 	// From ... store
 
@@ -688,7 +705,7 @@ export const TrackRow = observer((props) => {
 	const handlePlayClicked = (track) => {
 		player.audioStop();
 		player.clear();
-		if (track.isPlayerCandidate) {
+		if (track.isPlayerCandidate && origin != 'search') {
 			if (origin == 'album') {
 				linkedAlbum.play(track.id);
 			}
@@ -828,7 +845,7 @@ export const TrackRow = observer((props) => {
 	)
 
 	// Artiste
-	if (origin == "playlist") {
+	if (["playlist", "search"].indexOf(origin) > -1) {
 		rowCells.push(
 			<TableCell
 				key={`track-${track.id}-artist`}
@@ -848,7 +865,7 @@ export const TrackRow = observer((props) => {
 	}
 
 	// Album
-	if (origin == "playlist") {
+	if (["playlist", "search"].indexOf(origin) > -1) {
 		rowCells.push(
 			<TableCell
 				key={`track-${track.id}-album`}

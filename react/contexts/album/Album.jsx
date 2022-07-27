@@ -78,6 +78,12 @@ export const AlbumStore = types
 			return self.tracks_ids.length;
 		},
 
+		get description() {
+			const nbTracks = self.nbTracks;
+			const description = `${nbTracks} ${(nbTracks > 1) ? "titres" : "titre"}`;
+			return description;
+		},
+
 		// -
 
 		get coverUrl() {
@@ -402,6 +408,13 @@ export const AlbumContextualMenu = observer((props) => {
 
 	// -
 
+	const handleShowInFinderClick = () => {
+		ipc.send('showItemInFolder', [album.folder]);
+		handleCloseMenu();
+	}
+
+	// -
+
 	const handleGoto = (gotoContext, gotoContextId) => {
 		store.navigateTo(gotoContext, gotoContextId);
 		handleCloseMenu();
@@ -504,6 +517,20 @@ export const AlbumContextualMenu = observer((props) => {
 							paddingBottom: '10px',
 						}}
 					>
+
+						<ListItem
+							size="small"
+							onClick={() => handleShowInFinderClick()}
+						>
+							<ListIcon
+								name="insert_drive_file"
+							/>
+							<ListText withIcon={true}>
+								Ouvrir l'emplacement
+							</ListText>
+						</ListItem>
+
+						<Divider spacing="medium" />
 
 						<ListItem
 							size="small"

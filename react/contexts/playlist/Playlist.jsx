@@ -59,6 +59,12 @@ export const PlaylistStore = types
 			return self.tracks_ids.length;
 		},
 
+		get description() {
+			const nbTracks = self.nbTracks;
+			const description = `${nbTracks} ${(nbTracks > 1) ? "titres" : "titre"}`;
+			return description;
+		},
+
 		// -
 
 		get linkedFolder() {

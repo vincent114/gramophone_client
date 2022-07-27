@@ -225,7 +225,7 @@ export const PopupTrackMetadatas = observer((props) => {
 								<Field
 									id="txt-disc"
 									component='input'
-									label="Piste"
+									label="Disque"
 									value={track.disc}
 									disabled={true}
 								/>
@@ -237,6 +237,7 @@ export const PopupTrackMetadatas = observer((props) => {
 							<Row
 								style={{
 									marginTop: '10px',
+									marginBottom: '5px'
 								}}
 							>
 								<Typography
