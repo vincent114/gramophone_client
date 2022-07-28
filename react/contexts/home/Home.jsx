@@ -462,7 +462,8 @@ export const RenderLastAdded = observer((props) => {
 
 	// From ... store
 
-	const lastAdded = albums.getLastAdded(6);
+	const displayedNew = home.displayedNew;
+	const lastAdded = (displayedNew) ? albums.getLastAdded(6) : [];
 
 	// ...
 

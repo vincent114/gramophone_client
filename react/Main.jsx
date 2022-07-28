@@ -510,7 +510,7 @@ export const RootStoreContext = React.createContext(rootStore);
 window.store = rootStore;
 window.storeContext = RootStoreContext;
 
-setToStorage('debugMode', true, 'bool');
+// setToStorage('debugMode', true, 'bool');
 
 let staticRaw = {
 	'smap': copyObj(STATIC_SMAP),

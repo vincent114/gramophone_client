@@ -90,17 +90,30 @@ export const AlbumsStore = types
 			// ---
 
 			let lastAdded = [];
-			for (const lastAddedIdx in self.last_added_ids) {
-				if (lastAdded.length < maxAlbums) {
-					const albumId = self.last_added_ids[lastAddedIdx];
-					const album = self.by_id.get(albumId);
-					if (album) {
-						lastAdded.push(album);
-					}
-				} else {
-					break;
-				}
+
+			let albumsList = [];
+			for (const [albumId, album] of self.by_id.entries()) {
+				albumsList.push(album);
 			}
+			albumsList.sort(function (a, b) {
+				if (a.ts_added < b.ts_added)
+					return 1;
+				if (a.ts_added > b.ts_added)
+					return -1;
+				return 0;
+			});
+			lastAdded = albumsList.slice(0, (albumsList.length >= 6) ? 6 : albumsList.length - 1);
+			// for (const lastAddedIdx in self.last_added_ids) {
+			// 	if (lastAdded.length < maxAlbums) {
+			// 		const albumId = self.last_added_ids[lastAddedIdx];
+			// 		const album = self.by_id.get(albumId);
+			// 		if (album) {
+			// 			lastAdded.push(album);
+			// 		}
+			// 	} else {
+			// 		break;
+			// 	}
+			// }
 			return lastAdded;
 		},
 
@@ -112,6 +125,9 @@ export const AlbumsStore = types
 			const store = getRoot(self);
 			const app = store.app;
 			const helpers = app.helpers;
+			const library = store.library;
+
+			const shuffleIgnoreSoudtracks = library.shuffle_ignore_soudtracks;
 
 			// Il y en a-t-il assez ?
 			const nbAlbums = self.nbAlbums;
@@ -129,13 +145,14 @@ export const AlbumsStore = types
 				const randomIdx = helpers.getRandomNumber(albumIds.length) - 1;
 				if (randomAlbumsIdxs.indexOf(randomIdx) == -1) {
 					const albumId = albumIds[randomIdx];
+					const album = self.by_id.get(albumId);
 					randomAlbumsIdxs.push(randomIdx);
-					randomAlbumsIds.push(albumId);
-					if (load) {
-						const album = self.by_id.get(albumId);
-						if (album) {
-							randomAlbums.push(album);
+					if (album) {
+						if (shuffleIgnoreSoudtracks && ['soundtrack', 'soundtracks', 'bande_originale'].indexOf(album.genre_id) > -1) {
+							continue;
 						}
+						randomAlbumsIds.push(albumId);
+						randomAlbums.push(album);
 					}
 				}
 			}

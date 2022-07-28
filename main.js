@@ -514,6 +514,14 @@ ipcMain.on("showItemInFolder", (event, [fullPath]) => {
 	event.returnValue = shell.showItemInFolder(fullPath);
 });
 
+ipcMain.on("openExternal", (event, [url]) => {
+
+	// Ouvre l'URL passée en paramètres dans le navigateur par défaut
+	// ---
+
+	event.returnValue = shell.openExternal(url);
+});
+
 // ***** os *****
 // **************
 

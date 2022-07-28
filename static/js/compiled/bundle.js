@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 25975:
+/***/ 8008:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -163,7 +163,7 @@ var STATIC_SMAP = {
     kind: "webserver",
     port: 7304,
     database: null,
-    version: '0.0.1',
+    version: '4.0.0',
     changeset: '...',
     changeset_instance: '...',
     internal: '/index.html',
@@ -181,7 +181,7 @@ var STATIC_SMAP = {
     kind: "webserver",
     port: 7303,
     database: null,
-    version: '0.0.1',
+    version: '8.0.0',
     changeset: '...',
     changeset_instance: '...',
     internal: '/index.html',
@@ -1422,6 +1422,38 @@ var AutoAwesomeIcon = function AutoAwesomeIcon(props) {
     points: "19,15 17.75,17.75 15,19 17.75,20.25 19,23 20.25,20.25 23,19 20.25,17.75"
   }), /*#__PURE__*/react.createElement("path", {
     d: "M11.5,9.5L9,4L6.5,9.5L1,12l5.5,2.5L9,20l2.5-5.5L17,12L11.5,9.5z M9.99,12.99L9,15.17l-0.99-2.18L5.83,12l2.18-0.99 L9,8.83l0.99,2.18L12.17,12L9.99,12.99z"
+  }))));
+};
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/AutoFixHigh.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var AutoFixHighIcon = function AutoFixHighIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("rect", {
+    fill: "none",
+    height: "24",
+    width: "24",
+    x: "0"
+  })), /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("g", null, /*#__PURE__*/react.createElement("polygon", {
+    points: "20,7 20.94,4.94 23,4 20.94,3.06 20,1 19.06,3.06 17,4 19.06,4.94"
+  }), /*#__PURE__*/react.createElement("polygon", {
+    points: "8.5,7 9.44,4.94 11.5,4 9.44,3.06 8.5,1 7.56,3.06 5.5,4 7.56,4.94"
+  }), /*#__PURE__*/react.createElement("polygon", {
+    points: "20,12.5 19.06,14.56 17,15.5 19.06,16.44 20,18.5 20.94,16.44 23,15.5 20.94,14.56"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M17.71,9.12l-2.83-2.83C14.68,6.1,14.43,6,14.17,6c-0.26,0-0.51,0.1-0.71,0.29L2.29,17.46c-0.39,0.39-0.39,1.02,0,1.41 l2.83,2.83C5.32,21.9,5.57,22,5.83,22s0.51-0.1,0.71-0.29l11.17-11.17C18.1,10.15,18.1,9.51,17.71,9.12z M14.17,8.42l1.41,1.41 L14.41,11L13,9.59L14.17,8.42z M5.83,19.59l-1.41-1.41L11.59,11L13,12.41L5.83,19.59z"
   }))));
 };
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/Badge.jsx
@@ -4954,6 +4986,7 @@ var Icon = __webpack_require__(73244);
 
 
 
+
  // Datas
 // -------------------------------------------------------------------------------------------------------------
 
@@ -4979,6 +5012,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'art_track': ArtTrackIcon,
   'audiotrack': AudiotrackIcon,
   'auto_awesome': AutoAwesomeIcon,
+  'auto_fix_high': AutoFixHighIcon,
   'badge': BadgeIcon,
   'bolt': BoltIcon,
   'book': BookIcon,
@@ -9223,7 +9257,7 @@ var Indicator_Indicator = (0,es/* observer */.Pi)(function (props) {
 
   if (iconName) {
     icon = /*#__PURE__*/react.createElement(Icon_Icon, {
-      color: variant == "contrasted" ? "#FFFFFF" : severity,
+      color: variant == "contrasted" ? "#FFFFFF" : color,
       size: "small",
       name: iconName,
       style: {
@@ -9465,15 +9499,21 @@ var Link = __webpack_require__(17370);
 
 
 
+
+
  // Functions Components ReactJS
-// -------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
 // ***** Link *****
 // ****************
 
 var TAG_Link = function TAG_Link() {};
 
-var Link_Link = function Link(props) {
-  // From ... props
+var Link_Link = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app; // From ... store
+
+  var appKind = app.kind; // From ... props
+
   var href = props.href ? props.href : '';
   var children = props.children;
   var target = props.target ? props.target : ''; // _blank
@@ -9483,7 +9523,17 @@ var Link_Link = function Link(props) {
 
   if (!style.hasOwnProperty('color')) {
     style['color'] = SEVERITY_COLORS.info;
-  } // Render
+  } // Events
+  // ==================================================================================================
+
+
+  var handleClick = function handleClick(e) {
+    if (appKind == 'electron') {
+      e.preventDefault();
+      e.stopPropagation();
+      ipc.send('openExternal', [href]);
+    }
+  }; // Render
   // ==================================================================================================
 
 
@@ -9491,9 +9541,10 @@ var Link_Link = function Link(props) {
     href: href,
     target: target,
     className: (0,clsx_m/* default */.Z)("nx-link", className),
-    style: style
+    style: style,
+    onClick: handleClick
   }, children);
-};
+});
 // EXTERNAL MODULE: ../../nexus/react/contexts/playground/display/PlaygroundIcon.css
 var PlaygroundIcon = __webpack_require__(99286);
 ;// CONCATENATED MODULE: ../../nexus/react/contexts/playground/display/PlaygroundIcon.jsx
@@ -13057,6 +13108,8 @@ var About = __webpack_require__(42189);
 
 
 
+
+
  // Models
 // ======================================================================================================
 // ***** AboutStore *****
@@ -13176,6 +13229,7 @@ var RenderAbout = (0,es/* observer */.Pi)(function (props) {
   var service = about.service;
   var staticMode = app.staticMode;
   var appKind = app.kind;
+  var appKey = app.appKey;
   var version = service.version;
   var changeset = service.changeset;
   var changeset_instance = service.changeset_instance;
@@ -13183,7 +13237,14 @@ var RenderAbout = (0,es/* observer */.Pi)(function (props) {
   var githubLink = service.githubLink;
   var githubLinkClient = service.githubLinkClient;
   var nexusServiceInfo = services.getServiceInfo('nexus');
-  var nexusGithubLink = nexusServiceInfo.githubLink; // ...
+  var nexusGithubLink = nexusServiceInfo.githubLink;
+  var reactLink = "https://reactjs.org";
+  var mstLink = "https://mobx-state-tree.js.org/intro/welcome";
+  var electronLink = "https://www.electronjs.org";
+  var materialIconsLink = "https://fonts.google.com/icons?icon.set=Material+Icons";
+  var nodeID3Link = "https://www.npmjs.com/package/node-id3";
+  var musicMetadata = "https://www.npmjs.com/package/music-metadata";
+  var devLink = "https://vincentboni.pagesperso-orange.fr"; // ...
 
   react.useEffect(function () {
     if (!loaded) {
@@ -13269,7 +13330,59 @@ var RenderAbout = (0,es/* observer */.Pi)(function (props) {
   }, "R\xE9vision d\xE9p\xF4t"), /*#__PURE__*/react.createElement("div", {
     className: "nx-about-changeset selectable",
     "data-flex": "2"
-  }, changeset)))); // Section -> Buttons
+  }, changeset)), /*#__PURE__*/react.createElement(Heading_Heading, {
+    style: {
+      marginBottom: '10px'
+    }
+  }, "Technologies"), /*#__PURE__*/react.createElement("div", {
+    className: "h-col-small responsive-vertical responsive-spaced-none responsive-align-start"
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "nx-t nx-t-default"
+  }, "React"), /*#__PURE__*/react.createElement(Link_Link, {
+    href: reactLink,
+    target: "_blank",
+    className: "flex-2"
+  }, reactLink)), /*#__PURE__*/react.createElement("div", {
+    className: "h-col-small responsive-vertical responsive-spaced-none responsive-align-start"
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "nx-t nx-t-default"
+  }, "MobX-State-Tree"), /*#__PURE__*/react.createElement(Link_Link, {
+    href: mstLink,
+    target: "_blank",
+    className: "flex-2"
+  }, mstLink)), appKind == 'electron' && /*#__PURE__*/react.createElement("div", {
+    className: "h-col-small responsive-vertical responsive-spaced-none responsive-align-start"
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "nx-t nx-t-default"
+  }, "Electron"), /*#__PURE__*/react.createElement(Link_Link, {
+    href: electronLink,
+    target: "_blank",
+    className: "flex-2"
+  }, electronLink)), appKind == 'electron' && appKey == 'gramophone' && /*#__PURE__*/react.createElement("div", {
+    className: "h-col-small responsive-vertical responsive-spaced-none responsive-align-start"
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "nx-t nx-t-default"
+  }, "node-ID3"), /*#__PURE__*/react.createElement(Link_Link, {
+    href: nodeID3Link,
+    target: "_blank",
+    className: "flex-2"
+  }, nodeID3Link)), appKind == 'electron' && appKey == 'gramophone' && /*#__PURE__*/react.createElement("div", {
+    className: "h-col-small responsive-vertical responsive-spaced-none responsive-align-start"
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "nx-t nx-t-default"
+  }, "music-metadata"), /*#__PURE__*/react.createElement(Link_Link, {
+    href: musicMetadata,
+    target: "_blank",
+    className: "flex-2"
+  }, musicMetadata)), /*#__PURE__*/react.createElement("div", {
+    className: "h-col-small responsive-vertical responsive-spaced-none responsive-align-start"
+  }, /*#__PURE__*/react.createElement("div", {
+    className: "nx-t nx-t-default"
+  }, "Material Icons"), /*#__PURE__*/react.createElement(Link_Link, {
+    href: materialIconsLink,
+    target: "_blank",
+    className: "flex-2"
+  }, materialIconsLink)))); // Section -> Buttons
   // ---
 
   var sectionButtons = [];
@@ -13301,11 +13414,28 @@ var RenderAbout = (0,es/* observer */.Pi)(function (props) {
   var contentAbout = null;
 
   if (loaded) {
-    contentAbout = /*#__PURE__*/react.createElement(Section_Section, {
+    contentAbout = /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Section_Section, {
       icon: sectionIcon,
       title: sectionTitle,
       buttons: sectionButtons
-    }, sectionContent);
+    }, sectionContent), /*#__PURE__*/react.createElement("div", {
+      className: "nx-dev-wrapper"
+    }, /*#__PURE__*/react.createElement(Typography_Typography, {
+      variant: "description",
+      style: {
+        marginRight: '5px'
+      }
+    }, "D\xE9velopp\xE9 par"), /*#__PURE__*/react.createElement(Link_Link, {
+      href: devLink,
+      target: "_blank",
+      className: "flex-2",
+      style: {
+        marginRight: '5px'
+      }
+    }, "Vincent Boni"), /*#__PURE__*/react.createElement(Icon_Icon, {
+      name: "auto_fix_high",
+      color: "warning"
+    })));
   }
 
   return contentAbout;
@@ -14445,16 +14575,44 @@ var NEXORA_CHANGELOGS = [{
 // 	],
 // },
 var GRAMOPHONE_CHANGELOGS = [{
-  "status": "daft",
-  "date": null,
+  "status": "prod",
+  "date": "2022-07-28",
   "app_key": "gramophone",
   "version": "4.0.0",
   "version_name": "New wave",
   "changes": [{
-    "title": "Réécriture complète à l'aide de ReactJS et de mobx-state-tree"
+    "title": "Réécriture complète à l'aide de React et de MobX-State-Tree"
+  }, {
+    "title": "Écran d'accueil repensé pour inviter à lire de la musique"
+  }, {
+    "title": "Compatible mode sombre"
+  }, {
+    "title": "Possibilité de créer des dossiers de playlists"
+  }, {
+    "title": "Nouvelle playlist automatique listant les titres favoris"
+  }, {
+    "title": "Lecteur dans l'entête pour mettre en valeur le titre en cours de lecture"
+  }, {
+    "title": "Historique de lecture"
+  }, {
+    "title": "Plus de personnalisation (thème, accueil, lecture, ...)"
+  }, {
+    "title": "Menus contextuels permettant d'effectuer de nombreuses actions"
   }, {
     "title": "Abandon de MaterialUI pour des raisons de performance d'affichage",
     "content": "Et de facilité de maintenance."
+  }, {
+    "title": "Amélioration des performances (app native Apple Silicon)"
+  }],
+  "version_assets": [{
+    "plateform_key": "macos",
+    "filename": "gramophone_400_macOS.zip"
+  }, {
+    "plateform_key": "macosARM",
+    "filename": "gramophone_400_macosARM.zip"
+  }, {
+    "plateform_key": "win64",
+    "filename": "gramophone_400_win64.zip"
   }]
 }, {
   "status": "prod",
@@ -14463,7 +14621,7 @@ var GRAMOPHONE_CHANGELOGS = [{
   "version": "3.0.0",
   "version_name": "Mambo",
   "changes": [{
-    "title": "Réécriture complète à l'aide de React.JS et de MaterialUI"
+    "title": "Réécriture complète à l'aide de React et de MaterialUI"
   }, {
     "title": "Plusieurs vues dédiées aux articles, albums, morceaux, genres, années et playlists"
   }, {
@@ -15362,7 +15520,8 @@ var ChangelogReleaseItem_ChangelogReleaseItem = (0,es/* observer */.Pi)(function
   var services = app.services; // From ... store
 
   var staticUrl = app.staticUrl;
-  var breakPoint414 = app.breakPoint414; // From ... props
+  var breakPoint414 = app.breakPoint414;
+  var appKind = app.kind; // From ... props
 
   var release = props.release;
   var editable = props.editable == true ? true : false;
@@ -15405,6 +15564,11 @@ var ChangelogReleaseItem_ChangelogReleaseItem = (0,es/* observer */.Pi)(function
     var plateformKey = asset.plateform_key;
     var plateform = PLATEFORMS_BY_KEYS[plateformKey];
     var assetLink = "".concat(staticUrl, "/file/").concat(asset.filename);
+
+    if (appKind == 'electron') {
+      return;
+    }
+
     return /*#__PURE__*/react.createElement(Indicator_Indicator, {
       color: "info",
       iconName: "folder_zip",
@@ -15559,13 +15723,22 @@ var STATIC_CHANGELOGS = {
 
 var PLATEFORMS = [{
   "value": "macos",
-  "label": "macOS"
+  "label": "macOS (Intel)"
+}, {
+  "value": "macosARM",
+  "label": "macOS (Apple)"
 }, {
   "value": "win32",
-  "label": "Windows 32"
+  "label": "Windows x86"
 }, {
   "value": "win64",
-  "label": "Windows 64"
+  "label": "Windows x86-64"
+}, {
+  "value": "winARM32",
+  "label": "Windows ARM32"
+}, {
+  "value": "winARM64",
+  "label": "Windows ARM64"
 }];
 var PLATEFORMS_BY_KEYS = {};
 
@@ -15910,7 +16083,6 @@ var RenderChangelogs = (0,es/* observer */.Pi)(function (props) {
 
   var handleAssetClick = function handleAssetClick(filename) {
     var assetLink = "".concat(staticUrl, "/file/").concat(filename);
-    console.log(assetLink);
     app.gotoExternal(assetLink);
   }; // Renderers
   // ==================================================================================================
@@ -20171,7 +20343,7 @@ var services_STATIC_SMAP = {
     kind: "webserver",
     port: 7304,
     database: null,
-    version: '0.0.1',
+    version: '4.0.0',
     changeset: '...',
     changeset_instance: '...',
     internal: '/index.html',
@@ -20189,7 +20361,7 @@ var services_STATIC_SMAP = {
     kind: "webserver",
     port: 7303,
     database: null,
-    version: '0.0.1',
+    version: '8.0.0',
     changeset: '...',
     changeset_instance: '...',
     internal: '/index.html',
@@ -24071,19 +24243,41 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       // Récupération des derniers albums rajoutés
       // ---
       var lastAdded = [];
+      var albumsList = [];
 
-      for (var lastAddedIdx in self.last_added_ids) {
-        if (lastAdded.length < maxAlbums) {
-          var albumId = self.last_added_ids[lastAddedIdx];
-          var album = self.by_id.get(albumId);
+      var _iterator2 = Albums_createForOfIteratorHelper(self.by_id.entries()),
+          _step2;
 
-          if (album) {
-            lastAdded.push(album);
-          }
-        } else {
-          break;
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var _step2$value = Albums_slicedToArray(_step2.value, 2),
+              albumId = _step2$value[0],
+              album = _step2$value[1];
+
+          albumsList.push(album);
         }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
       }
+
+      albumsList.sort(function (a, b) {
+        if (a.ts_added < b.ts_added) return 1;
+        if (a.ts_added > b.ts_added) return -1;
+        return 0;
+      });
+      lastAdded = albumsList.slice(0, albumsList.length >= 6 ? 6 : albumsList.length - 1); // for (const lastAddedIdx in self.last_added_ids) {
+      // 	if (lastAdded.length < maxAlbums) {
+      // 		const albumId = self.last_added_ids[lastAddedIdx];
+      // 		const album = self.by_id.get(albumId);
+      // 		if (album) {
+      // 			lastAdded.push(album);
+      // 		}
+      // 	} else {
+      // 		break;
+      // 	}
+      // }
 
       return lastAdded;
     },
@@ -24093,7 +24287,9 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
-      var helpers = app.helpers; // Il y en a-t-il assez ?
+      var helpers = app.helpers;
+      var library = store.library;
+      var shuffleIgnoreSoudtracks = library.shuffle_ignore_soudtracks; // Il y en a-t-il assez ?
 
       var nbAlbums = self.nbAlbums;
 
@@ -24111,15 +24307,16 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
 
         if (randomAlbumsIdxs.indexOf(randomIdx) == -1) {
           var albumId = albumIds[randomIdx];
+          var album = self.by_id.get(albumId);
           randomAlbumsIdxs.push(randomIdx);
-          randomAlbumsIds.push(albumId);
 
-          if (load) {
-            var album = self.by_id.get(albumId);
-
-            if (album) {
-              randomAlbums.push(album);
+          if (album) {
+            if (shuffleIgnoreSoudtracks && ['soundtrack', 'soundtracks', 'bande_originale'].indexOf(album.genre_id) > -1) {
+              continue;
             }
+
+            randomAlbumsIds.push(albumId);
+            randomAlbums.push(album);
           }
         }
       }
@@ -24235,19 +24432,19 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
 
       if (goAhead) {
         // Suppression des titres de l'album
-        var _iterator2 = Albums_createForOfIteratorHelper(album.tracks_ids),
-            _step2;
+        var _iterator3 = Albums_createForOfIteratorHelper(album.tracks_ids),
+            _step3;
 
         try {
-          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-            var trackId = _step2.value;
+          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+            var trackId = _step3.value;
             tracks.unindex(trackId, true);
           } // Suppression de l'album dans l'année associée
 
         } catch (err) {
-          _iterator2.e(err);
+          _iterator3.e(err);
         } finally {
-          _iterator2.f();
+          _iterator3.f();
         }
 
         if (album.year_id) {
@@ -29244,15 +29441,17 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
       }, function (raw) {
         // self.update(raw);
         // app.saveValue(['playlists', 'by_id'], raw.by_id, () => {
-        // 	const permanentAdded = self.ensurePermanent();
-        // 	if (permanentAdded) {
-        // 		self.save();
-        // 	}
-        // 	self.setField('loaded', true);
+        var permanentAdded = self.ensurePermanent();
+
+        if (permanentAdded) {
+          self.save();
+        } // 	self.setField('loaded', true);
         // 	if (callback) {
         // 		callback();
         // 	}
         // });
+
+
         app.applyPatches([[['playlists', 'by_id'], raw.by_id], [['playlists', 'folders'], raw.folders]], function () {
           self.setField('loaded', true);
 
@@ -30487,7 +30686,8 @@ var RenderLastAdded = (0,es/* observer */.Pi)(function (props) {
   var home = store.home;
   var albums = store.albums; // From ... store
 
-  var lastAdded = albums.getLastAdded(6); // ...
+  var displayedNew = home.displayedNew;
+  var lastAdded = displayedNew ? albums.getLastAdded(6) : []; // ...
 
   var homeSectionDef = HOME_SECTIONS_BY_KEYS["new"]; // Events
   // ==================================================================================================
@@ -33972,8 +34172,8 @@ var initSnapshot = makeInitSnapshot(routes, {
 var rootStore = RootStore.create(initSnapshot);
 var RootStoreContext = /*#__PURE__*/react.createContext(rootStore);
 window.store = rootStore;
-window.storeContext = RootStoreContext;
-Storage_setToStorage('debugMode', true, 'bool');
+window.storeContext = RootStoreContext; // setToStorage('debugMode', true, 'bool');
+
 var staticRaw = {
   'smap': Datas_copyObj(services_STATIC_SMAP)
 };
@@ -35199,7 +35399,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(25975)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(8008)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

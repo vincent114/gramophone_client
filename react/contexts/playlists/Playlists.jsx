@@ -219,10 +219,10 @@ export const PlaylistsStore = types
 				(raw) => {
 					// self.update(raw);
 					// app.saveValue(['playlists', 'by_id'], raw.by_id, () => {
-					// 	const permanentAdded = self.ensurePermanent();
-					// 	if (permanentAdded) {
-					// 		self.save();
-					// 	}
+					const permanentAdded = self.ensurePermanent();
+					if (permanentAdded) {
+						self.save();
+					}
 					// 	self.setField('loaded', true);
 					// 	if (callback) {
 					// 		callback();
