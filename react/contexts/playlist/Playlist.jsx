@@ -322,7 +322,7 @@ export const PlaylistStore = types
 			const store = getRoot(self);
 			const app = store.app;
 			const snackbar = app.snackbar;
-			const slashPath = store.slashPath;
+			const slashPath = app.slashPath;
 			const tracks = self.getPlayable();
 
 			let nbCopied = 0;

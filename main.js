@@ -40,6 +40,10 @@ const createWindow = () => {
 
 	mainWindow = new BrowserWindow({
 		titleBarStyle: 'hidden',
+		titleBarOverlay: (platform == 'win32') ? {
+			color: '#216464',
+			symbolColor: '#FFFFFF'
+		} : false,
 		trafficLightPosition: { x: 10, y: 20 },
 
 		x: winState.x,
@@ -55,7 +59,7 @@ const createWindow = () => {
 	});
 
 	winState.manage(mainWindow);
-	if (process.platform == 'win32') {
+	if (platform == 'win32') {
 		mainWindow.setMenuBarVisibility(false);
 	}
 

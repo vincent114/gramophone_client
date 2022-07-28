@@ -177,21 +177,9 @@ const RootStore = types
 		popupTrackMetadatas: types.optional(PopupTrackMetadatasStore, {}),
 		popupManagePlaylist: types.optional(PopupManagePlaylistStore, {}),
 
-		platform: types.maybeNull(types.string),
-
 		loaded: false,
 
 	})
-	.views(self => ({
-
-		get slashPath() {
-			if (self.platform == 'win32') {
-				return '\\';
-			}
-			return '/';
-		},
-
-	}))
 	.actions(self => ({
 
 		afterLoad: () => {
@@ -451,6 +439,7 @@ let initSnapshot = makeInitSnapshot(routes, {
 	'app': {
 		'context': getFromStorage("lastContext", "home"),
 		'kind': 'electron',
+		'platform': ipc.sendSync('platform'),
 		'tasks': ['load_library'],
 		'header': {
 			'dynamic': false,
@@ -501,7 +490,6 @@ let initSnapshot = makeInitSnapshot(routes, {
 	'player': {
 		'volume': getFromStorage('volume', 25, 'int'),
 	},
-	'platform': ipc.sendSync('platform'),
 });
 
 export const rootStore = RootStore.create(initSnapshot);

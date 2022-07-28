@@ -16774,7 +16774,7 @@ var Header_Header = (0,es/* observer */.Pi)(function (props) {
       onClick: function onClick() {
         return handleHomeClick();
       },
-      disabled: isLoading || !canGoHome
+      disabled: !canGoHome
     }, /*#__PURE__*/react.createElement(Icon_Icon, {
       name: "home",
       color: "white"
@@ -18633,6 +18633,8 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
   initialized: false,
   kind: 'web',
   // web, electron
+  platform: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  // win32, darwin (electron only)
   tasks: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(mobx_state_tree_module/* types.string */.V5.string), []),
   staticMode: false,
   debugMode: false,
@@ -18734,6 +18736,14 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       }
 
       return self.appKey;
+    },
+
+    get slashPath() {
+      if (self.platform == 'win32') {
+        return '\\';
+      }
+
+      return '/';
     },
 
     // -
@@ -20172,6 +20182,7 @@ var NxApp_NxApp = (0,es/* observer */.Pi)(function (props) {
   var breakPoint320 = app.breakPoint320;
   var menuPinned = menu.pinned;
   var appKind = app.kind;
+  var appPlatform = app.platform;
   var themeMode = theme.mode; // ...
 
   react.useEffect(function () {
@@ -20251,7 +20262,7 @@ var NxApp_NxApp = (0,es/* observer */.Pi)(function (props) {
       'break-320': breakPoint320
     }, "ui-".concat(themeMode), {
       'loading': isLoading
-    }, window.process ? process.platform : '')
+    }, appPlatform)
   }, Header && !isFullScreen && /*#__PURE__*/react.createElement(Header, null), /*#__PURE__*/react.createElement("div", {
     id: "nx-content"
   }, Menu && !isFullScreen && /*#__PURE__*/react.createElement(Menu, null), /*#__PURE__*/react.createElement("div", {
@@ -28704,7 +28715,7 @@ var PlaylistStore = mobx_state_tree_module/* types.model */.V5.model({
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
       var snackbar = app.snackbar;
-      var slashPath = store.slashPath;
+      var slashPath = app.slashPath;
       var tracks = self.getPlayable();
       var nbCopied = 0;
       ipc.once('folderChoosed', function (folders) {
@@ -33862,19 +33873,7 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
   popupZoomCover: mobx_state_tree_module/* types.optional */.V5.optional(PopupZoomCoverStore, {}),
   popupTrackMetadatas: mobx_state_tree_module/* types.optional */.V5.optional(PopupTrackMetadatasStore, {}),
   popupManagePlaylist: mobx_state_tree_module/* types.optional */.V5.optional(PopupManagePlaylistStore, {}),
-  platform: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
   loaded: false
-}).views(function (self) {
-  return {
-    get slashPath() {
-      if (self.platform == 'win32') {
-        return '\\';
-      }
-
-      return '/';
-    }
-
-  };
 }).actions(function (self) {
   return {
     afterLoad: function afterLoad() {
@@ -34128,6 +34127,7 @@ var initSnapshot = makeInitSnapshot(routes, {
   'app': {
     'context': Storage_getFromStorage("lastContext", "home"),
     'kind': 'electron',
+    'platform': ipc.sendSync('platform'),
     'tasks': ['load_library'],
     'header': {
       'dynamic': false
@@ -34166,8 +34166,7 @@ var initSnapshot = makeInitSnapshot(routes, {
   'playlistFolderId': Storage_getFromStorage('lastPlaylistFolderId', ''),
   'player': {
     'volume': Storage_getFromStorage('volume', 25, 'int')
-  },
-  'platform': ipc.sendSync('platform')
+  }
 });
 var rootStore = RootStore.create(initSnapshot);
 var RootStoreContext = /*#__PURE__*/react.createContext(rootStore);
