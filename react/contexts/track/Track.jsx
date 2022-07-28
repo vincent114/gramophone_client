@@ -667,6 +667,7 @@ export const TrackRow = observer((props) => {
 
 	// ...
 
+	const checked = track.checked;
 	const favorite = track.favorite;
 	const starred = track.starred;
 	const isPlaying = track.isPlaying;
@@ -688,18 +689,27 @@ export const TrackRow = observer((props) => {
 
 	// -
 
-	const handleCheckedChanged = () => {
-		tracks.save();
+	const _saveTracksDelayed = () => {
+		clearTimeout(window.timeoutSaveTracks);
+		window.timeoutSaveTracks = setTimeout(() => {
+			tracks.save();
+		}, 1000);
+	}
+
+	// -
+
+	const handleCheckedChanged = (savePath, value) => {
+		_saveTracksDelayed();
 	}
 
 	const handleFavoriteClicked = (track) => {
 		track.setField('favorite', !track.favorite);
-		tracks.save();
+		_saveTracksDelayed();
 	}
 
 	const handleStarredClicked = (track) => {
 		track.setField('starred', !track.starred);
-		tracks.save();
+		_saveTracksDelayed();
 	}
 
 	const handlePlayClicked = (track) => {
@@ -744,7 +754,7 @@ export const TrackRow = observer((props) => {
 					ghostLabel={false}
 					savePath={['tracks', 'by_id', track.id, 'checked']}
 					disabled={isLoading}
-					callbackChange={() => handleCheckedChanged()}
+					callbackChange={handleCheckedChanged}
 				/>
 			</TableCell>
 		)

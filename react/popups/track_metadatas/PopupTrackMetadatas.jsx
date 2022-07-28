@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import clsx from 'clsx';
 
 import { Field } from 'nexus/forms/field/Field';
+import { Indicator } from 'nexus/forms/indicator/Indicator';
 
 import { Row } from 'nexus/layout/row/Row';
 import { Column } from 'nexus/layout/column/Column';
@@ -213,7 +214,7 @@ export const PopupTrackMetadatas = observer((props) => {
 							/>
 						</Row>
 
-						<Row>
+						<Row align="end">
 							<div className="h-col-small">
 								<Field
 									id="txt-track"
@@ -230,7 +231,14 @@ export const PopupTrackMetadatas = observer((props) => {
 									disabled={true}
 								/>
 							</div>
-							<div className="responsive-hidden"></div>
+							<div className="h-col-small">
+								<div className="responsive-hidden"></div>
+								<Indicator
+									color="typography"
+								>
+									{(track.track_type) ? track.track_type : "?"}
+								</Indicator>
+							</div>
 						</Row>
 
 						{track.ts_added && (

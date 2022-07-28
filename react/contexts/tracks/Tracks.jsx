@@ -114,8 +114,15 @@ export const TracksStore = types
 		// -
 
 		getFavorites() {
+			const store = getRoot(self);
+			const library = store.library;
+			const shuffleIgnoreSoudtracks = library.shuffle_ignore_soudtracks;
+
 			let favorites = [];
 			for (const [trackId, track] of self.by_id.entries()) {
+				if (shuffleIgnoreSoudtracks && ['soundtrack', 'soundtracks', 'bande_originale'].indexOf(track.genre_id) > -1) {
+					continue;
+				}
 				if (track.favorite) {
 					favorites.push(track);
 				}

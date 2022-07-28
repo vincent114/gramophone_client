@@ -20953,6 +20953,7 @@ function Track_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
  // Models
 // ======================================================================================================
 // ***** TrackStore *****
@@ -21481,6 +21482,7 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
 
   var isLoading = app.isLoading; // ...
 
+  var checked = track.checked;
   var favorite = track.favorite;
   var starred = track.starred;
   var isPlaying = track.isPlaying;
@@ -21497,18 +21499,28 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
   }; // -
 
 
-  var handleCheckedChanged = function handleCheckedChanged() {
-    tracks.save();
+  var _saveTracksDelayed = function _saveTracksDelayed() {
+    clearTimeout(window.timeoutSaveTracks);
+    window.timeoutSaveTracks = setTimeout(function () {
+      tracks.save();
+    }, 1000);
+  }; // -
+
+
+  var handleCheckedChanged = function handleCheckedChanged(savePath, value) {
+    _saveTracksDelayed();
   };
 
   var handleFavoriteClicked = function handleFavoriteClicked(track) {
     track.setField('favorite', !track.favorite);
-    tracks.save();
+
+    _saveTracksDelayed();
   };
 
   var handleStarredClicked = function handleStarredClicked(track) {
     track.setField('starred', !track.starred);
-    tracks.save();
+
+    _saveTracksDelayed();
   };
 
   var handlePlayClicked = function handlePlayClicked(track) {
@@ -21551,9 +21563,7 @@ var TrackRow = (0,es/* observer */.Pi)(function (props) {
       ghostLabel: false,
       savePath: ['tracks', 'by_id', track.id, 'checked'],
       disabled: isLoading,
-      callbackChange: function callbackChange() {
-        return handleCheckedChanged();
-      }
+      callbackChange: handleCheckedChanged
     })));
   } // Favori
 
@@ -25847,6 +25857,9 @@ var TracksStore = mobx_state_tree_module/* types.model */.V5.model({
     },
     // -
     getFavorites: function getFavorites() {
+      var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
+      var library = store.library;
+      var shuffleIgnoreSoudtracks = library.shuffle_ignore_soudtracks;
       var favorites = [];
 
       var _iterator2 = Tracks_createForOfIteratorHelper(self.by_id.entries()),
@@ -25857,6 +25870,10 @@ var TracksStore = mobx_state_tree_module/* types.model */.V5.model({
           var _step2$value = Tracks_slicedToArray(_step2.value, 2),
               trackId = _step2$value[0],
               track = _step2$value[1];
+
+          if (shuffleIgnoreSoudtracks && ['soundtrack', 'soundtracks', 'bande_originale'].indexOf(track.genre_id) > -1) {
+            continue;
+          }
 
           if (track.favorite) {
             favorites.push(track);
@@ -33101,6 +33118,7 @@ var PopupTrackMetadatas = __webpack_require__(56797);
 
 
 
+
  // Models
 // ======================================================================================================
 // ***** PopupTrackMetadatasStore *****
@@ -33250,7 +33268,9 @@ var PopupTrackMetadatas_PopupTrackMetadatas = (0,es/* observer */.Pi)(function (
         label: "Genre",
         value: linkedYear.name,
         disabled: true
-      })), /*#__PURE__*/react.createElement(Row_Row, null, /*#__PURE__*/react.createElement("div", {
+      })), /*#__PURE__*/react.createElement(Row_Row, {
+        align: "end"
+      }, /*#__PURE__*/react.createElement("div", {
         className: "h-col-small"
       }, /*#__PURE__*/react.createElement(Field_Field, {
         id: "txt-track",
@@ -33265,8 +33285,12 @@ var PopupTrackMetadatas_PopupTrackMetadatas = (0,es/* observer */.Pi)(function (
         value: track.disc,
         disabled: true
       })), /*#__PURE__*/react.createElement("div", {
+        className: "h-col-small"
+      }, /*#__PURE__*/react.createElement("div", {
         className: "responsive-hidden"
-      })), track.ts_added && /*#__PURE__*/react.createElement(Row_Row, {
+      }), /*#__PURE__*/react.createElement(Indicator_Indicator, {
+        color: "typography"
+      }, track.track_type ? track.track_type : "?"))), track.ts_added && /*#__PURE__*/react.createElement(Row_Row, {
         style: {
           marginTop: '10px',
           marginBottom: '5px'
