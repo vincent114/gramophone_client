@@ -163,15 +163,15 @@ export const TracksStore = types
 
 		// -
 
-		update: (raw) => {
-			self.by_id = {};
-			for (const [trackId, trackRaw] of Object.entries(raw.by_id)) {
-				const track = TrackStore.create({});
-				track.update(trackRaw);
-				self.by_id.set(trackId, track);
-			}
-			self.loaded = true;
-		},
+		// update: (raw) => {
+		// 	self.by_id = {};
+		// 	for (const [trackId, trackRaw] of Object.entries(raw.by_id)) {
+		// 		const track = TrackStore.create({});
+		// 		track.update(trackRaw);
+		// 		self.by_id.set(trackId, track);
+		// 	}
+		// 	self.loaded = true;
+		// },
 
 		load: (callback) => {
 
@@ -181,7 +181,7 @@ export const TracksStore = types
 			const store = getRoot(self);
 			const app = store.app;
 
-			store._readJsonFile(
+			app.readJsonFile(
 				self.tracksCollectionFilePath,
 				{
 					by_id: {},
@@ -204,7 +204,8 @@ export const TracksStore = types
 			// ---
 
 			const store = getRoot(self);
-			store._writeJsonFile(self.tracksCollectionFilePath, self.toJSON());
+			const app = store.app;
+			app.writeJsonFile(self.tracksCollectionFilePath, self.toJSON());
 
 			if (callback) {
 				callback();

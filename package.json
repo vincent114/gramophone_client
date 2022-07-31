@@ -1,6 +1,6 @@
 {
   "name": "gramophone_app",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Music jukebox App",
   "main": "main.js",
   "scripts": {

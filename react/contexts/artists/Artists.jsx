@@ -99,15 +99,15 @@ export const ArtistsStore = types
 
 		// -
 
-		update: (raw) => {
-			self.by_id = {};
-			for (let [artistId, artistRaw] of Object.entries(raw.by_id)) {
-				const artist = ArtistStore.create({});
-				artist.update(artistRaw);
-				self.by_id.set(artistId, artist);
-			}
-			self.loaded = true;
-		},
+		// update: (raw) => {
+		// 	self.by_id = {};
+		// 	for (let [artistId, artistRaw] of Object.entries(raw.by_id)) {
+		// 		const artist = ArtistStore.create({});
+		// 		artist.update(artistRaw);
+		// 		self.by_id.set(artistId, artist);
+		// 	}
+		// 	self.loaded = true;
+		// },
 
 		load: (callback) => {
 
@@ -117,7 +117,7 @@ export const ArtistsStore = types
 			const store = getRoot(self);
 			const app = store.app;
 
-			store._readJsonFile(
+			app.readJsonFile(
 				self.artistsCollectionFilePath,
 				{
 					by_id: {},
@@ -140,7 +140,8 @@ export const ArtistsStore = types
 			// ---
 
 			const store = getRoot(self);
-			store._writeJsonFile(self.artistsCollectionFilePath, self.toJSON());
+			const app = store.app;
+			app.writeJsonFile(self.artistsCollectionFilePath, self.toJSON());
 
 			if (callback) {
 				callback();

@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 8008:
+/***/ 44054:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -163,7 +163,7 @@ var STATIC_SMAP = {
     kind: "webserver",
     port: 7304,
     database: null,
-    version: '4.0.0',
+    version: '4.0.1',
     changeset: '...',
     changeset_instance: '...',
     internal: '/index.html',
@@ -543,7 +543,14 @@ function Datas_arrayLikeToArray(arr, len) { if (len == null || len > arr.length)
 // Datas
 // ======================================================================================================
 var LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-var NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']; // Functions
+var NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+var LIBRARY_TARGET_CHOICES = [{
+  "value": "default",
+  "label": "Emplacement par défaut"
+}, {
+  "value": "custom",
+  "label": "Emplacement personnalisé"
+}]; // Functions
 // ======================================================================================================
 
 function uuid() {
@@ -3157,6 +3164,30 @@ var MusicNoteIcon = function MusicNoteIcon(props) {
     d: "M12 3l.01 10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4.01 4S14 19.21 14 17V7h4V3h-6zm-1.99 16c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"
   }));
 };
+;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/MyLocation.jsx
+ // Functions Components ReactJS
+// ======================================================================================================
+
+var MyLocationIcon = function MyLocationIcon(props) {
+  // From ... props
+  var color = props.color ? props.color : '#000000';
+  var height = props.height ? props.height : 24;
+  var width = props.width ? props.width : 24; // Render
+  // ==================================================================================================
+
+  return /*#__PURE__*/react.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: height,
+    viewBox: "0 0 24 24",
+    width: width,
+    fill: color
+  }, /*#__PURE__*/react.createElement("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }), /*#__PURE__*/react.createElement("path", {
+    d: "M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"
+  }));
+};
 ;// CONCATENATED MODULE: ../../nexus/react/components/svg_icons/NewReleases.jsx
  // Functions Components ReactJS
 // ======================================================================================================
@@ -4987,6 +5018,7 @@ var Icon = __webpack_require__(73244);
 
 
 
+
  // Datas
 // -------------------------------------------------------------------------------------------------------------
 
@@ -5079,6 +5111,7 @@ var ICON_KEYS_TO_COMPONENT = {
   'move_down': MoveDownIcon,
   'move_up': MoveUpIcon,
   'music_note': MusicNoteIcon,
+  'my_location': MyLocationIcon,
   'new_releases': NewReleasesIcon,
   'newspaper': NewspaperIcon,
   'no_accounts': NoAccountsIcon,
@@ -7573,8 +7606,10 @@ var Field_Field = (0,es/* observer */.Pi)(function (props) {
   var onKeyUp = props.onKeyUp;
   var onKeyDown = props.onKeyDown;
   var onClick = props.onClick;
-  var startAdornment = props.startAdornment ? props.startAdornment : null;
-  var endAdornment = props.endAdornment ? props.endAdornment : null;
+  var startAdornment = props.startAdornment ? props.startAdornment : null; // let startAdornmentOnClick = props.startAdornmentOnClick;
+
+  var endAdornment = props.endAdornment ? props.endAdornment : null; // let endAdornementOnClick = props.endAdornementOnClick;
+
   var variant = props.variant ? props.variant : 'contained'; // contained, outlined
 
   var color = props.color ? props.color : 'primary'; // primary, secondary, white, black
@@ -14574,7 +14609,31 @@ var NEXORA_CHANGELOGS = [{
 // 		{"title": ""},
 // 	],
 // },
+// Liste des genres musicaux -> https://fr.wikipedia.org/wiki/Liste_de_styles_musicaux
 var GRAMOPHONE_CHANGELOGS = [{
+  "status": "prod",
+  "date": "2022-07-31",
+  "app_key": "gramophone",
+  "version": "4.0.1",
+  "version_name": "Opera",
+  "changes": [{
+    "title": "Optimisation des performances d'écriture"
+  }, {
+    "title": "Correction des petites erreurs de jeunesse"
+  }, {
+    "title": "Possibilité de choisir l'emplacement de sauvegarde"
+  }],
+  "version_assets": [{
+    "plateform_key": "macos",
+    "filename": "gramophone_401_macOS.zip"
+  }, {
+    "plateform_key": "macosARM",
+    "filename": "gramophone_401_macosARM.zip"
+  }, {
+    "plateform_key": "win64",
+    "filename": "gramophone_401_win64.zip"
+  }]
+}, {
   "status": "prod",
   "date": "2022-07-28",
   "app_key": "gramophone",
@@ -14603,16 +14662,6 @@ var GRAMOPHONE_CHANGELOGS = [{
     "content": "Et de facilité de maintenance."
   }, {
     "title": "Amélioration des performances (app native Apple Silicon)"
-  }],
-  "version_assets": [{
-    "plateform_key": "macos",
-    "filename": "gramophone_400_macOS.zip"
-  }, {
-    "plateform_key": "macosARM",
-    "filename": "gramophone_400_macosARM.zip"
-  }, {
-    "plateform_key": "win64",
-    "filename": "gramophone_400_win64.zip"
   }]
 }, {
   "status": "prod",
@@ -19640,6 +19689,57 @@ var NxAppStore = mobx_state_tree_module/* types.model */.V5.model({
       return self._fetchDatas(input, init, quiet, method, params, false);
     },
     // -
+    readJsonFile: function readJsonFile(filePath, defaultDatas, callback, verbose) {
+      // Lit le fichier JSON passé en paramètres et renvoie un dictionnaire
+      // ---
+      var datas = defaultDatas ? defaultDatas : {}; // On s'assure que le fichier existe
+
+      if (!ipc.sendSync('existsSync', filePath)) {
+        ipc.sendSync('writeJSONSync', filePath, datas, {
+          spaces: 4
+        });
+      }
+
+      if (verbose) {
+        console.log("SEND readJson ".concat(JSON.stringify(filePath)));
+      } // Lecture des données du fichier
+
+
+      try {
+        ipc.invoke('readJson', [filePath]).then(function (result) {
+          if (verbose) {
+            console.log("CALLBACK readJson ".concat(JSON.stringify(filePath)));
+            console.log(result);
+          }
+
+          if (callback) {
+            callback(result);
+          }
+        });
+      } catch (err) {
+        console.error(err);
+      }
+
+      return null;
+    },
+    writeJsonFile: function writeJsonFile(filePath, datas, callback) {
+      // Ecrit le dictionnaire dans le fichier json passés en paramètres
+      // ---
+      try {
+        ipc.send('writeJSON', [filePath, datas, {
+          spaces: 4
+        }]);
+
+        if (callback) {
+          callback(result);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+
+      return null;
+    },
+    // -
     applyPatches: function applyPatches(pathsAndValues, callbackPatched) {
       // Application de patchs à l'arbre MobxStateTree
       // ---
@@ -20354,7 +20454,7 @@ var services_STATIC_SMAP = {
     kind: "webserver",
     port: 7304,
     database: null,
-    version: '4.0.0',
+    version: '4.0.1',
     changeset: '...',
     changeset_instance: '...',
     internal: '/index.html',
@@ -24351,28 +24451,21 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       self[field] = value;
     },
     // -
-    update: function update(raw) {
-      self.by_id = {};
-
-      for (var _i2 = 0, _Object$entries = Object.entries(raw.by_id); _i2 < _Object$entries.length; _i2++) {
-        var _Object$entries$_i = Albums_slicedToArray(_Object$entries[_i2], 2),
-            albumId = _Object$entries$_i[0],
-            albumRaw = _Object$entries$_i[1];
-
-        var album = AlbumStore.create({});
-        album.update(albumRaw);
-        self.by_id.set(albumId, album);
-      }
-
-      self.loaded = true;
-    },
+    // update: (raw) => {
+    // 	self.by_id = {};
+    // 	for (let [albumId, albumRaw] of Object.entries(raw.by_id)) {
+    // 		const album = AlbumStore.create({});
+    // 		album.update(albumRaw);
+    // 		self.by_id.set(albumId, album);
+    // 	}
+    // 	self.loaded = true;
+    // },
     load: function load(callback) {
       // Chargement des albums
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
-
-      store._readJsonFile(self.albumsCollectionFilePath, {
+      app.readJsonFile(self.albumsCollectionFilePath, {
         by_id: {},
         last_added_ids: []
       }, function (raw) {
@@ -24396,8 +24489,8 @@ var AlbumsStore = mobx_state_tree_module/* types.model */.V5.model({
       // Sauvegarde des albums
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
-
-      store._writeJsonFile(self.albumsCollectionFilePath, self.toJSON());
+      var app = store.app;
+      app.writeJsonFile(self.albumsCollectionFilePath, self.toJSON());
 
       if (callback) {
         callback();
@@ -25433,28 +25526,21 @@ var ArtistsStore = mobx_state_tree_module/* types.model */.V5.model({
       self[field] = value;
     },
     // -
-    update: function update(raw) {
-      self.by_id = {};
-
-      for (var _i2 = 0, _Object$entries = Object.entries(raw.by_id); _i2 < _Object$entries.length; _i2++) {
-        var _Object$entries$_i = Artists_slicedToArray(_Object$entries[_i2], 2),
-            artistId = _Object$entries$_i[0],
-            artistRaw = _Object$entries$_i[1];
-
-        var artist = ArtistStore.create({});
-        artist.update(artistRaw);
-        self.by_id.set(artistId, artist);
-      }
-
-      self.loaded = true;
-    },
+    // update: (raw) => {
+    // 	self.by_id = {};
+    // 	for (let [artistId, artistRaw] of Object.entries(raw.by_id)) {
+    // 		const artist = ArtistStore.create({});
+    // 		artist.update(artistRaw);
+    // 		self.by_id.set(artistId, artist);
+    // 	}
+    // 	self.loaded = true;
+    // },
     load: function load(callback) {
       // Chargement des artistes
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
-
-      store._readJsonFile(self.artistsCollectionFilePath, {
+      app.readJsonFile(self.artistsCollectionFilePath, {
         by_id: {}
       }, function (raw) {
         // self.update(raw);
@@ -25471,8 +25557,8 @@ var ArtistsStore = mobx_state_tree_module/* types.model */.V5.model({
       // Sauvegarde des artistes
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
-
-      store._writeJsonFile(self.artistsCollectionFilePath, self.toJSON());
+      var app = store.app;
+      app.writeJsonFile(self.artistsCollectionFilePath, self.toJSON());
 
       if (callback) {
         callback();
@@ -25928,28 +26014,21 @@ var TracksStore = mobx_state_tree_module/* types.model */.V5.model({
       self[field] = value;
     },
     // -
-    update: function update(raw) {
-      self.by_id = {};
-
-      for (var _i2 = 0, _Object$entries = Object.entries(raw.by_id); _i2 < _Object$entries.length; _i2++) {
-        var _Object$entries$_i = Tracks_slicedToArray(_Object$entries[_i2], 2),
-            trackId = _Object$entries$_i[0],
-            trackRaw = _Object$entries$_i[1];
-
-        var track = TrackStore.create({});
-        track.update(trackRaw);
-        self.by_id.set(trackId, track);
-      }
-
-      self.loaded = true;
-    },
+    // update: (raw) => {
+    // 	self.by_id = {};
+    // 	for (const [trackId, trackRaw] of Object.entries(raw.by_id)) {
+    // 		const track = TrackStore.create({});
+    // 		track.update(trackRaw);
+    // 		self.by_id.set(trackId, track);
+    // 	}
+    // 	self.loaded = true;
+    // },
     load: function load(callback) {
       // Chargement des morceaux
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
-
-      store._readJsonFile(self.tracksCollectionFilePath, {
+      app.readJsonFile(self.tracksCollectionFilePath, {
         by_id: {}
       }, function (raw) {
         // self.update(raw);
@@ -25966,8 +26045,8 @@ var TracksStore = mobx_state_tree_module/* types.model */.V5.model({
       // Sauvegarde des morceaux
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
-
-      store._writeJsonFile(self.tracksCollectionFilePath, self.toJSON());
+      var app = store.app;
+      app.writeJsonFile(self.tracksCollectionFilePath, self.toJSON());
 
       if (callback) {
         callback();
@@ -26841,28 +26920,21 @@ var YearsStore = mobx_state_tree_module/* types.model */.V5.model({
       self[field] = value;
     },
     // -
-    update: function update(raw) {
-      self.by_id = {};
-
-      for (var _i2 = 0, _Object$entries = Object.entries(raw.by_id); _i2 < _Object$entries.length; _i2++) {
-        var _Object$entries$_i = Years_slicedToArray(_Object$entries[_i2], 2),
-            yearId = _Object$entries$_i[0],
-            yearRaw = _Object$entries$_i[1];
-
-        var year = YearStore.create({});
-        year.update(yearRaw);
-        self.by_id.set(yearId, year);
-      }
-
-      self.loaded = true;
-    },
+    // update: (raw) => {
+    // 	self.by_id = {};
+    // 	for (const [yearId, yearRaw] of Object.entries(raw.by_id)) {
+    // 		const year = YearStore.create({});
+    // 		year.update(yearRaw);
+    // 		self.by_id.set(yearId, year);
+    // 	}
+    // 	self.loaded = true;
+    // },
     load: function load(callback) {
       // Chargement des années
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
-
-      store._readJsonFile(self.yearsCollectionFilePath, {
+      app.readJsonFile(self.yearsCollectionFilePath, {
         by_id: {}
       }, function (raw) {
         // self.update(raw);
@@ -26879,8 +26951,8 @@ var YearsStore = mobx_state_tree_module/* types.model */.V5.model({
       // Sauvegarde des années
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
-
-      store._writeJsonFile(self.yearsCollectionFilePath, self.toJSON());
+      var app = store.app;
+      app.writeJsonFile(self.yearsCollectionFilePath, self.toJSON());
 
       if (callback) {
         callback();
@@ -27611,28 +27683,21 @@ var GenresStore = mobx_state_tree_module/* types.model */.V5.model({
       self[field] = value;
     },
     // -
-    update: function update(raw) {
-      self.by_id = {};
-
-      for (var _i2 = 0, _Object$entries = Object.entries(raw.by_id); _i2 < _Object$entries.length; _i2++) {
-        var _Object$entries$_i = Genres_slicedToArray(_Object$entries[_i2], 2),
-            genreId = _Object$entries$_i[0],
-            genreRaw = _Object$entries$_i[1];
-
-        var genre = GenreStore.create({});
-        genre.update(genreRaw);
-        self.by_id.set(genreId, genre);
-      }
-
-      self.loaded = true;
-    },
+    // update: (raw) => {
+    // 	self.by_id = {};
+    // 	for (const [genreId, genreRaw] of Object.entries(raw.by_id)) {
+    // 		const genre = GenreStore.create({});
+    // 		genre.update(genreRaw);
+    // 		self.by_id.set(genreId, genre);
+    // 	}
+    // 	self.loaded = true;
+    // },
     load: function load(callback) {
       // Chargement des morceaux
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
-
-      store._readJsonFile(self.genresCollectionFilePath, {
+      app.readJsonFile(self.genresCollectionFilePath, {
         by_id: {}
       }, function (raw) {
         // self.update(raw);
@@ -27649,8 +27714,8 @@ var GenresStore = mobx_state_tree_module/* types.model */.V5.model({
       // Sauvegarde des genres
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
-
-      store._writeJsonFile(self.genresCollectionFilePath, self.toJSON());
+      var app = store.app;
+      app.writeJsonFile(self.genresCollectionFilePath, self.toJSON());
 
       if (callback) {
         callback();
@@ -29462,8 +29527,7 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
       var app = store.app;
-
-      store._readJsonFile(self.playlistsCollectionFilePath, {
+      app.readJsonFile(self.playlistsCollectionFilePath, {
         by_id: {},
         folders: {}
       }, function (raw) {
@@ -29493,8 +29557,8 @@ var PlaylistsStore = mobx_state_tree_module/* types.model */.V5.model({
       // Sauvegarde des playlists
       // ---
       var store = (0,mobx_state_tree_module/* getRoot */.yj)(self);
-
-      store._writeJsonFile(self.playlistsCollectionFilePath, self.toJSON());
+      var app = store.app;
+      app.writeJsonFile(self.playlistsCollectionFilePath, self.toJSON());
 
       if (callback) {
         callback();
@@ -31618,20 +31682,6 @@ var SearchPage = (0,es/* observer */.Pi)(function (props) {
 // EXTERNAL MODULE: ./contexts/admin/Admin.css
 var admin_Admin = __webpack_require__(24251);
 ;// CONCATENATED MODULE: ./contexts/admin/Admin.jsx
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function Admin_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = Admin_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function Admin_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Admin_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Admin_arrayLikeToArray(o, minLen); }
@@ -31653,9 +31703,128 @@ function Admin_arrayLikeToArray(arr, len) { if (len == null || len > arr.length)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  // Functions Components ReactJS
-// -------------------------------------------------------------------------------------------------------------
-// ***** RenderAdminFolders *****
+// ======================================================================================================
+// ***** RenderSectionLibrary *****
+// ********************************
+
+var TAG_RenderSectionLibrary = function TAG_RenderSectionLibrary() {};
+
+var RenderSectionLibrary = (0,es/* observer */.Pi)(function (props) {
+  var store = react.useContext(window.storeContext);
+  var app = store.app;
+  var snackbar = app.snackbar;
+  var library = store.library; // From ... store
+
+  var isLoading = app.isLoading;
+  var pathToUse = library.path_to_use;
+  var customPath = library.custom_path;
+  var customPathAvailable = library.custom_path_available; // ...
+  // Events
+  // ==================================================================================================
+
+  var handleFieldChange = function handleFieldChange(savePath, value) {
+    library.save(function () {
+      clearTimeout(window.timeoutReload);
+      window.timeoutReload = setTimeout(function () {
+        store.reload();
+      }, 1000);
+    });
+  };
+
+  var handleBrowseCustomPath = function handleBrowseCustomPath() {
+    ipc.once('folderChoosed', function (folders) {
+      var _iterator = Admin_createForOfIteratorHelper(folders),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var folder = _step.value;
+          library.setField("path_to_use", "custom");
+          library.setField("custom_path", folder);
+          handleFieldChange();
+          break;
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    });
+    ipc.send('chooseFolder');
+  }; // Render
+  // ==================================================================================================
+  // Section -> Icon
+  // -------------------------------------------------
+
+
+  var sectionIcon = /*#__PURE__*/react.createElement(Icon_Icon, {
+    name: "save"
+  }); // Section -> Title
+  // -------------------------------------------------
+
+  var sectionTitle = "Emplacement de sauvegarde"; // Section -> Content
+  // -------------------------------------------------
+
+  var customPathError = "";
+
+  if (pathToUse == "custom" && customPath && !customPathAvailable) {
+    customPathError = "Dossier introuvable.";
+  }
+
+  var sectionContent = /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Field_Field, {
+    id: "rad-path-to-use",
+    component: "radios",
+    datas: LIBRARY_TARGET_CHOICES,
+    savePath: ['library', 'path_to_use'],
+    disabled: isLoading,
+    className: "rad-path-to-use",
+    style: {
+      marginLeft: '2px'
+    },
+    callbackChange: handleFieldChange
+  }), /*#__PURE__*/react.createElement(Row_Row, null, /*#__PURE__*/react.createElement(Field_Field, {
+    id: "txt-custom-path",
+    component: "input",
+    savePath: ['library', 'custom_path'],
+    disabled: isLoading,
+    error: customPathError,
+    endAdornment: /*#__PURE__*/react.createElement(IconButton, {
+      size: "tiny",
+      color: "typography",
+      iconName: "more_horiz",
+      disabled: isLoading,
+      onClick: function onClick() {
+        return handleBrowseCustomPath();
+      }
+    }),
+    style: {
+      marginLeft: '43px'
+    },
+    callbackBlur: handleFieldChange
+  }))); // -------------------------------------------------
+
+  return /*#__PURE__*/react.createElement(Section_Section, {
+    icon: sectionIcon,
+    title: sectionTitle
+  }, sectionContent);
+}); // ***** RenderAdminFolders *****
 // ******************************
 
 var TAG_RenderAdminFolders = function TAG_RenderAdminFolders() {};
@@ -31679,12 +31848,12 @@ var RenderAdminFolders = (0,es/* observer */.Pi)(function (props) {
 
   var handleAddFolder = function handleAddFolder(folderKey) {
     ipc.once('folderChoosed', function (folders) {
-      var _iterator = Admin_createForOfIteratorHelper(folders),
-          _step;
+      var _iterator2 = Admin_createForOfIteratorHelper(folders),
+          _step2;
 
       try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var folder = _step.value;
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var folder = _step2.value;
           library.addFolder(folderKey, folder);
           library.refreshAvailability();
           library.save(function () {
@@ -31692,9 +31861,9 @@ var RenderAdminFolders = (0,es/* observer */.Pi)(function (props) {
           });
         }
       } catch (err) {
-        _iterator.e(err);
+        _iterator2.e(err);
       } finally {
-        _iterator.f();
+        _iterator2.f();
       }
     });
     ipc.send('chooseFolder');
@@ -31968,7 +32137,7 @@ var Admin_RenderAdmin = (0,es/* observer */.Pi)(function (props) {
   // Render
   // ==================================================================================================
 
-  return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(RenderAdminFolders, null), /*#__PURE__*/react.createElement(RenderAdminScan, null), /*#__PURE__*/react.createElement(RenderSectionPlayback, null), /*#__PURE__*/react.createElement(RenderSectionTheme, null));
+  return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(RenderSectionLibrary, null), /*#__PURE__*/react.createElement(RenderAdminFolders, null), /*#__PURE__*/react.createElement(RenderAdminScan, null), /*#__PURE__*/react.createElement(RenderSectionPlayback, null), /*#__PURE__*/react.createElement(RenderSectionTheme, null));
 }); // ***** AdminPage *****
 // *********************
 
@@ -32199,6 +32368,10 @@ var LibraryFolderStore = mobx_state_tree_module/* types.model */.V5.model({
 var TAG_LibraryStore = function TAG_LibraryStore() {};
 
 var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
+  path_to_use: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  // default, custom
+  custom_path: mobx_state_tree_module/* types.maybeNull */.V5.maybeNull(mobx_state_tree_module/* types.string */.V5.string),
+  custom_path_available: true,
   source_folders: mobx_state_tree_module/* types.optional */.V5.optional(mobx_state_tree_module/* types.array */.V5.array(LibraryFolderStore), []),
   copy_folder: mobx_state_tree_module/* types.optional */.V5.optional(LibraryFolderStore, {}),
   copy_enabled: false,
@@ -32214,10 +32387,23 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
   loaded: false
 }).views(function (self) {
   return {
-    get collectionPath() {
+    get defaultCollectionPath() {
       var cwd = ipc.sendSync('getCwd');
-      var path = ipc.sendSync('pathJoin', [cwd, 'collection']);
+      return ipc.sendSync('pathJoin', [cwd, 'collection']);
+    },
+
+    get defaultCollectionCoversPath() {
+      var path = ipc.sendSync('pathJoin', [self.defaultCollectionPath, 'covers']);
       return path;
+    },
+
+    // -
+    get collectionPath() {
+      if (self.custom_path && self.custom_path_available) {
+        return self.custom_path;
+      } else {
+        return self.defaultCollectionPath;
+      }
     },
 
     get collectionCoversPath() {
@@ -32225,6 +32411,7 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
       return path;
     },
 
+    // -
     get collectionFiles() {
       // Compilation des dates de modifications des fichiers pour le scan rapide
       // ---
@@ -32436,6 +32623,14 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
     refreshAvailability: function refreshAvailability() {
       // Les dossiers sont-ils toujours accessibles ?
       // ---
+      if (self.custom_path) {
+        if (ipc.sendSync('existsSync', self.custom_path)) {
+          self.custom_path_available = true;
+        } else {
+          self.custom_path_available = false;
+        }
+      }
+
       var _iterator8 = Library_createForOfIteratorHelper(self.source_folders),
           _step8;
 
@@ -32465,6 +32660,9 @@ var LibraryStore = mobx_state_tree_module/* types.model */.V5.model({
     },
     update: function update(raw) {
       if (raw) {
+        self.path_to_use = raw.path_to_use ? raw.path_to_use : "default";
+        self.custom_path = raw.custom_path ? raw.custom_path : "";
+        self.custom_path_available = raw.custom_path_available ? raw.custom_path_available : true;
         self.source_folders = [];
 
         var _iterator9 = Library_createForOfIteratorHelper(raw.source_folders),
@@ -33807,64 +34005,10 @@ function Main_defineProperty(obj, key, value) { if (key in obj) { Object.defineP
 
 
 
- // Functions
-// ======================================================================================================
-
-function readJsonFile(filePath, defaultDatas, callback, verbose) {
-  // Lit le fichier JSON passé en paramètres et renvoie un dictionnaire
-  // ---
-  var datas = defaultDatas ? defaultDatas : {}; // On s'assure que le fichier existe
-
-  if (!ipc.sendSync('existsSync', filePath)) {
-    ipc.sendSync('writeJSONSync', filePath, datas, {
-      spaces: 4
-    });
-  }
-
-  if (verbose) {
-    console.log("SEND readJson ".concat(JSON.stringify(filePath)));
-  } // Lecture des données du fichier
-
-
-  try {
-    ipc.invoke('readJson', [filePath]).then(function (result) {
-      if (verbose) {
-        console.log("CALLBACK readJson ".concat(JSON.stringify(filePath)));
-        console.log(result);
-      }
-
-      if (callback) {
-        callback(result);
-      }
-    });
-  } catch (err) {
-    console.error(err);
-  }
-
-  return null;
-}
-
-function writeJsonFile(filePath, datas, callback) {
-  // Ecrit le dictionnaire dans le fichier json passés en paramètres
-  // ---
-  try {
-    ipc.invoke('writeJSON', [filePath, datas, {
-      spaces: 4
-    }]).then(function (result) {
-      if (callback) {
-        callback(result);
-      }
-    });
-  } catch (err) {
-    console.error(err);
-  }
-
-  return null;
-} // Models
+ // Models
 // ======================================================================================================
 // ***** RootStore *****
 // *********************
-
 
 var TAG_RootStore = function TAG_RootStore() {};
 
@@ -33974,18 +34118,33 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
         player.readPrevious();
       });
     },
+    load: function load() {
+      self.artists.load(self.afterLoad);
+      self.albums.load(self.afterLoad);
+      self.tracks.load(self.afterLoad);
+      self.years.load(self.afterLoad);
+      self.genres.load(self.afterLoad);
+      self.playlists.load(self.afterLoad);
+    },
+    reload: function reload() {
+      self.artists.setField('loaded', false);
+      self.albums.setField('loaded', false);
+      self.tracks.setField('loaded', false);
+      self.years.setField('loaded', false);
+      self.genres.setField('loaded', false);
+      self.playlists.setField('loaded', false);
+      self.loaded = false;
+      self.library.load();
+      self.player.load();
+      self.load();
+    },
     update: function update(datas) {
       // Gramophone-specific init datas
       // ---
       self.library.load();
       self.player.load();
       setTimeout(function () {
-        self.artists.load(self.afterLoad);
-        self.albums.load(self.afterLoad);
-        self.tracks.load(self.afterLoad);
-        self.years.load(self.afterLoad);
-        self.genres.load(self.afterLoad);
-        self.playlists.load(self.afterLoad);
+        self.load();
       }, 250);
     },
     save: function save(callback) {
@@ -34093,14 +34252,6 @@ var RootStore = mobx_state_tree_module/* types.model */.V5.model({
           "value": contextId
         }]);
       }
-    },
-    // -
-    _readJsonFile: function _readJsonFile(filePath, defaultDatas, callback) {
-      var app = self.app;
-      return readJsonFile(filePath, defaultDatas, callback, app.debugMode);
-    },
-    _writeJsonFile: function _writeJsonFile(filePath, datas) {
-      return writeJsonFile(filePath, datas);
     }
   };
 }); // Init
@@ -35422,7 +35573,7 @@ webpackContext.id = 132;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, [216], () => (__webpack_require__(63979)))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(8008)))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], () => (__webpack_require__(44054)))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

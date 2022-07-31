@@ -210,7 +210,7 @@ export const PlaylistsStore = types
 			const store = getRoot(self);
 			const app = store.app;
 
-			store._readJsonFile(
+			app.readJsonFile(
 				self.playlistsCollectionFilePath,
 				{
 					by_id: {},
@@ -250,7 +250,8 @@ export const PlaylistsStore = types
 			// ---
 
 			const store = getRoot(self);
-			store._writeJsonFile(self.playlistsCollectionFilePath, self.toJSON());
+			const app = store.app;
+			app.writeJsonFile(self.playlistsCollectionFilePath, self.toJSON());
 
 			if (callback) {
 				callback();

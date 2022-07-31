@@ -168,15 +168,15 @@ export const AlbumsStore = types
 
 		// -
 
-		update: (raw) => {
-			self.by_id = {};
-			for (let [albumId, albumRaw] of Object.entries(raw.by_id)) {
-				const album = AlbumStore.create({});
-				album.update(albumRaw);
-				self.by_id.set(albumId, album);
-			}
-			self.loaded = true;
-		},
+		// update: (raw) => {
+		// 	self.by_id = {};
+		// 	for (let [albumId, albumRaw] of Object.entries(raw.by_id)) {
+		// 		const album = AlbumStore.create({});
+		// 		album.update(albumRaw);
+		// 		self.by_id.set(albumId, album);
+		// 	}
+		// 	self.loaded = true;
+		// },
 
 		load: (callback) => {
 
@@ -186,7 +186,7 @@ export const AlbumsStore = types
 			const store = getRoot(self);
 			const app = store.app;
 
-			store._readJsonFile(
+			app.readJsonFile(
 				self.albumsCollectionFilePath,
 				{
 					by_id: {},
@@ -222,7 +222,8 @@ export const AlbumsStore = types
 			// ---
 
 			const store = getRoot(self);
-			store._writeJsonFile(self.albumsCollectionFilePath, self.toJSON());
+			const app = store.app;
+			app.writeJsonFile(self.albumsCollectionFilePath, self.toJSON());
 
 			if (callback) {
 				callback();

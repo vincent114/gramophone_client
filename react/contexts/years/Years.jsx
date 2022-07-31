@@ -86,15 +86,15 @@ export const YearsStore = types
 
 		// -
 
-		update: (raw) => {
-			self.by_id = {};
-			for (const [yearId, yearRaw] of Object.entries(raw.by_id)) {
-				const year = YearStore.create({});
-				year.update(yearRaw);
-				self.by_id.set(yearId, year);
-			}
-			self.loaded = true;
-		},
+		// update: (raw) => {
+		// 	self.by_id = {};
+		// 	for (const [yearId, yearRaw] of Object.entries(raw.by_id)) {
+		// 		const year = YearStore.create({});
+		// 		year.update(yearRaw);
+		// 		self.by_id.set(yearId, year);
+		// 	}
+		// 	self.loaded = true;
+		// },
 
 		load: (callback) => {
 
@@ -104,7 +104,7 @@ export const YearsStore = types
 			const store = getRoot(self);
 			const app = store.app;
 
-			store._readJsonFile(
+			app.readJsonFile(
 				self.yearsCollectionFilePath,
 				{
 					by_id: {},
@@ -127,7 +127,8 @@ export const YearsStore = types
 			// ---
 
 			const store = getRoot(self);
-			store._writeJsonFile(self.yearsCollectionFilePath, self.toJSON());
+			const app = store.app;
+			app.writeJsonFile(self.yearsCollectionFilePath, self.toJSON());
 
 			if (callback) {
 				callback();

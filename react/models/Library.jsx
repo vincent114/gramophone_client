@@ -155,6 +155,10 @@ export const LibraryFolderStore = types
 const TAG_LibraryStore = () => {}
 export const LibraryStore = types
 	.model({
+		path_to_use: types.maybeNull(types.string), // default, custom
+		custom_path: types.maybeNull(types.string),
+		custom_path_available: true,
+
 		source_folders: types.optional(types.array(LibraryFolderStore), []),
 		copy_folder: types.optional(LibraryFolderStore, {}),
 		copy_enabled: false,
@@ -176,16 +180,32 @@ export const LibraryStore = types
 	})
 	.views(self => ({
 
-		get collectionPath() {
+		get defaultCollectionPath() {
 			const cwd = ipc.sendSync('getCwd');
-			const path = ipc.sendSync('pathJoin', [cwd, 'collection']);
+			return ipc.sendSync('pathJoin', [cwd, 'collection']);
+		},
+
+		get defaultCollectionCoversPath() {
+			const path = ipc.sendSync('pathJoin', [self.defaultCollectionPath, 'covers']);
 			return path;
+		},
+
+		// -
+
+		get collectionPath() {
+			if (self.custom_path && self.custom_path_available) {
+				return self.custom_path;
+			} else {
+				return self.defaultCollectionPath;
+			}
 		},
 
 		get collectionCoversPath() {
 			const path = ipc.sendSync('pathJoin', [self.collectionPath, 'covers']);
 			return path;
 		},
+
+		// -
 
 		get collectionFiles() {
 
@@ -346,6 +366,14 @@ export const LibraryStore = types
 			// Les dossiers sont-ils toujours accessibles ?
 			// ---
 
+			if (self.custom_path) {
+				if (ipc.sendSync('existsSync', self.custom_path)) {
+					self.custom_path_available = true;
+				} else {
+					self.custom_path_available = false;
+				}
+			}
+
 			for (const sourceFolder of self.source_folders) {
 				if (ipc.sendSync('existsSync', sourceFolder.folder_path)) {
 					sourceFolder.folder_available = true;
@@ -365,6 +393,10 @@ export const LibraryStore = types
 
 		update: (raw) => {
 			if (raw) {
+				self.path_to_use = (raw.path_to_use) ? raw.path_to_use : "default";
+				self.custom_path = (raw.custom_path) ? raw.custom_path : "";
+				self.custom_path_available = (raw.custom_path_available) ? raw.custom_path_available : true;
+
 				self.source_folders = [];
 				for (const sourceFolderRaw of raw.source_folders) {
 					const sourceFolder = LibraryFolderStore.create({});

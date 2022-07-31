@@ -6,6 +6,7 @@ import { RenderSectionTheme } from 'nexus/contexts/preferences/Preferences';
 
 import { Heading } from 'nexus/forms/heading/Heading';
 import { Indicator } from 'nexus/forms/indicator/Indicator';
+import { Field } from 'nexus/forms/field/Field';
 
 import { Section } from 'nexus/layout/section/Section';
 import { Row } from 'nexus/layout/row/Row';
@@ -23,11 +24,130 @@ import { Switch } from 'nexus/ui/switch/Switch';
 import { Typography } from 'nexus/ui/typography/Typography';
 import { Divider } from 'nexus/ui/divider/Divider';
 
+import { LIBRARY_TARGET_CHOICES } from 'nexus/utils/Datas';
+
 import './Admin.css';
 
 
 // Functions Components ReactJS
-// -------------------------------------------------------------------------------------------------------------
+// ======================================================================================================
+
+// ***** RenderSectionLibrary *****
+// ********************************
+
+const TAG_RenderSectionLibrary = () => {}
+export const RenderSectionLibrary = observer((props) => {
+
+	const store = React.useContext(window.storeContext);
+	const app = store.app;
+	const snackbar = app.snackbar;
+	const library = store.library;
+
+	// From ... store
+
+	const isLoading = app.isLoading;
+	const pathToUse = library.path_to_use;
+	const customPath = library.custom_path;
+	const customPathAvailable = library.custom_path_available;
+
+	// ...
+
+	// Events
+	// ==================================================================================================
+
+	const handleFieldChange = (savePath, value) => {
+		library.save(() => {
+			clearTimeout(window.timeoutReload);
+			window.timeoutReload = setTimeout(() => {
+				store.reload();
+			}, 1000);
+		});
+	}
+
+	const handleBrowseCustomPath = () => {
+		ipc.once('folderChoosed', (folders) => {
+			for (const folder of folders) {
+				library.setField("path_to_use", "custom");
+				library.setField("custom_path", folder);
+				handleFieldChange();
+				break;
+			}
+		});
+		ipc.send('chooseFolder');
+	}
+
+	// Render
+	// ==================================================================================================
+
+	// Section -> Icon
+	// -------------------------------------------------
+
+	const sectionIcon = <Icon name="save" />
+
+	// Section -> Title
+	// -------------------------------------------------
+
+	const sectionTitle = "Emplacement de sauvegarde";
+
+	// Section -> Content
+	// -------------------------------------------------
+
+	let customPathError = "";
+	if (pathToUse == "custom" && customPath && !customPathAvailable) {
+		customPathError = "Dossier introuvable."
+	}
+
+	const sectionContent = (
+		<div>
+			<Field
+				id="rad-path-to-use"
+				component='radios'
+				datas={LIBRARY_TARGET_CHOICES}
+				savePath={['library', 'path_to_use']}
+				disabled={isLoading}
+				className="rad-path-to-use"
+				style={{
+					marginLeft: '2px',
+				}}
+				callbackChange={handleFieldChange}
+			/>
+
+			<Row>
+				<Field
+					id="txt-custom-path"
+					component='input'
+					savePath={['library', 'custom_path']}
+					disabled={isLoading}
+					error={customPathError}
+					endAdornment={(
+						<IconButton
+							size="tiny"
+							color="typography"
+							iconName="more_horiz"
+							disabled={isLoading}
+							onClick={() => handleBrowseCustomPath()}
+						/>
+					)}
+					style={{
+						marginLeft: '43px',
+					}}
+					callbackBlur={handleFieldChange}
+				/>
+			</Row>
+		</div>
+	)
+
+	// -------------------------------------------------
+
+	return (
+		<Section
+			icon={sectionIcon}
+			title={sectionTitle}
+		>
+			{sectionContent}
+		</Section>
+	)
+})
 
 // ***** RenderAdminFolders *****
 // ******************************
@@ -509,6 +629,7 @@ export const RenderAdmin = observer((props) => {
 
 	return (
 		<React.Fragment>
+			<RenderSectionLibrary />
 			<RenderAdminFolders />
 			<RenderAdminScan />
 			<RenderSectionPlayback />

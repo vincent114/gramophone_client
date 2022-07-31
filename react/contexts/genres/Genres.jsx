@@ -89,15 +89,15 @@ export const GenresStore = types
 
 		// -
 
-		update: (raw) => {
-			self.by_id = {};
-			for (const [genreId, genreRaw] of Object.entries(raw.by_id)) {
-				const genre = GenreStore.create({});
-				genre.update(genreRaw);
-				self.by_id.set(genreId, genre);
-			}
-			self.loaded = true;
-		},
+		// update: (raw) => {
+		// 	self.by_id = {};
+		// 	for (const [genreId, genreRaw] of Object.entries(raw.by_id)) {
+		// 		const genre = GenreStore.create({});
+		// 		genre.update(genreRaw);
+		// 		self.by_id.set(genreId, genre);
+		// 	}
+		// 	self.loaded = true;
+		// },
 
 		load: (callback) => {
 
@@ -107,7 +107,7 @@ export const GenresStore = types
 			const store = getRoot(self);
 			const app = store.app;
 
-			store._readJsonFile(
+			app.readJsonFile(
 				self.genresCollectionFilePath,
 				{
 					by_id: {},
@@ -130,7 +130,8 @@ export const GenresStore = types
 			// ---
 
 			const store = getRoot(self);
-			store._writeJsonFile(self.genresCollectionFilePath, self.toJSON());
+			const app = store.app;
+			app.writeJsonFile(self.genresCollectionFilePath, self.toJSON());
 
 			if (callback) {
 				callback();

@@ -62,67 +62,6 @@ import {
 import './Main.css';
 
 
-// Functions
-// ======================================================================================================
-
-function readJsonFile(filePath, defaultDatas, callback, verbose) {
-
-	// Lit le fichier JSON passé en paramètres et renvoie un dictionnaire
-	// ---
-
-	let datas = (defaultDatas) ? defaultDatas : {};
-
-	// On s'assure que le fichier existe
-	if (!ipc.sendSync('existsSync', filePath)) {
-		ipc.sendSync('writeJSONSync', filePath, datas, {
-			spaces: 4
-		});
-	}
-
-	if (verbose) {
-		console.log(`SEND readJson ${JSON.stringify(filePath)}`);
-	}
-
-	// Lecture des données du fichier
-	try {
-		ipc.invoke('readJson', [filePath]).then((result) => {
-			if (verbose) {
-				console.log(`CALLBACK readJson ${JSON.stringify(filePath)}`);
-				console.log(result);
-			}
-			if (callback) {
-				callback(result);
-			}
-		});
-	} catch(err) {
-		console.error(err);
-	}
-	return null;
-}
-
-function writeJsonFile(filePath, datas, callback) {
-
-	// Ecrit le dictionnaire dans le fichier json passés en paramètres
-	// ---
-
-	try {
-		ipc.invoke('writeJSON', [
-			filePath,
-			datas,
-			{spaces: 4},
-		])
-		.then((result) => {
-			if (callback) {
-				callback(result);
-			}
-		});
-	} catch(err) {
-		console.error(err);
-	}
-	return null;
-}
-
-
 // Models
 // ======================================================================================================
 
@@ -241,6 +180,32 @@ const RootStore = types
 			});
 		},
 
+		load: () => {
+			self.artists.load(self.afterLoad);
+			self.albums.load(self.afterLoad);
+			self.tracks.load(self.afterLoad);
+
+			self.years.load(self.afterLoad);
+			self.genres.load(self.afterLoad);
+			self.playlists.load(self.afterLoad);
+		},
+
+		reload: () => {
+			self.artists.setField('loaded', false);
+			self.albums.setField('loaded', false);
+			self.tracks.setField('loaded', false);
+
+			self.years.setField('loaded', false);
+			self.genres.setField('loaded', false);
+			self.playlists.setField('loaded', false);
+
+			self.loaded = false;
+
+			self.library.load();
+			self.player.load();
+			self.load();
+		},
+
 		update: (datas) => {
 
 			// Gramophone-specific init datas
@@ -250,13 +215,7 @@ const RootStore = types
 			self.player.load();
 
 			setTimeout(() => {
-				self.artists.load(self.afterLoad);
-				self.albums.load(self.afterLoad);
-				self.tracks.load(self.afterLoad);
-
-				self.years.load(self.afterLoad);
-				self.genres.load(self.afterLoad);
-				self.playlists.load(self.afterLoad);
+				self.load();
 			}, 250);
 		},
 
@@ -357,17 +316,6 @@ const RootStore = types
 					{"op": "replace", "path": "/playlistFolderId", "value": contextId},
 				]);
 			}
-		},
-
-		// -
-
-		_readJsonFile: (filePath, defaultDatas, callback) => {
-			const app = self.app;
-			return readJsonFile(filePath, defaultDatas, callback, app.debugMode);
-		},
-
-		_writeJsonFile: (filePath, datas) => {
-			return writeJsonFile(filePath, datas);
 		},
 
 	}))

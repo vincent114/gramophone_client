@@ -315,7 +315,7 @@ const initOSglobalHotkeys = () => {
 app.on('window-all-closed', () => {
 
 	// Toutes les fenêtres fermées ? -> on quitte l'application sur Windows et Linux
-	if (process.platform !== 'darwin') {
+	if (platform !== 'darwin') {
 		app.quit();
 	}
 });
@@ -404,7 +404,7 @@ ipcMain.handle("readJson", async (event, [filePath]) => {
 	return result;
 });
 
-ipcMain.handle("writeJSON", async (event, [filePath, datas, options]) => {
+ipcMain.on("writeJSON", async (event, [filePath, datas, options]) => {
 
 	// Ecrit des données dans le fichier passé en paramètres
 	// ---
@@ -412,7 +412,7 @@ ipcMain.handle("writeJSON", async (event, [filePath, datas, options]) => {
 	options = (options) ? options : {};
 
 	const result = await fs.writeJson(filePath, datas, options);
-	return result;
+	mainWindow.webContents.send("JSONwritten", result);
 });
 
 ipcMain.handle("copy", async (event, [sourcePath, targetPath]) => {
