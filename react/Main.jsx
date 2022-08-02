@@ -42,7 +42,7 @@ import {
 	PopupJumpToStore,
 	popupJumpToKey,
 	PopupJumpTo
-} from 'gramophone_client/popups/jump_to/PopupJumpTo';
+} from 'nexus/popups/jump_to/PopupJumpTo';
 import {
 	PopupZoomCoverStore,
 	popupZoomCoverKey,
